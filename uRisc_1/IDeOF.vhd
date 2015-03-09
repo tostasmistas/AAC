@@ -13,18 +13,18 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity IDeOF is
 	port(
 	-- input
-	clk				      : in std_logic;
+	clk				       : in std_logic;
 
-	inst_IN					: in std_logic_vector(15 downto 0);
+	inst_IN					 : in std_logic_vector(15 downto 0);
 	
-	R0 						: in std_logic_vector(15 downto 0);
-	R1 						: in std_logic_vector(15 downto 0);
-   R2 						: in std_logic_vector(15 downto 0);
-	R3 						: in std_logic_vector(15 downto 0);
-	R4 						: in std_logic_vector(15 downto 0);
-	R5 						: in std_logic_vector(15 downto 0);
-	R6 						: in std_logic_vector(15 downto 0);
-	R7 						: in std_logic_vector(15 downto 0);
+	R0 : in std_logic_vector(15 downto 0);
+	R1 : in std_logic_vector(15 downto 0);
+   R2 : in std_logic_vector(15 downto 0);
+	R3 : in std_logic_vector(15 downto 0);
+	R4 : in std_logic_vector(15 downto 0);
+	R5 : in std_logic_vector(15 downto 0);
+	R6 : in std_logic_vector(15 downto 0);
+	R7 : in std_logic_vector(15 downto 0);
 	
 	-- output
 	oper_A	: out std_logic_vector(15 downto 0);	-- A Data
@@ -74,7 +74,7 @@ constant zeros		: std_logic_vector(12 downto 0) := (others => '0');
 begin
 
 --------------------------------------------------------------------------
------- Conjuntos de instrucÃ§Ãµes ------------------------------------------
+------ Conjuntos de instrucções ------------------------------------------
 ------ Inst_IN(15:14)           ------------------------------------------
 ------ 0 0 => Transferencia de Controlo    -------------------------------
 ------ 0 1 => Constantes Formato I		    -------------------------------
@@ -84,7 +84,7 @@ begin
 
 
 --------------------------------------------------------------------------
--------- 0 0 -> TransferÃªncia de Controlo --------------------------------
+-------- 0 0 -> Transferência de Controlo --------------------------------
 -------- exitsem 3 formatos ----------------------------------------------
 --------------------------------------------------------------------------
 
@@ -99,8 +99,7 @@ aux_TRANS_FII   	<= ------------- logica
 
 -------- 1 1 -> Formato III jumps ----------------------------------------
 aux_TRANS_FIII_ADD_RB   <= inst_IN(2 downto 0);
-aux_TRANS_FIII_MUX   	<= ---------- logica
-aux_TRANS_FIII_WE_R7   	<= ---------- logica
+aux_TRANS_FIII_MUX   	<= ---------- logicaaux_TRANS_FIII_WE_R7   	<= ---------- logica
 
 
 --------------------------------------------------------------------------
@@ -111,7 +110,7 @@ aux_CONS_FI_11B 	<= inst_IN(10 downto 0 );
 
 
 --------------------------------------------------------------------------
--------- 1 0 -> InstrucÃ§Ãµes para a ALU/Memoria ----------------------------
+-------- 1 0 -> Instrucções para a ALU/Memoria ----------------------------
 --------------------------------------------------------------------------
 aux_ALU_ADD_RWC   <= inst_IN(13 downto 11);
 aux_ALU_ADD_RA		<= inst_IN(5 downto 2);	-- A Address
@@ -127,7 +126,7 @@ aux_CONS_FII_8B	<=	inst_IN(7 downto 0);
 
 
 --------------------------------------------------------------------------
------------------ MUXs para selecÃ§Ã£o de RA e de RB  ----------------------
+----------------- MUXs para selecção de RA e de RB  ----------------------
 --------------------------------------------------------------------------
 RA <= R0 when aux_ALU_ADD_RA = "000" else 
 		R1 when aux_ALU_ADD_RA = "001" else
@@ -148,9 +147,9 @@ RB <= R0 when aux_ALU_ADD_RB = "000" else
 		R7;
 			 
 --------------------------------------------------------------------------
--------- MUXs para selecÃ§Ã£o entre RA/RB e os imediatos A/B ---------------
+-------- MUXs para selecção entre RA/RB e os imediatos A/B ---------------
 --------------------------------------------------------------------------
-oper_A <= -- controlado por bit 14
+oper_A <=
 
 
 oper_B <=
