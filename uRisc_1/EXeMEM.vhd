@@ -12,7 +12,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity EXeMEM is
 	port(
 	-- input
-	clk, rst			       : in std_logic;
+	clk, rst			      	: in std_logic;
 	---PARA ALU
 	   REG_A 				 	: in std_logic_vector(15 downto 0);
 		REG_B 				 	: in std_logic_vector(15 downto 0);
@@ -27,7 +27,7 @@ entity EXeMEM is
 		TRANS_FIII_IN			: in std_logic;
 	--Output
 		--Registo
-		REG_WC            	: out std_logic_vector(15 downto 0)
+		REG_WC            		: out std_logic_vector(15 downto 0)
 		flagtest_rel_OUT		: out std_logic;			-----Salto relativo
 		flagtest_abs_OUT		: out std_logic			-----Salto absoluto
 			
@@ -37,23 +37,25 @@ end EXeMEM;
 architecture Behavioral of EXeMEM is
 
 signal aux_FLAGS			: std_logic_vector(3 downto 0) := (others => '0'); ---- Z,N,C,O---
-signal aux_R_FLAGS		: std_logic_vector(3 downto 0) := (others => '0');
-signal aux_flagtest_rel	: std_logic := '0';
-signal aux_flagtest_abs	: std_logic := '0';
+signal aux_R_FLAGS			: std_logic_vector(3 downto 0) := (others => '0');
+signal aux_flagtest_rel		: std_logic := '0';
+signal aux_flagtest_abs		: std_logic := '0';
 
-constant zeros		: std_logic_vector(12 downto 0) := (others => '0');
+constant zeros				: std_logic_vector(12 downto 0) := (others => '0');
 
 begin
 ---------------------------------------------------------------------------------------------
 ---------------------------------- MEMORIA --------------------------------------------------
 ---------------------------------------------------------------------------------------------
 
+
+
 ---------------------------------------------------------------------------------------------
 ----------------------------------- ALU -----------------------------------------------------
 ---------------------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------------------
----------------------------------- TESTE FLAGS ----------------------------------------------
+---------------------------------- TESTE FLA    GS ----------------------------------------------
 ---------------------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------------------
