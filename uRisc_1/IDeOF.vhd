@@ -13,18 +13,18 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity IDeOF is
 	port(
 	-- input
-	clk				       : in std_logic;
+	clk				      : in std_logic;
 
-	inst_IN					 : in std_logic_vector(15 downto 0);
+	inst_IN					: in std_logic_vector(15 downto 0);
 	
-	R0 : in std_logic_vector(15 downto 0);
-	R1 : in std_logic_vector(15 downto 0);
-   R2 : in std_logic_vector(15 downto 0);
-	R3 : in std_logic_vector(15 downto 0);
-	R4 : in std_logic_vector(15 downto 0);
-	R5 : in std_logic_vector(15 downto 0);
-	R6 : in std_logic_vector(15 downto 0);
-	R7 : in std_logic_vector(15 downto 0);
+	R0 						: in std_logic_vector(15 downto 0);
+	R1 						: in std_logic_vector(15 downto 0);
+   R2 						: in std_logic_vector(15 downto 0);
+	R3 						: in std_logic_vector(15 downto 0);
+	R4 						: in std_logic_vector(15 downto 0);
+	R5 						: in std_logic_vector(15 downto 0);
+	R6 						: in std_logic_vector(15 downto 0);
+	R7 						: in std_logic_vector(15 downto 0);
 	
 	-- output
 	oper_A	: out std_logic_vector(15 downto 0);	-- A Data
@@ -50,16 +50,16 @@ signal aux_CONS_FII_RWC	: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_CONS_FII_R	: std_logic := '0';
 signal aux_CONS_FII_8B	: std_logic_vector(7 downto 0) := (others => '0');
 
-signal aux_TRANS_FI_COND: std_logic_vector(3 downto 0) := (others => '0');
-signal aux_TRANS_FI_DES : std_logic_vector(7 downto 0) := (others => '0');
-signal aux_TRANS_FI_OP	: std_logic := '0';
+signal aux_active_FLAGTEST		: std_logic := '0';
+signal aux_TRANS_OP				: std_logic_vector(1 downto 0) := (others => '0');
+signal aux_TRANS_FI_COND		: std_logic_vector(2 downto 0) := (others => '0');
+signal aux_TRANS_FI_DES 		: std_logic_vector(7 downto 0) := (others => '0');
 
-signal aux_TRANS_FII_DES: std_logic_vector(11 downto 0) := (others => '0');
-signal aux_TRANS_FII		: std_logic := '0';
 
-signal aux_TRANS_FIII_ADD_RB : std_logic_vector(2 downto 0) := (others => '0');
-signal aux_TRANS_FIII_MUX	  : std_logic := '0';
-signal aux_TRANS_FIII_WE_R7  : std_logic := '0'; 
+signal aux_TRANS_FII_DES		: std_logic_vector(11 downto 0) := (others => '0');
+
+signal aux_TRANS_FIII_ADD_RB 	: std_logic_vector(2 downto 0) := (others => '0');
+signal aux_TRANS_FIII_R	  		: std_logic := '0';
 
 signal RA : std_logic_vector(15 downto 0) := (others => '0');
 signal RB : std_logic_vector(15 downto 0) := (others => '0');
@@ -82,24 +82,25 @@ begin
 ------ 1 1 => Constante Formato II		    -------------------------------
 --------------------------------------------------------------------------
 
-
+aux_active_FLAGTEST <= '1' when inst_IN(15 downto 0)= "00" else
+							  '0';
 --------------------------------------------------------------------------
 -------- 0 0 -> Transferência de Controlo --------------------------------
 -------- exitsem 3 formatos ----------------------------------------------
 --------------------------------------------------------------------------
+aux_TRANS_OP   <= inst_IN(13 downto 12);
 
 -------- 0 0/ 0 1 -> Formato I condicional -------------------------------
-aux_TRANS_FI_COND	<= inst_IN(11 downto 8);
-aux_TRANS_FI_DES	<= inst_IN(7 downto 0);
-aux_TRANS_FI_OP   <= inst_IN(12);
+aux_TRANS_FI_COND	<= inst_IN(12 downto 8);
+aux_TRANS_FI_DES	<= (15 downto 8 => inst_IN(7))&inst_IN(7 downto 0);
+
 
 -------- 1 0 -> Formato II incondicional ---------------------------------
-aux_TRANS_FII_DES <= inst_IN(11 downto 0);
-aux_TRANS_FII   	<= ------------- logica
+aux_TRANS_FII_DES <= (15 downto 12 => inst_IN(11))&inst_IN(11 downto 0);
 
 -------- 1 1 -> Formato III jumps ----------------------------------------
 aux_TRANS_FIII_ADD_RB   <= inst_IN(2 downto 0);
-aux_TRANS_FIII_MUX   	<= ---------- logicaaux_TRANS_FIII_WE_R7   	<= ---------- logica
+aux_TRANS_FIII_R 			<= inst_IN(11);
 
 
 --------------------------------------------------------------------------

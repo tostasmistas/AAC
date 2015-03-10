@@ -15,15 +15,15 @@ entity InF is
 	-- input
 	clk, rst			       : in std_logic;
 
-	flag_test_cond			 : in std_logic;
-	flag_test_jump			 : in std_logic;
-	destino_jump			 : in std_logic_vector(12 downto 0);
-	destino_cond			 : in std_logic_vector(12 downto 0);
+	FLAGTEST_cond			 : in std_logic;   
+	FLAGTEST_jump			 : in std_logic;
+	destino_jump			 : in std_logic_vector(11 downto 0);
+	destino_cond			 : in std_logic_vector(11 downto 0);
 
-	reg_pc_IN 				 : in std_logic_vector(12 downto 0);
+	reg_pc_IN 				 : in std_logic_vector(11 downto 0);
 
 	-- output
-	reg_pc_OUT            : out std_logic_vector(12 downto 0)
+	reg_pc_OUT            : out std_logic_vector(11 downto 0)
 				
 	);
 end InF;
@@ -33,21 +33,21 @@ architecture Behavioral of InF is
 --------------------------------------------------------------------------
 --------------------------- Aux Signals ----------------------------------
 --------------------------------------------------------------------------
-signal aux_pc_add_1	   : std_logic_vector(12 downto 0) := (others => '0');
-signal aux_saida_mux		: std_logic_vector(12 downto 0) := (others => '0');
-signal aux_reg_pc 		: std_logic_vector(12 downto 0) := (others => '0');
+signal aux_pc_add_1	   : std_logic_vector(11 downto 0) := (others => '0');
+signal aux_saida_mux		: std_logic_vector(11 downto 0) := (others => '0');
+signal aux_reg_pc 		: std_logic_vector(11 downto 0) := (others => '0');
 
 --------------------------------------------------------------------------
 ---------------------  Constantes   --------------------------------------
 --------------------------------------------------------------------------
-constant one		: std_logic_vector(12 downto 0) :="0000000000001" ;
-constant zeros		: std_logic_vector(12 downto 0) := (others => '0');
+constant one		: std_logic_vector(11 downto 0) :="0000000000001" ;
+constant zeros		: std_logic_vector(11 downto 0) := (others => '0');
 
 begin
-aux_pc_add_1 	<= reg_pc_IN + one when flag_test_cond = '0' else
-						reg_pc_IN + destino_trans;
+aux_pc_add_1 	<= reg_pc_IN + one when FLAGTEST_cond = '0' else
+						reg_pc_IN + destino_cond;
 	
-aux_saida_mux  <= aux_pc_add_1 when flag_test_jump = '0' else
+aux_saida_mux  <= aux_pc_add_1 when FLAGTEST_jump = '0' else
 						destino_jump;
 								
 	
@@ -75,7 +75,7 @@ process (clk, rst)
 			if rst = '1' then
 				aux_reg_ir <= zeros;
 			else
-				aux_reg_ir <= aux_saida_mux; -- carregar a próxima instrução da memória (de programa) e armazenar no IR
+				aux_reg_ir <= aux_saida_mux; 					-- carregar a próxima instrução da memória (de programa) e armazenar no IR
 			end if;		
 		end if;
 end process;	
