@@ -48,6 +48,18 @@ signal aux_FLAGTEST			: std_logic := '0';
 signal operando_A			: std_logic_vector(15 downto 0) := (others => '0');
 signal operando_B			: std_logic_vector(15 downto 0) := (others => '0');
 
+signal aux_flagtest_rel		: std_logic := '0';
+signal aux_FLAGTEST			: std_logic := '0';
+signal Aux_LogA				: std_logic_vector(15 downto 0);
+signal Aux_LogB				: std_logic_vector(15 downto 0);
+signal Aux_Arith			: std_logic_vector(15 downto 0);
+signal OUT_XOR				: std_logic_vector(15 downto 0);
+signal OUT_LOG				: std_logic_vector(15 downto 0);
+signal Sign_OP				: std_logic_vector(1 downto 0);
+signal Sign_FLAG			: std_logic_vector(1 downto 0);
+signal SignA				: std_logic;
+signal SignB				: std_logic;
+
 
 --------------------------------------------------------------------------
 ---------------------  Constantes   --------------------------------------
@@ -61,15 +73,85 @@ begin
 
 ---------------------------------------------------------------------------------------------
 ----------------------------------- ALU -----------------------------------------------------
----------------------------------------------------------------------------------------------
 
 operando_A <= reg_IDOF_OUT(48 downto 33);
 operando_B <= reg_IDOF_OUT(32 downto 17);
 
 -- os sinais de cima sao os operandos com que deves trabalhar na ALU
 -- a saida da ALU deve ser armazenada no sinal out_ALU
+------------------------------------LOG------------------------------------------------------
 
--- out_MEM onde se escreve o que sai da memoria
+SignA<=(ALU_OP(0) and not(ALU_OP(1))or(ALU_OP(2) and not(ALU_OP(3)));
+SignB<=(ALU_OP(0) or (ALU_OP(1))nand(ALU_OP(2) or not(ALU_OP(3)));
+
+Aux_LogA <= (not operando_A) 	when signA ='0' else 
+			operando_A 			when signA = '1' else 
+			'1';
+Aux_LogB <= (not operando_B) 	when signB ='0' else 
+			operando_B 			when signA = '1' else 
+			'1';
+
+Aux_LogA<=Aux_LogA and ((ALU_OP(0) xnor ALU_OP(1))and(ALU_OP(2) xnor ALU_OP(3)));
+Aux_LogB<=Aux_LogB and ((ALU_OP(0) xnor ALU_OP(2))and(ALU_OP(1) xnor ALU_OP(3)));
+
+Sign_OP(0)<=((ALU_OP(0) nor ALU_OP(1)) or (ALU_OP(1) xor ALU_OP(2))) or (ALU_OP(0) xor ALU_OP(3));
+Sign_OP(1)<=((ALU_OP(0) or ALU_OP(3)) nand (ALU_OP(1) or ALU_OP(2)));
+
+OUT_XOR <= (Aux_LogA xor Aux_LogB) 		when ALU_OP = '0' else 
+			not (Aux_LogA xor Aux_LogB) when ALU_OP = '1' else 
+			'0000000000000000';
+
+OUT_LOG  <= '0000000000000001' 		when Sign_OP = '00' else 
+			(Aux_LogA or Aux_LogB) 	when Sign_OP = '01' else
+			OUT_XOR 				when Sign_OP = '10' else
+			(Aux_LogA and Aux_LogB) when Sign_OP = '11' else
+			'0000000000000000';
+
+
+-----------------------------------ARIT------------------------------------------------------
+
+OUT_ARI <=  (operando_A + operando_B) 			when ALU_OP = '00000' else 
+			(operando_A + operando_B + 1)	 	when ALU_OP = '00001' else 
+			(operando_A +  1)		 			when ALU_OP = '00011' else 
+			(operando_A + not(operando_B))		when ALU_OP = '00100' else 
+			(operando_A + not(operando_B)+1)	when ALU_OP = '00101' else 
+			(operando_A - 1)					when ALU_OP = '00001' else 
+			sll(operando_A)						when ALU_OP = '01000' else 
+			sla(operando_A) 					when ALU_OP = '01001' else
+			'0000000000000000';
+
+out_ALU <=  OUT_ARI		when ALU_OP(4) = '0' else 
+			OUT_LOG		when ALU_OP(4) = '1' else
+			'0000000000000000';
+
+-------------------------------QUAIS FLAGS ATUALIZAM??---------------------------------------
+
+Sign_FLAG(1) <=  not(ALU_OP(4));
+
+Sign_FLAG(0) <=  [ALU_OP(2) and (not(ALU_OP(1)) or ALU_OP(2))] or [ALU_OP(4) and (not(ALU_OP(2)) and ((not(ALU_OP(1)) and ALU_OP(0)) or ALU_OP(3)))] or [(ALU_OP(4)) nor ALU_OP(3)] or [not(ALU_OP(0)) and ALU_OP(1)];
+
+aux_FLAGS  <= 	'0000'	when Sign_FLAG ='00' else 
+				'1100' 	when Sign_FLAG ='00' else 
+				'0111' 	when Sign_FLAG ='00' else 
+				'1111' 	when Sign_FLAG ='00' else 
+				'0000';   		--Caso em que venha uma operação nao reconheicda nao atualizamos nenhuma
+
+
+---------------------------------------------------------------------------------------------
+---------------------------------- TESTE FLAGS ----------------------------------------------
+---------------------------------------------------------------------------------------------
+aux_FLAGMUX	 <= FLAGS_IN(0) 						when TRANS_FI_COND_IN = "0101" else
+					 FLAGS_IN(1)					when TRANS_FI_COND_IN = "0100" else
+					 FLAGS_IN(2) 					when TRANS_FI_COND_IN = "0110" else
+					 FLAGS_IN(3) 					when TRANS_FI_COND_IN = "0011" else
+					'1' 	 	 					when TRANS_FI_COND_IN = "0000" else
+					 FLAGS_IN(0) or aux_FLAGS(1) 	when TRANS_FI_COND_IN = "0111" else
+					'0';
+
+
+aux_FLAGTEST <= aux_FLAGMUX xnor TRANS_OP(1);
+
+aux_FLAGTEST_cond <= (TRANS_OP(1) and not(TRANS_OP(0))) or (aux_FLAGTEST and not(TRANS_OP(1))); 
 
 
 ---------------------------------------------------------------------------------------------
