@@ -23,8 +23,13 @@ entity IDeOF is
 	R5 					: in std_logic_vector(15 downto 0);
 	R6 					: in std_logic_vector(15 downto 0);
 	R7 					: in std_logic_vector(15 downto 0);
+
+	FLAGTEST_MUXPC_IN	: in std_logic;
 	
 	-- output
+	FLAGTEST_active_OUT	: out std_logic;
+	JUMP_MUXPC_OUT		: out std_logic;	
+	JUMP_MUXWB_OUT		: out std_logic;
 	oper_A				: out std_logic_vector(15 downto 0);	-- operando A para a ALU
 	oper_B				: out std_logic_vector(15 downto 0); 	-- operando B para a ALU
 	aux_CONS_SEL		: out std_logic 						-- sinal de selecção para MUX entre operação da ALU e operação de carregamento de constantes
@@ -37,15 +42,13 @@ architecture Behavioral of IDeOF is
 --------------------------------------------------------------------------
 --------------------------- Aux Signals ----------------------------------
 --------------------------------------------------------------------------
-signal aux_ALU_ADD_RWC			: std_logic_vector(2 downto 0) := (others => '0');
-signal aux_ALU_ADD_RA			: std_logic_vector(2 downto 0) := (others => '0');
-signal aux_ALU_ADD_RB			: std_logic_vector(2 downto 0) := (others => '0');
+signal aux_ADD_RWC			: std_logic_vector(2 downto 0) := (others => '0');
+signal aux_ADD_RA			: std_logic_vector(2 downto 0) := (others => '0');
+signal aux_ADD_RB			: std_logic_vector(2 downto 0) := (others => '0');
+
 signal aux_ALU_OPER				: std_logic_vector(4 downto 0) := (others => '0');
 
-signal aux_CONS_FI_RWC			: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_CONS_FI_11B			: std_logic_vector(11 downto 0) := (others => '0');
-
-signal aux_CONS_FII_RWC			: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_CONS_FII_R			: std_logic := '0';
 signal aux_CONS_FII_8B			: std_logic_vector(7 downto 0) := (others => '0');
 
@@ -54,12 +57,9 @@ signal aux_TRANS_OP				: std_logic_vector(1 downto 0) := (others => '0');
 signal aux_TRANS_FI_COND		: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_TRANS_FI_DES 		: std_logic_vector(7 downto 0) := (others => '0');
 
-
 signal aux_TRANS_FII_DES		: std_logic_vector(11 downto 0) := (others => '0');
-
-signal aux_TRANS_FIII_ADD_RB 	: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_TRANS_FIII_R	  		: std_logic := '0';
-
+signal aux_JUMPS_active			: std_logic := '0';
 signal RA 						: std_logic_vector(15 downto 0) := (others => '0');
 signal RB 						: std_logic_vector(15 downto 0) := (others => '0');
 
@@ -72,6 +72,12 @@ constant zeros					: std_logic_vector(12 downto 0) := (others => '0');
 
 begin
 
+aux_ADD_RWC <= inst_IN(13 downto 11);
+aux_ADD_RA  <= inst_IN(5 downto 3);
+aux_ADD_RB  <= inst_IN(2 downto 0);
+
+
+
 --------------------------------------------------------------------------
 ------ Conjuntos de instrucções ------------------------------------------
 ------ Inst_IN(15:14)           ------------------------------------------
@@ -81,8 +87,7 @@ begin
 ------ 1 1 => Constante Formato II		    -------------------------------
 --------------------------------------------------------------------------
 
-aux_active_FLAGTEST <= '1' when inst_IN(15 downto 0)= "00" else
-					   '0';
+aux_active_FLAGTEST <= inst_IN(15) or inst_IN(14); --- Activa a FLAGTESTE
 --------------------------------------------------------------------------
 -------- 0 0 -> Transferência de Controlo --------------------------------
 -------- exitsem 3 formatos ----------------------------------------------
@@ -91,15 +96,14 @@ aux_TRANS_OP   <= inst_IN(13 downto 12);
 
 -------- 0 0/ 0 1 -> Formato I condicional -------------------------------
 aux_TRANS_FI_COND	<= inst_IN(12 downto 8);
-aux_TRANS_FI_DES	<= (15 downto 8 => inst_IN(7)) & inst_IN(7 downto 0);
-
+aux_TRANS_FI_DES	<= (11 downto 8 => inst_IN(7)) & inst_IN(7 downto 0);
 
 -------- 1 0 -> Formato II incondicional ---------------------------------
-aux_TRANS_FII_DES <= (15 downto 12 => inst_IN(11)) & inst_IN(11 downto 0);
+aux_TRANS_FII_DES <= inst_IN(11 downto 0);
 
 -------- 1 1 -> Formato III jumps ----------------------------------------
-aux_TRANS_FIII_ADD_RB   <= inst_IN(2 downto 0);
-aux_TRANS_FIII_R 		<= inst_IN(11);
+aux_JUMPS_active	<= not(aux_active_FLAGTEST) and inst_IN(13) and inst_IN(12); ----- TESTE de activação do FIII, escolhe o mux2:1
+aux_JUMPS_MUX_WB 	<= not(inst_IN(11)) and aux_JUMPS_active;
 
 
 --------------------------------------------------------------------------
@@ -151,6 +155,9 @@ RB <= 	R0 when aux_ALU_ADD_RB = "000" else
 --------------------------------------------------------------------------
 -------- ---------------
 --------------------------------------------------------------------------
+JUMP_MUXPC_OUT <= aux_JUMPS_active;
+JUMP_MUXWB_OUT <= aux_JUMPS_MUX_WB;
+
 oper_A <=	RA_C; 	-- operando A da ALU
 oper_B <=	RB;		-- operando B da ALU
 
