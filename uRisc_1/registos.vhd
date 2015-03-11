@@ -13,20 +13,22 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity registos is
 	port(
 	-- input
-	clk				       : in std_logic;
+	clk						: in std_logic;
 
-	inst_IN					 : in std_logic_vector(15 downto 0);
+	inst_IN					: in std_logic_vector(15 downto 0);
 	
 		
 	-- output
-	R0 : out std_logic_vector(15 downto 0);
-	R1 : out std_logic_vector(15 downto 0);
-   R2 : out std_logic_vector(15 downto 0);
-	R3 : out std_logic_vector(15 downto 0);
-	R4 : out std_logic_vector(15 downto 0);
-	R5 : out std_logic_vector(15 downto 0);
-	R6 : out std_logic_vector(15 downto 0);
-	R7 : out std_logic_vector(15 downto 0)
+	R0 						: out std_logic_vector(15 downto 0);
+	R1 						: out std_logic_vector(15 downto 0);
+	R2 						: out std_logic_vector(15 downto 0);
+	R3 						: out std_logic_vector(15 downto 0);
+	R4 						: out std_logic_vector(15 downto 0);
+	R5 						: out std_logic_vector(15 downto 0);
+	R6 						: out std_logic_vector(15 downto 0);
+	R7 						: out std_logic_vector(15 downto 0);
+	reg_lcl 				: out std_logic_vector(7 downto 0);
+	reg_lch 				: out std_logic_vector(7 downto 0)
 	
 	);
 end registos;
@@ -36,19 +38,20 @@ architecture Behavioral of registos is
 ---------------------------------------------------------------------
 --------------------------- Aux Signals -----------------------------
 ---------------------------------------------------------------------
-signal R0 : std_logic_vector(15 downto 0) := (others => '0');
-signal R1 : std_logic_vector(15 downto 0) := (others => '0');
-signal R2 : std_logic_vector(15 downto 0) := (others => '0');
-signal R3 : std_logic_vector(15 downto 0) := (others => '0');
-signal R4 : std_logic_vector(15 downto 0) := (others => '0');
-signal R5 : std_logic_vector(15 downto 0) := (others => '0');
-signal R6 : std_logic_vector(15 downto 0) := (others => '0');
-signal R7 : std_logic_vector(15 downto 0) := (others => '0');
+signal aux_reg_r0 : std_logic_vector(15 downto 0) := (others => '0');
+signal aux_reg_r1: std_logic_vector(15 downto 0) := (others => '0');
+signal aux_reg_r2 : std_logic_vector(15 downto 0) := (others => '0');
+signal aux_reg_r3 : std_logic_vector(15 downto 0) := (others => '0');
+signal aux_reg_r4 : std_logic_vector(15 downto 0) := (others => '0');
+signal aux_reg_r5 : std_logic_vector(15 downto 0) := (others => '0');
+signal aux_reg_r6 : std_logic_vector(15 downto 0) := (others => '0');
+signal aux_reg_r7 : std_logic_vector(15 downto 0) := (others => '0');
 
 begin
 
+
 ----------------------------------------------------------------------
------------------------ Banco de Registos	----------------------------
+----------------------- Banco de Registos ----------------------------
 ----------------------------------------------------------------------
 
 --------------------------- Registo 0 (R0) ---------------------------
@@ -146,5 +149,19 @@ process (clk, rst)
 			end if;		
 		end if;
 end process;
+
+--------------------------------------------------------------------------
+------------------------------- Exit -------------------------------------
+--------------------------------------------------------------------------
+R0 <= aux_reg_r0;
+R1 <= aux_reg_r1;
+R2 <= aux_reg_r2;
+R3 <= aux_reg_r3;
+R4 <= aux_reg_r4;
+R5 <= aux_reg_r5;
+R6 <= aux_reg_r6;
+R7 <= aux_reg_r7;
+
+
 
 end Behavioral;

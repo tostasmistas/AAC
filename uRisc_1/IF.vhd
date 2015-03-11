@@ -13,18 +13,17 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity InF is
 	port(
 	-- input
-	clk, rst			       : in std_logic;
+	clk, rst 				: in std_logic;
 
-	FLAGTEST_cond			 : in std_logic;   
-	FLAGTEST_jump			 : in std_logic;
-	destino_jump			 : in std_logic_vector(11 downto 0);
-	destino_cond			 : in std_logic_vector(11 downto 0);
+	FLAGTEST_cond			: in std_logic;   
+	FLAGTEST_jump			: in std_logic;
+	destino_jump			: in std_logic_vector(11 downto 0);
+	destino_cond			: in std_logic_vector(11 downto 0);
 
-	reg_pc_IN 				 : in std_logic_vector(11 downto 0);
+	reg_pc_IN 				: in std_logic_vector(11 downto 0);
 
 	-- output
-	reg_pc_OUT            : out std_logic_vector(11 downto 0)
-				
+	reg_pc_OUT				: out std_logic_vector(11 downto 0)				
 	);
 end InF;
 
