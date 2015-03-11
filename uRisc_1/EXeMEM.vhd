@@ -98,12 +98,11 @@ operando_B <= reg_IDOF_OUT(32 downto 17);
 SignA<=(ALU_OP(0) and not(ALU_OP(1))or(ALU_OP(2) and not(ALU_OP(3)));
 SignB<=(ALU_OP(0) or (ALU_OP(1))nand(ALU_OP(2) or not(ALU_OP(3)));
 
-Aux_LogA <= (not operando_A) 	when signA ='0' else 
-			operando_A 			when signA = '1' else 
-			'1';
-Aux_LogB <= (not operando_B) 	when signB ='0' else 
-			operando_B 			when signA = '1' else 
-			'1';
+Aux_LogA <= (not operando_A) 	when signA = '0' else 
+			operando_A 			when signA = '1' ;
+
+Aux_LogB <= (not operando_B) 	when signB = '0' else 
+			operando_B 			when signA = '1' ;
 
 Aux_LogA<=Aux_LogA and ((ALU_OP(0) xnor ALU_OP(1))and(ALU_OP(2) xnor ALU_OP(3)));
 Aux_LogB<=Aux_LogB and ((ALU_OP(0) xnor ALU_OP(2))and(ALU_OP(1) xnor ALU_OP(3)));
@@ -112,14 +111,12 @@ Sign_OP(0)<=((ALU_OP(0) nor ALU_OP(1)) or (ALU_OP(1) xor ALU_OP(2))) or (ALU_OP(
 Sign_OP(1)<=((ALU_OP(0) or ALU_OP(3)) nand (ALU_OP(1) or ALU_OP(2)));
 
 OUT_XOR <= (Aux_LogA xor Aux_LogB) 		when ALU_OP = '0' else 
-			not (Aux_LogA xor Aux_LogB) when ALU_OP = '1' else 
-			'0000000000000000';
+			not (Aux_LogA xor Aux_LogB) when ALU_OP = '1';
 
 OUT_LOG  <= '0000000000000001' 		when Sign_OP = '00' else 
 			(Aux_LogA or Aux_LogB) 	when Sign_OP = '01' else
 			OUT_XOR 				when Sign_OP = '10' else
-			(Aux_LogA and Aux_LogB) when Sign_OP = '11' else
-			'0000000000000000';
+			(Aux_LogA and Aux_LogB) when Sign_OP = '11' else;
 
 
 -----------------------------------ARIT------------------------------------------------------
@@ -135,8 +132,7 @@ OUT_ARI <=  (operando_A + operando_B) 			when ALU_OP = '00000' else
 			'0000000000000000';
 
 out_ALU <=  OUT_ARI		when ALU_OP(4) = '0' else 
-			OUT_LOG		when ALU_OP(4) = '1' else
-			'0000000000000000';
+			OUT_LOG		when ALU_OP(4) = '1' else;
 
 -------------------------------QUAIS FLAGS ATUALIZAM??---------------------------------------
 
@@ -145,10 +141,9 @@ Sign_FLAG(1) <=  not(ALU_OP(4));
 Sign_FLAG(0) <=  [ALU_OP(2) and (not(ALU_OP(1)) or ALU_OP(2))] or [ALU_OP(4) and (not(ALU_OP(2)) and ((not(ALU_OP(1)) and ALU_OP(0)) or ALU_OP(3)))] or [(ALU_OP(4)) nor ALU_OP(3)] or [not(ALU_OP(0)) and ALU_OP(1)];
 
 aux_FLAGS  <= 	'0000'	when Sign_FLAG ='00' else 
-				'1100' 	when Sign_FLAG ='00' else 
-				'0111' 	when Sign_FLAG ='00' else 
-				'1111' 	when Sign_FLAG ='00' else 
-				'0000';   		--Caso em que venha uma operação nao reconheicda nao atualizamos nenhuma
+				'1100' 	when Sign_FLAG ='01' else 
+				'0111' 	when Sign_FLAG ='10' else 
+				'1111' 	when Sign_FLAG ='11' ;
 
 
 ---------------------------------------------------------------------------------------------
@@ -159,15 +154,12 @@ aux_FLAGMUX	 <= FLAGS_IN(0) 						when TRANS_FI_COND_IN = "0101" else
 					 FLAGS_IN(2) 					when TRANS_FI_COND_IN = "0110" else
 					 FLAGS_IN(3) 					when TRANS_FI_COND_IN = "0011" else
 					'1' 	 	 					when TRANS_FI_COND_IN = "0000" else
-					 FLAGS_IN(0) or aux_FLAGS(1) 	when TRANS_FI_COND_IN = "0111" else
-					'0';
+					 FLAGS_IN(0) or aux_FLAGS(1) 	when TRANS_FI_COND_IN = "0111" ;
 
 
 aux_FLAGTEST <= aux_FLAGMUX xnor TRANS_OP(1);
 
 aux_FLAGTEST_cond <= (TRANS_OP(1) and not(TRANS_OP(0))) or (aux_FLAGTEST and not(TRANS_OP(1))); 
-
-
 
 
 ---------------------------------------------------------------------------------------------
@@ -187,9 +179,6 @@ end process;
 
 
 FLAGS_OUT <= aux_MSR_FLAGS;
-
-
-
 
 --------------------------------------------------------------------------
 ------------------------------- Exit -------------------------------------
