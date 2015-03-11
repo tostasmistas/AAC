@@ -16,9 +16,9 @@ entity EXeMEM is
 	---PARA ALU
 	   REG_A 				 	: in std_logic_vector(15 downto 0);
 		REG_B 				 	: in std_logic_vector(15 downto 0);
-		ALU_OPER					: in std_logic_vector(4 downto 0);
+		ALU_OP					: in std_logic_vector(4 downto 0);
 		FLAGS_IN					: in std_logic_vector(3 downto 0);
-			
+
 	---PARA A FlagTest
 		TRANS_OP					: in std_logic_vector(1 downto 0);
 		TRANS_FI_COND_IN		: in std_logic_vector(3 downto 0);
@@ -40,6 +40,14 @@ signal aux_FLAGS			: std_logic_vector(3 downto 0) := (others => '0'); ---- Z,N,C
 signal aux_MSR_FLAGS		: std_logic_vector(3 downto 0) := (others => '0');
 signal aux_flagtest_rel	: std_logic := '0';
 signal aux_FLAGTEST		: std_logic := '0';
+signal Aux_LogA				: std_logic_vector(15 downto 0);
+signal Aux_LogB				: std_logic_vector(15 downto 0);
+signal Aux_Arith			: std_logic_vector(15 downto 0);
+signal OUT_XOR			: std_logic_vector(15 downto 0);
+signal OUT_LOG			: std_logic_vector(15 downto 0);
+signal Sign_OP				: std_logic_vector(1 downto 0);
+signal SignA				: std_logic;
+signal SignB				: std_logic;
 
 constant zeros		: std_logic_vector(3 downto 0) := (others => '0');
 
@@ -50,7 +58,39 @@ begin
 
 ---------------------------------------------------------------------------------------------
 ----------------------------------- ALU -----------------------------------------------------
----------------------------------------------------------------------------------------------
+
+------------------------------------LOG------------------------------------------------------
+
+SignA<=(ALU_OP(0) and not(ALU_OP(1))or(ALU_OP(2) and not(ALU_OP(3)));
+SignB<=(ALU_OP(0) or (ALU_OP(1))nand(ALU_OP(2) or not(ALU_OP(3)));
+
+Aux_LogA <= (not REG_A) when signA ='0' else 
+			REG_A when signA = '1' else 
+			'1';
+Aux_LogB <= (not REG_B) when signB ='0' else 
+			REG_B when signA = '1' else 
+			'1';
+
+Aux_LogA<=Aux_LogA and ((ALU_OP(0) xnor ALU_OP(1))and(ALU_OP(2) xnor ALU_OP(3)));
+Aux_LogB<=Aux_LogB and ((ALU_OP(0) xnor ALU_OP(2))and(ALU_OP(1) xnor ALU_OP(3)));
+
+Sign_OP(0)<=((ALU_OP(0) nor ALU_OP(1)) or (ALU_OP(1) xor ALU_OP(2))) or (ALU_OP(0) xor ALU_OP(3));
+Sign_OP(1)<=((ALU_OP(0) or ALU_OP(3)) nand (ALU_OP(1) or ALU_OP(2)));
+
+OUT_XOR <= (Aux_LogA xor Aux_LogB) when ALU_OP = '0' else 
+			not (Aux_LogA xor Aux_LogB) when ALU_OP = '1' else 
+			'0000000000000000';
+
+OUT_LOG  <= '0000000000000001' when Sign_OP = '00' else 
+			(Aux_LogA or Aux_LogB) when Sign_OP = '01' else
+			OUT_XOR when Sign_OP = '10' else
+			(Aux_LogA and Aux_LogB) when Sign_OP = '11' else
+			'0000000000000000';
+
+
+-----------------------------------ARIT------------------------------------------------------
+
+
 
 ---------------------------------------------------------------------------------------------
 ---------------------------------- TESTE FLAGS ----------------------------------------------
