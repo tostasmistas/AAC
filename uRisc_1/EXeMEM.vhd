@@ -138,6 +138,17 @@ out_ALU <=  OUT_ARI		when ALU_OP(4) = '0' else
 			OUT_LOG		when ALU_OP(4) = '1' else
 			'0000000000000000';
 
+-------------------------------QUAIS FLAGS ATUALIZAM??---------------------------------------
+
+Sign_FLAG(1) <=  not(ALU_OP(4));
+
+Sign_FLAG(0) <=  [ALU_OP(2) and (not(ALU_OP(1)) or ALU_OP(2))] or [ALU_OP(4) and (not(ALU_OP(2)) and ((not(ALU_OP(1)) and ALU_OP(0)) or ALU_OP(3)))] or [(ALU_OP(4)) nor ALU_OP(3)] or [not(ALU_OP(0)) and ALU_OP(1)];
+
+aux_FLAGS  <= 	'0000'	when Sign_FLAG ='00' else 
+				'1100' 	when Sign_FLAG ='00' else 
+				'0111' 	when Sign_FLAG ='00' else 
+				'1111' 	when Sign_FLAG ='00' else 
+				'0000';   		--Caso em que venha uma operação nao reconheicda nao atualizamos nenhuma
 
 
 ---------------------------------------------------------------------------------------------
