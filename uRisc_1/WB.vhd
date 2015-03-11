@@ -33,14 +33,29 @@ end WB;
 
 architecture Behavioral of WB is
 
+--------------------------------------------------------------------------
+--------------------------- Aux Signals ----------------------------------
+--------------------------------------------------------------------------
+signal aux_sel_bit1				: std_logic_vector(15 downto 0) := (others => '0'); -- bit de selecção 1 do MUX 4:1 do WB
+signal aux_sel_bit0				: std_logic_vector(15 downto 0) := (others => '0'); -- bit de selecção 0 do MUX 4:1 do WB
+
 begin
 
+aux_sel_bit1 <= reg_EXMEM_OUT(36) or reg_EXMEM_OUT(0);
+				-- JUMP_MUXWB_OUT or inst_IN(14)
 
-out_mux_WB <=	reg_EXMEM_OUT(32 downto 17)		when reg_EXMEM_OUT(0) = '0' else  -- escrever a saída da ALU
-				reg_EXMEM_OUT(16 downto 1);										  -- fazer load de uma constante	
+aux_sel_bit0 <= reg_EXMEM_OUT(36) or (not(reg_EXMEM_OUT(0)) and reg_EXMEM_OUT(50)) ;
+				-- JUMP_MUXWB_OUT or (inst_IN(14) and ALU_vs_MEM)
+
+sel_mux_WB <= aux_sel_bit1 & aux_sel_bit0;
+
+out_mux_WB <=	reg_EXMEM_OUT(32 downto 17)		when sel_mux_WB = "00" else  -- escrever a saída da ALU 		(out_ALU)
+				reg_EXMEM_OUT(66 downto 51)		when sel_mux_WB = "01" else  -- escrever saída da MEM 			(out_MEM)
+				reg_EXMEM_OUT(16 downto 1)		when sel_mux_WB = "10" else	 -- fazer load de uma constante		(out_mux_constantes)
+				reg_EXMEM_OUT(49 downto 37);								 -- guardar em R7 o valor de PC+1 	(save_pc_add_1)
 
 -- decoder para os write-enable dos 8 registos do banco de registos 
-case reg_EXMEM_OUT(48 downto 33) is -- aux_ADD_RWC (vem do ID)
+case reg_EXMEM_OUT(35 downto 33) is -- aux_ADD_RWC (vem do ID)
 	when "000" => -- en_r0
     	en_r0 <= '1';
   	when "001" => -- en_r1

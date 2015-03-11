@@ -15,6 +15,7 @@ entity IDeOF is
 	-- input
 	clk					: in std_logic;
 	inst_IN				: in std_logic_vector(15 downto 0);
+	reg_IF_OUT 			: in std_logic_vector();
 	R0 					: in std_logic_vector(15 downto 0);
 	R1 					: in std_logic_vector(15 downto 0);
     R2 					: in std_logic_vector(15 downto 0);
@@ -124,7 +125,7 @@ aux_JUMPS_MUX_WB 	<= not(inst_IN(11)) and aux_JUMPS_active;
 -------- 0 1 -> Constantes	Formato I   -----------------------------------
 --------------------------------------------------------------------------
 
-ALU_CONS_SEL		<= inst_IN(14);
+ALU_CONS_SEL		<=  inst_IN(14);
 aux_CONS_FI_RWC 	<= 	inst_IN(13 downto 11);
 aux_CONS_FI_11B 	<= 	inst_IN(10 downto 0 );
 
@@ -180,6 +181,7 @@ out_mux_constantes <=	const11		when select_mux_constantes = "00" else
 JUMP_MUXPC_OUT <= aux_JUMPS_active;
 JUMP_MUXWB_OUT <= aux_JUMPS_MUX_WB;
 
+-- FAZER LOGICA DE ALU VS MEM E CONCATENAR RESULTADO AOS REGISTOS DE SAIDA
 
 --------------------------------------------------------------------------
 ------------------------------- Exit -------------------------------------
@@ -192,7 +194,8 @@ process (clk, rst)
 			if rst = '1' then
 				reg_IDOF_OUT <= zeros;
 			else
-				reg_IDOF_OUT <= aux_ADD_RWC & oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
+				reg_IDOF_OUT <= reg_IF_OUT(11 downto 0) & JUMP_MUXWB_OUT & aux_ADD_RWC & oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
+				-- reg_IDOF_OUT <= save_pc_add_1 & JUMP_MUXWB_OUT & aux_ADD_RWC & oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
 			end if;	
 		end if;
 end process;

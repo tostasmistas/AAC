@@ -40,6 +40,7 @@ architecture Behavioral of EXeMEM is
 --------------------------- Aux Signals ----------------------------------
 --------------------------------------------------------------------------
 signal out_ALU				: std_logic_vector(15 downto 0) := (others => '0'); -- saída da ALU
+signal out_MEM				: std_logic_vector(15 downto 0) := (others => '0'); -- saída da memória
 signal aux_FLAGS			: std_logic_vector(3 downto 0) := (others => '0'); 	-- Z,N,C,O
 signal aux_MSR_FLAGS		: std_logic_vector(3 downto 0) := (others => '0');
 signal aux_FLAGTEST			: std_logic := '0';
@@ -67,6 +68,8 @@ operando_B <= reg_IDOF_OUT(32 downto 17);
 
 -- os sinais de cima sao os operandos com que deves trabalhar na ALU
 -- a saida da ALU deve ser armazenada no sinal out_ALU
+
+-- out_MEM onde se escreve o que sai da memoria
 
 
 ---------------------------------------------------------------------------------------------
@@ -121,7 +124,8 @@ process (clk, rst)
 			if rst = '1' then
 				reg_EXMEM_OUT <= zeros;
 			else
-				reg_EXMEM_OUT <= reg_IDOF_OUT(51 downto 49) & out_ALU & reg_IDOF_OUT(16 downto 1) & reg_IDOF_OUT(0);
+				reg_EXMEM_OUT <= out_MEM & reg_IDOF_OUT(64 downto 53) & reg_IDOF_OUT(52) & reg_IDOF_OUT(51 downto 49) & out_ALU & reg_IDOF_OUT(16 downto 1) & reg_IDOF_OUT(0);
+				-- reg_EXMEM_OUT <= out_MEM & save_pc_add_1 & JUMP_MUXWB_OUT & aux_ADD_RWC & out_ALU & out_mux_constantes & ALU_CONS_SEL;
 			end if;	
 		end if;
 end process;
