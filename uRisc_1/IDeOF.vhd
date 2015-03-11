@@ -82,9 +82,6 @@ constant zeros					: std_logic_vector(12 downto 0) := (others => '0');
 
 begin
 
-
-
-
 aux_ADD_RWC <= inst_IN(13 downto 11);
 aux_ADD_RA  <= inst_IN(5 downto 3);
 aux_ADD_RB  <= inst_IN(2 downto 0);
