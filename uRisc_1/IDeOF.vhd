@@ -44,6 +44,7 @@ architecture Behavioral of IDeOF is
 signal aux_ADD_RWC			: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_ADD_RA			: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_ADD_RB			: std_logic_vector(2 downto 0) := (others => '0');
+signal aux_ADD_RA_C			: std_logic_vector(2 downto 0) := (others => '0');
 
 signal aux_ALU_OPER				: std_logic_vector(4 downto 0) := (others => '0');
 
@@ -58,13 +59,9 @@ signal aux_TRANS_FI_DES 		: std_logic_vector(7 downto 0) := (others => '0');
 
 signal aux_TRANS_FII_DES		: std_logic_vector(11 downto 0) := (others => '0');
 signal aux_TRANS_FIII_R	  		: std_logic := '0';
-<<<<<<< HEAD
 signal aux_JUMPS_active			: std_logic := '0';
-signal RA 						: std_logic_vector(15 downto 0) := (others => '0');
-=======
 
 signal RA_C 					: std_logic_vector(15 downto 0) := (others => '0');
->>>>>>> origin/master
 signal RB 						: std_logic_vector(15 downto 0) := (others => '0');
 
 
@@ -92,7 +89,8 @@ aux_ADD_RWC <= inst_IN(13 downto 11);
 aux_ADD_RA  <= inst_IN(5 downto 3);
 aux_ADD_RB  <= inst_IN(2 downto 0);
 
-
+aux_ADD_RA_C <= aux_ADD_RWC when (inst_IN(15) and inst_IN(14)) = '1' else
+				aux_ADD_RA;
 
 --------------------------------------------------------------------------
 ------ Conjuntos de instrucções ------------------------------------------
@@ -147,22 +145,22 @@ aux_CONS_FII_8B		<=	inst_IN(7 downto 0);
 --------------------------------------------------------------------------
 -------------------------- Operand Fetch  --------------------------------
 --------------------------------------------------------------------------
-RA_C <= R0 when aux_ALU_ADD_RA_C = "000" else 
-		R1 when aux_ALU_ADD_RA_C = "001" else
-		R2 when aux_ALU_ADD_RA_C = "010" else
-		R3 when aux_ALU_ADD_RA_C = "011" else
-		R4 when aux_ALU_ADD_RA_C = "100" else
-		R5 when aux_ALU_ADD_RA_C = "101" else
-		R6 when aux_ALU_ADD_RA_C = "110" else
+RA_C <= R0 when aux_ADD_RA_C = "000" else 
+		R1 when aux_ADD_RA_C = "001" else
+		R2 when aux_ADD_RA_C = "010" else
+		R3 when aux_ADD_RA_C = "011" else
+		R4 when aux_ADD_RA_C = "100" else
+		R5 when aux_ADD_RA_C = "101" else
+		R6 when aux_ADD_RA_C = "110" else
 		R7;
 			 
-RB <= 	R0 when aux_ALU_ADD_RB = "000" else 	
-		R1 when aux_ALU_ADD_RB = "001" else
-		R2 when aux_ALU_ADD_RB = "010" else
-		R3 when aux_ALU_ADD_RB = "011" else
-		R4 when aux_ALU_ADD_RB = "100" else
-		R5 when aux_ALU_ADD_RB = "101" else
-		R6 when aux_ALU_ADD_RB = "110" else
+RB <= 	R0 when aux_ADD_RB = "000" else 	
+		R1 when aux_ADD_RB = "001" else
+		R2 when aux_ADD_RB = "010" else
+		R3 when aux_ADD_RB = "011" else
+		R4 when aux_ADD_RB = "100" else
+		R5 when aux_ADD_RB = "101" else
+		R6 when aux_ADD_RB = "110" else
 		R7;
 
 oper_A <=	RA_C; 	-- operando A da ALU
