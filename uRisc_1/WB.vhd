@@ -19,6 +19,8 @@ begin
 
 -- tratar do DA, WE, DATA do register file neste andar
 
+OLA AMIGOSOSOSOSS
+
 
 end Behavioral;
 
