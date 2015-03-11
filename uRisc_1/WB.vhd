@@ -56,8 +56,5 @@ case reg_EXMEM_OUT(48 downto 33) is -- aux_ADD_RWC (vem do ID)
  		en_r7 <= '1';
 end case;
 
-
--- tratar do DA, WE, DATA do register file neste andar
-
 end Behavioral;
 

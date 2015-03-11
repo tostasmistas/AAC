@@ -64,7 +64,7 @@ process (clk, rst)
 			if rst = '1' then
 				aux_reg_r0 <= zeros;
 			elsif en_r0 = '1' then 
-				aux_reg_r0 <= result;
+				aux_reg_r0 <= out_mux_WB;
 			end if;	
 		end if;
 end process;
@@ -76,7 +76,7 @@ process (clk, rst)
 			if rst = '1' then
 				aux_reg_r1 <= zeros;
 			elsif en_r1 = '1' then 
-				aux_reg_r1 <= result;
+				aux_reg_r1 <= out_mux_WB;
 			end if;		
 		end if;
 end process;
@@ -88,7 +88,7 @@ process (clk, rst)
 			if rst = '1' then
 				aux_reg_r2 <= zeros;
 			elsif en_r2 = '1' then 
-				aux_reg_r2 <= result;
+				aux_reg_r2 <= out_mux_WB;
 			end if;			
 		end if;
 end process;
@@ -100,7 +100,7 @@ process (clk, rst)
 			if rst = '1' then
 				aux_reg_r3 <= zeros;
 			elsif en_r3 = '1' then 
-				aux_reg_r3 <= result;
+				aux_reg_r3 <= out_mux_WB;
 			end if;		
 		end if;
 end process;
@@ -112,7 +112,7 @@ process (clk, rst)
 			if rst = '1' then
 				aux_reg_r4 <= zeros;
 			elsif en_r4 = '1' then 
-				aux_reg_r4 <= result;
+				aux_reg_r4 <= out_mux_WB;
 			end if;			
 		end if;
 end process;
@@ -124,7 +124,7 @@ process (clk, rst)
 			if rst = '1' then
 				aux_reg_r5 <= zeros;
 			elsif en_r5 = '1' then 
-				aux_reg_r5 <= result;
+				aux_reg_r5 <= out_mux_WB;
 			end if;		
 		end if;
 end process;
@@ -136,7 +136,7 @@ process (clk, rst)
 			if rst = '1' then
 				aux_reg_r6 <= zeros;
 			elsif en_r6 = '1' then 
-				aux_reg_r6 <= result;
+				aux_reg_r6 <= out_mux_WB;
 			end if;		
 		end if;
 end process;
@@ -148,7 +148,7 @@ process (clk, rst)
 			if rst = '1' then
 				aux_reg_r7 <= zeros;
 			elsif en_r7 = '1' then 
-				aux_reg_r7 <= result;
+				aux_reg_r7 <= out_mux_WB;
 			end if;			
 		end if;
 end process;
