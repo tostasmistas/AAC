@@ -25,10 +25,7 @@ entity IDeOF is
 	R7 					: in std_logic_vector(15 downto 0);
 	
 	-- output
-	oper_A				: out std_logic_vector(15 downto 0);	-- operando A para a ALU
-	oper_B				: out std_logic_vector(15 downto 0); 	-- operando B para a ALU
-	aux_CONS_SEL		: out std_logic 						-- sinal de selecção para MUX entre operação da ALU e operação de carregamento de constantes
-	out_mux_constantes  : out std_logic_vector(15 downto 0) 	-- operando para carregamento de constantes				
+	reg_IDOF_OUT		: out std_logic_vector();	
 	);
 end IDeOF;
 
@@ -42,7 +39,6 @@ signal aux_ALU_ADD_RA			: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_ALU_ADD_RB			: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_ALU_OPER				: std_logic_vector(4 downto 0) := (others => '0');
 
-signal aux_CONS_SEL				: std_logic := '0';
 signal aux_CONS_FI_RWC			: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_CONS_FI_11B			: std_logic_vector(11 downto 0) := (others => '0');
 
@@ -63,6 +59,15 @@ signal aux_TRANS_FIII_R	  		: std_logic := '0';
 
 signal RA_C 					: std_logic_vector(15 downto 0) := (others => '0');
 signal RB 						: std_logic_vector(15 downto 0) := (others => '0');
+
+
+--------------------------------------------------------------------------
+---- sinais para colocar no registo entre o primeiro e segundo andar -----
+--------------------------------------------------------------------------
+signal oper_A					: std_logic_vector(15 downto 0);	-- operando A para a ALU
+signal oper_B					: std_logic_vector(15 downto 0);	-- operando B para a ALU
+signal out_mux_constantes		: std_logic_vector(15 downto 0);	-- operando para carregamento de constantes		
+signal ALU_CONS_SEL				: std_logic := '0'; 				-- sinal de selecção para MUX entre operação da ALU e operação de carregamento de constantes
 
 
 --------------------------------------------------------------------------
@@ -106,7 +111,7 @@ aux_TRANS_FIII_R 		<= inst_IN(11);
 --------------------------------------------------------------------------
 -------- 0 1 -> Constantes	Formato I   -----------------------------------
 --------------------------------------------------------------------------
-aux_CONS_SEL		<= inst_IN(14);
+ALU_CONS_SEL		<= inst_IN(14);
 aux_CONS_FI_RWC 	<= 	inst_IN(13 downto 11);
 aux_CONS_FI_11B 	<= 	inst_IN(10 downto 0 );
 
@@ -128,7 +133,7 @@ aux_CONS_FII_8B		<=	inst_IN(7 downto 0);
 
 
 --------------------------------------------------------------------------
------------------ MUXs para selecção de RA_C e de RB  --------------------
+-------------------------- Operand Fetch  --------------------------------
 --------------------------------------------------------------------------
 RA_C <= R0 when aux_ALU_ADD_RA_C = "000" else 
 		R1 when aux_ALU_ADD_RA_C = "001" else
@@ -148,10 +153,6 @@ RB <= 	R0 when aux_ALU_ADD_RB = "000" else
 		R6 when aux_ALU_ADD_RB = "110" else
 		R7;
 
-			 
---------------------------------------------------------------------------
--------- ---------------
---------------------------------------------------------------------------
 oper_A <=	RA_C; 	-- operando A da ALU
 oper_B <=	RB;		-- operando B da ALU
 
@@ -165,5 +166,22 @@ out_mux_constantes <=	const11		when select_mux_constantes = "00" else
 						const11		when select_mux_constantes = "01" else
 						lcl 		when select_mux_constantes = "10" else
 						lch;
+
+
+--------------------------------------------------------------------------
+------------------------------- Exit -------------------------------------
+--------------------------------------------------------------------------
+
+--------------- registo de saída do segundo andar: ID e OF ---------------
+process (clk, rst)
+	begin
+		if clk'event and clk = '1' then
+			if rst = '1' then
+				reg_IDOF_OUT <= zeros;
+			else
+				reg_IDOF_OUT <= aux_ADD_RWC & oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
+			end if;	
+		end if;
+end process;
 			 
 end Behavioral;
