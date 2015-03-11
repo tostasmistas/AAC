@@ -17,25 +17,25 @@ entity EXeMEM is
 	oper_B						: in std_logic_vector(15 downto 0) 	-- operando B para a ALU (vem do OF)
 	out_mux_constantes  		: in std_logic_vector(15 downto 0) 	-- operando para carregamento de constantes	(vem do OF)	
 	  
-	ALU_OPER				: in std_logic_vector(4 downto 0);
-	FLAGS_IN				: in std_logic_vector(3 downto 0);
+	ALU_OPER					: in std_logic_vector(4 downto 0);
+	FLAGS_IN					: in std_logic_vector(3 downto 0);
 			
 	---PARA A FlagTest
-		TRANS_OP				: in std_logic_vector(1 downto 0);
-		TRANS_FI_COND_IN		: in std_logic_vector(3 downto 0);
-		FLAGTEST_active_IN		: in std_logic;
+	TRANS_OP					: in std_logic_vector(1 downto 0);
+	TRANS_FI_COND_IN			: in std_logic_vector(3 downto 0);
+	FLAGTEST_active_IN			: in std_logic;
 
 
 	-- output
 	out_mux_WB					: out std_logic_vector(15 downto 0); -- saída para o WB
 
-		--Registo
-		REG_WC            		: out std_logic_vector(15 downto 0)
-		flagtest_rel_OUT		: out std_logic;						-- salto relativo
-		flagtest_abs_OUT		: out std_logic							-- salto absoluto
-		FLAGS_OUT				: out std_logic_vector(3 downto 0);
-		FLAGTEST_cond_OUT		: out std_logic
-			
+	--Registo
+	REG_WC            			: out std_logic_vector(15 downto 0)
+	flagtest_rel_OUT			: out std_logic;						-- salto relativo
+	flagtest_abs_OUT			: out std_logic							-- salto absoluto
+	FLAGS_OUT					: out std_logic_vector(3 downto 0);
+	FLAGTEST_cond_OUT			: out std_logic
+		
 	);
 end EXeMEM;
 
@@ -64,6 +64,8 @@ begin
 ---------------------------------------------------------------------------------------------
 ----------------------------------- ALU -----------------------------------------------------
 ---------------------------------------------------------------------------------------------
+
+-- a saida da ALU deve ser armazenada no sinal out_ALU
 
 out_mux_WB <=	out_ALU				when inst_IN(14) = '0' else
 				out_mux_constantes;

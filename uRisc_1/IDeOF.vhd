@@ -42,6 +42,7 @@ signal aux_ALU_ADD_RA			: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_ALU_ADD_RB			: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_ALU_OPER				: std_logic_vector(4 downto 0) := (others => '0');
 
+signal aux_CONS_SEL				: std_logic := '0';
 signal aux_CONS_FI_RWC			: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_CONS_FI_11B			: std_logic_vector(11 downto 0) := (others => '0');
 
@@ -60,7 +61,7 @@ signal aux_TRANS_FII_DES		: std_logic_vector(11 downto 0) := (others => '0');
 signal aux_TRANS_FIII_ADD_RB 	: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_TRANS_FIII_R	  		: std_logic := '0';
 
-signal RA 						: std_logic_vector(15 downto 0) := (others => '0');
+signal RA_C 					: std_logic_vector(15 downto 0) := (others => '0');
 signal RB 						: std_logic_vector(15 downto 0) := (others => '0');
 
 
