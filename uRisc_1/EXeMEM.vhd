@@ -17,8 +17,8 @@ entity EXeMEM is
 	oper_B						: in std_logic_vector(15 downto 0) 	-- operando B para a ALU (vem do OF)
 	out_mux_constantes  		: in std_logic_vector(15 downto 0) 	-- operando para carregamento de constantes	(vem do OF)	
 	  
-	ALU_OPER				: in std_logic_vector(4 downto 0);
-	FLAGS_IN				: in std_logic_vector(3 downto 0);
+	ALU_OPER					: in std_logic_vector(4 downto 0);
+	FLAGS_IN					: in std_logic_vector(3 downto 0);
 			
 	---PARA A FlagTest
 		TRANS_OP				: in std_logic_vector(1 downto 0);
@@ -34,7 +34,7 @@ entity EXeMEM is
 		flagtest_rel_OUT		: out std_logic;						-- salto relativo
 		flagtest_abs_OUT		: out std_logic							-- salto absoluto
 		FLAGS_OUT				: out std_logic_vector(3 downto 0);
-		FLAGTEST_cond_OUT		: out std_logic
+		FLAGTEST_MUXPC_OUT		: out std_logic
 			
 	);
 end EXeMEM;
@@ -80,11 +80,11 @@ aux_FLAGMUX	 <= FLAGS_IN(0) when TRANS_FI_COND_IN="0101" else
 					 '0';
 
 
-aux_FLAGTEST <= aux_FLAGMUX xnor TRANS_OP(1);
+aux_FLAGTEST_FI <= aux_FLAGMUX xnor TRANS_OP(1);
 
-aux_FLAGTEST_cond <= (TRANS_OP(1) and not(TRANS_OP(0))) or (aux_FLAGTEST and not(TRANS_OP(1))); 
+aux_FLAGTEST    <= (TRANS_OP(1) and not(TRANS_OP(0))) or (aux_FLAGTEST_FI and not(TRANS_OP(1))); 
 
-
+aux_FLAGTEST_MUXPC <= not(FLAGTEST_active_IN) and aux_FLAGTEST; 
 
 
 ---------------------------------------------------------------------------------------------
@@ -104,6 +104,7 @@ end process;
 
 
 FLAGS_OUT <= aux_MSR_FLAGS;
+FLAGTEST_MUXPC_OUT <= aux_FLAGTEST_MUXPC;
 
 end Behavioral;
 
