@@ -15,15 +15,17 @@ entity InF is
 	-- input
 	clk, rst 				: in std_logic;
 
-	FLAGTEST_cond			: in std_logic;   
-	FLAGTEST_jump			: in std_logic;
 	destino_jump			: in std_logic_vector(11 downto 0);
 	destino_cond			: in std_logic_vector(11 downto 0);
+
+	FLAGTEST_MUXPC_IN		: in std_logic;
+	JUMP_MUXPC_IN			: in std_logic;
 
 	reg_pc_IN 				: in std_logic_vector(11 downto 0);
 
 	-- output
-	reg_pc_OUT				: out std_logic_vector(11 downto 0)				
+	reg_PCMEM_OUT			: out std_logic_vector(11 downto 0);
+	reg_IF_OUT				: out std_logic_vector(downto);			
 	);
 end InF;
 
@@ -32,9 +34,11 @@ architecture Behavioral of InF is
 --------------------------------------------------------------------------
 --------------------------- Aux Signals ----------------------------------
 --------------------------------------------------------------------------
-signal aux_pc_add_1	   : std_logic_vector(11 downto 0) := (others => '0');
+signal aux_pc_add_1	   		: std_logic_vector(11 downto 0) := (others => '0');
 signal aux_saida_mux		: std_logic_vector(11 downto 0) := (others => '0');
-signal aux_reg_pc 		: std_logic_vector(11 downto 0) := (others => '0');
+signal aux_reg_pc 			: std_logic_vector(11 downto 0) := (others => '0');
+signal save_pc_add_1		: std_logic_vector(11 downto 0) := (others => '0');
+
 
 --------------------------------------------------------------------------
 ---------------------  Constantes   --------------------------------------
@@ -43,11 +47,11 @@ constant one		: std_logic_vector(11 downto 0) :="0000000000001" ;
 constant zeros		: std_logic_vector(11 downto 0) := (others => '0');
 
 begin
-aux_pc_add_1 	<= reg_pc_IN + one when FLAGTEST_cond = '0' else
-						reg_pc_IN + destino_cond;
+aux_pc_add_1 	<= reg_pc_IN + one when FLAGTEST_MUXPC_IN = '0' else
+				   reg_pc_IN + destino_cond;
 	
 aux_saida_mux  <= aux_pc_add_1 when FLAGTEST_jump = '0' else
-						destino_jump;
+				  destino_jump;
 								
 	
 ---------------------------------------------------------------------------
@@ -65,6 +69,14 @@ process (clk, rst)
 end process;		
 
 
+	
+
+--------------------------------------------------------------------------
+------------------------------- Exit -------------------------------------
+--------------------------------------------------------------------------
+reg_PCMEM_OUT <= aux_reg_pc;
+save_pc_add_1 <= aux_pc_add_1;
+
 ---------------------------------------------------------------------------
 --------------------- Registo de Instruções (IR)	------------------------
 ---------------------------------------------------------------------------
@@ -72,17 +84,14 @@ process (clk, rst)
 	begin
 		if clk'event and clk = '1' then
 			if rst = '1' then
-				aux_reg_ir <= zeros;
+				reg_IF_OUT <= zeros;
 			else
-				aux_reg_ir <= aux_saida_mux; 					-- carregar a próxima instrução da memória (de programa) e armazenar no IR
+				reg_IF_OUT <= "O que vem da memoria"&save_pc_add_1; 					-- carregar a próxima instrução da memória (de programa) e armazenar no IR
 			end if;		
 		end if;
-end process;	
+end process;
 
---------------------------------------------------------------------------
-------------------------------- Exit -------------------------------------
---------------------------------------------------------------------------
-reg_pc_OUT <= aux_reg_pc;
+
 
 end Behavioral;
 

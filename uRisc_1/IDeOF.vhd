@@ -24,7 +24,6 @@ entity IDeOF is
 	R6 					: in std_logic_vector(15 downto 0);
 	R7 					: in std_logic_vector(15 downto 0);
 
-	FLAGTEST_MUXPC_IN	: in std_logic;
 	
 	-- output
 	FLAGTEST_active_OUT	: out std_logic;
@@ -72,6 +71,9 @@ constant zeros					: std_logic_vector(12 downto 0) := (others => '0');
 
 begin
 
+
+
+
 aux_ADD_RWC <= inst_IN(13 downto 11);
 aux_ADD_RA  <= inst_IN(5 downto 3);
 aux_ADD_RB  <= inst_IN(2 downto 0);
@@ -110,22 +112,18 @@ aux_JUMPS_MUX_WB 	<= not(inst_IN(11)) and aux_JUMPS_active;
 -------- 0 1 -> Constantes	Formato I   -----------------------------------
 --------------------------------------------------------------------------
 aux_CONS_SEL		<= inst_IN(14);
-aux_CONS_FI_RWC 	<= 	inst_IN(13 downto 11);
 aux_CONS_FI_11B 	<= 	inst_IN(10 downto 0 );
 
 
 --------------------------------------------------------------------------
 -------- 1 0 -> Instrucções para a ALU/Memoria ----------------------------
 --------------------------------------------------------------------------
-aux_ALU_ADD_RWC   	<= 	inst_IN(13 downto 11);
-aux_ALU_ADD_RA 		<= 	inst_IN(5 downto 2);		-- A Address
-aux_ALU_ADD_RB		<= 	inst_IN(2 downto 0);		-- B Address
+
 aux_ALU_OPER		<=	inst_IN(10 downto 6);
 
 --------------------------------------------------------------------------
 -------- 1 1 -> Constantes	Formato II  -----------------------------------
 --------------------------------------------------------------------------
-aux_CONS_FII_RWC	<= 	inst_IN(13 downto 11);
 aux_CONS_FII_R		<=	inst_IN(10);
 aux_CONS_FII_8B		<=	inst_IN(7 downto 0);
 
