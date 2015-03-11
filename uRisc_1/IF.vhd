@@ -94,7 +94,5 @@ process (clk, rst)
 		end if;
 end process;
 
-
-
 end Behavioral;
 
