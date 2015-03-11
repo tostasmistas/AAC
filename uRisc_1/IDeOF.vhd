@@ -24,7 +24,6 @@ entity IDeOF is
 	R5 					: in std_logic_vector(15 downto 0);
 	R6 					: in std_logic_vector(15 downto 0);
 	R7 					: in std_logic_vector(15 downto 0);
-
 	
 	-- output
 	FLAGTEST_active_OUT	: out std_logic;

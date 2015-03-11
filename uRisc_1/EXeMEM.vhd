@@ -81,15 +81,14 @@ operando_B <= reg_IDOF_OUT(32 downto 17);
 -- a saida da ALU deve ser armazenada no sinal out_ALU
 ------------------------------------LOG------------------------------------------------------
 
-SignA<=(ALU_OP(0) and not(ALU_OP(1))or(ALU_OP(2) and not(ALU_OP(3)));
-SignB<=(ALU_OP(0) or (ALU_OP(1))nand(ALU_OP(2) or not(ALU_OP(3)));
+SignA <= (ALU_OP(0) and not(ALU_OP(1))) or (ALU_OP(2) and not(ALU_OP(3)));
+SignB <= (ALU_OP(0) or (ALU_OP(1))) nand (ALU_OP(2) or not(ALU_OP(3)));
 
 Aux_LogA <= (not operando_A) 	when signA ='0' else 
-			operando_A 			when signA = '1' else 
-			'1';
+			operando_A;
+
 Aux_LogB <= (not operando_B) 	when signB ='0' else 
-			operando_B 			when signA = '1' else 
-			'1';
+			operando_B;
 
 Aux_LogA<=Aux_LogA and ((ALU_OP(0) xnor ALU_OP(1))and(ALU_OP(2) xnor ALU_OP(3)));
 Aux_LogB<=Aux_LogB and ((ALU_OP(0) xnor ALU_OP(2))and(ALU_OP(1) xnor ALU_OP(3)));
@@ -135,24 +134,7 @@ aux_FLAGS  <= 	'0000'	when Sign_FLAG ='00' else
 				'0111' 	when Sign_FLAG ='00' else 
 				'1111' 	when Sign_FLAG ='00' else 
 				'0000';   		--Caso em que venha uma operação nao reconheicda nao atualizamos nenhuma
-
-
----------------------------------------------------------------------------------------------
----------------------------------- TESTE FLAGS ----------------------------------------------
----------------------------------------------------------------------------------------------
-aux_FLAGMUX	 <= FLAGS_IN(0) 						when TRANS_FI_COND_IN = "0101" else
-					 FLAGS_IN(1)					when TRANS_FI_COND_IN = "0100" else
-					 FLAGS_IN(2) 					when TRANS_FI_COND_IN = "0110" else
-					 FLAGS_IN(3) 					when TRANS_FI_COND_IN = "0011" else
-					'1' 	 	 					when TRANS_FI_COND_IN = "0000" else
-					 FLAGS_IN(0) or aux_FLAGS(1) 	when TRANS_FI_COND_IN = "0111" else
-					'0';
-
-
-aux_FLAGTEST <= aux_FLAGMUX xnor TRANS_OP(1);
-
-aux_FLAGTEST_cond <= (TRANS_OP(1) and not(TRANS_OP(0))) or (aux_FLAGTEST and not(TRANS_OP(1))); 
-
+				
 
 ---------------------------------------------------------------------------------------------
 ---------------------------------- TESTE FLAGS ----------------------------------------------
