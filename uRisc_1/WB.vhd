@@ -11,8 +11,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity WB is
-end WB;
-
+ola eu sou gay
+end WB
 architecture Behavioral of WB is
 
 begin
