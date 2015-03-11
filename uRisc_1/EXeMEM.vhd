@@ -12,6 +12,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity EXeMEM is
 	port(
 	-- input
+<<<<<<< HEAD
 	clk, rst			       : in std_logic;
 	---PARA ALU
 	   REG_A 				 	: in std_logic_vector(15 downto 0);
@@ -19,25 +20,41 @@ entity EXeMEM is
 		ALU_OP					: in std_logic_vector(4 downto 0);
 		FLAGS_IN					: in std_logic_vector(3 downto 0);
 
-	---PARA A FlagTest
-		TRANS_OP					: in std_logic_vector(1 downto 0);
-		TRANS_FI_COND_IN		: in std_logic_vector(3 downto 0);
-		FLAGTEST_active_IN	: in std_logic;
-	--Output
-		--Registo
-		REG_WC            	: out std_logic_vector(15 downto 0)
-		flagtest_rel_OUT		: out std_logic;			-----Salto relativo
-		flagtest_abs_OUT		: out std_logic			-----Salto absoluto
-		FLAGS_OUT				: out std_logic_vector(3 downto 0);
-		FLAGTEST_cond_OUT		: out std_logic
+=======
+	clk, rst 					: in std_logic;
+	reg_IDOF_OUT				: in std_logic_vector();  
+
+
+	ALU_OPER					: in std_logic_vector(4 downto 0);
+	FLAGS_IN					: in std_logic_vector(3 downto 0);
 			
+>>>>>>> origin/master
+	---PARA A FlagTest
+	TRANS_OP					: in std_logic_vector(1 downto 0);
+	TRANS_FI_COND_IN			: in std_logic_vector(3 downto 0);
+	FLAGTEST_active_IN			: in std_logic;
+
+	--Registo
+	REG_WC            			: out std_logic_vector(15 downto 0)
+	flagtest_rel_OUT			: out std_logic;					-- salto relativo
+	flagtest_abs_OUT			: out std_logic						-- salto absoluto
+	FLAGS_OUT					: out std_logic_vector(3 downto 0);
+	FLAGTEST_cond_OUT			: out std_logic
+		
+	-- output
+	reg_EXMEM_OUT				: out std_logic_vector();	
 	);
 end EXeMEM;
 
 architecture Behavioral of EXeMEM is
 
-signal aux_FLAGS			: std_logic_vector(3 downto 0) := (others => '0'); ---- Z,N,C,O---
+--------------------------------------------------------------------------
+--------------------------- Aux Signals ----------------------------------
+--------------------------------------------------------------------------
+signal out_ALU				: std_logic_vector(15 downto 0) := (others => '0'); -- saída da ALU
+signal aux_FLAGS			: std_logic_vector(3 downto 0) := (others => '0'); 	-- Z,N,C,O
 signal aux_MSR_FLAGS		: std_logic_vector(3 downto 0) := (others => '0');
+<<<<<<< HEAD
 signal aux_flagtest_rel	: std_logic := '0';
 signal aux_FLAGTEST		: std_logic := '0';
 signal Aux_LogA				: std_logic_vector(15 downto 0);
@@ -48,8 +65,19 @@ signal OUT_LOG			: std_logic_vector(15 downto 0);
 signal Sign_OP				: std_logic_vector(1 downto 0);
 signal SignA				: std_logic;
 signal SignB				: std_logic;
+=======
+signal aux_flagtest_rel		: std_logic := '0';
+signal aux_FLAGTEST			: std_logic := '0';
 
-constant zeros		: std_logic_vector(3 downto 0) := (others => '0');
+signal operando_A			: std_logic_vector(15 downto 0) := (others => '0');
+signal operando_B			: std_logic_vector(15 downto 0) := (others => '0');
+
+>>>>>>> origin/master
+
+--------------------------------------------------------------------------
+---------------------  Constantes   --------------------------------------
+--------------------------------------------------------------------------
+constant zeros				: std_logic_vector(3 downto 0) := (others => '0');
 
 begin
 ---------------------------------------------------------------------------------------------
@@ -92,16 +120,23 @@ OUT_LOG  <= '0000000000000001' when Sign_OP = '00' else
 
 
 
+operando_A <= reg_IDOF_OUT(48 downto 33);
+operando_B <= reg_IDOF_OUT(32 downto 17);
+
+-- os sinais de cima sao os operandos com que deves trabalhar na ALU
+-- a saida da ALU deve ser armazenada no sinal out_ALU
+
+
 ---------------------------------------------------------------------------------------------
 ---------------------------------- TESTE FLAGS ----------------------------------------------
 ---------------------------------------------------------------------------------------------
-aux_FLAGMUX	 <= FLAGS_IN(0) when TRANS_FI_COND_IN="0101" else
-					 FLAGS_IN(1) when TRANS_FI_COND_IN="0100" else
-					 FLAGS_IN(2) when TRANS_FI_COND_IN="0110" else
-					 FLAGS_IN(3) when TRANS_FI_COND_IN="0011" else
-						 '1' 	 	 when TRANS_FI_COND_IN="0000" else
-					 FLAGS_IN(0) or aux_FLAGS(1) when TRANS_FI_COND_IN="0111" else
-					 '0';
+aux_FLAGMUX	 <= FLAGS_IN(0) 						when TRANS_FI_COND_IN = "0101" else
+					 FLAGS_IN(1)					when TRANS_FI_COND_IN = "0100" else
+					 FLAGS_IN(2) 					when TRANS_FI_COND_IN = "0110" else
+					 FLAGS_IN(3) 					when TRANS_FI_COND_IN = "0011" else
+					'1' 	 	 					when TRANS_FI_COND_IN = "0000" else
+					 FLAGS_IN(0) or aux_FLAGS(1) 	when TRANS_FI_COND_IN = "0111" else
+					'0';
 
 
 aux_FLAGTEST <= aux_FLAGMUX xnor TRANS_OP(1);
@@ -128,6 +163,25 @@ end process;
 
 
 FLAGS_OUT <= aux_MSR_FLAGS;
+
+
+
+
+--------------------------------------------------------------------------
+------------------------------- Exit -------------------------------------
+--------------------------------------------------------------------------
+
+--------------- registo de saída do terceiro andar: EX e MEM -------------
+process (clk, rst)
+	begin
+		if clk'event and clk = '1' then
+			if rst = '1' then
+				reg_EXMEM_OUT <= zeros;
+			else
+				reg_EXMEM_OUT <= reg_IDOF_OUT(51 downto 49) & out_ALU & reg_IDOF_OUT(16 downto 1) & reg_IDOF_OUT(0);
+			end if;	
+		end if;
+end process;
 
 end Behavioral;
 

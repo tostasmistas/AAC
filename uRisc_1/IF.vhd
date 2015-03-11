@@ -13,18 +13,17 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity InF is
 	port(
 	-- input
-	clk, rst			       : in std_logic;
+	clk, rst 				: in std_logic;
 
-	FLAGTEST_cond			 : in std_logic;   
-	FLAGTEST_jump			 : in std_logic;
-	destino_jump			 : in std_logic_vector(11 downto 0);
-	destino_cond			 : in std_logic_vector(11 downto 0);
+	FLAGTEST_cond			: in std_logic;   
+	FLAGTEST_jump			: in std_logic;
+	destino_jump			: in std_logic_vector(11 downto 0);
+	destino_cond			: in std_logic_vector(11 downto 0);
 
-	reg_pc_IN 				 : in std_logic_vector(11 downto 0);
+	reg_pc_IN 				: in std_logic_vector(11 downto 0);
 
 	-- output
-	reg_pc_OUT            : out std_logic_vector(11 downto 0)
-				
+	reg_pc_OUT				: out std_logic_vector(11 downto 0)				
 	);
 end InF;
 
@@ -33,17 +32,18 @@ architecture Behavioral of InF is
 --------------------------------------------------------------------------
 --------------------------- Aux Signals ----------------------------------
 --------------------------------------------------------------------------
-signal aux_pc_add_1	   : std_logic_vector(11 downto 0) := (others => '0');
-signal aux_saida_mux		: std_logic_vector(11 downto 0) := (others => '0');
+signal aux_pc_add_1		: std_logic_vector(11 downto 0) := (others => '0');
+signal aux_saida_mux	: std_logic_vector(11 downto 0) := (others => '0');
 signal aux_reg_pc 		: std_logic_vector(11 downto 0) := (others => '0');
 
 --------------------------------------------------------------------------
 ---------------------  Constantes   --------------------------------------
 --------------------------------------------------------------------------
-constant one		: std_logic_vector(11 downto 0) :="0000000000001" ;
-constant zeros		: std_logic_vector(11 downto 0) := (others => '0');
+constant one			: std_logic_vector(11 downto 0) :="0000000000001" ;
+constant zeros			: std_logic_vector(11 downto 0) := (others => '0');
 
 begin
+
 aux_pc_add_1 	<= reg_pc_IN + one when FLAGTEST_cond = '0' else
 						reg_pc_IN + destino_cond;
 	
@@ -79,11 +79,6 @@ process (clk, rst)
 			end if;		
 		end if;
 end process;	
-
---------------------------------------------------------------------------
-------------------------------- Exit -------------------------------------
---------------------------------------------------------------------------
-reg_pc_OUT <= aux_reg_pc;
 
 end Behavioral;
 
