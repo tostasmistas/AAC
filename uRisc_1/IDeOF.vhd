@@ -26,13 +26,9 @@ entity IDeOF is
 	R7 					: in std_logic_vector(15 downto 0);
 	
 	-- output
+	reg_IDOF_OUT		: out std_logic_vector();	
 	FLAGTEST_active_OUT	: out std_logic;
 	JUMP_MUXPC_OUT		: out std_logic;	
-	JUMP_MUXWB_OUT		: out std_logic;
-			
-
-	reg_IDOF_OUT		: out std_logic_vector();	
-
 	);
 end IDeOF;
 
@@ -190,8 +186,8 @@ process (clk, rst)
 			if rst = '1' then
 				reg_IDOF_OUT <= zeros;
 			else
-				reg_IDOF_OUT <= reg_IF_OUT(11 downto 0) & JUMP_MUXWB_OUT & aux_ADD_RWC & oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
-				-- reg_IDOF_OUT <= save_pc_add_1 & JUMP_MUXWB_OUT & aux_ADD_RWC & oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
+				reg_IDOF_OUT <= aux_ALU_OPER & reg_IF_OUT(11 downto 0) & JUMP_MUXWB_OUT & aux_ADD_RWC & oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
+				-- reg_IDOF_OUT <= aux_ALU_OPER & save_pc_add_1 & JUMP_MUXWB_OUT & aux_ADD_RWC & oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
 			end if;	
 		end if;
 end process;

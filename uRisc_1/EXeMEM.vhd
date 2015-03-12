@@ -13,24 +13,20 @@ entity EXeMEM is
 	port(
 	-- input
 	clk, rst 					: in std_logic;
-
-	  
-	ALU_OPER					: in std_logic_vector(4 downto 0);
-	FLAGS_IN					: in std_logic_vector(3 downto 0);
 	reg_IDOF_OUT				: in std_logic_vector(); 
+	FLAGS_IN					: in std_logic_vector(3 downto 0);
 
-		---PARA A FlagTest
-		TRANS_OP					: in std_logic_vector(1 downto 0);
-		TRANS_FI_COND_IN			: in std_logic_vector(3 downto 0);
-		FLAGTEST_active_IN			: in std_logic;
-		--Registo
-		REG_WC            		: out std_logic_vector(15 downto 0)
-		FLAGS_OUT				: out std_logic_vector(3 downto 0);
-		FLAGTEST_MUXPC_OUT		: out std_logic
+	---PARA A FlagTest
+	TRANS_OP					: in std_logic_vector(1 downto 0);
+	TRANS_FI_COND_IN			: in std_logic_vector(3 downto 0);
+	FLAGTEST_active_IN			: in std_logic;
+	--Registo
+	REG_WC            			: out std_logic_vector(15 downto 0)
+	FLAGS_OUT					: out std_logic_vector(3 downto 0);
 
-		
 	-- output
 	reg_EXMEM_OUT				: out std_logic_vector();	
+	FLAGTEST_MUXPC_OUT			: out std_logic
 	);
 end EXeMEM;
 
@@ -47,81 +43,76 @@ signal aux_FLAGTEST			: std_logic := '0';
 
 signal operando_A			: std_logic_vector(15 downto 0) := (others => '0');
 signal operando_B			: std_logic_vector(15 downto 0) := (others => '0');
+signal oper_ALU				: std_logic_vector(4 downto 0) := (others => '0');
+signal p_ALU				: std_logic_vector(15 downto 0) := (others => '0');
+signal sel_mux_q			: std_logic_vector(1 downto 0) := (others => '0');
+signal q_ALU				: std_logic_vector(15 downto 0) := (others => '0');
+signal cIN_ALU				: std_logic := '0';
+signal out_ARI				: std_logic_vector(16 downto 0) := (others => '0');
 
 signal aux_flagtest_rel		: std_logic := '0';
 signal aux_FLAGTEST			: std_logic := '0';
-signal Aux_LogA				: std_logic_vector(15 downto 0);
-signal Aux_LogB				: std_logic_vector(15 downto 0);
-signal Aux_Arith			: std_logic_vector(15 downto 0);
-signal OUT_XOR				: std_logic_vector(15 downto 0);
-signal OUT_LOG				: std_logic_vector(15 downto 0);
-signal Sign_OP				: std_logic_vector(1 downto 0);
-signal Sign_FLAG			: std_logic_vector(1 downto 0);
-signal SignA				: std_logic;
-signal SignB				: std_logic;
 
 --------------------------------------------------------------------------
 ---------------------  Constantes   --------------------------------------
 --------------------------------------------------------------------------
 constant zeros				: std_logic_vector(3 downto 0) := (others => '0');
+constant menusum			: std_logic_vector(15 downto 0) :=(others => '1');
+constant zeros_ALU			: std_logic_vector(15 downto 0) := (others => '0');
 
 begin
 
 ---------------------------------------------------------------------------------------------
----------------------------------- MEMORIA --------------------------------------------------
+---------------------------------- MEMÓRIA --------------------------------------------------
 ---------------------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------------------
 ----------------------------------- ALU -----------------------------------------------------
+---------------------------------------------------------------------------------------------
 
-operando_A <= reg_IDOF_OUT(48 downto 33);
-operando_B <= reg_IDOF_OUT(32 downto 17);
+operando_A 	<= reg_IDOF_OUT(48 downto 33);
+operando_B 	<= reg_IDOF_OUT(32 downto 17);
+oper_ALU 	<= reg_IDOF_OUT(70 downto 66);
 
--- os sinais de cima sao os operandos com que deves trabalhar na ALU
--- a saida da ALU deve ser armazenada no sinal out_ALU
-------------------------------------LOG------------------------------------------------------
+----------------------------------- aritméticas ---------------------------------------------
 
-SignA <= (ALU_OP(0) and not(ALU_OP(1))) or (ALU_OP(2) and not(ALU_OP(3)));
-SignB <= (ALU_OP(0) or (ALU_OP(1))) nand (ALU_OP(2) or not(ALU_OP(3)));
+p_ALU <= operando_A; 
 
-Aux_LogA <= (not operando_A) 	when signA ='0' else 
-			operando_A;
+sel_mux_q <= oper_ALU(2) & oper_ALU(1);
 
-Aux_LogB <= (not operando_B) 	when signB ='0' else 
-			operando_B;
+q_ALU <= operando_B			when sel_mux_q = "00" else
+		 menusum			when sel_mux_q = "01" else
+		 not(operando_B) 	when sel_mux_q = "10" else
+		 zeros_ALU;	 
 
-Aux_LogA<=Aux_LogA and ((ALU_OP(0) xnor ALU_OP(1))and(ALU_OP(2) xnor ALU_OP(3)));
-Aux_LogB<=Aux_LogB and ((ALU_OP(0) xnor ALU_OP(2))and(ALU_OP(1) xnor ALU_OP(3)));
+cIN_ALU <= oper_ALU(0);
+		
+out_ARI <= p_ALU + q_ALU + cIN_ALU;
 
-Sign_OP(0)<=((ALU_OP(0) nor ALU_OP(1)) or (ALU_OP(1) xor ALU_OP(2))) or (ALU_OP(0) xor ALU_OP(3));
-Sign_OP(1)<=((ALU_OP(0) or ALU_OP(3)) nand (ALU_OP(1) or ALU_OP(2)));
+--------------------------------------- lógicas ---------------------------------------------
 
-OUT_XOR <= (Aux_LogA xor Aux_LogB) 		when ALU_OP = '0' else 
-			not (Aux_LogA xor Aux_LogB) when ALU_OP = '1' else 
-			'0000000000000000';
+sel_mux_oper_ALU(3 downto 1)
 
-OUT_LOG  <= '0000000000000001' 		when Sign_OP = '00' else 
-			(Aux_LogA or Aux_LogB) 	when Sign_OP = '01' else
-			OUT_XOR 				when Sign_OP = '10' else
-			(Aux_LogA and Aux_LogB) when Sign_OP = '11' else
-			'0000000000000000';
+out_LOG <=  operando_A 									when  
+			operando_B 									when
+			(not(operando_A)) or (not(operando_B))		when
+			operando_A or (not(operando_B))				when
+			(not(operando_A)) or operando_B				when
+			operando_A or operando_B					when
+			operando_A xor operando_B					when 	else
+			zeros_ALU;		
+
+---------------------------------------- shifts ---------------------------------------------
+
+out_SHIFT <= sll(operando_A) when 
+			 sra(operando_A)
 
 
------------------------------------ARIT------------------------------------------------------
-
-OUT_ARI <=  (operando_A + operando_B) 			when ALU_OP = '00000' else 
-			(operando_A + operando_B + 1)	 	when ALU_OP = '00001' else 
-			(operando_A +  1)		 			when ALU_OP = '00011' else 
-			(operando_A + not(operando_B))		when ALU_OP = '00100' else 
-			(operando_A + not(operando_B)+1)	when ALU_OP = '00101' else 
-			(operando_A - 1)					when ALU_OP = '00001' else 
-			sll(operando_A)						when ALU_OP = '01000' else 
-			sla(operando_A) 					when ALU_OP = '01001' else
-			'0000000000000000';
-
-out_ALU <=  OUT_ARI		when ALU_OP(4) = '0' else 
-			OUT_LOG		when ALU_OP(4) = '1' else
-			'0000000000000000';
+---------------------------------- RESULTADO FINAL DA ALU -----------------------------------
+out_ALU <=	out_ARI			when  	else
+			out_SHIFT 		when 	else
+			out_LOG 		when 	else
+			not(out_LOG);
 
 -------------------------------QUAIS FLAGS ATUALIZAM??---------------------------------------
 
@@ -153,7 +144,6 @@ aux_FLAGTEST_FI <= aux_FLAGMUX xnor TRANS_OP(1);
 aux_FLAGTEST    <= (TRANS_OP(1) and not(TRANS_OP(0))) or (aux_FLAGTEST_FI and not(TRANS_OP(1))); 
 
 aux_FLAGTEST_MUXPC <= not(FLAGTEST_active_IN) and aux_FLAGTEST; 
-
 
 ---------------------------------------------------------------------------------------------
 ----------------------------------- REGISTO FLAGS -------------------------------------------

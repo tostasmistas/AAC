@@ -53,7 +53,6 @@ out_mux_WB <=	reg_EXMEM_OUT(32 downto 17)		when sel_mux_WB = "00" else  -- escre
 				reg_EXMEM_OUT(66 downto 51)		when sel_mux_WB = "01" else  -- escrever saída da MEM 			(out_MEM)
 				reg_EXMEM_OUT(16 downto 1)		when sel_mux_WB = "10" else	 -- fazer load de uma constante		(out_mux_constantes)
 				reg_EXMEM_OUT(49 downto 37);								 -- guardar em R7 o valor de PC+1 	(save_pc_add_1)
-				
 
 -- decoder para os write-enable dos 8 registos do banco de registos 
 case reg_EXMEM_OUT(35 downto 33) is -- aux_ADD_RWC (vem do ID)
