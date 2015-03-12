@@ -50,6 +50,9 @@ signal sel_mux_q			: std_logic_vector(1 downto 0) := (others => '0');
 signal q_ALU				: std_logic_vector(15 downto 0) := (others => '0');
 signal cIN_ALU				: std_logic := '0';
 signal out_ARI				: std_logic_vector(16 downto 0) := (others => '0');
+signal sel_mux_LOG			: std_logic_vector(2 downto 0) := (others => '0');
+signal sel_mux_ALU			: std_logic_vector(1 downto 0) := (others => '0');
+signal aux_sel_mux_ALU_bit0	: std_logic := '0';
 
 signal aux_flagtest_rel		: std_logic := '0';
 signal aux_FLAGTEST			: std_logic := '0';
@@ -92,24 +95,27 @@ out_ARI <= p_ALU + q_ALU + cIN_ALU;
 
 --------------------------------------- lógicas ---------------------------------------------
 
-sel_mux_oper_ALU(3 downto 1)
+sel_mux_LOG <= oper_ALU(3 downto 1);
 
-out_LOG <=  operando_A 									when  
-			operando_B 									when
-			(not(operando_A)) or (not(operando_B))		when
-			operando_A or (not(operando_B))				when
-			(not(operando_A)) or operando_B				when
-			operando_A or operando_B					when
-			operando_A xor operando_B					when 	else
-			zeros_ALU;		
+out_LOG <=  zeros_ALU									when sel_mux_LOG = "000" else
+			operando_B 									when sel_mux_LOG = "001" else
+			operando_A 									when sel_mux_LOG = "010" else
+			operando_A or operando_B					when sel_mux_LOG = "011" else
+			not(operando_A xor operando_B)				when sel_mux_LOG = "100" else
+			(not(operando_A)) or operando_B				when sel_mux_LOG = "101" else
+			operando_A or (not(operando_B))				when sel_mux_LOG = "110" else
+			(not(operando_A)) or (not(operando_B));		
 
 ---------------------------------------- shifts ---------------------------------------------
 
-out_SHIFT <= sll(operando_A) when 
-			 sra(operando_A)
+out_SHIFT <= sll(operando_A) when oper_ALU(0) = '0' else
+			 sra(operando_A);
 
+---------------------------------- resultado final da ALU -----------------------------------
+aux_sel_mux_ALU_bit0 <= 
 
----------------------------------- RESULTADO FINAL DA ALU -----------------------------------
+sel_mux_ALU <= oper_ALU(4) & aux_sel_mux_ALU_bit0;
+
 out_ALU <=	out_ARI			when  	else
 			out_SHIFT 		when 	else
 			out_LOG 		when 	else

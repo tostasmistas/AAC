@@ -36,8 +36,8 @@ architecture Behavioral of WB is
 --------------------------------------------------------------------------
 --------------------------- Aux Signals ----------------------------------
 --------------------------------------------------------------------------
-signal aux_sel_bit1				: std_logic_vector(15 downto 0) := (others => '0'); -- bit de selecção 1 do MUX 4:1 do WB
-signal aux_sel_bit0				: std_logic_vector(15 downto 0) := (others => '0'); -- bit de selecção 0 do MUX 4:1 do WB
+signal aux_sel_bit1				: std_logic := '0'; -- bit de selecção 1 do MUX 4:1 do WB
+signal aux_sel_bit0				: std_logic := '0'; -- bit de selecção 0 do MUX 4:1 do WB
 
 begin
 
