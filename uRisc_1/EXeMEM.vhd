@@ -95,16 +95,16 @@ out_ARI <= p_ALU + q_ALU + cIN_ALU;
 
 --------------------------------------- lógicas ---------------------------------------------
 
-sel_mux_LOG <= oper_ALU(3 downto 1);
+sel_mux_LOG <= (oper_ALU(3) xor oper_ALU(0))&(oper_ALU(3) xor oper_ALU(1))&(oper_ALU(3) xor oper_ALU(2));
 
 out_LOG <=  zeros_ALU									when sel_mux_LOG = "000" else
-			operando_B 									when sel_mux_LOG = "001" else
-			operando_A 									when sel_mux_LOG = "010" else
-			operando_A or operando_B					when sel_mux_LOG = "011" else
-			not(operando_A xor operando_B)				when sel_mux_LOG = "100" else
-			(not(operando_A)) or operando_B				when sel_mux_LOG = "101" else
-			operando_A or (not(operando_B))				when sel_mux_LOG = "110" else
-			(not(operando_A)) or (not(operando_B));		
+			operando_A and operando_B					when sel_mux_LOG = "001" else
+			not(operando_A) and operando_B				when sel_mux_LOG = "010" else
+			operando_B									when sel_mux_LOG = "011" else
+			not(operando_A) and operando_B				when sel_mux_LOG = "100" else
+			operando_A									when sel_mux_LOG = "101" else
+			operando_A xor operando_B					when sel_mux_LOG = "110" else
+			operando_A or operando_B;		
 
 ---------------------------------------- shifts ---------------------------------------------
 
@@ -112,13 +112,12 @@ out_SHIFT <= sll(operando_A) when oper_ALU(0) = '0' else
 			 sra(operando_A);
 
 ---------------------------------- resultado final da ALU -----------------------------------
-aux_sel_mux_ALU_bit0 <= 
 
-sel_mux_ALU <= oper_ALU(4) & aux_sel_mux_ALU_bit0;
+sel_mux_ALU <= oper_ALU(4) & oper_ALU(3);
 
-out_ALU <=	out_ARI			when  	else
-			out_SHIFT 		when 	else
-			out_LOG 		when 	else
+out_ALU <=	out_ARI			when sel_mux_ALU = "00" 	else
+			out_SHIFT 		when sel_mux_ALU = "01"		else
+			out_LOG 		when sel_mux_ALU = "10"		else
 			not(out_LOG);
 
 -------------------------------QUAIS FLAGS ATUALIZAM??---------------------------------------
