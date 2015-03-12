@@ -38,6 +38,7 @@ architecture Behavioral of EXeMEM is
 signal out_ALU				: std_logic_vector(15 downto 0) := (others => '0'); -- saída da ALU
 signal out_MEM				: std_logic_vector(15 downto 0) := (others => '0'); -- saída da memória
 signal aux_FLAGS			: std_logic_vector(3 downto 0) := (others => '0'); 	-- Z,N,C,O
+signal aux_act_FLAGS		: std_logic_vector(3 downto 0) := (others => '0'); 	-- Z,N,C,O
 signal aux_MSR_FLAGS		: std_logic_vector(3 downto 0) := (others => '0');
 signal aux_FLAGTEST			: std_logic := '0';
 
@@ -120,22 +121,43 @@ Sign_FLAG(1) <=  not(ALU_OP(4));
 
 Sign_FLAG(0) <=  [ALU_OP(2) and (not(ALU_OP(1)) or ALU_OP(2))] or [ALU_OP(4) and (not(ALU_OP(2)) and ((not(ALU_OP(1)) and ALU_OP(0)) or ALU_OP(3)))] or [(ALU_OP(4)) nor ALU_OP(3)] or [not(ALU_OP(0)) and ALU_OP(1)];
 
-aux_FLAGS  <= 	'0000'	when Sign_FLAG ='00' else 
-				'1100' 	when Sign_FLAG ='00' else 
-				'0111' 	when Sign_FLAG ='00' else 
-				'1111' 	when Sign_FLAG ='00' else 
+aux_act_FLAGS <='0000'	when Sign_FLAG ='00' else 
+				'1100' 	when Sign_FLAG ='01' else 
+				'0111' 	when Sign_FLAG ='10' else 
+				'1111' 	when Sign_FLAG ='11' else 
 				'0000';   		--Caso em que venha uma operação nao reconheicda nao atualizamos nenhuma
-				
+
+--Actualizar FLAGS
+--OVERFLOW
+aux_FLAGS(0) <= FLAGS_IN(0) when (aux_act_FLAGS(0)=0) else
+				'1' 		when ((p_ALU(15)=q_ALU(15)) and (p_ALU(15)=q_ALU(15))) else 
+				'0';
+
+--CARRY
+aux_FLAGS(1) <= FLAGS_IN(1) when (aux_act_FLAGS(1)=0) else
+				'1' 		when (out_ALU(16)=1) else 
+				'0';
+
+--NEGATIVE
+aux_FLAGS(2) <= FLAGS_IN(2) when (aux_act_FLAGS(2)=2) else
+				'1' 		when (out_ALU(15)=1) else 
+				'0';
+
+--ZERO
+aux_FLAGS(2) <= FLAGS_IN(2) when (aux_act_FLAGS(2)=2) else
+				'1' 		when (out_ALU='00000000000000000') else 
+				'0';
+
 
 ---------------------------------------------------------------------------------------------
 ---------------------------------- TESTE FLAGS ----------------------------------------------
 ---------------------------------------------------------------------------------------------
-aux_FLAGMUX	 <= FLAGS_IN(0) 						when TRANS_FI_COND_IN = "0101" else
-					 FLAGS_IN(1)					when TRANS_FI_COND_IN = "0100" else
-					 FLAGS_IN(2) 					when TRANS_FI_COND_IN = "0110" else
-					 FLAGS_IN(3) 					when TRANS_FI_COND_IN = "0011" else
+aux_FLAGMUX	 <= 	FLAGS_IN(0) 						when TRANS_FI_COND_IN = "0101" else
+					FLAGS_IN(1)					when TRANS_FI_COND_IN = "0100" else
+					FLAGS_IN(2) 					when TRANS_FI_COND_IN = "0110" else
+					FLAGS_IN(3) 					when TRANS_FI_COND_IN = "0011" else
 					'1' 	 	 					when TRANS_FI_COND_IN = "0000" else
-					 FLAGS_IN(0) or aux_FLAGS(1) 	when TRANS_FI_COND_IN = "0111" else
+					FLAGS_IN(0) or aux_FLAGS(1) 	when TRANS_FI_COND_IN = "0111" else
 					'0';
 
 
