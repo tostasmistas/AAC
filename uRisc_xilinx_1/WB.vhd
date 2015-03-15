@@ -37,7 +37,7 @@ signal aux_sel_bit1				: std_logic := '0'; -- bit de selecção 1 do MUX 4:1 do 
 signal aux_sel_bit0				: std_logic := '0'; -- bit de selecção 0 do MUX 4:1 do WB
 signal sel_mux_WB					: std_logic_vector(1 downto 0) := (others => '0');
 signal out_mux_WB					: std_logic_vector(15 downto 0) := (others => '0');
-signal en_regs						: std_logic_vector(1 downto 0) := (others => '0');
+signal en_regs						: std_logic_vector(7 downto 0) := (others => '0');
 
 begin
 
@@ -56,15 +56,15 @@ out_mux_WB <=	reg_EXMEM_OUT(32 downto 17)		when sel_mux_WB = "00" else  -- escre
 
 -- decoder para os write-enable dos 8 registos do banco de registos -- TRATAR DISTO!
 with reg_EXMEM_OUT(35 downto 33) select
-	en_regs <= 	"0001" when "000",
-					"0010" when "001",
-					"0011" when "010",
-					"0100" when "011",
-					"0101" when "100",
-					"0110" when "101",
-					"0111" when "110",
-					"1000" when "111", 
-					"0000" when others;
+	en_regs <= 	"00000001" when "000",
+				"00000010" when "001",
+				"00000100" when "010",
+				"00001000" when "011",
+				"00010000" when "100",
+				"00100000" when "101",
+				"01000000" when "110",
+				"10000000" when "111", 
+				"00000000" when others;
 
 end Behavioral;
 

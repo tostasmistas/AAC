@@ -15,14 +15,7 @@ entity registos is
 		-- input
 		clk, rst						: in std_logic;
 		inst_IN					: in std_logic_vector(15 downto 0);
-		en_r0					: in std_logic;
-		en_r1					: in std_logic;
-		en_r2					: in std_logic;
-		en_r3					: in std_logic;
-		en_r4					: in std_logic;
-		en_r5					: in std_logic;
-		en_r6					: in std_logic;
-		en_r7					: in std_logic;	
+		-- colocar registo entre andares e la colocar o vector do en_regs do WB
 			
 		-- output
 		R0 						: out std_logic_vector(15 downto 0);
