@@ -44,15 +44,16 @@ signal aux_TRANS_FII_DES	: std_logic_vector(11 downto 0) := (others => '0');
 signal aux_TRANS_FIII_R	  	: std_logic := '0';
 signal aux_JUMPS_active		: std_logic := '0';
 signal aux_JUMPS_MUX_WB		: std_logic := '0';
-signal JUMP_MUXWB_OUT					: std_logic := '0';
+signal JUMP_MUXWB_OUT		: std_logic := '0';
+signal ALU_vs_MEM			: std_logic := '0';
 signal RA_C 				: std_logic_vector(15 downto 0) := (others => '0');
 signal RB 					: std_logic_vector(15 downto 0) := (others => '0');
 signal oper_A				: std_logic_vector(15 downto 0);	-- operando A para a ALU
 signal oper_B				: std_logic_vector(15 downto 0);	-- operando B para a ALU
 signal const11				: std_logic_vector(15 downto 0);	-- operando B para a ALU
-signal lcl : std_logic_vector(15 downto 0);	-- operando B para a ALU
-signal lch : std_logic_vector(15 downto 0);	-- operando B para a ALU
-signal select_mux_constantes : std_logic_vector(1 downto 0);
+signal lcl 					: std_logic_vector(15 downto 0);	-- operando B para a ALU
+signal lch 					: std_logic_vector(15 downto 0);	-- operando B para a ALU
+signal select_mux_constantes: std_logic_vector(1 downto 0);
 signal out_mux_constantes	: std_logic_vector(15 downto 0);	-- operando para carregamento de constantes		
 signal ALU_CONS_SEL			: std_logic := '0'; 				-- sinal de selecção para MUX entre operação da ALU e operação de carregamento de constantes
 
@@ -159,10 +160,12 @@ out_mux_constantes <=	const11		when select_mux_constantes = "00" else
 						lcl 		when select_mux_constantes = "10" else
 						lch;
 
+ALU_vs_MEM <= aux_ALU_OPER(1) and not(aux_ALU_OPER(2)) and aux_ALU_OPER(3) and not(aux_ALU_OPER(0));
+
+WE_RAM <= (inst_IN(15) and not(inst_IN(14))) and ALU_vs_MEM and inst_IN(6);
+
 JUMP_MUXPC_OUT <= aux_JUMPS_active;
 JUMP_MUXWB_OUT <= aux_JUMPS_MUX_WB;
-
--- FAZER LOGICA DE ALU VS MEM E CONCATENAR RESULTADO AOS REGISTOS DE SAIDA
 
 --------------------------------------------------------------------------
 ------------------------------- Exit -------------------------------------
@@ -175,9 +178,9 @@ process (clk, rst)
 			if rst = '1' then
 				reg_IDOF_OUT <= zeros;
 			else
-				reg_IDOF_OUT <= FLAGTEST_active_OUT & aux_ALU_OPER & reg_IF_OUT(11 downto 0) & JUMP_MUXWB_OUT & aux_ADD_RWC & 
+				reg_IDOF_OUT <= WE_RAM & FLAGTEST_active_OUT & aux_ALU_OPER & ALU_vs_MEM & reg_IF_OUT(11 downto 0) & JUMP_MUXWB_OUT & aux_ADD_RWC & 
 								oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
-				-- reg_IDOF_OUT <= FLAGTEST_active_OUT & aux_ALU_OPER & save_pc_add_1 & JUMP_MUXWB_OUT & aux_ADD_RWC & 
+				-- reg_IDOF_OUT <= WE_RAM & FLAGTEST_active_OUT & aux_ALU_OPER & ALU_vs_MEM & save_pc_add_1 & JUMP_MUXWB_OUT & aux_ADD_RWC & 
 				--                 oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
 			end if;	
 		end if;

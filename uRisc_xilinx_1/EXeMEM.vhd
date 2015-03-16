@@ -14,6 +14,7 @@ entity EXeMEM is
 		-- output
 		reg_EXMEM_OUT				: out std_logic_vector(66 downto 0);		-- registo entre andares
 		out_ADD_MEM					: out std_logic_vector(11 downto 0);		-- para endereçar a RAM
+		out_WE_MEM					: out std_logic;							-- para controlar o WE da RAM 
 		FLAGS_OUT					: out std_logic_vector(3 downto 0);
 		in_RAM						: out std_logic_vector(15 downto 0);
 		FLAGTEST_MUXPC_OUT			: out std_logic 							
@@ -75,6 +76,12 @@ TRANS_FI_COND_IN 	<= reg_IDOF_OUT(49) & reg_IDOF_OUT(70 downto 68);
 
 out_ADD_MEM <= operando_A(11 downto 0); -- para endereçar leitura e escrita da RAM
 
+out_WE_MEM <= reg_IDOF_OUT(72); -- write-enable da RAM
+
+out_MEM <= out_RAM; -- armazenar depois em RC o valor contido na posição de memória endereçada por A
+
+in_RAM <= operando_B; -- armazenar na posição de memória endereçada por A o valor contido em B
+
 ---------------------------------------------------------------------------------------------
 ----------------------------------- ALU -----------------------------------------------------
 ---------------------------------------------------------------------------------------------
@@ -120,6 +127,10 @@ out_ALU <=	out_ARI			when sel_mux_ALU = "00" 	else
 			out_SHIFT 		when sel_mux_ALU = "01"		else
 			out_LOG 		when sel_mux_ALU = "10"		else
 			not(out_LOG);
+
+---------------------------------------------------------------------------------------------
+----------------------------------- FLAGS ---------------------------------------------------
+---------------------------------------------------------------------------------------------
 
 -------------------------------QUAIS FLAGS ATUALIZAM??---------------------------------------
 
@@ -199,8 +210,10 @@ process (clk, rst)
 			if rst = '1' then
 				reg_EXMEM_OUT <= zeros;
 			else
-				reg_EXMEM_OUT <= out_MEM & reg_IDOF_OUT(64 downto 53) & reg_IDOF_OUT(52) & reg_IDOF_OUT(51 downto 49) & out_ALU & reg_IDOF_OUT(16 downto 1) & reg_IDOF_OUT(0);
-				-- reg_EXMEM_OUT <= out_MEM & save_pc_add_1 & JUMP_MUXWB_OUT & aux_ADD_RWC & out_ALU & out_mux_constantes & ALU_CONS_SEL;
+				reg_EXMEM_OUT <= out_MEM & ALU_vs_MEM & reg_IDOF_OUT(64 downto 53) & reg_IDOF_OUT(52) & reg_IDOF_OUT(51 downto 49) & 
+								 out_ALU & reg_IDOF_OUT(16 downto 1) & reg_IDOF_OUT(0);
+				-- reg_EXMEM_OUT <= out_MEM & ALU_vs_MEM & save_pc_add_1 & JUMP_MUXWB_OUT & aux_ADD_RWC & 
+				--                  out_ALU & out_mux_constantes & ALU_CONS_SEL;
 			end if;	
 		end if;
 end process;

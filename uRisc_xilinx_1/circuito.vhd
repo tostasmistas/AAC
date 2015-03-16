@@ -85,6 +85,7 @@ architecture Behavioral of circuito is
 			-- output
 			reg_EXMEM_OUT				: out std_logic_vector(66 downto 0);		-- registo entre andares
 			out_ADD_MEM					: out std_logic_vector(11 downto 0);		-- para endereçar a RAM
+			out_WE_MEM					: out std_logic;	
 			FLAGS_OUT					: out std_logic_vector(3 downto 0);
 			in_RAM						: out std_logic_vector(15 downto 0);
 			FLAGTEST_MUXPC_OUT			: out std_logic 							
@@ -206,10 +207,10 @@ begin
 	
 	inst_memoria_RAM: memoria_RAM port map(
 		CLK_A 	=> clk,
-		WE_A	=> ,
+		WE_A	=> out_WE_MEM,
 		Addr_A 	=> out_ADD_MEM,
-		DI_A	=> 
-		DO_A 	=>
+		DI_A	=> in_RAM,
+		DO_A 	=> out_RAM
 	
 	);
 	
