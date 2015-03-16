@@ -14,10 +14,11 @@ entity EXeMEM is
 		FLAGTEST_active_IN			: in std_logic;
 
 		-- output
-		reg_EXMEM_OUT				: out std_logic_vector(66 downto 0);	
+		reg_EXMEM_OUT				: out std_logic_vector(66 downto 0);		-- registo entre andares
+		out_ADD_MEM					: out std_logic_vector(11 downto 0);
 		REG_WC            			: out std_logic_vector(15 downto 0);
 		FLAGS_OUT					: out std_logic_vector(3 downto 0);
-		FLAGTEST_MUXPC_OUT			: out std_logic 							-- registo entre andares
+		FLAGTEST_MUXPC_OUT			: out std_logic 							
 	);
 end EXeMEM;
 
@@ -59,17 +60,19 @@ constant zeros_ALU				: std_logic_vector(15 downto 0) := (others => '0');
 
 begin
 
+operando_A 	<= reg_IDOF_OUT(48 downto 33);
+operando_B 	<= reg_IDOF_OUT(32 downto 17);
+oper_ALU 	<= reg_IDOF_OUT(70 downto 66);
+
 ---------------------------------------------------------------------------------------------
 ---------------------------------- MEMÓRIA --------------------------------------------------
 ---------------------------------------------------------------------------------------------
 
+out_ADD_MEM <= operando_A(11 downto 0); -- para endereçar leitura e escrita da RAM
+
 ---------------------------------------------------------------------------------------------
 ----------------------------------- ALU -----------------------------------------------------
 ---------------------------------------------------------------------------------------------
-
-operando_A 	<= reg_IDOF_OUT(48 downto 33);
-operando_B 	<= reg_IDOF_OUT(32 downto 17);
-oper_ALU 	<= reg_IDOF_OUT(70 downto 66);
 
 ----------------------------------- aritméticas ---------------------------------------------
 
@@ -101,8 +104,8 @@ out_LOG <=  zeros_ALU									when sel_mux_LOG = "000" else
 
 ---------------------------------------- shifts ---------------------------------------------
 
---out_SHIFT <= operando_A sll 1 when oper_ALU(0) = '0' else
-	--		    operando_A sra 1;
+out_SHIFT <= (operando_A(14 downto 0) & '0') 				when oper_ALU(0) = '0' else -- SLL
+			 (operando_A(15) & operando_A(15 downto 1));								-- SRA
 
 ---------------------------------- resultado final da ALU -----------------------------------
 
