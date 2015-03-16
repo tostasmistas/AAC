@@ -128,20 +128,17 @@ aux_act_FLAGS <= "0000"	when Sign_FLAG ="00" else
 
 
 --OVERFLOW
-aux_FLAGS(0) <= '1' 		when ((p_ALU(15)=q_ALU(15)) and (p_ALU(15)=q_ALU(15))) else 
-				'0';
+
+aux_FLAGS(0) <=  ((p_ALU(15) XOR q_ALU(15)) and  (!(p_ALU(15)) XNOR q_ALU(15)));
 
 --CARRY
-aux_FLAGS(1) <= '1' 		when (out_ALU(16)=1) else 
-				'0';
+aux_FLAGS(1) <=  (out_ALU(16) AND '1');
 
 --NEGATIVE
-aux_FLAGS(2) <= '1' 		when (out_ALU(15)=1) else 
-				'0';
+aux_FLAGS(2) <=  (out_ALU(15) AND '1');
 
 --ZERO
-aux_FLAGS(3) <= '1' 		when (out_ALU="00000000000000000") else 
-				'0';
+aux_FLAGS(3) <= (out_ALU XOR "00000000000000000");
 
 
 aux_FLAGS <= (FLAGS_IN AND !(aux_act_FLAGS)) OR (aux_act_FLAGS AND aux_FLAGS);
