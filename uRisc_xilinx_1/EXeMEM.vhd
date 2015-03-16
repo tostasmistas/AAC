@@ -9,11 +9,13 @@ entity EXeMEM is
 		clk, rst 					: in std_logic;
 		reg_IDOF_OUT				: in std_logic_vector(71 downto 0);			-- registo entre andares
 		FLAGS_IN					: in std_logic_vector(3 downto 0);
+		out_RAM						: in std_logic_vector(15 downto 0);
 		
 		-- output
 		reg_EXMEM_OUT				: out std_logic_vector(66 downto 0);		-- registo entre andares
 		out_ADD_MEM					: out std_logic_vector(11 downto 0);		-- para endereçar a RAM
 		FLAGS_OUT					: out std_logic_vector(3 downto 0);
+		in_RAM						: out std_logic_vector(15 downto 0);
 		FLAGTEST_MUXPC_OUT			: out std_logic 							
 	);
 end EXeMEM;

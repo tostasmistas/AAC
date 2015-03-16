@@ -13,8 +13,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity registos is
 	port(
 		-- input
-		clk, rst						: in std_logic;
-		inst_IN					: in std_logic_vector(15 downto 0);
+		clk, rst				: in std_logic;
+		en_regs					: in std_logic_vector(7 downto 0);
 		-- colocar registo entre andares e la colocar o vector do en_regs do WB
 			
 		-- output
@@ -57,96 +57,96 @@ begin
 ----------------------------------------------------------------------
 
 --------------------------- Registo 0 (R0) ---------------------------
-process (clk, rst)
+process (clk, rst,en_regs)
 	begin
 		if clk'event and clk = '1' then
 			if rst = '1' then
 				aux_reg_r0 <= zeros;
-			elsif en_r0 = '1' then 
+			elsif en_regs = "00000001" then 
 				aux_reg_r0 <= zeros;
 			end if;	
 		end if;
 end process;
 
 --------------------------- Registo 1 (R1) ---------------------------
-process (clk, rst)
+process (clk, rst,en_regs)
 	begin
 		if clk'event and clk = '1' then
 			if rst = '1' then
 				aux_reg_r1 <= zeros;
-			elsif en_r1 = '1' then 
+			elsif en_regs = "00000010" then 
 				aux_reg_r1 <= zeros;
 			end if;		
 		end if;
 end process;
 
 --------------------------- Registo 2 (R2) ---------------------------
-process (clk, rst)
+process (clk, rst,en_regs)
 	begin
 		if clk'event and clk = '1' then
 			if rst = '1' then
 				aux_reg_r2 <= zeros;
-			elsif en_r2 = '1' then 
+			elsif en_regs = "00000100" then 
 				aux_reg_r2 <= zeros;
 			end if;			
 		end if;
 end process;
 
 --------------------------- Registo 3 (R3) ---------------------------
-process (clk, rst)
+process (clk, rst,en_regs)
 	begin
 		if clk'event and clk = '1' then
 			if rst = '1' then
 				aux_reg_r3 <= zeros;
-			elsif en_r3 = '1' then 
+			elsif en_regs = "00001000" then 
 				aux_reg_r3 <= zeros;
 			end if;		
 		end if;
 end process;
 
 --------------------------- Registo 4 (R4) ---------------------------
-process (clk, rst)
+process (clk, rst,en_regs)
 	begin
 		if clk'event and clk = '1' then
 			if rst = '1' then
 				aux_reg_r4 <= zeros;
-			elsif en_r4 = '1' then 
+			elsif en_regs ="00010000"  then 
 				aux_reg_r4 <= zeros;
 			end if;			
 		end if;
 end process;
 
 --------------------------- Registo 5 (R5) ---------------------------
-process (clk, rst)
+process (clk, rst,en_regs)
 	begin
 		if clk'event and clk = '1' then
 			if rst = '1' then
 				aux_reg_r5 <= zeros;
-			elsif en_r5 = '1' then 
+			elsif en_regs = "00100000" then 
 				aux_reg_r5 <= zeros;
 			end if;		
 		end if;
 end process;
 
 --------------------------- Registo 6 (R6) ---------------------------
-process (clk, rst)
+process (clk, rst,en_regs)
 	begin
 		if clk'event and clk = '1' then
 			if rst = '1' then
 				aux_reg_r6 <= zeros;
-			elsif en_r6 = '1' then 
+			elsif en_regs= "01000000" then 
 				aux_reg_r6 <= zeros;
 			end if;		
 		end if;
 end process;
 
 --------------------------- Registo 7 (R7) ---------------------------
-process (clk, rst)
+process (clk, rst,en_regs)
 	begin
 		if clk'event and clk = '1' then
 			if rst = '1' then
 				aux_reg_r7 <= zeros;
-			elsif en_r7 = '1' then 
+			elsif en_regs = "10000000" then 
 				aux_reg_r7 <= zeros;
 			end if;			
 		end if;

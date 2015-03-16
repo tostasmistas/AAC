@@ -11,7 +11,8 @@ entity InF is
 		destino_cond			: in std_logic_vector(11 downto 0);     -- vem da ALU
 		FLAGTEST_MUXPC_IN		: in std_logic;							-- vem da ALU
 		JUMP_MUXPC_IN			: in std_logic;							-- vem do IDeOF
-		reg_pc_IN 				: in std_logic_vector(11 downto 0);		-- PC realimentado	
+		reg_pc_IN 				: in std_logic_vector(11 downto 0);		-- PC realimentado
+		out_ROM					: in std_logic_vector(15 downto 0);	
 
 		-- output
 		reg_PCMEM_OUT			: out std_logic_vector(11 downto 0);	-- PC + 1
@@ -78,8 +79,7 @@ process (clk, rst)
 			if rst = '1' then
 				reg_IF_OUT <= zeros;
 			else
-				-- substituir "000" pelo que vem da memoria
-				reg_IF_OUT <= "000" & save_pc_add_1; 					-- carregar a próxima instrução da memória (de programa) e armazenar no IR
+				reg_IF_OUT <= out_ROM & save_pc_add_1; 					-- carregar a próxima instrução da memória (de programa) e armazenar no IR
 			end if;		
 		end if;
 end process;

@@ -44,7 +44,7 @@ end memoria_RAM;
 
 architecture Behavioral of memoria_RAM is
 
-type MEM_TYPE is array(0 to (2**ADDR_SIZE)-1) of STD_LOGIC_VECTOR(31 downto 0);
+type MEM_TYPE is array(0 to (2**ADDR_SIZE)-1) of STD_LOGIC_VECTOR(15 downto 0);
 
 constant InitValue : MEM_TYPE := ( 
 	others=> x"00000000"
