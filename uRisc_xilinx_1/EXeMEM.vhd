@@ -115,37 +115,36 @@ out_ALU <=	out_ARI			when sel_mux_ALU = "00" 	else
 
 -------------------------------QUAIS FLAGS ATUALIZAM??---------------------------------------
 
---Sign_FLAG(1) <=  not(ALU_OP(4));
+Sign_FLAG(1) <=  not(ALU_OP(4));
 
---Sign_FLAG(0) <=  (ALU_OP(2) and (not(ALU_OP(1)) or ALU_OP(2))) or (ALU_OP(4) and (not(ALU_OP(2)) and ((not(ALU_OP(1)) and ALU_OP(0)) or ALU_OP(3)))) or ((ALU_OP(4)) nor ALU_OP(3)) or (not(ALU_OP(0)) and ALU_OP(1));
+Sign_FLAG(0) <=  (ALU_OP(2) and (not(ALU_OP(1)) or ALU_OP(2))) or (ALU_OP(4) and (not(ALU_OP(2)) and ((not(ALU_OP(1)) and ALU_OP(0)) or ALU_OP(3)))) or ((ALU_OP(4)) nor ALU_OP(3)) or (not(ALU_OP(0)) and ALU_OP(1));
 
---aux_act_FLAGS <= "0000"	when Sign_FLAG ="00" else 
-	--			"1100" 	when Sign_FLAG ="01" else 
-		--		"0111" 	when Sign_FLAG ="10" else 
-			--	"1111";
+aux_act_FLAGS <= "0000"	when Sign_FLAG ="00" else 
+				"1100" 	when Sign_FLAG ="01" else 
+				"0111" 	when Sign_FLAG ="10" else 
+				"1111";
 
 --Actualizar FLAGS
+
+
 --OVERFLOW
---aux_FLAGS(0) <= FLAGS_IN(0) when (aux_act_FLAGS(0)=0) else
-	--			'1' 		when ((p_ALU(15)=q_ALU(15)) and (p_ALU(15)=q_ALU(15))) else 
-		--		'0';
+aux_FLAGS(0) <= '1' 		when ((p_ALU(15)=q_ALU(15)) and (p_ALU(15)=q_ALU(15))) else 
+				'0';
 
 --CARRY
---aux_FLAGS(1) <= FLAGS_IN(1) when (aux_act_FLAGS(1)=0) else
-	--			'1' 		when (out_ALU(16)=1) else 
-		--		'0';
+aux_FLAGS(1) <= '1' 		when (out_ALU(16)=1) else 
+				'0';
 
 --NEGATIVE
---aux_FLAGS(2) <= FLAGS_IN(2) when (aux_act_FLAGS(2)=2) else
-	--			'1' 		when (out_ALU(15)=1) else 
-		--		'0';
+aux_FLAGS(2) <= '1' 		when (out_ALU(15)=1) else 
+				'0';
 
 --ZERO
---aux_FLAGS(2) <= FLAGS_IN(2) when (aux_act_FLAGS(2)=2) else
-	--			'1' 		when (out_ALU="00000000000000000") else 
-		--		'0';
+aux_FLAGS(3) <= '1' 		when (out_ALU="00000000000000000") else 
+				'0';
 
 
+aux_FLAGS <= (FLAGS_IN AND !(aux_act_FLAGS)) OR (aux_act_FLAGS AND aux_FLAGS);
 ---------------------------------------------------------------------------------------------
 ---------------------------------- TESTE FLAGS ----------------------------------------------
 ---------------------------------------------------------------------------------------------
