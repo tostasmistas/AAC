@@ -17,14 +17,7 @@ entity WB is
 		reg_EXMEM_OUT				: in std_logic_vector(66 downto 0);		-- registo entre andares
 		
 		-- output
-		en_r0						: out std_logic;
-		en_r1						: out std_logic;
-		en_r2						: out std_logic;
-		en_r3						: out std_logic;
-		en_r4						: out std_logic;
-		en_r5						: out std_logic;
-		en_r6						: out std_logic;
-		en_r7						: out std_logic
+		en_regs						: out std_logic_vector(7 downto 0)
 	);
 end WB;
 
@@ -37,7 +30,6 @@ signal aux_sel_bit1				: std_logic := '0'; -- bit de selecção 1 do MUX 4:1 do 
 signal aux_sel_bit0				: std_logic := '0'; -- bit de selecção 0 do MUX 4:1 do WB
 signal sel_mux_WB					: std_logic_vector(1 downto 0) := (others => '0');
 signal out_mux_WB					: std_logic_vector(15 downto 0) := (others => '0');
-signal en_regs						: std_logic_vector(7 downto 0) := (others => '0');
 
 begin
 

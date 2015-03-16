@@ -7,14 +7,14 @@ entity InF is
 	port(
 		-- input
 		clk, rst 				: in std_logic;
-		destino_jump			: in std_logic_vector(11 downto 0);
-		destino_cond			: in std_logic_vector(11 downto 0);
-		FLAGTEST_MUXPC_IN		: in std_logic;
-		JUMP_MUXPC_IN			: in std_logic;
-		reg_pc_IN 				: in std_logic_vector(11 downto 0);
+		destino_jump			: in std_logic_vector(11 downto 0);		-- vem da ALU	
+		destino_cond			: in std_logic_vector(11 downto 0);     -- vem da ALU
+		FLAGTEST_MUXPC_IN		: in std_logic;							-- vem da ALU
+		JUMP_MUXPC_IN			: in std_logic;							-- vem do IDeOF
+		reg_pc_IN 				: in std_logic_vector(11 downto 0);		-- PC realimentado	
 
 		-- output
-		reg_PCMEM_OUT			: out std_logic_vector(11 downto 0);
+		reg_PCMEM_OUT			: out std_logic_vector(11 downto 0);	-- PC + 1
 		reg_IF_OUT				: out std_logic_vector(27 downto 0)		-- registo entre andares		
 	);
 end InF;
@@ -70,7 +70,7 @@ reg_PCMEM_OUT <= aux_reg_pc;
 save_pc_add_1 <= aux_pc_add_1;
 
 ---------------------------------------------------------------------------
---------------------- Registo de Instruções (IR)	------------------------
+--------------------- Registo de Instruções (IR) --------------------------
 ---------------------------------------------------------------------------
 process (clk, rst)
 	begin

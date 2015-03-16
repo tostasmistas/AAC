@@ -6,7 +6,6 @@ entity IDeOF is
 		-- input
 		clk, rst 				: in std_logic;
 		reg_IF_OUT 				: in std_logic_vector(27 downto 0);		-- registo entre andares
-		inst_IN					: in std_logic_vector(15 downto 0);	
 		R0 						: in std_logic_vector(15 downto 0);
 		R1 						: in std_logic_vector(15 downto 0);
 	    R2 						: in std_logic_vector(15 downto 0);
@@ -16,10 +15,9 @@ entity IDeOF is
 		R6 						: in std_logic_vector(15 downto 0);
 		R7 						: in std_logic_vector(15 downto 0);
 		
-		-- output
-		FLAGTEST_active_OUT		: out std_logic;
-		JUMP_MUXPC_OUT			: out std_logic;
-		reg_IDOF_OUT			: out std_logic_vector(70 downto 0) 				-- registo entre andares
+		-- output					
+		JUMP_MUXPC_OUT			: out std_logic;						-- vai para o IF
+		reg_IDOF_OUT			: out std_logic_vector(71 downto 0) 	-- registo entre andares
 	);
 end IDeOF;
 
@@ -28,6 +26,7 @@ architecture Behavioral of IDeOF is
 --------------------------------------------------------------------------
 --------------------------- Aux Signals ----------------------------------
 --------------------------------------------------------------------------
+signal inst_IN 				: std_logic_vector(15 downto 0) := (others => '0');
 signal aux_ADD_RWC			: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_ADD_RA			: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_ADD_RB			: std_logic_vector(2 downto 0) := (others => '0');
@@ -65,6 +64,8 @@ constant one				: std_logic_vector(12 downto 0) :="0000000000001" ;
 constant zeros				: std_logic_vector(12 downto 0) := (others => '0');
 
 begin
+
+inst_IN <= reg_IF_OUT(27 downto 12);
 
 aux_ADD_RWC <= inst_IN(13 downto 11);
 aux_ADD_RA  <= inst_IN(5 downto 3);
@@ -174,8 +175,10 @@ process (clk, rst)
 			if rst = '1' then
 				reg_IDOF_OUT <= zeros;
 			else
-				reg_IDOF_OUT <= aux_ALU_OPER & reg_IF_OUT(11 downto 0) & JUMP_MUXWB_OUT & aux_ADD_RWC & oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
-				-- reg_IDOF_OUT <= aux_ALU_OPER & save_pc_add_1 & JUMP_MUXWB_OUT & aux_ADD_RWC & oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
+				reg_IDOF_OUT <= FLAGTEST_active_OUT & aux_ALU_OPER & reg_IF_OUT(11 downto 0) & JUMP_MUXWB_OUT & aux_ADD_RWC & 
+								oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
+				-- reg_IDOF_OUT <= FLAGTEST_active_OUT & aux_ALU_OPER & save_pc_add_1 & JUMP_MUXWB_OUT & aux_ADD_RWC & 
+				--                 oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
 			end if;	
 		end if;
 end process;

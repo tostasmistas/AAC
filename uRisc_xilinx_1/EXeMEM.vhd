@@ -7,16 +7,12 @@ entity EXeMEM is
 	port(
 		-- input
 		clk, rst 					: in std_logic;
-		reg_IDOF_OUT				: in std_logic_vector(70 downto 0);			-- registo entre andares
+		reg_IDOF_OUT				: in std_logic_vector(71 downto 0);			-- registo entre andares
 		FLAGS_IN					: in std_logic_vector(3 downto 0);
-		TRANS_OP					: in std_logic_vector(1 downto 0);
-		TRANS_FI_COND_IN			: in std_logic_vector(3 downto 0);
-		FLAGTEST_active_IN			: in std_logic;
-
+		
 		-- output
 		reg_EXMEM_OUT				: out std_logic_vector(66 downto 0);		-- registo entre andares
-		out_ADD_MEM					: out std_logic_vector(11 downto 0);
-		REG_WC            			: out std_logic_vector(15 downto 0);
+		out_ADD_MEM					: out std_logic_vector(11 downto 0);		-- para endereçar a RAM
 		FLAGS_OUT					: out std_logic_vector(3 downto 0);
 		FLAGTEST_MUXPC_OUT			: out std_logic 							
 	);
@@ -42,14 +38,18 @@ signal q_ALU					: std_logic_vector(15 downto 0) := (others => '0');
 signal cIN_ALU					: std_logic := '0';
 signal out_ARI					: std_logic_vector(16 downto 0) := (others => '0');
 signal out_LOG					: std_logic_vector(15 downto 0) := (others => '0');
-signal out_SHIFT					: std_logic_vector(15 downto 0) := (others => '0');
+signal out_SHIFT				: std_logic_vector(15 downto 0) := (others => '0');
 signal sel_mux_LOG				: std_logic_vector(2 downto 0) := (others => '0');
 signal sel_mux_ALU				: std_logic_vector(1 downto 0) := (others => '0');
 signal aux_sel_mux_ALU_bit0		: std_logic := '0';
-signal aux_FLAGMUX 			: std_logic;
-signal aux_FLAGTEST_FI : std_logic;
-signal aux_FLAGTEST_MUXPC : std_logic;
+signal aux_FLAGMUX 				: std_logic;
+signal aux_FLAGTEST_FI 			: std_logic;
+signal aux_FLAGTEST_MUXPC 		: std_logic;
 signal aux_flagtest_rel			: std_logic := '0';
+signal TRANS_OP					: std_logic_vector(1 downto 0) := (others => '0');
+signal TRANS_FI_COND_IN			: std_logic_vector(3 downto 0) := (others => '0');
+signal FLAGTEST_active_IN	    : std_logic;		
+
 
 --------------------------------------------------------------------------
 ---------------------  Constantes   --------------------------------------
@@ -60,9 +60,12 @@ constant zeros_ALU				: std_logic_vector(15 downto 0) := (others => '0');
 
 begin
 
-operando_A 	<= reg_IDOF_OUT(48 downto 33);
-operando_B 	<= reg_IDOF_OUT(32 downto 17);
-oper_ALU 	<= reg_IDOF_OUT(70 downto 66);
+operando_A 			<= reg_IDOF_OUT(48 downto 33);
+operando_B 			<= reg_IDOF_OUT(32 downto 17);
+oper_ALU 			<= reg_IDOF_OUT(70 downto 66);
+FLAGTEST_active_IN 	<= reg_IDOF_OUT(71);
+TRANS_OP 		 	<= reg_IDOF_OUT(51 downto 50);
+TRANS_FI_COND_IN 	<= reg_IDOF_OUT(49) & reg_IDOF_OUT(70 downto 68);
 
 ---------------------------------------------------------------------------------------------
 ---------------------------------- MEMÓRIA --------------------------------------------------
@@ -91,7 +94,7 @@ out_ARI <= p_ALU + q_ALU + cIN_ALU;
 
 --------------------------------------- lógicas ---------------------------------------------
 
-sel_mux_LOG <= (oper_ALU(3) xor oper_ALU(0))&(oper_ALU(3) xor oper_ALU(1))&(oper_ALU(3) xor oper_ALU(2));
+sel_mux_LOG <= (oper_ALU(3) xor oper_ALU(0)) & (oper_ALU(3) xor oper_ALU(1)) & (oper_ALU(3) xor oper_ALU(2));
 
 out_LOG <=  zeros_ALU									when sel_mux_LOG = "000" else
 			operando_A and operando_B					when sel_mux_LOG = "001" else
