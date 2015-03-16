@@ -63,7 +63,7 @@ process (clk, rst,en_regs)
 			if rst = '1' then
 				aux_reg_r0 <= zeros;
 			elsif en_regs = "00000001" then 
-				aux_reg_r0 <= zeros;
+				aux_reg_r0 <= out_mux_WB;
 			end if;	
 		end if;
 end process;
@@ -75,7 +75,7 @@ process (clk, rst,en_regs)
 			if rst = '1' then
 				aux_reg_r1 <= zeros;
 			elsif en_regs = "00000010" then 
-				aux_reg_r1 <= zeros;
+				aux_reg_r1 <= out_mux_WB;
 			end if;		
 		end if;
 end process;
@@ -87,7 +87,7 @@ process (clk, rst,en_regs)
 			if rst = '1' then
 				aux_reg_r2 <= zeros;
 			elsif en_regs = "00000100" then 
-				aux_reg_r2 <= zeros;
+				aux_reg_r2 <= out_mux_WB;
 			end if;			
 		end if;
 end process;
@@ -99,7 +99,7 @@ process (clk, rst,en_regs)
 			if rst = '1' then
 				aux_reg_r3 <= zeros;
 			elsif en_regs = "00001000" then 
-				aux_reg_r3 <= zeros;
+				aux_reg_r3 <= out_mux_WB;
 			end if;		
 		end if;
 end process;
@@ -111,7 +111,7 @@ process (clk, rst,en_regs)
 			if rst = '1' then
 				aux_reg_r4 <= zeros;
 			elsif en_regs ="00010000"  then 
-				aux_reg_r4 <= zeros;
+				aux_reg_r4 <= out_mux_WB;
 			end if;			
 		end if;
 end process;
@@ -123,7 +123,7 @@ process (clk, rst,en_regs)
 			if rst = '1' then
 				aux_reg_r5 <= zeros;
 			elsif en_regs = "00100000" then 
-				aux_reg_r5 <= zeros;
+				aux_reg_r5 <= out_mux_WB;
 			end if;		
 		end if;
 end process;
@@ -135,7 +135,7 @@ process (clk, rst,en_regs)
 			if rst = '1' then
 				aux_reg_r6 <= zeros;
 			elsif en_regs= "01000000" then 
-				aux_reg_r6 <= zeros;
+				aux_reg_r6 <= out_mux_WB;
 			end if;		
 		end if;
 end process;
@@ -147,7 +147,7 @@ process (clk, rst,en_regs)
 			if rst = '1' then
 				aux_reg_r7 <= zeros;
 			elsif en_regs = "10000000" then 
-				aux_reg_r7 <= zeros;
+				aux_reg_r7 <= out_mux_WB;
 			end if;			
 		end if;
 end process;

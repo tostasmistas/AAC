@@ -17,6 +17,7 @@ entity WB is
 		reg_EXMEM_OUT				: in std_logic_vector(66 downto 0);		-- registo entre andares
 		
 		-- output
+		out_mux_WB					: out std_logic_vector(15 downto 0);
 		en_regs						: out std_logic_vector(7 downto 0)
 	);
 end WB;
@@ -33,11 +34,13 @@ signal out_mux_WB				: std_logic_vector(15 downto 0) := (others => '0');
 
 begin
 
-aux_sel_bit1 <= reg_EXMEM_OUT(36) or reg_EXMEM_OUT(0);
+is_jump <= reg_EXMEM_OUT(36); -- JUMP_MUXWB_OUT	
+
+aux_sel_bit1 <= is_jump or reg_EXMEM_OUT(0);
 				-- JUMP_MUXWB_OUT or inst_IN(14)
 
-aux_sel_bit0 <= reg_EXMEM_OUT(36) or (not(reg_EXMEM_OUT(0)) and reg_EXMEM_OUT(50)) ;
-				-- JUMP_MUXWB_OUT or (inst_IN(14) and ALU_vs_MEM)
+aux_sel_bit0 <= is_jump or (not(reg_EXMEM_OUT(0)) and reg_EXMEM_OUT(50)) ;
+				-- JUMP_MUXWB_OUT or (not(inst_IN(14)) and ALU_vs_MEM)
 
 sel_mux_WB <= aux_sel_bit1 & aux_sel_bit0;
 
