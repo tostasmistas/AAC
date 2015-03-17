@@ -28,8 +28,10 @@ architecture Behavioral of EXeMEM is
 --------------------------------------------------------------------------
 signal out_ALU					: std_logic_vector(15 downto 0) := (others => '0'); -- saída da ALU
 signal out_MEM					: std_logic_vector(15 downto 0) := (others => '0'); -- saída da memória
+signal aux_FLAGS_ALU			: std_logic_vector(3 downto 0) := (others => '0'); 	-- Z,N,C,O
+signal aux_FLAGS_SHIFT			: std_logic_vector(2 downto 0) := (others => '0'); 	-- Z,N,C
+signal aux_FLAGS_LOG			: std_logic_vector(1 downto 0) := (others => '0'); 	-- Z,N
 signal aux_FLAGS				: std_logic_vector(3 downto 0) := (others => '0'); 	-- Z,N,C,O
-signal aux_act_FLAGS			: std_logic_vector(3 downto 0) := (others => '0'); 	-- Z,N,C,O
 signal aux_MSR_FLAGS			: std_logic_vector(3 downto 0) := (others => '0');
 signal aux_FLAGTEST				: std_logic := '0';
 signal operando_A				: std_logic_vector(15 downto 0) := (others => '0');
@@ -41,7 +43,7 @@ signal q_ALU					: std_logic_vector(15 downto 0) := (others => '0');
 signal cIN_ALU					: std_logic := '0';
 signal out_ARI					: std_logic_vector(16 downto 0) := (others => '0');
 signal out_LOG					: std_logic_vector(15 downto 0) := (others => '0');
-signal out_SHIFT				: std_logic_vector(15 downto 0) := (others => '0');
+signal out_SHIFT				: std_logic_vector(16 downto 0) := (others => '0');
 signal sel_mux_LOG				: std_logic_vector(2 downto 0) := (others => '0');
 signal sel_mux_ALU				: std_logic_vector(1 downto 0) := (others => '0');
 signal aux_sel_mux_ALU_bit0		: std_logic := '0';
@@ -116,8 +118,8 @@ out_LOG <=  zeros_ALU									when sel_mux_LOG = "000" else
 
 ---------------------------------------- shifts ---------------------------------------------
 
-out_SHIFT <= (operando_A(14 downto 0) & '0') 				when oper_ALU(0) = '0' else -- SLL
-			 (operando_A(15) & operando_A(15 downto 1));								-- SRA
+out_SHIFT <= (operando_A(15 downto 0) & '0') when oper_ALU(0) = '0' else -- SLL
+			 (operando_A(15) & operando_A(15) & operando_A(15 downto 1));								-- SRA
 
 ---------------------------------- resultado final da ALU -----------------------------------
 
@@ -138,34 +140,63 @@ Sign_FLAG(1) <=  not(ALU_OP(4));
 
 Sign_FLAG(0) <=  (ALU_OP(2) and (not(ALU_OP(1)) or ALU_OP(2))) or (ALU_OP(4) and (not(ALU_OP(2)) and ((not(ALU_OP(1)) and ALU_OP(0)) or ALU_OP(3)))) or ((ALU_OP(4)) nor ALU_OP(3)) or (not(ALU_OP(0)) and ALU_OP(1));
 
-aux_act_FLAGS <= "0000"	when Sign_FLAG ="00" else 
-				"1100" 	when Sign_FLAG ="01" else 
-				"0111" 	when Sign_FLAG ="10" else 
-				"1111";
+a--Actualizar FLAGS
 
---Actualizar FLAGS
+---------------------------FLAGS DA ALU-----------------------------
 
 
 --OVERFLOW
 
-aux_FLAGS(0) <=  ((p_ALU(15) XOR q_ALU(15)) and  (!(p_ALU(15)) XNOR q_ALU(15)));
+aux_FLAGS_ALU(0) <=  out_ALU(16) xor out_ALU(15);
 
 --CARRY
-aux_FLAGS(1) <=  (out_ALU(16) AND '1');
+aux_FLAGS_ALU(1) <=  out_ALU(16);
 
 --NEGATIVE
-aux_FLAGS(2) <=  (out_ALU(15) AND '1');
+aux_FLAGS_ALU(2) <=  out_ALU(15);
 
 --ZERO
-aux_FLAGS(3) <= (out_ALU XOR "00000000000000000");
+aux_FLAGS_ALU(3) <= not(out_ALU(15) or out_ALU(14) or out_ALU(13) or out_ALU(12)or out_ALU(11) 
+				 or out_ALU(10) or out_ALU(9) or out_ALU(8) or out_ALU(7) or out_ALU(6) 
+				 or out_ALU(5) or out_ALU(4) or out_ALU(3) or out_ALU(2) or out_ALU(1)
+				 or out_ALU(0));
+
+------------------------FLAGS LOGICA-------------------------------
+--NEGATIVE
+aux_FLAGS_LOG(0) <= out_LOG(16);
+--ZERO
+aux_FLAGS_LOG(1) <= not(out_LOG(15) or out_LOG(14) or out_LOG(13) or out_LOG(12)or out_LOG(11) 
+				 or out_LOG(10) or out_LOG(9) or out_LOG(8) or out_LOG(7) or out_LOG(6) 
+				 or out_LOG(5) or out_LOG(4) or out_LOG(3) or out_LOG(2) or out_LOG(1)
+				 or out_LOG(0));
 
 
-aux_FLAGS <= (FLAGS_IN AND !(aux_act_FLAGS)) OR (aux_act_FLAGS AND aux_FLAGS);
+------------------------FLAGS SHIFT-------------------------------
+--CARRY
+aux_FLAGS_SHIFT(0) <= out_SHIFT(16);
+
+--NEGATIVE
+aux_FLAGS_SHIFT(1) <= out_SHIFT(15);
+
+--ZERO
+aux_FLAGS_SHIFT(2)	<= not(out_SHIFT(15) or out_SHIFT(14) or out_SHIFT(13) or out_SHIFT(12)or out_SHIFT(11) 
+				 	or out_SHIFT(10) or out_SHIFT(9) or out_SHIFT(8) or out_SHIFT(7) or out_SHIFT(6) 
+				 	or out_SHIFT(5) or out_SHIFT(4) or out_SHIFT(3) or out_SHIFT(2) or out_SHIFT(1)
+				 	or out_SHIFT(0));
+-------------------------------------------------------------------
+
+aux_FLAGS <= 	 FLAGS_IN								when Sign_FLAG ="00" else 
+				 aux_FLAGS_LOG & FLAGS_IN(1 downto 0) 	when Sign_FLAG ="01" else 
+				 aux_FLAGS_SHIFT & FLAGS_IN(0) 			when Sign_FLAG ="10" else 
+				 aux_FLAGS_ALU;
+
+
+
 ---------------------------------------------------------------------------------------------
 ---------------------------------- TESTE FLAGS ----------------------------------------------
 ---------------------------------------------------------------------------------------------
-aux_FLAGMUX	 <= 	FLAGS_IN(0) 						when TRANS_FI_COND_IN = "0101" else
-					FLAGS_IN(1)					when TRANS_FI_COND_IN = "0100" else
+aux_FLAGMUX	 <= 	FLAGS_IN(0) 					when TRANS_FI_COND_IN = "0101" else
+					FLAGS_IN(1)						when TRANS_FI_COND_IN = "0100" else
 					FLAGS_IN(2) 					when TRANS_FI_COND_IN = "0110" else
 					FLAGS_IN(3) 					when TRANS_FI_COND_IN = "0011" else
 					'1' 	 	 					when TRANS_FI_COND_IN = "0000" else
