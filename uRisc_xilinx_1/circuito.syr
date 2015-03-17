@@ -4,7 +4,7 @@ Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.06 secs
+Total CPU time to Xst completion: 0.07 secs
  
 --> Parameter xsthdpdir set to xst
 
@@ -183,13 +183,13 @@ Synthesizing Unit <EXeMEM>.
     Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/exemem.vhd".
     Found 68-bit register for signal <aux_reg_EXMEM_OUT>.
     Found 4-bit register for signal <aux_MSR_FLAGS>.
-    Found 17-bit adder for signal <n0245> created at line 113.
-    Found 17-bit adder for signal <out_ARI> created at line 113.
+    Found 17-bit adder for signal <n0246> created at line 114.
+    Found 17-bit adder for signal <out_ARI> created at line 114.
     Found 16-bit 4-to-1 multiplexer for signal <q_ALU> created at line 42.
     Found 16-bit 8-to-1 multiplexer for signal <out_LOG> created at line 45.
     Found 16-bit 4-to-1 multiplexer for signal <out_ALU> created at line 29.
     Found 4-bit 4-to-1 multiplexer for signal <aux_FLAGS> created at line 34.
-    Found 1-bit 8-to-1 multiplexer for signal <_n0297> created at line 50.
+    Found 1-bit 8-to-1 multiplexer for signal <_n0298> created at line 50.
     Summary:
 	inferred   2 Adder/Subtractor(s).
 	inferred  72 D-type flip-flop(s).
@@ -319,7 +319,6 @@ Macro Statistics
 =========================================================================
 
 Optimizing unit <circuito> ...
-WARNING:Xst:1710 - FF/Latch <inst_IDeOF/reg_IDOF_OUT_72> (without init value) has a constant value of 0 in block <circuito>. This FF/Latch will be trimmed during the optimization process.
 
 Optimizing unit <InF> ...
 
@@ -335,8 +334,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 313
- Flip-Flops                                            : 313
+# Registers                                            : 314
+ Flip-Flops                                            : 314
 
 =========================================================================
 
@@ -359,19 +358,19 @@ Top Level Output File Name         : circuito.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 324
+# BELS                             : 325
 #      GND                         : 1
 #      LUT2                        : 11
 #      LUT3                        : 19
-#      LUT4                        : 48
+#      LUT4                        : 49
 #      LUT5                        : 21
 #      LUT6                        : 135
 #      MUXCY                       : 27
 #      MUXF7                       : 32
 #      VCC                         : 1
 #      XORCY                       : 29
-# FlipFlops/Latches                : 313
-#      FDR                         : 181
+# FlipFlops/Latches                : 314
+#      FDR                         : 182
 #      FDRE                        : 128
 #      FDS                         : 4
 # RAMS                             : 2
@@ -389,15 +388,15 @@ Selected Device : 7a200tffg1156-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:             313  out of  259600     0%  
- Number of Slice LUTs:                  234  out of  129800     0%  
-    Number used as Logic:               234  out of  129800     0%  
+ Number of Slice Registers:             314  out of  259600     0%  
+ Number of Slice LUTs:                  235  out of  129800     0%  
+    Number used as Logic:               235  out of  129800     0%  
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:    411
-   Number with an unused Flip Flop:      98  out of    411    23%  
-   Number with an unused LUT:           177  out of    411    43%  
-   Number of fully used LUT-FF pairs:   136  out of    411    33%  
+ Number of LUT Flip Flop pairs used:    412
+   Number with an unused Flip Flop:      98  out of    412    23%  
+   Number with an unused LUT:           177  out of    412    42%  
+   Number of fully used LUT-FF pairs:   137  out of    412    33%  
    Number of unique control sets:        10
 
 IO Utilization: 
@@ -430,7 +429,7 @@ Clock Information:
 -----------------------------------+------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)  | Load  |
 -----------------------------------+------------------------+-------+
-clk_in                             | BUFGP                  | 315   |
+clk_in                             | BUFGP                  | 316   |
 -----------------------------------+------------------------+-------+
 
 Asynchronous Control Signals Information:
@@ -442,7 +441,7 @@ Timing Summary:
 Speed Grade: -3
 
    Minimum period: 3.233ns (Maximum Frequency: 309.272MHz)
-   Minimum input arrival time before clock: 1.171ns
+   Minimum input arrival time before clock: 1.172ns
    Maximum output required time after clock: 0.645ns
    Maximum combinational path delay: No path found
 
@@ -453,7 +452,7 @@ All values displayed in nanoseconds (ns)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk_in'
   Clock period: 3.233ns (frequency: 309.272MHz)
-  Total number of paths / destination ports: 9139 / 426
+  Total number of paths / destination ports: 9146 / 427
 -------------------------------------------------------------------------
 Delay:               3.233ns (Levels of Logic = 4)
   Source:            inst_IDeOF/reg_IDOF_OUT_42 (FF)
@@ -477,9 +476,9 @@ Delay:               3.233ns (Levels of Logic = 4)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'clk_in'
-  Total number of paths / destination ports: 329 / 329
+  Total number of paths / destination ports: 330 / 330
 -------------------------------------------------------------------------
-Offset:              1.171ns (Levels of Logic = 2)
+Offset:              1.172ns (Levels of Logic = 2)
   Source:            rst_in (PAD)
   Destination:       inst_IDeOF/reg_IDOF_OUT_52 (FF)
   Destination Clock: clk_in rising
@@ -488,11 +487,11 @@ Offset:              1.171ns (Levels of Logic = 2)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O           313   0.001   0.445  rst_in_IBUF (rst_in_IBUF)
+     IBUF:I->O           314   0.001   0.445  rst_in_IBUF (rst_in_IBUF)
      LUT2:I1->O            1   0.097   0.279  reg_IF_OUT<23>1 (reg_IF_OUT<23>_0)
      FDR:R                     0.349          inst_IDeOF/reg_IDOF_OUT_52
     ----------------------------------------
-    Total                      1.171ns (0.447ns logic, 0.724ns route)
+    Total                      1.172ns (0.447ns logic, 0.725ns route)
                                        (38.2% logic, 61.8% route)
 
 =========================================================================
@@ -530,14 +529,14 @@ clk_in         |    3.233|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 10.00 secs
-Total CPU time to Xst completion: 9.75 secs
+Total REAL time to Xst completion: 11.00 secs
+Total CPU time to Xst completion: 11.06 secs
  
 --> 
 
-Total memory usage is 434948 kilobytes
+Total memory usage is 449220 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    2 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
 Number of infos    :    3 (   0 filtered)
 

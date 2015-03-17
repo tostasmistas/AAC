@@ -58,6 +58,7 @@ signal aux_EXMEM_bit6			: std_logic := '0';
 signal aux_EXMEM_bit15 			: std_logic := '0';
 signal Sign_FLAG					: std_logic_vector(1 downto 0) := (others => '0');
 signal out_ADD_MEM_aux			: std_logic_vector(11 downto 0) := (others => '0');
+signal out_WE_MEM_aux			: std_logic := '0';
 signal aux_reg_EXMEM_OUT		: std_logic_vector(67 downto 0) := (others => '0');
 
 --------------------------------------------------------------------------
@@ -87,8 +88,8 @@ out_ADD_MEM_aux <= operando_A(11 downto 0); -- para endereçar leitura e escrita
 
 out_ADD_MEM <= out_ADD_MEM_aux;
 
-out_WE_MEM <= reg_IDOF_OUT(72); -- write-enable da RAM
-
+out_WE_MEM <= out_WE_MEM_aux; -- write-enable da RAM
+out_WE_MEM_aux <= reg_IDOF_OUT(72);
 out_MEM <= out_RAM; -- armazenar depois em RC o valor contido na posição de memória endereçada por A
 
 in_RAM <= operando_B; -- armazenar na posição de memória endereçada por A o valor contido em B

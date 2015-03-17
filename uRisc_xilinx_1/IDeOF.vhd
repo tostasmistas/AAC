@@ -161,13 +161,13 @@ lch <=	aux_CONS_FII_8B & RA_C(7 downto 0);						-- lch c
 select_mux_constantes <= inst_IN(15) & inst_IN(10);
 
 out_mux_constantes <=	const11		when select_mux_constantes = "00" else
-						const11		when select_mux_constantes = "01" else
-						lcl 		when select_mux_constantes = "10" else
-						lch;
+								const11		when select_mux_constantes = "01" else
+								lcl 			when select_mux_constantes = "10" else
+								lch;
 
-ALU_vs_MEM <= aux_ALU_OPER(1) and not(aux_ALU_OPER(2)) and aux_ALU_OPER(3) and not(aux_ALU_OPER(0));
+ALU_vs_MEM <= (aux_ALU_OPER(1) and not(aux_ALU_OPER(2))) and (aux_ALU_OPER(3) and not(aux_ALU_OPER(4)));
 
-WE_RAM <= (inst_IN(15) and not(inst_IN(14))) and ALU_vs_MEM and inst_IN(6);
+WE_RAM <= (inst_IN(15) and not(inst_IN(14))) and (ALU_vs_MEM and inst_IN(6));
 
 JUMP_MUXPC_OUT <= aux_JUMPS_active;
 JUMP_MUXWB_OUT <= aux_JUMPS_MUX_WB;

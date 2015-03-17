@@ -15,19 +15,3 @@ Finished circuit initialization process.
 at 0 ps, Instance /test/uut/inst_EXeMEM/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
 at 0 ps, Instance /test/uut/inst_EXeMEM/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
 at 5 ns(1), Instance /test/uut/inst_memoria_RAM/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-# restart
-# run all
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-at 0 ps, Instance /test/uut/inst_EXeMEM/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-at 0 ps, Instance /test/uut/inst_EXeMEM/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-at 5 ns(1), Instance /test/uut/inst_memoria_RAM/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-Stopped at time : 1586010 ns : File "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/registos.vhd" Line 134
-# restart
-# run all
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-at 0 ps, Instance /test/uut/inst_EXeMEM/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-at 0 ps, Instance /test/uut/inst_EXeMEM/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-at 5 ns(1), Instance /test/uut/inst_memoria_RAM/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-Stopped at time : 1862465 ns : File "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/IF.vhd" Line 44
