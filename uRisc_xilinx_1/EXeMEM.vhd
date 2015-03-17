@@ -7,12 +7,12 @@ entity EXeMEM is
 	port(
 		-- input
 		clk, rst 					: in std_logic;
-		reg_IDOF_OUT				: in std_logic_vector(71 downto 0);			-- registo entre andares
+		reg_IDOF_OUT				: in std_logic_vector(73 downto 0);			-- registo entre andares
 		FLAGS_IN					: in std_logic_vector(3 downto 0);
 		out_RAM						: in std_logic_vector(15 downto 0);
 		
 		-- output
-		reg_EXMEM_OUT				: out std_logic_vector(66 downto 0);		-- registo entre andares
+		reg_EXMEM_OUT				: out std_logic_vector(67 downto 0);		-- registo entre andares
 		out_ADD_MEM					: out std_logic_vector(11 downto 0);		-- para endereçar a RAM
 		out_WE_MEM					: out std_logic;							-- para controlar o WE da RAM 
 		FLAGS_OUT					: out std_logic_vector(3 downto 0);
@@ -28,7 +28,7 @@ architecture Behavioral of EXeMEM is
 --------------------------------------------------------------------------
 signal out_ALU					: std_logic_vector(15 downto 0) := (others => '0'); -- saída da ALU
 signal out_MEM					: std_logic_vector(15 downto 0) := (others => '0'); -- saída da memória
-signal aux_FLAGS_ALU			: std_logic_vector(3 downto 0) := (others => '0'); 	-- Z,N,C,O
+signal aux_FLAGS_ARI			: std_logic_vector(3 downto 0) := (others => '0'); 	-- Z,N,C,O
 signal aux_FLAGS_SHIFT			: std_logic_vector(2 downto 0) := (others => '0'); 	-- Z,N,C
 signal aux_FLAGS_LOG			: std_logic_vector(1 downto 0) := (others => '0'); 	-- Z,N
 signal aux_FLAGS				: std_logic_vector(3 downto 0) := (others => '0'); 	-- Z,N,C,O
@@ -57,23 +57,25 @@ signal FLAGTEST_active_IN	    : std_logic := '0';
 signal aux_EXMEM_bit6			: std_logic := '0';
 signal aux_EXMEM_bit15 			: std_logic := '0';
 signal Sign_FLAG					: std_logic_vector(1 downto 0) := (others => '0');
-
+signal out_ADD_MEM_aux			: std_logic_vector(11 downto 0) := (others => '0');
+signal aux_reg_EXMEM_OUT		: std_logic_vector(67 downto 0) := (others => '0');
 
 --------------------------------------------------------------------------
 ---------------------  Constantes   --------------------------------------
 --------------------------------------------------------------------------
-constant zeros					: std_logic_vector(3 downto 0) := (others => '0');
+constant zeros					: std_logic_vector(67 downto 0) := (others => '0');
+constant zeros_4				: std_logic_vector(3 downto 0) :=(others => '1');
 constant menusum				: std_logic_vector(15 downto 0) :=(others => '1');
 constant zeros_ALU				: std_logic_vector(15 downto 0) := (others => '0');
 
 begin
 
-operando_A 			<= reg_IDOF_OUT(48 downto 33);
-operando_B 			<= reg_IDOF_OUT(32 downto 17);
-oper_ALU 			<= reg_IDOF_OUT(70 downto 66);
+operando_A 				<= reg_IDOF_OUT(48 downto 33);
+operando_B 				<= reg_IDOF_OUT(32 downto 17);
+oper_ALU 				<= reg_IDOF_OUT(70 downto 66);
 FLAGTEST_active_IN 	<= reg_IDOF_OUT(71);
-TRANS_OP 		 	<= reg_IDOF_OUT(51 downto 50);
-TRANS_FI_COND_IN 	<= reg_IDOF_OUT(49) & reg_IDOF_OUT(70 downto 68);
+TRANS_OP 		 		<= reg_IDOF_OUT(51 downto 50);
+TRANS_FI_COND_IN 		<= reg_IDOF_OUT(49) & reg_IDOF_OUT(70 downto 68);
 aux_EXMEM_bit6 		<= reg_IDOF_OUT(66);
 aux_EXMEM_bit15		<= reg_IDOF_OUT(73);
 
@@ -81,7 +83,9 @@ aux_EXMEM_bit15		<= reg_IDOF_OUT(73);
 ---------------------------------- MEMÓRIA --------------------------------------------------
 ---------------------------------------------------------------------------------------------
 
-out_ADD_MEM <= operando_A(11 downto 0); -- para endereçar leitura e escrita da RAM
+out_ADD_MEM_aux <= operando_A(11 downto 0); -- para endereçar leitura e escrita da RAM
+
+out_ADD_MEM <= out_ADD_MEM_aux;
 
 out_WE_MEM <= reg_IDOF_OUT(72); -- write-enable da RAM
 
@@ -105,8 +109,8 @@ q_ALU <= operando_B			when sel_mux_q = "00" else
 		 zeros_ALU;	 
 
 cIN_ALU <= oper_ALU(0);
-		
-out_ARI <= p_ALU + q_ALU + cIN_ALU;
+
+out_ARI <= (p_ALU(15) & p_ALU) + (q_ALU(15) & q_ALU) + cIN_ALU;
 
 --------------------------------------- lógicas ---------------------------------------------
 
@@ -130,10 +134,10 @@ out_SHIFT <= (operando_A(15 downto 0) & '0') when oper_ALU(0) = '0' else  -- SLL
 
 sel_mux_ALU <= oper_ALU(4) & oper_ALU(3);
 
-out_ALU <=	out_ARI			when sel_mux_ALU = "00" 	else
-			out_SHIFT 		when sel_mux_ALU = "01"		else
-			out_LOG 		when sel_mux_ALU = "10"		else
-			not(out_LOG);
+out_ALU <=	out_ARI(15 downto 0)			when sel_mux_ALU = "00" 	else
+				out_SHIFT(15 downto 0) 		when sel_mux_ALU = "01"		else
+			   out_LOG 		               when sel_mux_ALU = "10"		else
+			   not(out_LOG);
 
 ---------------------------------------------------------------------------------------------
 ----------------------------------- FLAGS ---------------------------------------------------
@@ -152,23 +156,23 @@ Sign_FLAG(0) <=  (oper_ALU(2) and (not(oper_ALU(1)) or oper_ALU(2))) or (oper_AL
 
 --OVERFLOW
 
-aux_FLAGS_ALU(0) <=  out_ALU(16) xor out_ALU(15);
+aux_FLAGS_ARI(0) <=  out_ARI(16) xor out_ARI(15);
 
 --CARRY
-aux_FLAGS_ALU(1) <=  out_ALU(16);
+aux_FLAGS_ARI(1) <=  out_ARI(16);
 
 --NEGATIVE
-aux_FLAGS_ALU(2) <=  out_ALU(15);
+aux_FLAGS_ARI(2) <=  out_ARI(15);
 
 --ZERO
-aux_FLAGS_ALU(3) <= not(out_ALU(15) or out_ALU(14) or out_ALU(13) or out_ALU(12)or out_ALU(11) 
-				 or out_ALU(10) or out_ALU(9) or out_ALU(8) or out_ALU(7) or out_ALU(6) 
-				 or out_ALU(5) or out_ALU(4) or out_ALU(3) or out_ALU(2) or out_ALU(1)
-				 or out_ALU(0));
+aux_FLAGS_ARI(3) <= not(out_ARI(15) or out_ARI(14) or out_ARI(13) or out_ARI(12)or out_ARI(11) 
+				 or out_ARI(10) or out_ARI(9) or out_ARI(8) or out_ARI(7) or out_ARI(6) 
+				 or out_ARI(5) or out_ARI(4) or out_ARI(3) or out_ARI(2) or out_ARI(1)
+				 or out_ARI(0));
 
 ------------------------FLAGS LOGICA-------------------------------
 --NEGATIVE
-aux_FLAGS_LOG(0) <= out_LOG(16);
+aux_FLAGS_LOG(0) <= out_LOG(15);
 --ZERO
 aux_FLAGS_LOG(1) <= not(out_LOG(15) or out_LOG(14) or out_LOG(13) or out_LOG(12)or out_LOG(11) 
 				 or out_LOG(10) or out_LOG(9) or out_LOG(8) or out_LOG(7) or out_LOG(6) 
@@ -190,10 +194,10 @@ aux_FLAGS_SHIFT(2)	<= not(out_SHIFT(15) or out_SHIFT(14) or out_SHIFT(13) or out
 				 	or out_SHIFT(0));
 -------------------------------------------------------------------
 
-aux_FLAGS <= 	 FLAGS_IN								when Sign_FLAG ="00" else 
+aux_FLAGS <= FLAGS_IN										when Sign_FLAG ="00" else 
 				 aux_FLAGS_LOG & FLAGS_IN(1 downto 0) 	when Sign_FLAG ="01" else 
 				 aux_FLAGS_SHIFT & FLAGS_IN(0) 			when Sign_FLAG ="10" else 
-				 aux_FLAGS_ALU;
+				 aux_FLAGS_ARI;
 
 
 
@@ -223,7 +227,7 @@ process (clk, rst)
 	begin
 		if clk'event and clk = '1' then
 			if rst = '1' then
-				aux_MSR_FLAGS <= zeros;
+				aux_MSR_FLAGS <= zeros_4;
 			else
 				aux_MSR_FLAGS <= aux_FLAGS;
 			end if;		
@@ -244,15 +248,17 @@ process (clk, rst)
 	begin
 		if clk'event and clk = '1' then
 			if rst = '1' then
-				reg_EXMEM_OUT <= zeros;
+				aux_reg_EXMEM_OUT <= zeros;
 			else
-				reg_EXMEM_OUT <= aux_EXMEM_bit6 & aux_EXMEM_bit15 & out_MEM & ALU_vs_MEM & reg_IDOF_OUT(64 downto 53) & reg_IDOF_OUT(52) & reg_IDOF_OUT(51 downto 49) & 
+				aux_reg_EXMEM_OUT <= aux_EXMEM_bit6 & aux_EXMEM_bit15 & out_MEM & reg_IDOF_OUT(65) & reg_IDOF_OUT(64 downto 53) & reg_IDOF_OUT(52) & reg_IDOF_OUT(51 downto 49) & 
 								 out_ALU & reg_IDOF_OUT(16 downto 1) & reg_IDOF_OUT(0);
 				-- reg_EXMEM_OUT <= aux_EXMEM_bit6 & aux_EXMEM_bit15 & out_MEM & ALU_vs_MEM & save_pc_add_1 & JUMP_MUXWB_OUT & aux_ADD_RWC & 
 				--                  out_ALU & out_mux_constantes & ALU_CONS_SEL;
 			end if;	
 		end if;
 end process;
+
+reg_EXMEM_OUT <= aux_reg_EXMEM_OUT;
 
 end Behavioral;
 

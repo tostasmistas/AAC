@@ -19,7 +19,7 @@ entity IDeOF is
 		JUMP_MUXPC_OUT			: out std_logic;						-- vai para o IF
 		destino_jump			: out std_logic_vector(11 downto 0);
 		destino_cond			: out std_logic_vector(11 downto 0);
-		reg_IDOF_OUT			: out std_logic_vector(71 downto 0) 	-- registo entre andares
+		reg_IDOF_OUT			: out std_logic_vector(73 downto 0) 	-- registo entre andares
 	);
 end IDeOF;
 
@@ -30,27 +30,24 @@ architecture Behavioral of IDeOF is
 --------------------------------------------------------------------------
 signal inst_IN 				: std_logic_vector(15 downto 0) := (others => '0');
 signal aux_ADD_RWC			: std_logic_vector(2 downto 0) := (others => '0');
-signal aux_ADD_RA			: std_logic_vector(2 downto 0) := (others => '0');
-signal aux_ADD_RB			: std_logic_vector(2 downto 0) := (others => '0');
+signal aux_ADD_RA				: std_logic_vector(2 downto 0) := (others => '0');
+signal aux_ADD_RB				: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_ADD_RA_C			: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_ALU_OPER			: std_logic_vector(4 downto 0) := (others => '0');
-signal aux_CONS_FI_11B		: std_logic_vector(11 downto 0) := (others => '0');
-signal aux_CONS_FII_R		: std_logic := '0';
+signal aux_CONS_FI_11B		: std_logic_vector(10 downto 0) := (others => '0');
 signal aux_CONS_FII_8B		: std_logic_vector(7 downto 0) := (others => '0');
-signal aux_CONS_FI_RWC		: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_active_FLAGTEST	: std_logic := '0';
 signal aux_TRANS_OP			: std_logic_vector(1 downto 0) := (others => '0');
-signal aux_TRANS_FI_COND	: std_logic_vector(2 downto 0) := (others => '0');
-signal aux_TRANS_FI_DES 	: std_logic_vector(7 downto 0) := (others => '0');
+signal aux_TRANS_FI_DES 	: std_logic_vector(11 downto 0) := (others => '0');
 signal aux_TRANS_FII_DES	: std_logic_vector(11 downto 0) := (others => '0');
 signal aux_TRANS_DES			: std_logic_vector(11 downto 0) := (others => '0');
 signal aux_TRANS_FIII_R	  	: std_logic := '0';
 signal aux_JUMPS_active		: std_logic := '0';
 signal aux_JUMPS_MUX_WB		: std_logic := '0';
 signal JUMP_MUXWB_OUT		: std_logic := '0';
-signal ALU_vs_MEM			: std_logic := '0';
-signal RA_C 				: std_logic_vector(15 downto 0) := (others => '0');
-signal RB 					: std_logic_vector(15 downto 0) := (others => '0');
+signal ALU_vs_MEM				: std_logic := '0';
+signal RA_C 					: std_logic_vector(15 downto 0) := (others => '0');
+signal RB 						: std_logic_vector(15 downto 0) := (others => '0');
 signal oper_A				: std_logic_vector(15 downto 0);	-- operando A para a ALU
 signal oper_B				: std_logic_vector(15 downto 0);	-- operando B para a ALU
 signal const11				: std_logic_vector(15 downto 0);	-- operando B para a ALU
@@ -67,7 +64,7 @@ signal WE_RAM					: std_logic := '0';
 ---------------------  Constantes   --------------------------------------
 --------------------------------------------------------------------------
 constant one				: std_logic_vector(12 downto 0) :="0000000000001" ;
-constant zeros				: std_logic_vector(12 downto 0) := (others => '0');
+constant zeros				: std_logic_vector(73 downto 0) := (others => '0');
 
 begin
 
@@ -97,7 +94,7 @@ aux_active_FLAGTEST <= inst_IN(15) or inst_IN(14); --- Activa a FLAGTESTE
 aux_TRANS_OP 		<= inst_IN(13 downto 12);
 
 -------- 0 0/ 0 1 -> Formato I condicional -------------------------------
-aux_TRANS_FI_COND 	<= inst_IN(12 downto 8);
+
 aux_TRANS_FI_DES 	<= (11 downto 8 => inst_IN(7)) & inst_IN(7 downto 0);
 
 -------- 1 0 -> Formato II incondicional ---------------------------------
@@ -110,15 +107,14 @@ aux_JUMPS_MUX_WB 	<= not(inst_IN(11)) and aux_JUMPS_active;
 -------------Escolha da constante do destino-----------------------------
  
 aux_TRANS_DES <= aux_TRANS_FI_DES when aux_TRANS_OP(1) = '0'  else
-				 aux_TRANS_FII_DES;
+				     aux_TRANS_FII_DES;
 
 
 --------------------------------------------------------------------------
 -------- 0 1 -> Constantes	Formato I   -----------------------------------
 --------------------------------------------------------------------------
 
-ALU_CONS_SEL		<=  inst_IN(14);
-aux_CONS_FI_RWC 	<= 	inst_IN(13 downto 11);
+ALU_CONS_SEL		<=  	inst_IN(14);
 aux_CONS_FI_11B 	<= 	inst_IN(10 downto 0 );
 
 
@@ -131,8 +127,7 @@ aux_ALU_OPER		<=	inst_IN(10 downto 6);
 --------------------------------------------------------------------------
 -------- 1 1 -> Constantes	Formato II  -----------------------------------
 --------------------------------------------------------------------------
-aux_CONS_FII_R		<=	inst_IN(10);
-aux_CONS_FII_8B		<=	inst_IN(7 downto 0);
+aux_CONS_FII_8B	<=	inst_IN(7 downto 0);
 
 
 --------------------------------------------------------------------------
@@ -159,7 +154,7 @@ RB <= 	R0 when aux_ADD_RB = "000" else
 oper_A <=	RA_C; 	-- operando A da ALU
 oper_B <=	RB;		-- operando B da ALU
 
-const11 <= (15 downto 11 => aux_CONS_FI_11B(11)) & aux_CONS_FI_11B;	-- loadlit c
+const11 <= (15 downto 11 => aux_CONS_FI_11B(10)) & aux_CONS_FI_11B;	-- loadlit c
 lcl <=	RA_C(15 downto 8) & aux_CONS_FII_8B;					-- lcl c
 lch <=	aux_CONS_FII_8B & RA_C(7 downto 0);						-- lch c
 

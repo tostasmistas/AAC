@@ -47,8 +47,7 @@ signal aux_reg_r7 : std_logic_vector(15 downto 0) := (others => '0');
 --------------------------------------------------------------------------
 ---------------------  Constantes   --------------------------------------
 --------------------------------------------------------------------------
-constant one				: std_logic_vector(11 downto 0) :="0000000000001" ;
-constant zeros				: std_logic_vector(11 downto 0) := (others => '0');
+constant zeros				: std_logic_vector(15 downto 0) := (others => '0');
 
 begin
 

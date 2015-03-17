@@ -1,5 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity memoria_RAM is
 		Generic(
@@ -19,10 +20,10 @@ architecture Behavioral of memoria_RAM is
 type MEM_TYPE is array(0 to (2**ADDR_SIZE)-1) of STD_LOGIC_VECTOR(15 downto 0);
 
 constant InitValue : MEM_TYPE := ( 
-	others=> x"00000000"
+	others=> X"0000"
 	);
 
-shared variable myRAM : MEM_TYPE;
+shared variable RAM : MEM_TYPE := InitValue;
 
 
 begin
@@ -30,9 +31,9 @@ process (CLK_A)
 	begin
 		if rising_edge(CLK_A)then
 			if WE_A='1'  then
-			--	RAM(conv_integer(Addr_A)) := DI_A;
+				RAM(conv_integer(Addr_A)) := DI_A;
 			end if;
-			--	DO_A <= RAM(conv_integer(Addr_A));
+				DO_A <= RAM(conv_integer(Addr_A));
 	end if;
 end process;
 
