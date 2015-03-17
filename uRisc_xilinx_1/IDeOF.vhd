@@ -17,6 +17,8 @@ entity IDeOF is
 		
 		-- output					
 		JUMP_MUXPC_OUT			: out std_logic;						-- vai para o IF
+		destino_jump			: out std_logic_vector(11 downto 0);
+		destino_cond			: out std_logic_vector(11 downto 0);
 		reg_IDOF_OUT			: out std_logic_vector(71 downto 0) 	-- registo entre andares
 	);
 end IDeOF;
@@ -40,6 +42,7 @@ signal aux_active_FLAGTEST	: std_logic := '0';
 signal aux_TRANS_OP			: std_logic_vector(1 downto 0) := (others => '0');
 signal aux_TRANS_FI_COND	: std_logic_vector(2 downto 0) := (others => '0');
 signal aux_TRANS_FI_DES 	: std_logic_vector(7 downto 0) := (others => '0');
+signal aux_TRANS_FII_DES	: std_logic_vector(11 downto 0) := (others => '0');
 signal aux_TRANS_FII_DES	: std_logic_vector(11 downto 0) := (others => '0');
 signal aux_TRANS_FIII_R	  	: std_logic := '0';
 signal aux_JUMPS_active		: std_logic := '0';
@@ -101,6 +104,11 @@ aux_TRANS_FII_DES	<= inst_IN(11 downto 0);
 -------- 1 1 -> Formato III jumps ----------------------------------------
 aux_JUMPS_active 	<= not(aux_active_FLAGTEST) and inst_IN(13) and inst_IN(12); ----- TESTE de activação do FIII, escolhe o mux2:1
 aux_JUMPS_MUX_WB 	<= not(inst_IN(11)) and aux_JUMPS_active;
+
+-------------Escolha da constante do destino-----------------------------
+ 
+aux_TRANS_DES <= aux_TRANS_FI_DES when aux_TRANS_OP(1) = '0'  else
+				 aux_TRANS_FII_DES;
 
 
 --------------------------------------------------------------------------
@@ -166,6 +174,8 @@ WE_RAM <= (inst_IN(15) and not(inst_IN(14))) and ALU_vs_MEM and inst_IN(6);
 
 JUMP_MUXPC_OUT <= aux_JUMPS_active;
 JUMP_MUXWB_OUT <= aux_JUMPS_MUX_WB;
+destino_cond	<= aux_TRANS_DES;
+destino_jump	<= oper_B(11 downto 0);
 
 --------------------------------------------------------------------------
 ------------------------------- Exit -------------------------------------
