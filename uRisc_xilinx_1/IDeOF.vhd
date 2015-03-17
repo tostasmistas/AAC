@@ -59,6 +59,7 @@ signal lch 					: std_logic_vector(15 downto 0);	-- operando B para a ALU
 signal select_mux_constantes: std_logic_vector(1 downto 0);
 signal out_mux_constantes	: std_logic_vector(15 downto 0);	-- operando para carregamento de constantes		
 signal ALU_CONS_SEL			: std_logic := '0'; 				-- sinal de selecção para MUX entre operação da ALU e operação de carregamento de constantes
+signal aux_IDOF_bit15		: std_logic := '0';
 
 
 --------------------------------------------------------------------------
@@ -174,8 +175,10 @@ WE_RAM <= (inst_IN(15) and not(inst_IN(14))) and ALU_vs_MEM and inst_IN(6);
 
 JUMP_MUXPC_OUT <= aux_JUMPS_active;
 JUMP_MUXWB_OUT <= aux_JUMPS_MUX_WB;
-destino_cond	<= aux_TRANS_DES;
-destino_jump	<= oper_B(11 downto 0);
+destino_cond   <= aux_TRANS_DES;
+destino_jump   <= oper_B(11 downto 0);
+
+aux_IDOF_bit15 <= inst_IN(15);
 
 --------------------------------------------------------------------------
 ------------------------------- Exit -------------------------------------
@@ -188,9 +191,9 @@ process (clk, rst)
 			if rst = '1' then
 				reg_IDOF_OUT <= zeros;
 			else
-				reg_IDOF_OUT <= WE_RAM & FLAGTEST_active_OUT & aux_ALU_OPER & ALU_vs_MEM & reg_IF_OUT(11 downto 0) & JUMP_MUXWB_OUT & aux_ADD_RWC & 
+				reg_IDOF_OUT <= aux_IDOF_bit15 & WE_RAM & FLAGTEST_active_OUT & aux_ALU_OPER & ALU_vs_MEM & reg_IF_OUT(11 downto 0) & JUMP_MUXWB_OUT & aux_ADD_RWC & 
 								oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
-				-- reg_IDOF_OUT <= WE_RAM & FLAGTEST_active_OUT & aux_ALU_OPER & ALU_vs_MEM & save_pc_add_1 & JUMP_MUXWB_OUT & aux_ADD_RWC & 
+				-- reg_IDOF_OUT <= aux_IDOF_bit15 & WE_RAM & FLAGTEST_active_OUT & aux_ALU_OPER & ALU_vs_MEM & save_pc_add_1 & JUMP_MUXWB_OUT & aux_ADD_RWC & 
 				--                 oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
 			end if;	
 		end if;

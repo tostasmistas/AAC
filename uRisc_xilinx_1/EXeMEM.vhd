@@ -47,13 +47,15 @@ signal out_SHIFT				: std_logic_vector(16 downto 0) := (others => '0');
 signal sel_mux_LOG				: std_logic_vector(2 downto 0) := (others => '0');
 signal sel_mux_ALU				: std_logic_vector(1 downto 0) := (others => '0');
 signal aux_sel_mux_ALU_bit0		: std_logic := '0';
-signal aux_FLAGMUX 				: std_logic;
-signal aux_FLAGTEST_FI 			: std_logic;
-signal aux_FLAGTEST_MUXPC 		: std_logic;
+signal aux_FLAGMUX 				: std_logic := '0';
+signal aux_FLAGTEST_FI 			: std_logic := '0';
+signal aux_FLAGTEST_MUXPC 		: std_logic := '0';
 signal aux_flagtest_rel			: std_logic := '0';
 signal TRANS_OP					: std_logic_vector(1 downto 0) := (others => '0');
 signal TRANS_FI_COND_IN			: std_logic_vector(3 downto 0) := (others => '0');
-signal FLAGTEST_active_IN	    : std_logic;		
+signal FLAGTEST_active_IN	    : std_logic := '0';		
+signal aux_EXMEM_bit6			: std_logic := '0';
+signal aux_EXMEM_bit15 			: std_logic := '0';
 
 
 --------------------------------------------------------------------------
@@ -71,6 +73,8 @@ oper_ALU 			<= reg_IDOF_OUT(70 downto 66);
 FLAGTEST_active_IN 	<= reg_IDOF_OUT(71);
 TRANS_OP 		 	<= reg_IDOF_OUT(51 downto 50);
 TRANS_FI_COND_IN 	<= reg_IDOF_OUT(49) & reg_IDOF_OUT(70 downto 68);
+aux_EXMEM_bit6 		<= reg_IDOF_OUT(66);
+aux_EXMEM_bi15		<= reg_IDOF_OUT(73);
 
 ---------------------------------------------------------------------------------------------
 ---------------------------------- MEMÓRIA --------------------------------------------------
@@ -118,8 +122,8 @@ out_LOG <=  zeros_ALU									when sel_mux_LOG = "000" else
 
 ---------------------------------------- shifts ---------------------------------------------
 
-out_SHIFT <= (operando_A(15 downto 0) & '0') when oper_ALU(0) = '0' else -- SLL
-			 (operando_A(15) & operando_A(15) & operando_A(15 downto 1));								-- SRA
+out_SHIFT <= (operando_A(15 downto 0) & '0') when oper_ALU(0) = '0' else  -- SLL
+			 (operando_A(15) & operando_A(15) & operando_A(15 downto 1)); -- SRA
 
 ---------------------------------- resultado final da ALU -----------------------------------
 
@@ -241,9 +245,9 @@ process (clk, rst)
 			if rst = '1' then
 				reg_EXMEM_OUT <= zeros;
 			else
-				reg_EXMEM_OUT <= out_MEM & ALU_vs_MEM & reg_IDOF_OUT(64 downto 53) & reg_IDOF_OUT(52) & reg_IDOF_OUT(51 downto 49) & 
+				reg_EXMEM_OUT <= aux_EXMEM_bit6 & aux_EXMEM_bit15 & out_MEM & ALU_vs_MEM & reg_IDOF_OUT(64 downto 53) & reg_IDOF_OUT(52) & reg_IDOF_OUT(51 downto 49) & 
 								 out_ALU & reg_IDOF_OUT(16 downto 1) & reg_IDOF_OUT(0);
-				-- reg_EXMEM_OUT <= out_MEM & ALU_vs_MEM & save_pc_add_1 & JUMP_MUXWB_OUT & aux_ADD_RWC & 
+				-- reg_EXMEM_OUT <= aux_EXMEM_bit6 & aux_EXMEM_bit15 & out_MEM & ALU_vs_MEM & save_pc_add_1 & JUMP_MUXWB_OUT & aux_ADD_RWC & 
 				--                  out_ALU & out_mux_constantes & ALU_CONS_SEL;
 			end if;	
 		end if;
