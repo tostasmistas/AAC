@@ -8,37 +8,10 @@
 <msg type="info" file="Xst" num="0" delta="new" >Part-select index evaluated to out of bound value may lead to incorrect synthesis results; it is recommended not to use them in RTL
 </msg>
 
-<msg type="error" file="HDLCompiler" num="1314" delta="old" >"S:\uRisc_1\circuito.vhd" Line 121: Formal port/generic &lt;<arg fmt="%s" index="1">instr</arg>&gt; is not declared in &lt;<arg fmt="%s" index="2">inf</arg>&gt;
+<msg type="error" file="HDLCompiler" num="69" delta="old" >"C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\EXeMEM.vhd" Line 249: &lt;<arg fmt="%s" index="1">alu_vs_mem</arg>&gt; is not declared.
 </msg>
 
-<msg type="error" file="HDLCompiler" num="432" delta="old" >"S:\uRisc_1\circuito.vhd" Line 118: Formal &lt;<arg fmt="%s" index="1">destino_jump</arg>&gt; has no actual or default value.
-</msg>
-
-<msg type="error" file="HDLCompiler" num="1314" delta="old" >"S:\uRisc_1\circuito.vhd" Line 130: Formal port/generic &lt;<arg fmt="%s" index="1">sw_value</arg>&gt; is not declared in &lt;<arg fmt="%s" index="2">ideof</arg>&gt;
-</msg>
-
-<msg type="error" file="HDLCompiler" num="432" delta="old" >"S:\uRisc_1\circuito.vhd" Line 129: Formal &lt;<arg fmt="%s" index="1">clk</arg>&gt; has no actual or default value.
-</msg>
-
-<msg type="error" file="HDLCompiler" num="1314" delta="old" >"S:\uRisc_1\circuito.vhd" Line 142: Formal port/generic &lt;<arg fmt="%s" index="1">sw_value</arg>&gt; is not declared in &lt;<arg fmt="%s" index="2">exemem</arg>&gt;
-</msg>
-
-<msg type="error" file="HDLCompiler" num="432" delta="old" >"S:\uRisc_1\circuito.vhd" Line 141: Formal &lt;<arg fmt="%s" index="1">clk</arg>&gt; has no actual or default value.
-</msg>
-
-<msg type="error" file="HDLCompiler" num="1314" delta="old" >"S:\uRisc_1\circuito.vhd" Line 154: Formal port/generic &lt;<arg fmt="%s" index="1">sw_value</arg>&gt; is not declared in &lt;<arg fmt="%s" index="2">wb</arg>&gt;
-</msg>
-
-<msg type="error" file="HDLCompiler" num="432" delta="old" >"S:\uRisc_1\circuito.vhd" Line 153: Formal &lt;<arg fmt="%s" index="1">clk</arg>&gt; has no actual or default value.
-</msg>
-
-<msg type="error" file="HDLCompiler" num="1314" delta="old" >"S:\uRisc_1\circuito.vhd" Line 166: Formal port/generic &lt;<arg fmt="%s" index="1">sw_value</arg>&gt; is not declared in &lt;<arg fmt="%s" index="2">registos</arg>&gt;
-</msg>
-
-<msg type="error" file="HDLCompiler" num="432" delta="old" >"S:\uRisc_1\circuito.vhd" Line 165: Formal &lt;<arg fmt="%s" index="1">clk</arg>&gt; has no actual or default value.
-</msg>
-
-<msg type="error" file="HDLCompiler" num="854" delta="old" >"S:\uRisc_1\circuito.vhd" Line 14: Unit &lt;<arg fmt="%s" index="1">behavioral</arg>&gt; ignored due to previous errors.
+<msg type="error" file="HDLCompiler" num="854" delta="old" >"C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\EXeMEM.vhd" Line 24: Unit &lt;<arg fmt="%s" index="1">behavioral</arg>&gt; ignored due to previous errors.
 </msg>
 
 </messages>

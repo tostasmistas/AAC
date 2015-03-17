@@ -35,7 +35,6 @@ signal ALU_ou_MEM 				: std_logic := '0';
 signal aux_sel_bit1				: std_logic := '0'; -- bit de selecção 1 do MUX 4:1 do WB
 signal aux_sel_bit0				: std_logic := '0'; -- bit de selecção 0 do MUX 4:1 do WB
 signal sel_mux_WB				: std_logic_vector(1 downto 0) := (others => '0');
-signal out_mux_WB				: std_logic_vector(15 downto 0) := (others => '0');
 signal ALU_e_MEM				: std_logic := '0';
 signal soMEM 					: std_logic := '0';
 signal soALU 					: std_logic := '0';
@@ -56,10 +55,10 @@ isJump <= reg_EXMEM_OUT(36); -- JUMP_MUXWB_OUT
 
 ALU_ou_MEM <= reg_EXMEM_OUT(50);
 
-aux_sel_bit1 <= is_jump or bit14;
+aux_sel_bit1 <= isJump or bit14;
 				-- JUMP_MUXWB_OUT or inst_IN(14)
 
-aux_sel_bit0 <= is_jump or (not(bit14) and ALU_ou_MEM) ;
+aux_sel_bit0 <= isJump or (not(bit14) and ALU_ou_MEM) ;
 				-- JUMP_MUXWB_OUT or (not(inst_IN(14)) and ALU_vs_MEM)
 
 sel_mux_WB <= aux_sel_bit1 & aux_sel_bit0;
@@ -80,7 +79,7 @@ loadMEM <= soMEM and not(bit6);
 
 controlo <= bit14 nor bit15;
 
-controloJump <= controlo and isJump
+controloJump <= controlo and isJump;
 
 ovWE <= (soALU or loadMEM) or (controloJump or bit14);
 

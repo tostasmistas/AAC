@@ -15,6 +15,7 @@ entity registos is
 		-- input
 		clk, rst				: in std_logic;
 		en_regs					: in std_logic_vector(7 downto 0);
+		out_mux_WB				: in std_logic_vector(15 downto 0);
 		-- colocar registo entre andares e la colocar o vector do en_regs do WB
 			
 		-- output

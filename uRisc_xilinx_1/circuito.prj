@@ -1,5 +1,7 @@
 vhdl work "WB.vhd"
 vhdl work "registos.vhd"
+vhdl work "memoria_ROM.vhd"
+vhdl work "memoria_RAM.vhd"
 vhdl work "IF.vhd"
 vhdl work "IDeOF.vhd"
 vhdl work "EXeMEM.vhd"

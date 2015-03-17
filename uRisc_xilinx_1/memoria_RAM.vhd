@@ -22,7 +22,7 @@ constant InitValue : MEM_TYPE := (
 	others=> x"00000000"
 	);
 
-shared variable myRAM : MEM_TYPE := InitValue0;
+shared variable myRAM : MEM_TYPE;
 
 
 begin
@@ -30,9 +30,9 @@ process (CLK_A)
 	begin
 		if rising_edge(CLK_A)then
 			if WE_A='1'  then
-				RAM(conv_integer(Addr_A)) := DI_A;
+			--	RAM(conv_integer(Addr_A)) := DI_A;
 			end if;
-				DO_A <= RAM(conv_integer(Addr_A));
+			--	DO_A <= RAM(conv_integer(Addr_A));
 	end if;
 end process;
 

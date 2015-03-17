@@ -11,41 +11,5 @@
 <msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/EXeMEM.vhd&quot; into library work</arg>
 </msg>
 
-<msg type="error" file="ProjectMgmt" num="806" >&quot;<arg fmt="%s" index="1">C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/EXeMEM.vhd</arg>&quot; Line <arg fmt="%d" index="2">151</arg>. <arg fmt="%s" index="3">Syntax error near &quot;!&quot;.</arg>
-</msg>
-
-<msg type="error" file="ProjectMgmt" num="806" >&quot;<arg fmt="%s" index="1">C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/EXeMEM.vhd</arg>&quot; Line <arg fmt="%d" index="2">163</arg>. <arg fmt="%s" index="3">Syntax error near &quot;!&quot;.</arg>
-</msg>
-
-<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/IDeOF.vhd&quot; into library work</arg>
-</msg>
-
-<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/IF.vhd&quot; into library work</arg>
-</msg>
-
-<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/WB.vhd&quot; into library work</arg>
-</msg>
-
-<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/circuito.vhd&quot; into library work</arg>
-</msg>
-
-<msg type="error" file="ProjectMgmt" num="806" >&quot;<arg fmt="%s" index="1">C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/circuito.vhd</arg>&quot; Line <arg fmt="%d" index="2">7</arg>. <arg fmt="%s" index="3">Syntax error near &quot;)&quot;.</arg>
-</msg>
-
-<msg type="error" file="ProjectMgmt" num="806" >&quot;<arg fmt="%s" index="1">C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/circuito.vhd</arg>&quot; Line <arg fmt="%d" index="2">16</arg>. <arg fmt="%s" index="3">Syntax error near &quot;port&quot;.</arg>
-</msg>
-
-<msg type="error" file="ProjectMgmt" num="806" >&quot;<arg fmt="%s" index="1">C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/circuito.vhd</arg>&quot; Line <arg fmt="%d" index="2">181</arg>. <arg fmt="%s" index="3">Syntax error near &quot;reg_EXMEM_OUT&quot;.</arg>
-</msg>
-
-<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/memoria_RAM.vhd&quot; into library work</arg>
-</msg>
-
-<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/memoria_ROM.vhd&quot; into library work</arg>
-</msg>
-
-<msg type="info" file="ProjectMgmt" num="1061" ><arg fmt="%s" index="1">Parsing VHDL file &quot;C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/registos.vhd&quot; into library work</arg>
-</msg>
-
 </messages>
 

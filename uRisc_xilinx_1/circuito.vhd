@@ -3,7 +3,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity circuito is
   port (
-    clk, rst: in std_logic;
+    clk, rst: in std_logic
     );
 end circuito;
 
@@ -54,24 +54,24 @@ architecture Behavioral of circuito is
   
 	component IDeOF
 		port(
-			-- input
-			clk, rst 				: in std_logic;
-			reg_IF_OUT 				: in std_logic_vector(27 downto 0);		-- registo entre andares
-			inst_IN					: in std_logic_vector(15 downto 0);	
-			R0 						: in std_logic_vector(15 downto 0);
-			R1 						: in std_logic_vector(15 downto 0);
-		    R2 						: in std_logic_vector(15 downto 0);
-			R3 						: in std_logic_vector(15 downto 0);
-			R4 						: in std_logic_vector(15 downto 0);
-			R5 						: in std_logic_vector(15 downto 0);
-			R6 						: in std_logic_vector(15 downto 0);
-			R7 						: in std_logic_vector(15 downto 0);
-			
-			-- output
-			FLAGTEST_active_OUT		: out std_logic;
-			JUMP_MUXPC_OUT			: out std_logic;
-			reg_IDOF_OUT			: out std_logic_vector(70 downto 0) 				-- registo entre andares
-		);
+		-- input
+		clk, rst 				: in std_logic;
+		reg_IF_OUT 				: in std_logic_vector(27 downto 0);		-- registo entre andares
+		R0 						: in std_logic_vector(15 downto 0);
+		R1 						: in std_logic_vector(15 downto 0);
+	    R2 						: in std_logic_vector(15 downto 0);
+		R3 						: in std_logic_vector(15 downto 0);
+		R4 						: in std_logic_vector(15 downto 0);
+		R5 						: in std_logic_vector(15 downto 0);
+		R6 						: in std_logic_vector(15 downto 0);
+		R7 						: in std_logic_vector(15 downto 0);
+		
+		-- output					
+		JUMP_MUXPC_OUT			: out std_logic;						-- vai para o IF
+		destino_jump			: out std_logic_vector(11 downto 0);
+		destino_cond			: out std_logic_vector(11 downto 0);
+		reg_IDOF_OUT			: out std_logic_vector(71 downto 0) 	-- registo entre andares
+	);
 	end component;
 
 	component EXeMEM
@@ -99,7 +99,8 @@ architecture Behavioral of circuito is
 		reg_EXMEM_OUT				: in std_logic_vector(66 downto 0);		-- registo entre andares
 		
 		-- output
-		en_regs						: out std_logic_vector(7 downto 0)
+		en_regs						: out std_logic_vector(7 downto 0);
+		out_MUX_WB					: out std_logic_vector(15 downto 0)
 	);
   end component;
   
@@ -108,6 +109,7 @@ architecture Behavioral of circuito is
 		-- input
 		clk, rst				: in std_logic;
 		en_regs					: in std_logic_vector(7 downto 0);
+		out_mux_WB				: in std_logic_vector(15 downto 0);
 		-- colocar registo entre andares e la colocar o vector do en_regs do WB
 			
 		-- output
@@ -139,6 +141,7 @@ signal 	en_regs					: std_logic_vector(7 downto 0);
 signal 	out_ROM					: std_logic_vector(15 downto 0);
 signal 	out_RAM					: std_logic_vector(15 downto 0);
 signal 	in_RAM					: std_logic_vector(15 downto 0);
+signal 	out_MUX_WB				: std_logic_vector(15 downto 0);
 
 begin
 
@@ -168,6 +171,8 @@ begin
 		R6  => R6,
 		R7  => R7,
 		JUMP_MUXPC_OUT  => JUMP_MUXPC_IN,
+		destino_cond =>	destino_cond,
+		destino_jump => destino_jump,
 		reg_IDOF_OUT  => reg_IDOF_OUT
 		);
 		
@@ -177,7 +182,7 @@ begin
 		reg_IDOF_OUT  => reg_IDOF_OUT,
 		FLAGS_IN  => FLAGS_OUT,
 		out_RAM => out_RAM,
-		in_RAM 	=> in_RAM
+		in_RAM 	=> in_RAM,
 		reg_EXMEM_OUT => reg_EXMEM_OUT,
 		out_ADD_MEM => out_ADD_MEM, 
 		FLAGS_OUT  => FLAGS_OUT,
@@ -188,12 +193,14 @@ begin
 		clk => clk,
 		rst => rst, 
 		reg_EXMEM_OUT  => reg_EXMEM_OUT,
+		out_MUX_WB => out_MUX_WB,
 		en_regs  => en_regs
 		);
 		
 	inst_registos: registos port map(
 		clk => clk,
 		rst => rst, 
+		out_mux_WB => out_MUX_WB,
 		en_regs	=> en_regs,
 		R0  => R0,
 		R1  => R1,	

@@ -56,6 +56,7 @@ signal TRANS_FI_COND_IN			: std_logic_vector(3 downto 0) := (others => '0');
 signal FLAGTEST_active_IN	    : std_logic := '0';		
 signal aux_EXMEM_bit6			: std_logic := '0';
 signal aux_EXMEM_bit15 			: std_logic := '0';
+signal Sign_FLAG					: std_logic_vector(1 downto 0) := (others => '0');
 
 
 --------------------------------------------------------------------------
@@ -74,7 +75,7 @@ FLAGTEST_active_IN 	<= reg_IDOF_OUT(71);
 TRANS_OP 		 	<= reg_IDOF_OUT(51 downto 50);
 TRANS_FI_COND_IN 	<= reg_IDOF_OUT(49) & reg_IDOF_OUT(70 downto 68);
 aux_EXMEM_bit6 		<= reg_IDOF_OUT(66);
-aux_EXMEM_bi15		<= reg_IDOF_OUT(73);
+aux_EXMEM_bit15		<= reg_IDOF_OUT(73);
 
 ---------------------------------------------------------------------------------------------
 ---------------------------------- MEMÓRIA --------------------------------------------------
@@ -140,11 +141,11 @@ out_ALU <=	out_ARI			when sel_mux_ALU = "00" 	else
 
 -------------------------------QUAIS FLAGS ATUALIZAM??---------------------------------------
 
-Sign_FLAG(1) <=  not(ALU_OP(4));
+Sign_FLAG(1) <=  not(oper_ALU(4));
 
-Sign_FLAG(0) <=  (ALU_OP(2) and (not(ALU_OP(1)) or ALU_OP(2))) or (ALU_OP(4) and (not(ALU_OP(2)) and ((not(ALU_OP(1)) and ALU_OP(0)) or ALU_OP(3)))) or ((ALU_OP(4)) nor ALU_OP(3)) or (not(ALU_OP(0)) and ALU_OP(1));
+Sign_FLAG(0) <=  (oper_ALU(2) and (not(oper_ALU(1)) or oper_ALU(2))) or (oper_ALU(4) and (not(oper_ALU(2)) and ((not(oper_ALU(1)) and oper_ALU(0)) or oper_ALU(3)))) or ((oper_ALU(4)) nor oper_ALU(3)) or (not(oper_ALU(0)) and oper_ALU(1));
 
-a--Actualizar FLAGS
+--Actualizar FLAGS
 
 ---------------------------FLAGS DA ALU-----------------------------
 
