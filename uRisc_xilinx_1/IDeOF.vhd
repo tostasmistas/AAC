@@ -7,6 +7,7 @@ entity IDeOF is
 		clk, rst 				: in std_logic;
 		reg_IF_OUT 				: in std_logic_vector(27 downto 0);		-- registo entre andares
 		FLAGS_IN					: in std_logic_vector(3 downto 0);
+		en_registo 				: in std_logic;
 		R0 						: in std_logic_vector(15 downto 0);
 		R1 						: in std_logic_vector(15 downto 0);
 	    R2 						: in std_logic_vector(15 downto 0);
@@ -65,6 +66,7 @@ signal ALU_CONS_SEL			: std_logic := '0'; 				-- sinal de selecção para MUX entr
 signal aux_IDOF_bit15		: std_logic := '0';
 signal WE_RAM					: std_logic := '0';
 signal TRANS_FI_COND_IN		: std_logic_vector(3 downto 0) := (others => '0');
+signal aux_reg_IDOF_OUT		: std_logic_vector(73 downto 0) := (others => '0');
 
 
 --------------------------------------------------------------------------
@@ -215,14 +217,19 @@ process (clk, rst)
 	begin
 		if clk'event and clk = '1' then
 			if rst = '1' then
-				reg_IDOF_OUT <= zeros;
+				aux_reg_IDOF_OUT <= zeros;
 			else
-				reg_IDOF_OUT <= aux_IDOF_bit15 & WE_RAM & aux_active_FLAGTEST & aux_ALU_OPER & ALU_vs_MEM & reg_IF_OUT(11 downto 0) & JUMP_MUXWB_OUT & aux_ADD_RWC & 
+				aux_reg_IDOF_OUT <= aux_IDOF_bit15 & WE_RAM & aux_active_FLAGTEST & aux_ALU_OPER & ALU_vs_MEM & reg_IF_OUT(11 downto 0) & JUMP_MUXWB_OUT & aux_ADD_RWC & 
 								oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
 				-- reg_IDOF_OUT <= aux_IDOF_bit15 & WE_RAM & FLAGTEST_active_OUT & aux_ALU_OPER & ALU_vs_MEM & save_pc_add_1 & JUMP_MUXWB_OUT & aux_ADD_RWC & 
 				--                 oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
 			end if;	
 		end if;
 end process;
+
+reg_IDOF_OUT <= aux_reg_IDOF_OUT when en_registo = '0' else
+				aux_IDOF_bit15 & WE_RAM & aux_active_FLAGTEST & aux_ALU_OPER & ALU_vs_MEM & reg_IF_OUT(11 downto 0) & JUMP_MUXWB_OUT & aux_ADD_RWC & 
+				oper_A & oper_B & out_mux_constantes & ALU_CONS_SEL;
+				
 			 
 end Behavioral;

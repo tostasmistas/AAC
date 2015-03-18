@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/test_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_signed" />
+            <top_module name="std_logic_textio" />
+            <top_module name="std_logic_unsigned" />
+            <top_module name="test" />
+            <top_module name="textio" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="19" />
+   <wvobject fp_name="/test/clk_in" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_in</obj_property>
+      <obj_property name="ObjectShortName">clk_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/rst_in" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst_in</obj_property>
+      <obj_property name="ObjectShortName">rst_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/unicicle" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">unicicle</obj_property>
+      <obj_property name="ObjectShortName">unicicle</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/addr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">addr[11:0]</obj_property>
+      <obj_property name="ObjectShortName">addr[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/saida" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">saida[15:0]</obj_property>
+      <obj_property name="ObjectShortName">saida[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/clk_in_period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_in_period</obj_property>
+      <obj_property name="ObjectShortName">clk_in_period</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_InF/out_rom" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_rom[15:0]</obj_property>
+      <obj_property name="ObjectShortName">out_rom[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_InF/reg_pcmem_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_pcmem_out[11:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_pcmem_out[11:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_registos/r0" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r0[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r0[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_registos/r1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r1[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_registos/r2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r2[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_registos/r3" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r3[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r3[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_registos/r4" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r4[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r4[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_registos/r5" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r5[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r5[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_registos/r6" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r6[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r6[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_registos/r6" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r6[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r6[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_memoria_RAM/addr_a" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">addr_a[11:0]</obj_property>
+      <obj_property name="ObjectShortName">addr_a[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_memoria_RAM/di_a" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">di_a[15:0]</obj_property>
+      <obj_property name="ObjectShortName">di_a[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_memoria_RAM/do_a" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">do_a[15:0]</obj_property>
+      <obj_property name="ObjectShortName">do_a[15:0]</obj_property>
+   </wvobject>
+</wave_config>

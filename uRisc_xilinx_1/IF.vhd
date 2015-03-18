@@ -8,6 +8,7 @@ entity InF is
 		-- input
 		clk_InF, rst 				: in std_logic;
 		destino_jump			: in std_logic_vector(11 downto 0);		 -- vem da ALU	
+		en_registo 				: in std_logic;
 		destino_cond			: in std_logic_vector(11 downto 0);     -- vem da ALU
 		FLAGTEST_MUXPC_IN		: in std_logic;							    -- vem da ALU
 		JUMP_MUXPC_IN			: in std_logic;							    -- vem do IDeOF
@@ -17,6 +18,7 @@ entity InF is
 		-- output
 		reg_PCMEM_OUT			: out std_logic_vector(11 downto 0);	 -- PC + 1
 		reg_OUT					: out std_logic_vector(11 downto 0);
+		addr			: out std_logic_vector(11 downto 0);	-- PC + 1
 		reg_IF_OUT				: out std_logic_vector(27 downto 0)		 -- registo entre andares		
 	);
 end InF;
@@ -86,8 +88,10 @@ end process;
 ------------------------------- Exit -------------------------------------
 --------------------------------------------------------------------------
 reg_PCMEM_OUT <= aux_reg_pc;
+addr <= aux_reg_pc;
 reg_OUT		  <= aux_reg_pc;
-reg_IF_OUT	  <= aux_reg_IF_OUT;
+reg_IF_OUT	  <= aux_reg_IF_OUT when en_registo = '0' else
+				 out_ROM & aux_pc_add_1;
 
 end Behavioral;
 

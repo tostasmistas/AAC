@@ -10,6 +10,7 @@ entity EXeMEM is
 		reg_IDOF_OUT				: in std_logic_vector(73 downto 0);			-- registo entre andares
 		FLAGS_IN					: in std_logic_vector(3 downto 0);
 		out_RAM						: in std_logic_vector(15 downto 0);
+		en_registo 					: in std_logic;
 		
 		-- output
 		reg_EXMEM_OUT				: out std_logic_vector(67 downto 0);		-- registo entre andares
@@ -238,7 +239,9 @@ process (clk, rst)
 		end if;
 end process;
 
-reg_EXMEM_OUT <= aux_reg_EXMEM_OUT;
+reg_EXMEM_OUT <= aux_reg_EXMEM_OUT when en_registo = '0' else
+				 aux_EXMEM_bit6 & aux_EXMEM_bit15 & out_MEM & reg_IDOF_OUT(65) & reg_IDOF_OUT(64 downto 53) & reg_IDOF_OUT(52) & reg_IDOF_OUT(51 downto 49) & 
+				 out_ALU & reg_IDOF_OUT(16 downto 1) & reg_IDOF_OUT(0);	
 
 end Behavioral;
 

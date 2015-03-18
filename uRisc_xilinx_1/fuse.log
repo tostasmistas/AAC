@@ -5,10 +5,12 @@ Turning on mult-threading, number of parallel sub-compilation jobs: 16
 Determining compilation order of HDL files
 Parsing VHDL file "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/WB.vhd" into library work
 Parsing VHDL file "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/registos.vhd" into library work
+Parsing VHDL file "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/memoria_ROM.vhd" into library work
 Parsing VHDL file "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/memoria_RAM.vhd" into library work
 Parsing VHDL file "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/IF.vhd" into library work
 Parsing VHDL file "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/IDeOF.vhd" into library work
 Parsing VHDL file "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/EXeMEM.vhd" into library work
+Parsing VHDL file "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/Controlo.vhd" into library work
 Parsing VHDL file "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/circuito.vhd" into library work
 Parsing VHDL file "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/test.vhd" into library work
 Starting static elaboration
@@ -18,17 +20,21 @@ Compiling package std_logic_1164
 Compiling package std_logic_arith
 Compiling package std_logic_signed
 Compiling package std_logic_unsigned
+Compiling package textio
+Compiling package std_logic_textio
 Compiling architecture behavioral of entity InF [inf_default]
 Compiling architecture behavioral of entity IDeOF [ideof_default]
 Compiling architecture behavioral of entity EXeMEM [exemem_default]
 Compiling architecture behavioral of entity WB [wb_default]
 Compiling architecture behavioral of entity registos [registos_default]
 Compiling architecture behavioral of entity memoria_RAM [\memoria_RAM(12)\]
+Compiling architecture behavioral of entity memoria_ROM [\memoria_ROM(12)\]
+Compiling architecture behavioral of entity Controlo [controlo_default]
 Compiling architecture behavioral of entity circuito [circuito_default]
 Compiling architecture behavior of entity test
 Time Resolution for simulation is 1ps.
 Waiting for 1 sub-compilation(s) to finish...
-Compiled 20 VHDL Units
+Compiled 26 VHDL Units
 Built simulation executable C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/test_isim_beh.exe
-Fuse Memory Usage: 35768 KB
-Fuse CPU Usage: 561 ms
+Fuse Memory Usage: 41336 KB
+Fuse CPU Usage: 1356 ms

@@ -11,15 +11,20 @@ Time resolution is 1 ps
 # run 1000 ns
 Simulator is doing circuit initialization process.
 at 0 ps, Instance /test/uut/inst_InF/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+at 0 ps, Instance /test/uut/inst_memoria_ROM/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
 Finished circuit initialization process.
 at 0 ps, Instance /test/uut/inst_EXeMEM/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-at 0 ps, Instance /test/uut/inst_EXeMEM/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-at 5 ns(1), Instance /test/uut/inst_memoria_RAM/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
 # restart
 # run all
 Simulator is doing circuit initialization process.
+at 0 ps, Instance /test/uut/inst_memoria_ROM/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
 Finished circuit initialization process.
 at 0 ps, Instance /test/uut/inst_EXeMEM/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+Stopped at time : 318705 ns : File "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/IDeOF.vhd" Line 230
+# restart
+# run all
+Simulator is doing circuit initialization process.
+at 0 ps, Instance /test/uut/inst_memoria_ROM/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
+Finished circuit initialization process.
 at 0 ps, Instance /test/uut/inst_EXeMEM/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-at 5 ns(1), Instance /test/uut/inst_memoria_RAM/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-Stopped at time : 1269445 ns : File "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/IF.vhd" Line 57
+Stopped at time : 263435 ns : File "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/IF.vhd" Line 50

@@ -43,7 +43,7 @@ ARCHITECTURE behavior OF test IS
     PORT(
          clk_in : IN  std_logic;
          rst_in : IN  std_logic;
-         inst : IN  std_logic_vector(15 downto 0);
+			unicicle : IN  std_logic;
          addr : OUT  std_logic_vector(11 downto 0);
          saida : OUT  std_logic_vector(15 downto 0)
         );
@@ -53,7 +53,7 @@ ARCHITECTURE behavior OF test IS
    --Inputs
    signal clk_in : std_logic := '0';
    signal rst_in : std_logic := '0';
-   signal inst : std_logic_vector(15 downto 0) := (others => '0');
+	signal unicicle : std_logic := '0';
 
  	--Outputs
    signal addr : std_logic_vector(11 downto 0);
@@ -68,7 +68,7 @@ BEGIN
    uut: circuito PORT MAP (
           clk_in => clk_in,
           rst_in => rst_in,
-          inst => inst,
+			 unicicle => unicicle,
           addr => addr,
           saida => saida
         );
@@ -94,16 +94,17 @@ BEGIN
 
 		rst_in <= '1' after 15 ns,
 				 '0' after 15 ns + clk_in_period*2;
+		unicicle <= '1' after 35 ns;
 	
       -- insert stimulus here 
 
-		inst <=  X"0000" after 35 ns ;
-		inst <=  X"2003" after 45 ns ;
-		inst <=  X"2055" after 55 ns ;
-		inst <=  X"2055" after 65 ns ;
-		inst <=  X"2055" after 75 ns ;
-		inst <=  X"6005" after 85 ns ;
---		inst <=  X"c000" after 155 ns ;
+--		inst <=  X"0000" after 35 ns ;
+--		inst <=  X"2003" after 45 ns ;
+--		inst <=  X"2055" after 55 ns ;
+--		inst <=  X"2055" after 65 ns ;
+--		inst <=  X"2055" after 75 ns ;
+--		inst <=  X"6000" after 85 ns ;
+--		inst <=  X"c000" after 95 ns ;
 --		inst <=  X"c480" after 175 ns ;
 --		inst <=  X"c8ae" after 195 ns ;
 --		inst <=  X"ccdd" after 215 ns ;

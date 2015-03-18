@@ -6,8 +6,7 @@ use IEEE.STD_LOGIC_SIGNED.ALL;
 
 entity circuito is
   port (
-    clk_in, rst_in: in std_logic;
-	 inst		: in  std_logic_vector(15 downto 0);
+    clk_in, rst_in, unicicle: in std_logic;
 	 addr		: out std_logic_vector(11 downto 0);
 	 saida	: out std_logic_vector(15 downto 0)
     );
@@ -21,6 +20,7 @@ architecture Behavioral of circuito is
 		port(
 		-- input
 			clk_InF, rst 				: in std_logic;
+			en_registo 				: in std_logic;
 			destino_jump			: in std_logic_vector(11 downto 0);		-- vem da ALU	
 			destino_cond			: in std_logic_vector(11 downto 0);     -- vem da ALU
 			FLAGTEST_MUXPC_IN		: in std_logic;							-- vem da ALU
@@ -30,6 +30,7 @@ architecture Behavioral of circuito is
 
 			-- output
 			reg_PCMEM_OUT			: out std_logic_vector(11 downto 0);	-- PC + 1
+			addr			: out std_logic_vector(11 downto 0);	-- PC + 1
 			reg_OUT					: out std_logic_vector(11 downto 0);
 			reg_IF_OUT				: out std_logic_vector(27 downto 0)		-- registo entre andares		
 		);
@@ -40,7 +41,8 @@ architecture Behavioral of circuito is
 		-- input
 		clk, rst 				: in std_logic;
 		reg_IF_OUT 				: in std_logic_vector(27 downto 0);		-- registo entre andares
-		FLAGS_IN					: in std_logic_vector(3 downto 0);
+		FLAGS_IN				: in std_logic_vector(3 downto 0);
+		en_registo 				: in std_logic;
 		R0 						: in std_logic_vector(15 downto 0);
 		R1 						: in std_logic_vector(15 downto 0);
 	    R2 						: in std_logic_vector(15 downto 0);
@@ -63,6 +65,7 @@ architecture Behavioral of circuito is
     	port(
 			-- input
 			clk, rst 					: in std_logic;
+			en_registo 				  : in std_logic;
 			reg_IDOF_OUT				: in std_logic_vector(73 downto 0);			-- registo entre andares
 			FLAGS_IN						: in std_logic_vector(3 downto 0);
 			out_RAM						: in std_logic_vector(15 downto 0);
@@ -123,16 +126,23 @@ architecture Behavioral of circuito is
 		
 	end component;
 	
---	component memoria_ROM
---			Generic(
---			ADDR_SIZE :	positive:= 12
---		);
---		Port(
---			Addr_ROM 	: in 	STD_LOGIC_VECTOR(ADDR_SIZE-1 downto 0);
---			DO_ROM 	: out 	STD_LOGIC_VECTOR(15 downto 0)
---		);
---		
---	end component;
+	component memoria_ROM
+			Generic(
+			ADDR_SIZE :	positive:= 12
+		);
+		Port(
+			Addr_ROM 	: in 	STD_LOGIC_VECTOR(ADDR_SIZE-1 downto 0);
+			DO_ROM 	: out 	STD_LOGIC_VECTOR(15 downto 0)
+		);
+		
+	end component;
+
+	component Controlo 
+		port (
+			clk, rst: in std_logic;
+			unicicle: in std_logic;
+			en_registo : out std_logic);
+	end component;
 
 signal	destino_jump			: std_logic_vector(11 downto 0);
 signal	destino_cond			: std_logic_vector(11 downto 0);
@@ -154,26 +164,30 @@ signal 	in_RAM					: std_logic_vector(15 downto 0);
 signal 	out_MUX_WB				: std_logic_vector(15 downto 0);
 signal 	out_ADD_MEM				: std_logic_vector(11 downto 0);
 signal 	out_WE_MEM				: std_logic;
+signal en_registo 				: std_logic;
 
 begin
 
   inst_InF: InF port map(
 		clk_InF => clk_in,
 		rst => rst_in,
+		en_registo => en_registo,
 		destino_jump => destino_jump,
 		destino_cond => destino_cond,
 		FLAGTEST_MUXPC_IN => FLAGTEST_MUXPC_IN,
 		JUMP_MUXPC_IN => JUMP_MUXPC_IN,
 		reg_pc_IN => reg_pc_IN,
 		reg_OUT	=>	reg_pc_IN,
-		out_ROM => inst,
-		reg_PCMEM_OUT => addr,
+		out_ROM => out_ROM,
+		addr => addr,
+		reg_PCMEM_OUT => reg_PCMEM_OUT,
 		reg_IF_OUT  => reg_IF_OUT
 		);
 		
   inst_IDeOF: IDeOF port map(
 		clk => clk_in,
 		rst => rst_in, 
+		en_registo => en_registo,
 		reg_IF_OUT  => reg_IF_OUT,
 		FLAGS_IN =>FLAGSTEST_OUT,
 		R0  => R0,
@@ -194,6 +208,7 @@ begin
 	 inst_EXeMEM: EXeMEM port map(
 		clk => clk_in,
 		rst => rst_in, 
+		en_registo => en_registo,
 		reg_IDOF_OUT  	=> reg_IDOF_OUT,
 		FLAGS_IN  		=> FLAGS_OUT,
 		out_RAM 			=> out_RAM,
@@ -236,11 +251,20 @@ begin
 	
 	);
 	
---	inst_memoria_ROM: memoria_ROM port map(
---
---		Addr_ROM 	=> reg_PCMEM_OUT,
---		DO_ROM		=> out_ROM
---	
---	);
+	inst_memoria_ROM: memoria_ROM port map(
+
+		Addr_ROM 	=> reg_PCMEM_OUT,
+		DO_ROM		=> out_ROM
+	
+	);
+
+	inst_Controlo: Controlo port map(
+
+		clk => clk_in,
+		rst => rst_in,
+		unicicle => unicicle,
+		en_registo => en_registo 
+	
+	);
 		
 end Behavioral;
