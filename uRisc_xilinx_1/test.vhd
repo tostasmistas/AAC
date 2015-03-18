@@ -98,19 +98,19 @@ BEGIN
       -- insert stimulus here 
 
 		inst <=  X"0000" after 35 ns ;
-		inst <=  X"2003" after 55 ns ;
+		inst <=  X"2003" after 45 ns ;
+		inst <=  X"2055" after 55 ns ;
+		inst <=  X"2055" after 65 ns ;
 		inst <=  X"2055" after 75 ns ;
-		inst <=  X"2055" after 95 ns ;
-		inst <=  X"2055" after 115 ns ;
-		inst <=  X"6000" after 135 ns ;
-		inst <=  X"c000" after 155 ns ;
-		inst <=  X"c480" after 175 ns ;
-		inst <=  X"c8ae" after 195 ns ;
-		inst <=  X"ccdd" after 215 ns ;
-		inst <=  X"d0ea" after 235 ns ;
-		inst <=  X"d47f" after 255 ns ;
-		inst <=  X"d8c7" after 275 ns ;
-		inst <=  X"dc2b" after 295 ns ;
+		inst <=  X"6005" after 85 ns ;
+--		inst <=  X"c000" after 155 ns ;
+--		inst <=  X"c480" after 175 ns ;
+--		inst <=  X"c8ae" after 195 ns ;
+--		inst <=  X"ccdd" after 215 ns ;
+--		inst <=  X"d0ea" after 235 ns ;
+--		inst <=  X"d47f" after 255 ns ;
+--		inst <=  X"d8c7" after 275 ns ;
+--		inst <=  X"dc2b" after 295 ns ;
 --		inst <=  X"b000" after 315 ns ;
 --		inst <=  X"0301" after 335 ns ;
 --		inst <=  X"a0e0" after 355 ns ;

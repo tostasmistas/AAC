@@ -16,8 +16,9 @@ entity EXeMEM is
 		out_ADD_MEM					: out std_logic_vector(11 downto 0);		-- para endereçar a RAM
 		out_WE_MEM					: out std_logic;							-- para controlar o WE da RAM 
 		FLAGS_OUT					: out std_logic_vector(3 downto 0);
-		in_RAM						: out std_logic_vector(15 downto 0);
-		FLAGTEST_MUXPC_OUT			: out std_logic 							
+		FLAGSTEST_OUT				: out std_logic_vector(3 downto 0);
+		in_RAM						: out std_logic_vector(15 downto 0)
+								
 	);
 end EXeMEM;
 
@@ -33,7 +34,6 @@ signal aux_FLAGS_SHIFT			: std_logic_vector(2 downto 0) := (others => '0'); 	-- 
 signal aux_FLAGS_LOG			: std_logic_vector(1 downto 0) := (others => '0'); 	-- Z,N
 signal aux_FLAGS				: std_logic_vector(3 downto 0) := (others => '0'); 	-- Z,N,C,O
 signal aux_MSR_FLAGS			: std_logic_vector(3 downto 0) := (others => '0');
-signal aux_FLAGTEST				: std_logic := '0';
 signal operando_A				: std_logic_vector(15 downto 0) := (others => '0');
 signal operando_B				: std_logic_vector(15 downto 0) := (others => '0');
 signal oper_ALU					: std_logic_vector(4 downto 0) := (others => '0');
@@ -48,8 +48,6 @@ signal sel_mux_LOG				: std_logic_vector(2 downto 0) := (others => '0');
 signal sel_mux_ALU				: std_logic_vector(1 downto 0) := (others => '0');
 signal aux_sel_mux_ALU_bit0		: std_logic := '0';
 signal aux_FLAGMUX 				: std_logic := '0';
-signal aux_FLAGTEST_FI 			: std_logic := '0';
-signal aux_FLAGTEST_MUXPC 		: std_logic := '0';
 signal aux_flagtest_rel			: std_logic := '0';
 signal TRANS_OP					: std_logic_vector(1 downto 0) := (others => '0');
 signal TRANS_FI_COND_IN			: std_logic_vector(3 downto 0) := (others => '0');
@@ -74,9 +72,6 @@ begin
 operando_A 				<= reg_IDOF_OUT(48 downto 33);
 operando_B 				<= reg_IDOF_OUT(32 downto 17);
 oper_ALU 				<= reg_IDOF_OUT(70 downto 66);
-FLAGTEST_active_IN 	<= reg_IDOF_OUT(71);
-TRANS_OP 		 		<= reg_IDOF_OUT(51 downto 50);
-TRANS_FI_COND_IN 		<= reg_IDOF_OUT(49) & reg_IDOF_OUT(70 downto 68);
 aux_EXMEM_bit6 		<= reg_IDOF_OUT(66);
 aux_EXMEM_bit15		<= reg_IDOF_OUT(73);
 
@@ -202,23 +197,6 @@ aux_FLAGS <= FLAGS_IN										when Sign_FLAG ="00" else
 
 
 
----------------------------------------------------------------------------------------------
----------------------------------- TESTE FLAGS ----------------------------------------------
----------------------------------------------------------------------------------------------
-aux_FLAGMUX	 <= 	FLAGS_IN(0) 					when TRANS_FI_COND_IN = "0101" else
-					FLAGS_IN(1)						when TRANS_FI_COND_IN = "0100" else
-					FLAGS_IN(2) 					when TRANS_FI_COND_IN = "0110" else
-					FLAGS_IN(3) 					when TRANS_FI_COND_IN = "0011" else
-					'1' 	 	 					when TRANS_FI_COND_IN = "0000" else
-					FLAGS_IN(0) or aux_FLAGS(1) 	when TRANS_FI_COND_IN = "0111" else
-					'0';
-
-
-aux_FLAGTEST_FI <= aux_FLAGMUX xnor TRANS_OP(1);
-
-aux_FLAGTEST    <= (TRANS_OP(1) and not(TRANS_OP(0))) or (aux_FLAGTEST_FI and not(TRANS_OP(1))); 
-
-aux_FLAGTEST_MUXPC <= not(FLAGTEST_active_IN) and aux_FLAGTEST; 
 
 ---------------------------------------------------------------------------------------------
 ----------------------------------- REGISTO FLAGS -------------------------------------------
@@ -237,7 +215,8 @@ end process;
 
 
 FLAGS_OUT <= aux_MSR_FLAGS;
-FLAGTEST_MUXPC_OUT <= aux_FLAGTEST_MUXPC;
+FLAGSTEST_OUT	<= aux_MSR_FLAGS;
+
 
 
 --------------------------------------------------------------------------

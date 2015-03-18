@@ -36,10 +36,11 @@ architecture Behavioral of circuito is
 	end component;
   
 	component IDeOF
-		port(
+			port(
 		-- input
 		clk, rst 				: in std_logic;
 		reg_IF_OUT 				: in std_logic_vector(27 downto 0);		-- registo entre andares
+		FLAGS_IN					: in std_logic_vector(3 downto 0);
 		R0 						: in std_logic_vector(15 downto 0);
 		R1 						: in std_logic_vector(15 downto 0);
 	    R2 						: in std_logic_vector(15 downto 0);
@@ -53,6 +54,7 @@ architecture Behavioral of circuito is
 		JUMP_MUXPC_OUT			: out std_logic;						-- vai para o IF
 		destino_jump			: out std_logic_vector(11 downto 0);
 		destino_cond			: out std_logic_vector(11 downto 0);
+		FLAGTEST_MUXPC_OUT		: out std_logic; 
 		reg_IDOF_OUT			: out std_logic_vector(73 downto 0) 	-- registo entre andares
 	);
 	end component;
@@ -70,8 +72,8 @@ architecture Behavioral of circuito is
 			out_ADD_MEM					: out std_logic_vector(11 downto 0);		-- para endereçar a RAM
 			out_WE_MEM					: out std_logic;	
 			FLAGS_OUT					: out std_logic_vector(3 downto 0);
-			in_RAM						: out std_logic_vector(15 downto 0);
-			FLAGTEST_MUXPC_OUT			: out std_logic 							
+			FLAGSTEST_OUT				: out std_logic_vector(3 downto 0);
+			in_RAM						: out std_logic_vector(15 downto 0)							
 		);
   end component;
   
@@ -144,6 +146,7 @@ signal 	reg_IDOF_OUT			: std_logic_vector(73 downto 0);
 signal	reg_EXMEM_OUT			: std_logic_vector(67 downto 0);	
 signal	REG_WC            	: std_logic_vector(15 downto 0);
 signal	FLAGS_OUT				: std_logic_vector(3 downto 0);
+signal	FLAGSTEST_OUT				: std_logic_vector(3 downto 0);
 signal 	en_regs					: std_logic_vector(7 downto 0);
 signal 	out_ROM					: std_logic_vector(15 downto 0);
 signal 	out_RAM					: std_logic_vector(15 downto 0);
@@ -172,6 +175,7 @@ begin
 		clk => clk_in,
 		rst => rst_in, 
 		reg_IF_OUT  => reg_IF_OUT,
+		FLAGS_IN =>FLAGSTEST_OUT,
 		R0  => R0,
 		R1  => R1,	
 		R2  => R2,
@@ -183,6 +187,7 @@ begin
 		JUMP_MUXPC_OUT  => JUMP_MUXPC_IN,
 		destino_cond 	 => destino_cond,
 		destino_jump	 => destino_jump,
+		FLAGTEST_MUXPC_OUT => FLAGTEST_MUXPC_IN,
 		reg_IDOF_OUT 	 => reg_IDOF_OUT
 		);
 		
@@ -196,8 +201,8 @@ begin
 		out_ADD_MEM 	=> out_ADD_MEM, 
 		out_WE_MEM 		=> out_WE_MEM,
 		FLAGS_OUT  		=> FLAGS_OUT,
-		in_RAM 			=> in_RAM,
-		FLAGTEST_MUXPC_OUT  => FLAGTEST_MUXPC_IN
+		FLAGSTEST_OUT  		=> FLAGSTEST_OUT,
+		in_RAM 			=> in_RAM
 		);
 	
 	inst_WB: WB port map( 

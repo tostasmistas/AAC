@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/test_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_signed" />
+            <top_module name="std_logic_unsigned" />
+            <top_module name="test" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="11" />
+   <wvobject fp_name="/test/clk_in" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_in</obj_property>
+      <obj_property name="ObjectShortName">clk_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/rst_in" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst_in</obj_property>
+      <obj_property name="ObjectShortName">rst_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/inst" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">inst[15:0]</obj_property>
+      <obj_property name="ObjectShortName">inst[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/addr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">addr[11:0]</obj_property>
+      <obj_property name="ObjectShortName">addr[11:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/saida" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">saida[15:0]</obj_property>
+      <obj_property name="ObjectShortName">saida[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/clk_in_period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_in_period</obj_property>
+      <obj_property name="ObjectShortName">clk_in_period</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_InF/aux_pc_add_1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">aux_pc_add_1[11:0]</obj_property>
+      <obj_property name="ObjectShortName">aux_pc_add_1[11:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_InF/destino_cond" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">destino_cond[11:0]</obj_property>
+      <obj_property name="ObjectShortName">destino_cond[11:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_InF/destino_jump" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">destino_jump[11:0]</obj_property>
+      <obj_property name="ObjectShortName">destino_jump[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_IDeOF/jump_muxpc_out" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">jump_muxpc_out</obj_property>
+      <obj_property name="ObjectShortName">jump_muxpc_out</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_IDeOF/flagtest_muxpc_out" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">flagtest_muxpc_out</obj_property>
+      <obj_property name="ObjectShortName">flagtest_muxpc_out</obj_property>
+   </wvobject>
+</wave_config>
