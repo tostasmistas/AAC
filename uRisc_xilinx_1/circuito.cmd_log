@@ -135,3 +135,5 @@ xst -intstyle ise -ifn "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/circui
 xst -intstyle ise -ifn "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/circuito.xst" -ofn "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/circuito.syr" 
 xst -intstyle ise -ifn "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/circuito.xst" -ofn "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/circuito.syr" 
 xst -intstyle ise -ifn "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/circuito.xst" -ofn "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/circuito.syr" 
+xst -intstyle ise -ifn "C:/Users/margarida/Downloads/git/AAC/uRisc_xilinx_1/circuito.xst" -ofn "C:/Users/margarida/Downloads/git/AAC/uRisc_xilinx_1/circuito.syr" 
+xst -intstyle ise -ifn "C:/Users/margarida/Downloads/git/AAC/uRisc_xilinx_1/circuito.xst" -ofn "C:/Users/margarida/Downloads/git/AAC/uRisc_xilinx_1/circuito.syr" 

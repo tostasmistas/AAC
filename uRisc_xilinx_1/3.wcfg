@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/test_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="C:/Users/margarida/Downloads/git/AAC/uRisc_xilinx_1/test_isim_beh.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="std_logic_1164" />
             <top_module name="std_logic_arith" />
@@ -59,6 +59,6 @@
    <wvobject fp_name="/test/uut/r4" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">r4[15:0]</obj_property>
       <obj_property name="ObjectShortName">r4[15:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
 </wave_config>

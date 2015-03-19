@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2015-03-18T21:49:39</DateModified>
+  <DateModified>2015-03-19T11:07:16</DateModified>
   <ModuleName>circuito</ModuleName>
   <SummaryTimeStamp>2015-03-18T21:49:11</SummaryTimeStamp>
-  <SavedFilePath>C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/iseconfig/circuito.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1\</ImplementationReportsDirectory>
+  <SavedFilePath>C:/Users/margarida/Downloads/git/AAC/uRisc_xilinx_1/iseconfig/circuito.xreport</SavedFilePath>
+  <ImplementationReportsDirectory>C:/Users/margarida/Downloads/git/AAC/uRisc_xilinx_1\</ImplementationReportsDirectory>
   <DateInitialized>2015-03-14T20:52:00</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>

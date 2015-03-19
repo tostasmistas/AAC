@@ -111,13 +111,13 @@ out_ARI <= (p_ALU(15) & p_ALU) + (q_ALU(15) & q_ALU) + cIN_ALU;
 
 --------------------------------------- lógicas ---------------------------------------------
 
-sel_mux_LOG <= (oper_ALU(3) xor oper_ALU(0)) & (oper_ALU(3) xor oper_ALU(1)) & (oper_ALU(3) xor oper_ALU(2));
+sel_mux_LOG <= (oper_ALU(3) xor oper_ALU(2)) & (oper_ALU(3) xor oper_ALU(1)) & (oper_ALU(3) xor oper_ALU(0));
 
 out_LOG <=  zeros_ALU									when sel_mux_LOG = "000" else
 			operando_A and operando_B					when sel_mux_LOG = "001" else
 			not(operando_A) and operando_B				when sel_mux_LOG = "010" else
 			operando_B									when sel_mux_LOG = "011" else
-			not(operando_A) and operando_B				when sel_mux_LOG = "100" else
+			operando_A and not(operando_B)				when sel_mux_LOG = "100" else
 			operando_A									when sel_mux_LOG = "101" else
 			operando_A xor operando_B					when sel_mux_LOG = "110" else
 			operando_A or operando_B;		

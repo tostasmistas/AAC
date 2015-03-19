@@ -1,8 +1,23 @@
 ISim log file
-Running: C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\test_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/test_isim_beh.wdb 
+Running: C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\test_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb C:/Users/margarida/Downloads/git/AAC/uRisc_xilinx_1/test_isim_beh.wdb 
 ISim O.87xd (signature 0xc3576ebc)
-WARNING: A WEBPACK license was found.
-WARNING: Please use Xilinx License Configuration Manager to check out a full ISim license.
+----------------------------------------------------------------------
+INFO:Security:61 - The XILINXD_LICENSE_FILE environment variable is not set.
+INFO:Security:63 - The LM_LICENSE_FILE environment variable is not set.
+INFO:Security:68 - For more information or for assistance in obtaining 
+ a license, please run the Xilinx License Configuration Manager
+       (xlcm or "Manage Xilinx Licenses".)
+INFO:Security:68a - user is margarida, on host FUJITSUM.
+ERROR:Security:14 - No feature was available for 'ISIM'.
+
+No such feature exists.
+Feature:       ISIM
+License path:  C:/.Xilinx\Xilinx.lic;C:\Xilinx\13.4\ISE_DS\ISE\/data\*.lic;C:\Xilinx\13.4\ISE_DS\ISE\/coregen/core_licenses\Xilinx.lic;C:\Xilinx\13.4\ISE_DS\ISE\/coregen/core_licenses\XilinxFree.lic;C:\Xilinx\13.4\ISE_DS\EDK/data/core_licenses\Xilinx.lic;
+FLEXnet Licensing error:-5,357
+For further information, refer to the FLEXnet Licensing documentation,
+available at "www.acresso.com".
+----------------------------------------------------------------------
+WARNING: A full ISim License cannot be checked out due to the issues listed above. Please use Xilinx License Configuration Manager to fix these issues in order to check out a full ISim license.
 WARNING: ISim will run in Lite mode. Please refer to the ISim documentation for more information on the differences between the Lite and the Full version.
 This is a Lite version of ISim.
 Time resolution is 1 ps
@@ -15,16 +30,8 @@ at 0 ps, Instance /test/uut/inst_memoria_ROM/ : Warning: CONV_INTEGER: There is 
 Finished circuit initialization process.
 at 0 ps, Instance /test/uut/inst_EXeMEM/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
 # restart
-# run all
+# run 1.00us
 Simulator is doing circuit initialization process.
 at 0 ps, Instance /test/uut/inst_memoria_ROM/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
 Finished circuit initialization process.
 at 0 ps, Instance /test/uut/inst_EXeMEM/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-Stopped at time : 318705 ns : File "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/IDeOF.vhd" Line 230
-# restart
-# run all
-Simulator is doing circuit initialization process.
-at 0 ps, Instance /test/uut/inst_memoria_ROM/ : Warning: CONV_INTEGER: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, and it has been converted to 0.
-Finished circuit initialization process.
-at 0 ps, Instance /test/uut/inst_EXeMEM/ : Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
-Stopped at time : 263435 ns : File "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/IF.vhd" Line 50
