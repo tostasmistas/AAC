@@ -6,7 +6,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity InF is
 	port(
 		-- input
-		clk_InF, rst 				: in std_logic;
+		clk, rst 				: in std_logic;
 		destino_jump			: in std_logic_vector(11 downto 0);		 -- vem da ALU	
 		en_registo 				: in std_logic;
 		destino_cond			: in std_logic_vector(11 downto 0);     -- vem da ALU
@@ -54,9 +54,9 @@ aux_saida_mux <= aux_pc_add_1 				when JUMP_MUXPC_IN = '0' else
 ---------------------------------------------------------------------------
 ----------------------- Registo PC	---------------------------------------
 ---------------------------------------------------------------------------
-process (clk_InF, rst)
+process (clk, rst)
 	begin
-		if clk_InF'event and clk_InF= '1' then
+		if clk'event and clk = '1' then
 			if rst = '1' then
 				aux_reg_pc <= zeros_12;
 			else
@@ -73,9 +73,9 @@ end process;
 ---------------------------------------------------------------------------
 --------------------- Registo de Instruções (IR) --------------------------
 ---------------------------------------------------------------------------
-process (clk_InF, rst)
+process (clk, rst)
 	begin
-		if clk_InF'event and clk_InF = '1' then
+		if clk'event and clk = '1' then
 			if rst = '1' then
 				aux_reg_IF_OUT <= zeros_28;
 			else

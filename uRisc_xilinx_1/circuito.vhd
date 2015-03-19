@@ -19,7 +19,7 @@ architecture Behavioral of circuito is
 	component InF
 		port(
 		-- input
-			clk_InF, rst 				: in std_logic;
+			clk, rst 				: in std_logic;
 			en_registo 				: in std_logic;
 			destino_jump			: in std_logic_vector(11 downto 0);		-- vem da ALU	
 			destino_cond			: in std_logic_vector(11 downto 0);     -- vem da ALU
@@ -83,6 +83,7 @@ architecture Behavioral of circuito is
   component WB
    port(
 		-- input
+		clk, rst 					: in std_logic;
 		reg_EXMEM_OUT				: in std_logic_vector(67 downto 0);		-- registo entre andares
 		
 		-- output
@@ -169,7 +170,7 @@ signal en_registo 				: std_logic;
 begin
 
   inst_InF: InF port map(
-		clk_InF => clk_in,
+		clk => clk_in,
 		rst => rst_in,
 		en_registo => en_registo,
 		destino_jump => destino_jump,
@@ -221,6 +222,8 @@ begin
 		);
 	
 	inst_WB: WB port map( 
+		clk => clk_in,
+		rst => rst_in,
 		reg_EXMEM_OUT  => reg_EXMEM_OUT,
 		out_MUX_WB => out_MUX_WB,
 		out_saida => saida,
