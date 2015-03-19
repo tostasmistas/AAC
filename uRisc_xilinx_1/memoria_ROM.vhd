@@ -25,8 +25,8 @@ type MEM_TYPE is array(0 to (2**ADDR_SIZE)-1) of STD_LOGIC_VECTOR(15 downto 0);
 		variable IN_LINE: LINE;
 		variable ROM : MEM_TYPE;
 		variable index :integer;
-
-		begin			 
+  
+		begin			  
 			  index := 0;
 			  while NOT(endfile(INFILE)) loop
 					readline(INFILE,IN_LINE);	

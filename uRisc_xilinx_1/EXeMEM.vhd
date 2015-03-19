@@ -56,6 +56,7 @@ signal FLAGTEST_active_IN	    : std_logic := '0';
 signal aux_EXMEM_bit6			: std_logic := '0';
 signal aux_EXMEM_bit15 			: std_logic := '0';
 signal Sign_FLAG					: std_logic_vector(1 downto 0) := (others => '0');
+signal aux_Sign_FLAG					: std_logic_vector(1 downto 0) := (others => '0');
 signal out_ADD_MEM_aux			: std_logic_vector(11 downto 0) := (others => '0');
 signal out_WE_MEM_aux			: std_logic := '0';
 signal aux_reg_EXMEM_OUT		: std_logic_vector(67 downto 0) := (others => '0');
@@ -64,7 +65,7 @@ signal aux_reg_EXMEM_OUT		: std_logic_vector(67 downto 0) := (others => '0');
 ---------------------  Constantes   --------------------------------------
 --------------------------------------------------------------------------
 constant zeros					: std_logic_vector(67 downto 0) := (others => '0');
-constant zeros_4				: std_logic_vector(3 downto 0) :=(others => '1');
+constant zeros_4				: std_logic_vector(3 downto 0) :=(others => '0');
 constant menusum				: std_logic_vector(15 downto 0) :=(others => '1');
 constant zeros_ALU				: std_logic_vector(15 downto 0) := (others => '0');
 
@@ -142,10 +143,12 @@ out_ALU <=	out_ARI(15 downto 0)			when sel_mux_ALU = "00" 	else
 
 -------------------------------QUAIS FLAGS ATUALIZAM??---------------------------------------
 
-Sign_FLAG(1) <=  not(oper_ALU(4));
+aux_Sign_FLAG(1) <=  not(oper_ALU(4));
 
-Sign_FLAG(0) <=  (oper_ALU(2) and (not(oper_ALU(1)) or oper_ALU(2))) or (oper_ALU(4) and (not(oper_ALU(2)) and ((not(oper_ALU(1)) and oper_ALU(0)) or oper_ALU(3)))) or ((oper_ALU(4)) nor oper_ALU(3)) or (not(oper_ALU(0)) and oper_ALU(1));
+aux_Sign_FLAG(0) <=  (oper_ALU(2) and (not(oper_ALU(1)) or oper_ALU(2))) or (oper_ALU(4) and (not(oper_ALU(2)) and ((not(oper_ALU(1)) and oper_ALU(0)) or oper_ALU(3)))) or ((oper_ALU(4)) nor oper_ALU(3)) or (not(oper_ALU(0)) and oper_ALU(1));
 
+Sign_FLAG	<=  aux_Sign_FLAG when (aux_EXMEM_bit15 and NOT(reg_IDOF_OUT(0)) and NOT(reg_IDOF_OUT(65))) = '1' else
+					 "00";
 --Actualizar FLAGS
 
 ---------------------------FLAGS DA ALU-----------------------------

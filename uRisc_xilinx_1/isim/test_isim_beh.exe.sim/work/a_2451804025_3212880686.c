@@ -21,7 +21,7 @@
 #include <malloc.h>
 #define alloca _alloca
 #endif
-static const char *ng0 = "C:/Users/margarida/Downloads/git/AAC/uRisc_xilinx_1/memoria_RAM.vhd";
+static const char *ng0 = "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/memoria_RAM.vhd";
 extern char *IEEE_P_2592010699;
 extern char *IEEE_P_3620187407;
 
@@ -74,7 +74,7 @@ LAB6:    xsi_set_current_line(36, ng0);
     t3 = *((char **)t1);
     t1 = (t0 + 1352U);
     t4 = *((char **)t1);
-    t1 = (t0 + 6068U);
+    t1 = (t0 + 6048U);
     t10 = ieee_p_3620187407_sub_514432868_3965413181(IEEE_P_3620187407, t4, t1);
     t11 = (t10 - 0);
     t12 = (t11 * 1);
@@ -98,7 +98,7 @@ LAB5:    xsi_set_current_line(34, ng0);
     t8 = *((char **)t3);
     t3 = (t0 + 1352U);
     t9 = *((char **)t3);
-    t3 = (t0 + 6068U);
+    t3 = (t0 + 6048U);
     t10 = ieee_p_3620187407_sub_514432868_3965413181(IEEE_P_3620187407, t9, t3);
     t11 = (t10 - 0);
     t12 = (t11 * 1);
