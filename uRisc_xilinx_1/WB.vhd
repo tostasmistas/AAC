@@ -36,6 +36,7 @@ signal ALU_ou_MEM 				: std_logic := '0';
 signal aux_sel_bit1				: std_logic := '0'; -- bit de selecção 1 do MUX 4:1 do WB
 signal aux_sel_bit0				: std_logic := '0'; -- bit de selecção 0 do MUX 4:1 do WB
 signal sel_mux_WB				: std_logic_vector(1 downto 0) := (others => '0');
+signal aux_sel_mux_WB				: std_logic_vector(1 downto 0) := (others => '0');
 signal ALU_e_MEM				: std_logic := '0';
 signal soMEM 					: std_logic := '0';
 signal soALU 					: std_logic := '0';
@@ -43,7 +44,9 @@ signal loadMEM					: std_logic := '0';
 signal controlo					: std_logic := '0';
 signal controloJump				: std_logic := '0';
 signal ovWE 					: std_logic := '0';
-signal aux_out_mux_WB			: std_logic_vector(15 downto 0):= (others => '0');
+signal aux_out_alu			: std_logic_vector(15 downto 0):= (others => '0');
+signal aux_out_const			: std_logic_vector(15 downto 0):= (others => '0');
+signal aux_out_pcadd1			: std_logic_vector(15 downto 0):= (others => '0');
 
 
 constant zeros				: std_logic_vector(15 downto 0) := (others => '0');
@@ -67,10 +70,32 @@ aux_sel_bit0 <= isJump or (not(bit14) and ALU_ou_MEM) ;
 
 sel_mux_WB <= aux_sel_bit1 & aux_sel_bit0;
 
-aux_out_mux_WB <=	reg_EXMEM_OUT(32 downto 17)		when sel_mux_WB = "00" else    -- escrever a saída da ALU 		(out_ALU)
-					reg_EXMEM_OUT(65 downto 50)		when sel_mux_WB = "01" else    -- escrever saída da MEM 			(out_MEM)
-					reg_EXMEM_OUT(16 downto 1)			when sel_mux_WB = "10" else	 -- fazer load de uma constante		(out_mux_constantes)
-					X"0" & reg_EXMEM_OUT(48 downto 37);								 -- guardar em R7 o valor de PC+1 	(save_pc_add_1)
+process(clk)
+begin
+	if clk'event and clk ='1' then 
+      if rst = '1' then
+			 aux_out_alu <= zeros;
+			 aux_out_const <= zeros;
+			 aux_out_pcadd1 <= zeros;
+		else
+			 aux_out_alu <= reg_EXMEM_OUT(32 downto 17);
+			 aux_out_const <= reg_EXMEM_OUT(16 downto 1);
+			 aux_out_pcadd1 <= X"0" & reg_EXMEM_OUT(48 downto 37);
+		end if;
+end if;
+end process;
+
+process(clk)
+begin
+	if clk'event and clk ='1' then 
+      aux_sel_mux_WB <= sel_mux_WB;
+	end if;
+end process;
+
+out_mux_WB <=	aux_out_alu								when aux_sel_mux_WB = "00" else    -- escrever a saída da ALU 		(out_ALU)
+					reg_EXMEM_OUT(65 downto 50)		when aux_sel_mux_WB = "01" else    -- escrever saída da MEM 			(out_MEM)
+					aux_out_const							when aux_sel_mux_WB = "10" else	 -- fazer load de uma constante		(out_mux_constantes)
+					aux_out_pcadd1;								 -- guardar em R7 o valor de PC+1 	(save_pc_add_1)
 
 
 ALU_e_MEM <= (bit15 and (not(bit14)));
@@ -108,16 +133,8 @@ begin
    end if;
 end process;
 
-process(clk)
-begin
-	if clk'event and clk ='1' then 
-      if rst = '1' then
-		out_mux_WB <= zeros;
-		else
-		out_mux_WB <= aux_out_mux_WB;
-		end if;
-	end if;
-end process;
+
+
 
 end Behavioral;
 
