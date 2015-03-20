@@ -102,9 +102,9 @@ p_ALU <= operando_A;
 sel_mux_q <= oper_ALU(2) & oper_ALU(1);
 
 q_ALU <= operando_B			when sel_mux_q = "00" else
-		 menusum			when sel_mux_q = "01" else
+		 zeros_ALU			when sel_mux_q = "01" else
 		 not(operando_B) 	when sel_mux_q = "10" else
-		 zeros_ALU;	 
+		 menusum;	 
 
 cIN_ALU <= oper_ALU(0);
 

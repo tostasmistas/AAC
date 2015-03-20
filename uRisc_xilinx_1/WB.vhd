@@ -16,6 +16,7 @@ entity WB is
 		clk, rst 					: in std_logic;
 		reg_EXMEM_OUT				: in std_logic_vector(67 downto 0);		-- registo entre andares
 		
+		
 		-- output
 		out_mux_WB					: out std_logic_vector(15 downto 0);
 		out_saida					: out std_logic_vector(15 downto 0);
@@ -70,27 +71,27 @@ aux_sel_bit0 <= isJump or (not(bit14) and ALU_ou_MEM) ;
 
 sel_mux_WB <= aux_sel_bit1 & aux_sel_bit0;
 
-process(clk)
-begin
-	if clk'event and clk ='1' then 
-      if rst = '1' then
-			 aux_out_alu <= zeros;
-			 aux_out_const <= zeros;
-			 aux_out_pcadd1 <= zeros;
-		else
+--process(clk)
+--begin
+--	if clk'event and clk ='1' then 
+--      if rst = '1' then
+--			 aux_out_alu <= zeros;
+--			 aux_out_const <= zeros;
+--			 aux_out_pcadd1 <= zeros;
+--		else
 			 aux_out_alu <= reg_EXMEM_OUT(32 downto 17);
 			 aux_out_const <= reg_EXMEM_OUT(16 downto 1);
 			 aux_out_pcadd1 <= X"0" & reg_EXMEM_OUT(48 downto 37);
-		end if;
-end if;
-end process;
+--		end if;
+--end if;
+--end process;
 
-process(clk)
-begin
-	if clk'event and clk ='1' then 
+--process(clk)
+--begin
+--	if clk'event and clk ='1' then 
       aux_sel_mux_WB <= sel_mux_WB;
-	end if;
-end process;
+--	end if;
+--end process;
 
 out_mux_WB <=	aux_out_alu								when aux_sel_mux_WB = "00" else    -- escrever a saída da ALU 		(out_ALU)
 					reg_EXMEM_OUT(65 downto 50)		when aux_sel_mux_WB = "01" else    -- escrever saída da MEM 			(out_MEM)
@@ -112,26 +113,37 @@ controloJump <= controlo and isJump;
 
 ovWE <= (soALU or loadMEM) or (controloJump or bit14);
 
-process(clk)
-begin
-   if clk'event and clk ='1' then 
-      if rst = '1' then
-         en_regs <= X"00";
-      else
-         case reg_EXMEM_OUT(35 downto 33)	is
-            when "000" => en_regs <= "0000000" & ovWE;
-            when "001" => en_regs <= "000000" & ovWE & '0';
-            when "010" => en_regs <= "00000" & ovWE & "00";
-            when "011" => en_regs <= "0000" & ovWE & "000";
-				when "100" => en_regs <= "000" & ovWE & "0000";
-				when "101" => en_regs <= "00" & ovWE & "00000";
-				when "110" => en_regs <= '0' & ovWE & "000000";
-				when "111" => en_regs <= ovWE & "0000000";
-            when others => en_regs <= "00000000";
-         end case;
-      end if;
-   end if;
-end process;
+--process(clk)
+--begin
+--   if clk'event and clk ='1' then 
+--      if rst = '1' then
+--         en_regs <= X"00";
+--      else
+--         case reg_EXMEM_OUT(35 downto 33)	is
+--            when "000" => en_regs <= "0000000" & ovWE;
+--            when "001" => en_regs <= "000000" & ovWE & '0';
+--            when "010" => en_regs <= "00000" & ovWE & "00";
+--            when "011" => en_regs <= "0000" & ovWE & "000";
+--				when "100" => en_regs <= "000" & ovWE & "0000";
+--				when "101" => en_regs <= "00" & ovWE & "00000";
+--				when "110" => en_regs <= '0' & ovWE & "000000";
+--				when "111" => en_regs <= ovWE & "0000000";
+--            when others => en_regs <= "00000000";
+--         end case;
+--      end if;
+--   end if;
+--end process;
+
+with reg_EXMEM_OUT(35 downto 33) select
+	en_regs <= 	"0000000" & ovWE 		when "000",
+				"000000" & ovWE & '0'	when "001",
+				"00000" & ovWE & "00" 	when "010",
+				"0000" & ovWE & "000" 	when "011",
+				"000" & ovWE & "0000" 	when "100",
+				"00" & ovWE & "00000" 	when "101",
+				'0' & ovWE & "000000" 	when "110",
+				ovWE & "0000000" 		   when "111", 
+				"00000000"              when others;
 
 
 

@@ -21,6 +21,8 @@ architecture Behavioral of circuito is
 		-- input
 			clk, rst 				: in std_logic;
 			en_registo 				: in std_logic;
+			atraso_pc					: in std_logic;
+			rep_pc					: in std_logic;
 			destino_jump			: in std_logic_vector(11 downto 0);		-- vem da ALU	
 			destino_cond			: in std_logic_vector(11 downto 0);     -- vem da ALU
 			FLAGTEST_MUXPC_IN		: in std_logic;							-- vem da ALU
@@ -30,8 +32,9 @@ architecture Behavioral of circuito is
 
 			-- output
 			reg_PCMEM_OUT			: out std_logic_vector(11 downto 0);	-- PC + 1
-			addr			: out std_logic_vector(11 downto 0);	-- PC + 1
+			addr			: out std_logic_vector(11 downto 0);				-- PC + 1
 			reg_OUT					: out std_logic_vector(11 downto 0);
+			rep_pc_out					: out std_logic;
 			reg_IF_OUT				: out std_logic_vector(27 downto 0)		-- registo entre andares		
 		);
 	end component;
@@ -40,6 +43,7 @@ architecture Behavioral of circuito is
 			port(
 		-- input
 		clk, rst 				: in std_logic;
+	
 		reg_IF_OUT 				: in std_logic_vector(27 downto 0);		-- registo entre andares
 		FLAGS_IN				: in std_logic_vector(3 downto 0);
 		en_registo 				: in std_logic;
@@ -54,6 +58,7 @@ architecture Behavioral of circuito is
 		
 		-- output					
 		JUMP_MUXPC_OUT			: out std_logic;						-- vai para o IF
+		atraso_pc					: out std_logic;
 		destino_jump			: out std_logic_vector(11 downto 0);
 		destino_cond			: out std_logic_vector(11 downto 0);
 		FLAGTEST_MUXPC_OUT		: out std_logic; 
@@ -96,7 +101,7 @@ architecture Behavioral of circuito is
   component registos
     port(
 		-- input
-		clk, rst				: in std_logic;
+		clk,rst						: in std_logic;
 		en_regs					: in std_logic_vector(7 downto 0);
 		out_mux_WB				: in std_logic_vector(15 downto 0);
 		-- colocar registo entre andares e la colocar o vector do en_regs do WB
@@ -166,12 +171,17 @@ signal 	out_MUX_WB				: std_logic_vector(15 downto 0);
 signal 	out_ADD_MEM				: std_logic_vector(11 downto 0);
 signal 	out_WE_MEM				: std_logic;
 signal en_registo 				: std_logic;
+signal 	atraso_pc				: std_logic;
+signal  rep_pc				: std_logic;
 
 begin
 
   inst_InF: InF port map(
 		clk => clk_in,
 		rst => rst_in,
+		rep_pc => rep_pc,
+		rep_pc_out => rep_pc,
+		atraso_pc => atraso_pc,
 		en_registo => en_registo,
 		destino_jump => destino_jump,
 		destino_cond => destino_cond,
@@ -190,6 +200,7 @@ begin
 		rst => rst_in, 
 		en_registo => en_registo,
 		reg_IF_OUT  => reg_IF_OUT,
+		atraso_pc => atraso_pc,
 		FLAGS_IN =>FLAGSTEST_OUT,
 		R0  => R0,
 		R1  => R1,	
@@ -231,8 +242,8 @@ begin
 		);
 		
 	inst_registos: registos port map(
-		clk => clk_in,
-		rst => rst_in, 
+		rst => rst_in,
+		clk => clk_in,		
 		out_mux_WB => out_MUX_WB,
 		en_regs	=> en_regs,
 		R0  => R0,

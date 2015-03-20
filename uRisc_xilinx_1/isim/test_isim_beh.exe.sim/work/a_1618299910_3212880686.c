@@ -658,7 +658,7 @@ LAB6:    t30 = (t0 + 4712U);
         goto LAB7;
 
 LAB8:
-LAB11:    t50 = (t0 + 8568U);
+LAB11:    t50 = (t0 + 8448U);
     t51 = *((char **)t50);
     t50 = (t0 + 20816);
     t52 = (t50 + 56U);
@@ -683,7 +683,7 @@ LAB3:    t7 = (t0 + 4232U);
     xsi_driver_first_trans_fast(t7);
     goto LAB2;
 
-LAB5:    t22 = (t0 + 8448U);
+LAB5:    t22 = (t0 + 8568U);
     t25 = *((char **)t22);
     t22 = (t0 + 20816);
     t26 = (t22 + 56U);

@@ -13,7 +13,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity registos is
 	port(
 		-- input
-		clk, rst				: in std_logic;
+		clk,rst						: in std_logic;
 		en_regs					: in std_logic_vector(7 downto 0);
 		out_mux_WB				: in std_logic_vector(15 downto 0);
 		-- colocar registo entre andares e la colocar o vector do en_regs do WB
@@ -57,98 +57,98 @@ begin
 ----------------------------------------------------------------------
 
 --------------------------- Registo 0 (R0) ---------------------------
-process (clk, rst,en_regs)
+process (clk,rst,en_regs,out_mux_WB)
 	begin
-		if clk'event and clk = '1' then
+		if rising_edge(clk) then
 			if rst = '1' then
 				aux_reg_r0 <= zeros;
 			elsif en_regs = "00000001" then 
 				aux_reg_r0 <= out_mux_WB;
-			end if;	
+			end if;
 		end if;
 end process;
 
 --------------------------- Registo 1 (R1) ---------------------------
-process (clk, rst,en_regs)
+process (clk,rst,en_regs,out_mux_WB)
 	begin
-		if clk'event and clk = '1' then
+		if rising_edge(clk) then
 			if rst = '1' then
 				aux_reg_r1 <= zeros;
 			elsif en_regs = "00000010" then 
 				aux_reg_r1 <= out_mux_WB;
-			end if;		
-		end if;
+			end if;	
+		end if;			
 end process;
 
 --------------------------- Registo 2 (R2) ---------------------------
-process (clk, rst,en_regs)
+process (clk,rst,en_regs,out_mux_WB)
 	begin
-		if clk'event and clk = '1' then
+		if rising_edge(clk) then
 			if rst = '1' then
 				aux_reg_r2 <= zeros;
 			elsif en_regs = "00000100" then 
 				aux_reg_r2 <= out_mux_WB;
-			end if;			
-		end if;
+			end if;	
+		end if;			
 end process;
 
 --------------------------- Registo 3 (R3) ---------------------------
-process (clk, rst,en_regs)
+process (clk,rst,en_regs,out_mux_WB)
 	begin
-		if clk'event and clk = '1' then
+		if rising_edge(clk) then
 			if rst = '1' then
 				aux_reg_r3 <= zeros;
 			elsif en_regs = "00001000" then 
 				aux_reg_r3 <= out_mux_WB;
-			end if;		
-		end if;
+			end if;
+		end if;			
 end process;
 
 --------------------------- Registo 4 (R4) ---------------------------
-process (clk, rst,en_regs)
+process (clk,rst,en_regs,out_mux_WB)
 	begin
-		if clk'event and clk = '1' then
+		if rising_edge(clk) then
 			if rst = '1' then
 				aux_reg_r4 <= zeros;
 			elsif en_regs ="00010000"  then 
 				aux_reg_r4 <= out_mux_WB;
-			end if;			
-		end if;
+			end if;	
+		end if;			
 end process;
 
 --------------------------- Registo 5 (R5) ---------------------------
-process (clk, rst,en_regs)
+process (clk,rst,en_regs,out_mux_WB)
 	begin
-		if clk'event and clk = '1' then
+		if rising_edge(clk) then
 			if rst = '1' then
 				aux_reg_r5 <= zeros;
 			elsif en_regs = "00100000" then 
 				aux_reg_r5 <= out_mux_WB;
-			end if;		
-		end if;
+			end if;
+		end if;			
 end process;
 
 --------------------------- Registo 6 (R6) ---------------------------
-process (clk, rst,en_regs)
+process (clk,rst,en_regs,out_mux_WB)
 	begin
-		if clk'event and clk = '1' then
+		if rising_edge(clk) then
 			if rst = '1' then
 				aux_reg_r6 <= zeros;
 			elsif en_regs= "01000000" then 
 				aux_reg_r6 <= out_mux_WB;
-			end if;		
+			end if;
 		end if;
 end process;
 
 --------------------------- Registo 7 (R7) ---------------------------
-process (clk, rst,en_regs)
+process (clk,rst,en_regs,out_mux_WB)
 	begin
-		if clk'event and clk = '1' then
+		if rising_edge(clk) then
 			if rst = '1' then
 				aux_reg_r7 <= zeros;
 			elsif en_regs = "10000000" then 
 				aux_reg_r7 <= out_mux_WB;
-			end if;			
+			end if;
 		end if;
 end process;
 

@@ -21,12 +21,13 @@ entity IDeOF is
 		JUMP_MUXPC_OUT			: out std_logic;						-- vai para o IF
 		destino_jump			: out std_logic_vector(11 downto 0);
 		destino_cond			: out std_logic_vector(11 downto 0);
+		atraso_pc					: out std_logic;
 		FLAGTEST_MUXPC_OUT		: out std_logic; 
 		reg_IDOF_OUT			: out std_logic_vector(73 downto 0) 	-- registo entre andares
 	);
 end IDeOF;
 
-architecture Behavioral of IDeOF is
+	architecture Behavioral of IDeOF is
 
 --------------------------------------------------------------------------
 --------------------------- Aux Signals ----------------------------------
@@ -147,15 +148,15 @@ aux_CONS_FII_8B	<=	inst_IN(7 downto 0);
 ---------------------------------------------------------------------------------------------
 ---------------------------------- TESTE FLAGS ----------------------------------------------
 ---------------------------------------------------------------------------------------------
-aux_FLAGMUX	 <=FLAGS_IN(0) 					when TRANS_FI_COND_IN = "0101" else
-					FLAGS_IN(1)						when TRANS_FI_COND_IN = "0100" else
-					FLAGS_IN(2) 					when TRANS_FI_COND_IN = "0110" else
-					FLAGS_IN(3) 					when TRANS_FI_COND_IN = "0011" else
+aux_FLAGMUX	 <=FLAGS_IN(3) 					when TRANS_FI_COND_IN = "0101" else
+					FLAGS_IN(2)						when TRANS_FI_COND_IN = "0100" else
+					FLAGS_IN(1) 					when TRANS_FI_COND_IN = "0110" else
+					FLAGS_IN(0) 					when TRANS_FI_COND_IN = "0011" else
 					'1' 	 	 					   when TRANS_FI_COND_IN = "0000" else
-					FLAGS_IN(0) or FLAGS_IN(1) when TRANS_FI_COND_IN = "0111" else
+					FLAGS_IN(3) or FLAGS_IN(2) when TRANS_FI_COND_IN = "0111" else
 					'0';
 
-aux_FLAGTEST    <= (not(aux_TRANS_OP(1)) and aux_TRANS_OP(0) and aux_FLAGMUX) or(not(aux_TRANS_OP(0))and aux_FLAGMUX ) or (aux_TRANS_OP(1) and not(aux_TRANS_OP(0))); 
+aux_FLAGTEST    <= (not(aux_TRANS_OP(1)) and aux_TRANS_OP(0) and aux_FLAGMUX) or (not(aux_TRANS_OP(0))and not(aux_FLAGMUX) ) or (aux_TRANS_OP(1) and not(aux_TRANS_OP(0))); 
 
 aux_FLAGTEST_MUXPC <=  not(aux_active_FLAGTEST) and aux_FLAGTEST and aux_TEST_NOP; 
 
@@ -197,6 +198,8 @@ out_mux_constantes <=			const11		when select_mux_constantes = "00" else
 ALU_vs_MEM <= (aux_ALU_OPER(1) and not(aux_ALU_OPER(2))) and (aux_ALU_OPER(3) and not(aux_ALU_OPER(4)));
 
 WE_RAM <= (inst_IN(15) and not(inst_IN(14))) and (ALU_vs_MEM and inst_IN(6));
+
+atraso_pc <= ALU_vs_MEM and not(WE_RAM);
 
 
 
