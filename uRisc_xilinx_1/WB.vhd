@@ -48,6 +48,7 @@ signal ovWE 					: std_logic := '0';
 signal aux_out_alu			: std_logic_vector(15 downto 0):= (others => '0');
 signal aux_out_const			: std_logic_vector(15 downto 0):= (others => '0');
 signal aux_out_pcadd1			: std_logic_vector(15 downto 0):= (others => '0');
+signal aux_en_WC 			: std_logic_vector(2 downto 0):= (others => '0');
 
 
 constant zeros				: std_logic_vector(15 downto 0) := (others => '0');
@@ -93,10 +94,10 @@ sel_mux_WB <= aux_sel_bit1 & aux_sel_bit0;
 --	end if;
 --end process;
 
-out_mux_WB <=	aux_out_alu								when aux_sel_mux_WB = "00" else    -- escrever a saída da ALU 		(out_ALU)
-					reg_EXMEM_OUT(65 downto 50)		when aux_sel_mux_WB = "01" else    -- escrever saída da MEM 			(out_MEM)
-					aux_out_const							when aux_sel_mux_WB = "10" else	 -- fazer load de uma constante		(out_mux_constantes)
-					aux_out_pcadd1;								 -- guardar em R7 o valor de PC+1 	(save_pc_add_1)
+out_mux_WB <=	aux_out_alu								when aux_sel_mux_WB = "00" else    	-- escrever a saída da ALU 		(out_ALU)
+					reg_EXMEM_OUT(65 downto 50)		when aux_sel_mux_WB = "01" else    	-- escrever saída da MEM 			(out_MEM)
+					aux_out_const							when aux_sel_mux_WB = "10" else	 	-- fazer load de uma constante		(out_mux_constantes)
+					aux_out_pcadd1;								 										-- guardar em R7 o valor de PC+1 	(save_pc_add_1)
 
 
 ALU_e_MEM <= (bit15 and (not(bit14)));
@@ -113,37 +114,20 @@ controloJump <= controlo and isJump;
 
 ovWE <= (soALU or loadMEM) or (controloJump or bit14);
 
---process(clk)
---begin
---   if clk'event and clk ='1' then 
---      if rst = '1' then
---         en_regs <= X"00";
---      else
---         case reg_EXMEM_OUT(35 downto 33)	is
---            when "000" => en_regs <= "0000000" & ovWE;
---            when "001" => en_regs <= "000000" & ovWE & '0';
---            when "010" => en_regs <= "00000" & ovWE & "00";
---            when "011" => en_regs <= "0000" & ovWE & "000";
---				when "100" => en_regs <= "000" & ovWE & "0000";
---				when "101" => en_regs <= "00" & ovWE & "00000";
---				when "110" => en_regs <= '0' & ovWE & "000000";
---				when "111" => en_regs <= ovWE & "0000000";
---            when others => en_regs <= "00000000";
---         end case;
---      end if;
---   end if;
---end process;
+aux_en_WC <= "111" when (aux_sel_mux_WB(1) and not(aux_sel_mux_WB(0))) = '1' else reg_EXMEM_OUT(35 downto 33);
 
-with reg_EXMEM_OUT(35 downto 33) select
-	en_regs <= 	"0000000" & ovWE 		when "000",
-				"000000" & ovWE & '0'	when "001",
-				"00000" & ovWE & "00" 	when "010",
-				"0000" & ovWE & "000" 	when "011",
-				"000" & ovWE & "0000" 	when "100",
-				"00" & ovWE & "00000" 	when "101",
-				'0' & ovWE & "000000" 	when "110",
-				ovWE & "0000000" 		   when "111", 
-				"00000000"              when others;
+
+
+with aux_en_WC select
+		en_regs <= 	"0000000" & ovWE 		when "000",
+					"000000" & ovWE & '0'	when "001",
+					"00000" & ovWE & "00" 	when "010",
+					"0000" & ovWE & "000" 	when "011",
+					"000" & ovWE & "0000" 	when "100",
+					"00" & ovWE & "00000" 	when "101",
+					'0' & ovWE & "000000" 	when "110",
+					ovWE & "0000000" 		   when "111", 
+					"00000000"              when others;
 
 
 

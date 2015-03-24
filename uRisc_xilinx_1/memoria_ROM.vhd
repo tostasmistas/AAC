@@ -14,7 +14,7 @@ entity memoria_ROM is
 			DO_ROM 	: out 	STD_LOGIC_VECTOR(15 downto 0)
 		);
 end memoria_ROM; 
-     
+  
 architecture Behavioral of memoria_ROM is
 
 type MEM_TYPE is array(0 to (2**ADDR_SIZE)-1) of STD_LOGIC_VECTOR(15 downto 0);
@@ -25,7 +25,7 @@ type MEM_TYPE is array(0 to (2**ADDR_SIZE)-1) of STD_LOGIC_VECTOR(15 downto 0);
 		variable IN_LINE: LINE;
 		variable ROM : MEM_TYPE;
 		variable index :integer;
-  
+   
 		begin			  
 			  index := 0;
 			  while NOT(endfile(INFILE)) loop
@@ -44,7 +44,7 @@ signal ROM : MEM_TYPE := InitRamFromFile("rom_inst.txt");
 
  
 begin
-			DO_ROM <= ROM(conv_integer(Addr_ROM)); -- leitura assincrona
+DO_ROM <= ROM(conv_integer(Addr_ROM)); -- leitura assincrona
 
 end Behavioral;
 

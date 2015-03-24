@@ -108,7 +108,7 @@ q_ALU <= operando_B			when sel_mux_q = "00" else
 
 cIN_ALU <= oper_ALU(0);
 
-out_ARI <= (p_ALU(15) & p_ALU) + (q_ALU(15) & q_ALU) + cIN_ALU;
+out_ARI <= ('0' & p_ALU) + ('0' & q_ALU) + cIN_ALU;
 
 --------------------------------------- lógicas ---------------------------------------------
 
@@ -172,6 +172,7 @@ aux_FLAGS_ARI(3) <= not(out_ARI(15) or out_ARI(14) or out_ARI(13) or out_ARI(12)
 ------------------------FLAGS LOGICA-------------------------------
 --NEGATIVE
 aux_FLAGS_LOG(0) <= out_LOG(15);
+
 --ZERO
 aux_FLAGS_LOG(1) <= not(out_LOG(15) or out_LOG(14) or out_LOG(13) or out_LOG(12)or out_LOG(11) 
 				 or out_LOG(10) or out_LOG(9) or out_LOG(8) or out_LOG(7) or out_LOG(6) 
