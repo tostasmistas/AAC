@@ -151,12 +151,11 @@ Sign_FLAG	<=  aux_Sign_FLAG when (aux_EXMEM_bit15 and NOT(reg_IDOF_OUT(0)) and N
 					 "00";
 --Actualizar FLAGS
 
----------------------------FLAGS DA ALU-----------------------------
+---------------------------FLAGS DA ARI-----------------------------
 
 
 --OVERFLOW
-
-aux_FLAGS_ARI(0) <=  out_ARI(16) xor out_ARI(15);
+aux_FLAGS_ARI(0) <=  (q_ALU(15) xnor p_ALU(15)) and (q_ALU(15) xor out_ALU(15));
 
 --CARRY
 aux_FLAGS_ARI(1) <=  out_ARI(16);
