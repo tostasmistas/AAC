@@ -4,13 +4,13 @@ Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.21 secs
+Total CPU time to Xst completion: 0.47 secs
  
 --> Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.21 secs
+Total CPU time to Xst completion: 0.47 secs
  
 --> Reading design: circuito.prj
 
@@ -106,31 +106,31 @@ INFO:Xst - Part-select index evaluated to out of bound value may lead to incorre
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
-Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\WB.vhd" into library work
+Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\WB.vhd" into library work
 Parsing entity <WB>.
 Parsing architecture <Behavioral> of entity <wb>.
-Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\registos.vhd" into library work
+Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\registos.vhd" into library work
 Parsing entity <registos>.
 Parsing architecture <Behavioral> of entity <registos>.
-Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\memoria_ROM.vhd" into library work
+Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\memoria_ROM.vhd" into library work
 Parsing entity <memoria_ROM>.
 Parsing architecture <Behavioral> of entity <memoria_rom>.
-Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\memoria_RAM.vhd" into library work
+Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\memoria_RAM.vhd" into library work
 Parsing entity <memoria_RAM>.
 Parsing architecture <Behavioral> of entity <memoria_ram>.
-Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\IF.vhd" into library work
+Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\IF.vhd" into library work
 Parsing entity <InF>.
 Parsing architecture <Behavioral> of entity <inf>.
-Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\IDeOF.vhd" into library work
+Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\IDeOF.vhd" into library work
 Parsing entity <IDeOF>.
 Parsing architecture <Behavioral> of entity <ideof>.
-Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\EXeMEM.vhd" into library work
+Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\EXeMEM.vhd" into library work
 Parsing entity <EXeMEM>.
 Parsing architecture <Behavioral> of entity <exemem>.
-Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\Controlo.vhd" into library work
+Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\Controlo.vhd" into library work
 Parsing entity <Controlo>.
 Parsing architecture <Behavioral> of entity <controlo>.
-Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\circuito.vhd" into library work
+Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\circuito.vhd" into library work
 Parsing entity <circuito>.
 Parsing architecture <Behavioral> of entity <circuito>.
 
@@ -161,13 +161,13 @@ Elaborating entity <Controlo> (architecture <Behavioral>) from library <work>.
 =========================================================================
 
 Synthesizing Unit <circuito>.
-    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/circuito.vhd".
+    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/circuito.vhd".
     Summary:
 	no macro.
 Unit <circuito> synthesized.
 
 Synthesizing Unit <InF>.
-    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/if.vhd".
+    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/if.vhd".
     Found 1-bit register for signal <rep_pc_out>.
     Found 28-bit register for signal <aux_reg_IF_OUT>.
     Found 12-bit register for signal <aux_reg_pc>.
@@ -180,7 +180,7 @@ Synthesizing Unit <InF>.
 Unit <InF> synthesized.
 
 Synthesizing Unit <IDeOF>.
-    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/ideof.vhd".
+    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/ideof.vhd".
     Found 74-bit register for signal <aux_reg_IDOF_OUT>.
     Found 1-bit 8-to-1 multiplexer for signal <_n0244> created at line 44.
     Found 16-bit 8-to-1 multiplexer for signal <RA_C> created at line 57.
@@ -192,11 +192,11 @@ Synthesizing Unit <IDeOF>.
 Unit <IDeOF> synthesized.
 
 Synthesizing Unit <EXeMEM>.
-    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/exemem.vhd".
+    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/exemem.vhd".
 WARNING:Xst:647 - Input <reg_IDOF_OUT<71:71>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found 68-bit register for signal <aux_reg_EXMEM_OUT>.
     Found 4-bit register for signal <aux_MSR_FLAGS>.
-    Found 17-bit adder for signal <n0225> created at line 111.
+    Found 17-bit adder for signal <n0228> created at line 111.
     Found 17-bit adder for signal <out_ARI> created at line 111.
     Found 16-bit 4-to-1 multiplexer for signal <q_ALU> created at line 43.
     Found 16-bit 8-to-1 multiplexer for signal <out_LOG> created at line 46.
@@ -209,7 +209,7 @@ WARNING:Xst:647 - Input <reg_IDOF_OUT<71:71>> is never used. This port will be p
 Unit <EXeMEM> synthesized.
 
 Synthesizing Unit <WB>.
-    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/wb.vhd".
+    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/wb.vhd".
 WARNING:Xst:647 - Input <reg_EXMEM_OUT<51:65>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <clk> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
@@ -220,7 +220,7 @@ WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and lef
 Unit <WB> synthesized.
 
 Synthesizing Unit <registos>.
-    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/registos.vhd".
+    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/registos.vhd".
     Found 16-bit register for signal <aux_reg_r1>.
     Found 16-bit register for signal <aux_reg_r2>.
     Found 16-bit register for signal <aux_reg_r3>.
@@ -234,18 +234,15 @@ Synthesizing Unit <registos>.
 Unit <registos> synthesized.
 
 Synthesizing Unit <memoria_RAM>.
-    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/memoria_ram.vhd".
+    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/memoria_ram.vhd".
         ADDR_SIZE = 12
     Found 4096x16-bit single-port RAM <Mram_RAM> for signal <RAM>.
-    Found 16-bit register for signal <DO_A>.
     Summary:
 	inferred   1 RAM(s).
-	inferred  16 D-type flip-flop(s).
-	inferred   1 Multiplexer(s).
 Unit <memoria_RAM> synthesized.
 
 Synthesizing Unit <memoria_ROM>.
-    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/memoria_rom.vhd".
+    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/memoria_rom.vhd".
         ADDR_SIZE = 12
 WARNING:Xst:2999 - Signal 'ROM', unconnected in block 'memoria_ROM', is tied to its initial value.
     Found 4096x16-bit single-port Read Only RAM <Mram_ROM> for signal <ROM>.
@@ -254,7 +251,7 @@ WARNING:Xst:2999 - Signal 'ROM', unconnected in block 'memoria_ROM', is tied to 
 Unit <memoria_ROM> synthesized.
 
 Synthesizing Unit <Controlo>.
-    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/controlo.vhd".
+    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/controlo.vhd".
 WARNING:Xst:647 - Input <clk> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Summary:
@@ -271,19 +268,18 @@ Macro Statistics
 # Adders/Subtractors                                   : 4
  12-bit adder                                          : 2
  17-bit adder                                          : 2
-# Registers                                            : 15
+# Registers                                            : 14
  1-bit register                                        : 1
  12-bit register                                       : 1
- 16-bit register                                       : 9
+ 16-bit register                                       : 8
  28-bit register                                       : 1
  4-bit register                                        : 1
  68-bit register                                       : 1
  74-bit register                                       : 1
-# Multiplexers                                         : 36
+# Multiplexers                                         : 35
  1-bit 2-to-1 multiplexer                              : 16
  1-bit 8-to-1 multiplexer                              : 1
  12-bit 2-to-1 multiplexer                             : 4
- 16-bit 2-to-1 multiplexer                             : 1
  16-bit 3-to-1 multiplexer                             : 1
  16-bit 4-to-1 multiplexer                             : 3
  16-bit 8-to-1 multiplexer                             : 3
@@ -294,8 +290,8 @@ Macro Statistics
  68-bit 2-to-1 multiplexer                             : 1
  74-bit 2-to-1 multiplexer                             : 1
  8-bit 8-to-1 multiplexer                              : 1
-# Xors                                                 : 5
- 1-bit xor2                                            : 4
+# Xors                                                 : 6
+ 1-bit xor2                                            : 5
  16-bit xor2                                           : 1
 
 =========================================================================
@@ -324,20 +320,17 @@ INFO:Xst:3226 - The RAM <inst_memoria_ROM/Mram_ROM> will be implemented as a BLO
 Unit <circuito> synthesized (advanced).
 
 Synthesizing (advanced) Unit <memoria_RAM>.
-INFO:Xst:3226 - The RAM <Mram_RAM> will be implemented as a BLOCK RAM, absorbing the following register(s): <DO_A>
+INFO:Xst:3218 - HDL ADVISOR - The RAM <Mram_RAM> will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
     -----------------------------------------------------------------------
-    | ram_type           | Block                               |          |
+    | ram_type           | Distributed                         |          |
     -----------------------------------------------------------------------
     | Port A                                                              |
     |     aspect ratio   | 4096-word x 16-bit                  |          |
-    |     mode           | write-first                         |          |
     |     clkA           | connected to signal <CLK_A>         | rise     |
     |     weA            | connected to signal <WE_A>          | high     |
     |     addrA          | connected to signal <Addr_A>        |          |
     |     diA            | connected to signal <DI_A>          |          |
-    |     doA            | connected to signal <DO_A>          |          |
-    -----------------------------------------------------------------------
-    | optimization       | speed                               |          |
+    |     doA            | connected to internal node          |          |
     -----------------------------------------------------------------------
 Unit <memoria_RAM> synthesized (advanced).
 
@@ -346,8 +339,8 @@ Advanced HDL Synthesis Report
 
 Macro Statistics
 # RAMs                                                 : 2
- 4096x16-bit single-port block RAM                     : 1
  4096x16-bit single-port block Read Only RAM           : 1
+ 4096x16-bit single-port distributed RAM               : 1
 # Adders/Subtractors                                   : 3
  12-bit adder                                          : 2
  17-bit adder carry in                                 : 1
@@ -367,8 +360,8 @@ Macro Statistics
  68-bit 2-to-1 multiplexer                             : 1
  74-bit 2-to-1 multiplexer                             : 1
  8-bit 8-to-1 multiplexer                              : 1
-# Xors                                                 : 5
- 1-bit xor2                                            : 4
+# Xors                                                 : 6
+ 1-bit xor2                                            : 5
  16-bit xor2                                           : 1
 
 =========================================================================
@@ -421,23 +414,25 @@ Top Level Output File Name         : circuito.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 779
+# BELS                             : 874
 #      GND                         : 1
 #      INV                         : 1
 #      LUT1                        : 11
-#      LUT3                        : 94
-#      LUT4                        : 37
-#      LUT5                        : 157
-#      LUT6                        : 360
-#      MUXCY                       : 38
-#      MUXF7                       : 38
+#      LUT3                        : 95
+#      LUT4                        : 21
+#      LUT5                        : 181
+#      LUT6                        : 398
+#      MUXCY                       : 40
+#      MUXF7                       : 69
+#      MUXF8                       : 16
 #      VCC                         : 1
-#      XORCY                       : 41
+#      XORCY                       : 40
 # FlipFlops/Latches                : 315
 #      FDR                         : 187
 #      FDRE                        : 128
-# RAMS                             : 4
-#      RAMB36E1                    : 4
+# RAMS                             : 258
+#      RAM256X1S                   : 256
+#      RAMB36E1                    : 2
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
 # IO Buffers                       : 14
@@ -452,23 +447,25 @@ Selected Device : 7a200tffg1156-3
 
 Slice Logic Utilization: 
  Number of Slice Registers:             315  out of  259600     0%  
- Number of Slice LUTs:                  660  out of  129800     0%  
-    Number used as Logic:               660  out of  129800     0%  
+ Number of Slice LUTs:                 1731  out of  129800     1%  
+    Number used as Logic:               707  out of  129800     0%  
+    Number used as Memory:             1024  out of  45000     2%  
+       Number used as RAM:             1024
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:    757
-   Number with an unused Flip Flop:     442  out of    757    58%  
-   Number with an unused LUT:            97  out of    757    12%  
-   Number of fully used LUT-FF pairs:   218  out of    757    28%  
-   Number of unique control sets:        12
+ Number of LUT Flip Flop pairs used:   1835
+   Number with an unused Flip Flop:    1520  out of   1835    82%  
+   Number with an unused LUT:           104  out of   1835     5%  
+   Number of fully used LUT-FF pairs:   211  out of   1835    11%  
+   Number of unique control sets:        18
 
 IO Utilization: 
  Number of IOs:                          31
  Number of bonded IOBs:                  15  out of    500     3%  
 
 Specific Feature Utilization:
- Number of Block RAM/FIFO:                4  out of    365     1%  
-    Number using Block RAM only:          4
+ Number of Block RAM/FIFO:                2  out of    365     0%  
+    Number using Block RAM only:          2
  Number of BUFG/BUFGCTRLs:                1  out of     32     3%  
 
 ---------------------------
@@ -492,7 +489,7 @@ Clock Information:
 -----------------------------------+------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)  | Load  |
 -----------------------------------+------------------------+-------+
-clk_in                             | BUFGP                  | 319   |
+clk_in                             | BUFGP                  | 573   |
 -----------------------------------+------------------------+-------+
 
 Asynchronous Control Signals Information:
@@ -503,8 +500,8 @@ Timing Summary:
 ---------------
 Speed Grade: -3
 
-   Minimum period: 4.770ns (Maximum Frequency: 209.654MHz)
-   Minimum input arrival time before clock: 4.681ns
+   Minimum period: 4.686ns (Maximum Frequency: 213.399MHz)
+   Minimum input arrival time before clock: 4.652ns
    Maximum output required time after clock: 0.654ns
    Maximum combinational path delay: No path found
 
@@ -514,10 +511,10 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk_in'
-  Clock period: 4.770ns (frequency: 209.654MHz)
-  Total number of paths / destination ports: 162654 / 427
+  Clock period: 4.686ns (frequency: 213.399MHz)
+  Total number of paths / destination ports: 345420 / 2987
 -------------------------------------------------------------------------
-Delay:               4.770ns (Levels of Logic = 18)
+Delay:               4.686ns (Levels of Logic = 10)
   Source:            inst_InF/aux_reg_IF_OUT_23 (FF)
   Destination:       inst_EXeMEM/aux_MSR_FLAGS_3 (FF)
   Source Clock:      clk_in rising
@@ -529,33 +526,25 @@ Delay:               4.770ns (Levels of Logic = 18)
     ----------------------------------------  ------------
      FDR:C->Q              4   0.361   0.570  inst_InF/aux_reg_IF_OUT_23 (inst_InF/aux_reg_IF_OUT_23)
      LUT6:I2->O           32   0.097   0.486  inst_IDeOF/Mmux_aux_ADD_RA_C11 (inst_IDeOF/aux_ADD_RA_C<0>)
-     LUT6:I4->O            1   0.097   0.000  inst_IDeOF/Mmux_RA_C_3 (inst_IDeOF/Mmux_RA_C_3)
-     MUXF7:I1->O           8   0.279   0.327  inst_IDeOF/Mmux_RA_C_2_f7 (inst_IDeOF/RA_C<0>)
-     LUT3:I2->O            2   0.097   0.283  inst_IDeOF/Mmux_reg_IDOF_OUT271 (reg_IDOF_OUT<33>)
-     MUXCY:DI->O           1   0.337   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<0> (inst_EXeMEM/Madd_out_ARI_Madd_cy<0>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<1> (inst_EXeMEM/Madd_out_ARI_Madd_cy<1>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<2> (inst_EXeMEM/Madd_out_ARI_Madd_cy<2>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<3> (inst_EXeMEM/Madd_out_ARI_Madd_cy<3>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<4> (inst_EXeMEM/Madd_out_ARI_Madd_cy<4>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<5> (inst_EXeMEM/Madd_out_ARI_Madd_cy<5>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<6> (inst_EXeMEM/Madd_out_ARI_Madd_cy<6>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<7> (inst_EXeMEM/Madd_out_ARI_Madd_cy<7>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<8> (inst_EXeMEM/Madd_out_ARI_Madd_cy<8>)
+     LUT6:I4->O            1   0.097   0.000  inst_IDeOF/Mmux_RA_C_314 (inst_IDeOF/Mmux_RA_C_314)
+     MUXF7:I1->O           7   0.279   0.323  inst_IDeOF/Mmux_RA_C_2_f7_13 (inst_IDeOF/RA_C<8>)
+     LUT3:I2->O           81   0.097   0.394  inst_IDeOF/Mmux_reg_IDOF_OUT361 (reg_IDOF_OUT<41>)
+     MUXCY:DI->O           1   0.337   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<8> (inst_EXeMEM/Madd_out_ARI_Madd_cy<8>)
      MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<9> (inst_EXeMEM/Madd_out_ARI_Madd_cy<9>)
      MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<10> (inst_EXeMEM/Madd_out_ARI_Madd_cy<10>)
-     XORCY:CI->O           3   0.370   0.521  inst_EXeMEM/Madd_out_ARI_Madd_xor<11> (inst_EXeMEM/out_ARI<11>)
+     XORCY:CI->O           2   0.370   0.515  inst_EXeMEM/Madd_out_ARI_Madd_xor<11> (inst_EXeMEM/out_ARI<11>)
      LUT6:I3->O            1   0.097   0.511  inst_EXeMEM/Mmux_aux_FLAGS412 (inst_EXeMEM/Mmux_aux_FLAGS411)
      LUT6:I3->O            1   0.097   0.000  inst_EXeMEM/Mmux_aux_FLAGS415 (inst_EXeMEM/aux_FLAGS<3>)
      FDR:D                     0.008          inst_EXeMEM/aux_MSR_FLAGS_3
     ----------------------------------------
-    Total                      4.770ns (2.070ns logic, 2.700ns route)
-                                       (43.4% logic, 56.6% route)
+    Total                      4.686ns (1.886ns logic, 2.800ns route)
+                                       (40.2% logic, 59.8% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'clk_in'
-  Total number of paths / destination ports: 46661 / 741
+  Total number of paths / destination ports: 89676 / 3301
 -------------------------------------------------------------------------
-Offset:              4.681ns (Levels of Logic = 19)
+Offset:              4.652ns (Levels of Logic = 8)
   Source:            unicicle (PAD)
   Destination:       inst_EXeMEM/aux_MSR_FLAGS_3 (FF)
   Destination Clock: clk_in rising
@@ -564,29 +553,18 @@ Offset:              4.681ns (Levels of Logic = 19)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O           370   0.001   0.842  unicicle_IBUF (unicicle_IBUF)
-     LUT6:I1->O           32   0.097   0.486  inst_IDeOF/Mmux_aux_ADD_RA_C11 (inst_IDeOF/aux_ADD_RA_C<0>)
-     LUT6:I4->O            1   0.097   0.000  inst_IDeOF/Mmux_RA_C_3 (inst_IDeOF/Mmux_RA_C_3)
-     MUXF7:I1->O           8   0.279   0.327  inst_IDeOF/Mmux_RA_C_2_f7 (inst_IDeOF/RA_C<0>)
-     LUT3:I2->O            2   0.097   0.283  inst_IDeOF/Mmux_reg_IDOF_OUT271 (reg_IDOF_OUT<33>)
-     MUXCY:DI->O           1   0.337   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<0> (inst_EXeMEM/Madd_out_ARI_Madd_cy<0>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<1> (inst_EXeMEM/Madd_out_ARI_Madd_cy<1>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<2> (inst_EXeMEM/Madd_out_ARI_Madd_cy<2>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<3> (inst_EXeMEM/Madd_out_ARI_Madd_cy<3>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<4> (inst_EXeMEM/Madd_out_ARI_Madd_cy<4>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<5> (inst_EXeMEM/Madd_out_ARI_Madd_cy<5>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<6> (inst_EXeMEM/Madd_out_ARI_Madd_cy<6>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<7> (inst_EXeMEM/Madd_out_ARI_Madd_cy<7>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<8> (inst_EXeMEM/Madd_out_ARI_Madd_cy<8>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<9> (inst_EXeMEM/Madd_out_ARI_Madd_cy<9>)
-     MUXCY:CI->O           1   0.023   0.000  inst_EXeMEM/Madd_out_ARI_Madd_cy<10> (inst_EXeMEM/Madd_out_ARI_Madd_cy<10>)
-     XORCY:CI->O           3   0.370   0.521  inst_EXeMEM/Madd_out_ARI_Madd_xor<11> (inst_EXeMEM/out_ARI<11>)
-     LUT6:I3->O            1   0.097   0.511  inst_EXeMEM/Mmux_aux_FLAGS412 (inst_EXeMEM/Mmux_aux_FLAGS411)
-     LUT6:I3->O            1   0.097   0.000  inst_EXeMEM/Mmux_aux_FLAGS415 (inst_EXeMEM/aux_FLAGS<3>)
+     IBUF:I->O           401   0.001   0.675  unicicle_IBUF (unicicle_IBUF)
+     LUT3:I0->O           17   0.097   0.767  inst_InF/Mmux_reg_IF_OUT51 (reg_IF_OUT<13>)
+     LUT6:I0->O            7   0.097   0.711  inst_IDeOF/Mmux_RB_2_f7_13 (destino_jump<8>)
+     LUT6:I1->O            1   0.097   0.000  inst_EXeMEM/Mmux_out_LOG151_G (N1189)
+     MUXF7:I1->O           2   0.279   0.561  inst_EXeMEM/Mmux_out_LOG151 (inst_EXeMEM/out_LOG<8>)
+     LUT6:I2->O            1   0.097   0.511  inst_EXeMEM/Mmux_aux_FLAGS45_SW1 (N819)
+     LUT6:I3->O            1   0.097   0.556  inst_EXeMEM/Mmux_aux_FLAGS45 (inst_EXeMEM/Mmux_aux_FLAGS44)
+     LUT6:I2->O            1   0.097   0.000  inst_EXeMEM/Mmux_aux_FLAGS415 (inst_EXeMEM/aux_FLAGS<3>)
      FDR:D                     0.008          inst_EXeMEM/aux_MSR_FLAGS_3
     ----------------------------------------
-    Total                      4.681ns (1.710ns logic, 2.971ns route)
-                                       (36.5% logic, 63.5% route)
+    Total                      4.652ns (0.870ns logic, 3.782ns route)
+                                       (18.7% logic, 81.3% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'clk_in'
@@ -617,18 +595,18 @@ Clock to Setup on destination clock clk_in
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-clk_in         |    4.770|         |         |         |
+clk_in         |    4.686|         |         |         |
 ---------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
-Total REAL time to Xst completion: 51.00 secs
-Total CPU time to Xst completion: 51.55 secs
+Total REAL time to Xst completion: 44.00 secs
+Total CPU time to Xst completion: 43.68 secs
  
 --> 
 
-Total memory usage is 480092 kilobytes
+Total memory usage is 475592 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    8 (   0 filtered)

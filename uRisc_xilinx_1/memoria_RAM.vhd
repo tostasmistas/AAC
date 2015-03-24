@@ -34,10 +34,11 @@ process (CLK_A)
 		if rising_edge(CLK_A)then
 			if WE_A='1'  then
 				RAM(conv_integer(Addr_A)) := DI_A;
-			end if;
-				DO_A <= RAM(conv_integer(Addr_A));
+			end if;				
 	end if;
 end process;
+
+DO_A <= RAM(conv_integer(Addr_A)); -- leitura assincrona
 
 end Behavioral;
 

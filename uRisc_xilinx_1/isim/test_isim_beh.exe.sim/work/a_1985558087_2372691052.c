@@ -21,7 +21,7 @@
 #include <malloc.h>
 #define alloca _alloca
 #endif
-static const char *ng0 = "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/test.vhd";
+static const char *ng0 = "C:/Users/margarida/Downloads/git/AAC/uRisc_xilinx_1/test.vhd";
 
 
 
@@ -144,7 +144,7 @@ LAB5:    goto LAB4;
 
 LAB7:    goto LAB5;
 
-LAB8:    xsi_set_current_line(95, ng0);
+LAB8:    xsi_set_current_line(94, ng0);
     t3 = (15 * 1000LL);
     t2 = (t0 + 3648);
     t4 = (t2 + 56U);
@@ -153,22 +153,9 @@ LAB8:    xsi_set_current_line(95, ng0);
     t8 = *((char **)t7);
     *((unsigned char *)t8) = (unsigned char)3;
     xsi_driver_first_trans_delta(t2, 0U, 1, t3);
-    t5 = (15 * 1000LL);
-    t9 = (t0 + 1968U);
-    t10 = *((char **)t9);
-    t11 = *((int64 *)t10);
-    t12 = (t11 * 2);
-    t13 = (t5 + t12);
     t9 = (t0 + 3648);
-    t14 = (t9 + 56U);
-    t15 = *((char **)t14);
-    t16 = (t15 + 56U);
-    t17 = *((char **)t16);
-    *((unsigned char *)t17) = (unsigned char)2;
-    xsi_driver_subsequent_trans_delta(t9, 0U, 1, t13);
-    t18 = (t0 + 3648);
-    xsi_driver_intertial_reject(t18, t3, t3);
-    xsi_set_current_line(97, ng0);
+    xsi_driver_intertial_reject(t9, t3, t3);
+    xsi_set_current_line(96, ng0);
     t3 = (35 * 1000LL);
     t2 = (t0 + 3712);
     t4 = (t2 + 56U);
@@ -177,8 +164,21 @@ LAB8:    xsi_set_current_line(95, ng0);
     t8 = *((char **)t7);
     *((unsigned char *)t8) = (unsigned char)3;
     xsi_driver_first_trans_delta(t2, 0U, 1, t3);
+    t5 = (35 * 1000LL);
+    t9 = (t0 + 1968U);
+    t10 = *((char **)t9);
+    t11 = *((int64 *)t10);
+    t12 = (t11 * 2);
+    t13 = (t5 + t12);
     t9 = (t0 + 3712);
-    xsi_driver_intertial_reject(t9, t3, t3);
+    t14 = (t9 + 56U);
+    t15 = *((char **)t14);
+    t16 = (t15 + 56U);
+    t17 = *((char **)t16);
+    *((unsigned char *)t17) = (unsigned char)2;
+    xsi_driver_subsequent_trans_delta(t9, 0U, 1, t13);
+    t18 = (t0 + 3712);
+    xsi_driver_intertial_reject(t18, t3, t3);
     xsi_set_current_line(195, ng0);
 
 LAB14:    *((char **)t1) = &&LAB15;

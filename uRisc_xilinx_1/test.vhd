@@ -91,11 +91,11 @@ BEGIN
 
       wait for clk_in_period*10;
 		
+		unicicle <= '1' after 15 ns;
 
-		rst_in <= '1' after 15 ns,
-				 '0' after 15 ns + clk_in_period*2;
-		unicicle <= '1' after 35 ns;
-	
+		rst_in <= '1' after 35 ns,
+				    '0' after 35 ns + clk_in_period*2;
+		
       -- insert stimulus here 
 
 --		inst <=  X"0000" after 35 ns ;
