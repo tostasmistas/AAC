@@ -99,11 +99,11 @@ static void work_a_1985558087_2372691052_p_1(char *t0)
     char *t2;
     int64 t3;
     char *t4;
-    int64 t5;
+    char *t5;
     char *t6;
     char *t7;
     char *t8;
-    char *t9;
+    int64 t9;
     char *t10;
     int64 t11;
     int64 t12;
@@ -121,78 +121,51 @@ LAB0:    t1 = (t0 + 3200U);
 
 LAB3:    goto *t2;
 
-LAB2:    xsi_set_current_line(90, ng0);
-    t3 = (100 * 1000LL);
-    t2 = (t0 + 3008);
-    xsi_process_wait(t2, t3);
-
-LAB6:    *((char **)t1) = &&LAB7;
-
-LAB1:    return;
-LAB4:    xsi_set_current_line(92, ng0);
-    t2 = (t0 + 1968U);
-    t4 = *((char **)t2);
-    t3 = *((int64 *)t4);
-    t5 = (t3 * 10);
-    t2 = (t0 + 3008);
-    xsi_process_wait(t2, t5);
-
-LAB10:    *((char **)t1) = &&LAB11;
-    goto LAB1;
-
-LAB5:    goto LAB4;
-
-LAB7:    goto LAB5;
-
-LAB8:    xsi_set_current_line(94, ng0);
-    t3 = (15 * 1000LL);
+LAB2:    xsi_set_current_line(94, ng0);
+    t3 = (0 * 1000LL);
     t2 = (t0 + 3648);
     t4 = (t2 + 56U);
-    t6 = *((char **)t4);
-    t7 = (t6 + 56U);
-    t8 = *((char **)t7);
-    *((unsigned char *)t8) = (unsigned char)3;
+    t5 = *((char **)t4);
+    t6 = (t5 + 56U);
+    t7 = *((char **)t6);
+    *((unsigned char *)t7) = (unsigned char)3;
     xsi_driver_first_trans_delta(t2, 0U, 1, t3);
-    t9 = (t0 + 3648);
-    xsi_driver_intertial_reject(t9, t3, t3);
+    t8 = (t0 + 3648);
+    xsi_driver_intertial_reject(t8, t3, t3);
     xsi_set_current_line(96, ng0);
-    t3 = (35 * 1000LL);
+    t3 = (10 * 1000LL);
     t2 = (t0 + 3712);
     t4 = (t2 + 56U);
-    t6 = *((char **)t4);
-    t7 = (t6 + 56U);
-    t8 = *((char **)t7);
-    *((unsigned char *)t8) = (unsigned char)3;
+    t5 = *((char **)t4);
+    t6 = (t5 + 56U);
+    t7 = *((char **)t6);
+    *((unsigned char *)t7) = (unsigned char)3;
     xsi_driver_first_trans_delta(t2, 0U, 1, t3);
-    t5 = (35 * 1000LL);
-    t9 = (t0 + 1968U);
-    t10 = *((char **)t9);
+    t9 = (10 * 1000LL);
+    t8 = (t0 + 1968U);
+    t10 = *((char **)t8);
     t11 = *((int64 *)t10);
     t12 = (t11 * 2);
-    t13 = (t5 + t12);
-    t9 = (t0 + 3712);
-    t14 = (t9 + 56U);
+    t13 = (t9 + t12);
+    t8 = (t0 + 3712);
+    t14 = (t8 + 56U);
     t15 = *((char **)t14);
     t16 = (t15 + 56U);
     t17 = *((char **)t16);
     *((unsigned char *)t17) = (unsigned char)2;
-    xsi_driver_subsequent_trans_delta(t9, 0U, 1, t13);
+    xsi_driver_subsequent_trans_delta(t8, 0U, 1, t13);
     t18 = (t0 + 3712);
     xsi_driver_intertial_reject(t18, t3, t3);
     xsi_set_current_line(195, ng0);
 
-LAB14:    *((char **)t1) = &&LAB15;
-    goto LAB1;
+LAB6:    *((char **)t1) = &&LAB7;
 
-LAB9:    goto LAB8;
+LAB1:    return;
+LAB4:    goto LAB2;
 
-LAB11:    goto LAB9;
+LAB5:    goto LAB4;
 
-LAB12:    goto LAB2;
-
-LAB13:    goto LAB12;
-
-LAB15:    goto LAB13;
+LAB7:    goto LAB5;
 
 }
 

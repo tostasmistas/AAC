@@ -51,8 +51,8 @@ begin
 aux_pc_add_1 <= reg_pc_IN + one 			when FLAGTEST_MUXPC_IN = '0' else
 				    reg_pc_IN + one + destino_cond;
 					 
-aux_atraso_pc <= '1' when (atraso_pc and rep_pc) = '1' else
-						'0';
+--aux_atraso_pc <= '1' when (atraso_pc and rep_pc) = '1' else
+--						'0';
 	
 aux_saida_mux <= aux_pc_add_1 				when JUMP_MUXPC_IN = '0' else
 				 destino_jump;
@@ -67,12 +67,12 @@ process (clk, rst, rep_pc,reg_pc_IN)
 			if rst = '1' then
 				aux_reg_pc <= zeros_12;
 				rep_pc_out <= '0';
-			elsif aux_atraso_pc = '0' then
+			else
 				aux_reg_pc <= aux_saida_mux;
-				rep_pc_out <= 	'1';
-			else 
-				aux_reg_pc <= reg_pc_IN;
-				rep_pc_out <= '0';
+				--rep_pc_out <= 	'1';
+			--else 
+				--aux_reg_pc <= reg_pc_IN;
+				--rep_pc_out <= '0';
 			end if;
 		end if;
 end process;		

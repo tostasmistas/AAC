@@ -87,14 +87,14 @@ BEGIN
    stim_proc: process
    begin		
       -- hold reset state for 100 ns.
-      wait for 100 ns;	
+      --wait for 100 ns;	
 
-      wait for clk_in_period*10;
+      --wait for clk_in_period*10;
 		
-		unicicle <= '1' after 15 ns;
+		unicicle <= '1' after 0 ns;
 
-		rst_in <= '1' after 35 ns,
-				    '0' after 35 ns + clk_in_period*2;
+		rst_in <= '1' after 10 ns,
+				    '0' after 10 ns + clk_in_period*2;
 		
       -- insert stimulus here 
 
