@@ -3,14 +3,14 @@ Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to xst/projnav.tmp
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.39 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.17 secs
  
 --> Parameter xsthdpdir set to xst
 
 
-Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.41 secs
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.17 secs
  
 --> Reading design: circuito.prj
 
@@ -106,31 +106,31 @@ INFO:Xst - Part-select index evaluated to out of bound value may lead to incorre
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
-Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\WB.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\WB.vhd" into library work
 Parsing entity <WB>.
 Parsing architecture <Behavioral> of entity <wb>.
-Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\registos.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\registos.vhd" into library work
 Parsing entity <registos>.
 Parsing architecture <Behavioral> of entity <registos>.
-Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\memoria_ROM.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\memoria_ROM.vhd" into library work
 Parsing entity <memoria_ROM>.
 Parsing architecture <Behavioral> of entity <memoria_rom>.
-Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\memoria_RAM.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\memoria_RAM.vhd" into library work
 Parsing entity <memoria_RAM>.
 Parsing architecture <Behavioral> of entity <memoria_ram>.
-Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\IF.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\IF.vhd" into library work
 Parsing entity <InF>.
 Parsing architecture <Behavioral> of entity <inf>.
-Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\IDeOF.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\IDeOF.vhd" into library work
 Parsing entity <IDeOF>.
 Parsing architecture <Behavioral> of entity <ideof>.
-Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\EXeMEM.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\EXeMEM.vhd" into library work
 Parsing entity <EXeMEM>.
 Parsing architecture <Behavioral> of entity <exemem>.
-Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\Controlo.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\Controlo.vhd" into library work
 Parsing entity <Controlo>.
 Parsing architecture <Behavioral> of entity <controlo>.
-Parsing VHDL file "C:\Users\margarida\Downloads\git\AAC\uRisc_xilinx_1\circuito.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\circuito.vhd" into library work
 Parsing entity <circuito>.
 Parsing architecture <Behavioral> of entity <circuito>.
 
@@ -161,13 +161,13 @@ Elaborating entity <Controlo> (architecture <Behavioral>) from library <work>.
 =========================================================================
 
 Synthesizing Unit <circuito>.
-    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/circuito.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/circuito.vhd".
     Summary:
 	no macro.
 Unit <circuito> synthesized.
 
 Synthesizing Unit <InF>.
-    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/if.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/if.vhd".
 WARNING:Xst:647 - Input <atraso_pc> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <rep_pc> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found 1-bit register for signal <rep_pc_out>.
@@ -182,7 +182,7 @@ WARNING:Xst:647 - Input <rep_pc> is never used. This port will be preserved and 
 Unit <InF> synthesized.
 
 Synthesizing Unit <IDeOF>.
-    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/ideof.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/ideof.vhd".
     Found 74-bit register for signal <aux_reg_IDOF_OUT>.
     Found 1-bit 8-to-1 multiplexer for signal <_n0244> created at line 44.
     Found 16-bit 8-to-1 multiplexer for signal <RA_C> created at line 57.
@@ -194,7 +194,7 @@ Synthesizing Unit <IDeOF>.
 Unit <IDeOF> synthesized.
 
 Synthesizing Unit <EXeMEM>.
-    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/exemem.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/exemem.vhd".
 WARNING:Xst:647 - Input <reg_IDOF_OUT<71:71>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found 68-bit register for signal <aux_reg_EXMEM_OUT>.
     Found 4-bit register for signal <aux_MSR_FLAGS>.
@@ -211,7 +211,7 @@ WARNING:Xst:647 - Input <reg_IDOF_OUT<71:71>> is never used. This port will be p
 Unit <EXeMEM> synthesized.
 
 Synthesizing Unit <WB>.
-    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/wb.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/wb.vhd".
 WARNING:Xst:647 - Input <reg_EXMEM_OUT<51:65>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <clk> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
@@ -222,7 +222,7 @@ WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and lef
 Unit <WB> synthesized.
 
 Synthesizing Unit <registos>.
-    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/registos.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/registos.vhd".
     Found 16-bit register for signal <aux_reg_r1>.
     Found 16-bit register for signal <aux_reg_r2>.
     Found 16-bit register for signal <aux_reg_r3>.
@@ -236,7 +236,7 @@ Synthesizing Unit <registos>.
 Unit <registos> synthesized.
 
 Synthesizing Unit <memoria_RAM>.
-    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/memoria_ram.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/memoria_ram.vhd".
         ADDR_SIZE = 12
     Found 4096x16-bit single-port RAM <Mram_RAM> for signal <RAM>.
     Summary:
@@ -244,7 +244,7 @@ Synthesizing Unit <memoria_RAM>.
 Unit <memoria_RAM> synthesized.
 
 Synthesizing Unit <memoria_ROM>.
-    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/memoria_rom.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/memoria_rom.vhd".
         ADDR_SIZE = 12
 WARNING:Xst:2999 - Signal 'ROM', unconnected in block 'memoria_ROM', is tied to its initial value.
     Found 4096x16-bit single-port Read Only RAM <Mram_ROM> for signal <ROM>.
@@ -253,7 +253,7 @@ WARNING:Xst:2999 - Signal 'ROM', unconnected in block 'memoria_ROM', is tied to 
 Unit <memoria_ROM> synthesized.
 
 Synthesizing Unit <Controlo>.
-    Related source file is "c:/users/margarida/downloads/git/aac/urisc_xilinx_1/controlo.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/controlo.vhd".
 WARNING:Xst:647 - Input <clk> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Summary:
@@ -604,11 +604,11 @@ clk_in         |    4.661|         |         |         |
 
 
 Total REAL time to Xst completion: 46.00 secs
-Total CPU time to Xst completion: 46.18 secs
+Total CPU time to Xst completion: 45.43 secs
  
 --> 
 
-Total memory usage is 475528 kilobytes
+Total memory usage is 482240 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :   10 (   0 filtered)
