@@ -114,7 +114,7 @@ controloJump <= controlo and isJump;
 
 ovWE <= (soALU or loadMEM) or (controloJump or bit14);
 
-aux_en_WC <= "111" when (aux_sel_mux_WB(1) and not(aux_sel_mux_WB(0))) = '1' else reg_EXMEM_OUT(35 downto 33);
+aux_en_WC <= "111" when (aux_sel_mux_WB(1) and aux_sel_mux_WB(0)) = '1' else reg_EXMEM_OUT(35 downto 33);
 
 
 

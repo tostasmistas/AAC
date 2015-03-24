@@ -36,5 +36,5 @@ Time Resolution for simulation is 1ps.
 Waiting for 1 sub-compilation(s) to finish...
 Compiled 26 VHDL Units
 Built simulation executable C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/test_isim_beh.exe
-Fuse Memory Usage: 44880 KB
-Fuse CPU Usage: 1871 ms
+Fuse Memory Usage: 44940 KB
+Fuse CPU Usage: 1419 ms
