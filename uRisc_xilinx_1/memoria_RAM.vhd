@@ -20,19 +20,8 @@ architecture Behavioral of memoria_RAM is
 type MEM_TYPE is array(0 to (2**ADDR_SIZE)-1) of STD_LOGIC_VECTOR(15 downto 0);
 
 constant InitValue : MEM_TYPE := ( 
-	14 => X"000c",
-	15 => X"0007",
-	16 => X"000b",
-	17 => X"0013",
-	18 => X"0011",
-	19 => X"0015",
-	20 => X"0009",
-	21 => X"0017",
-	22 => X"000f",
-	23 => X"0005",
-	24 => X"0003",
-	25 => X"0001",
-	26 => X"000d",
+	14 => X"0001",
+	15 => X"0001",
 	others=> X"0000"
 	);
 

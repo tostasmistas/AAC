@@ -4,7 +4,7 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use STD.TEXTIO.all;
 use STD.TEXTIO;
 use IEEE.STD_LOGIC_TEXTIO.all;	
- 
+
 entity memoria_ROM is
 		Generic(
 			ADDR_SIZE :	positive:= 12
@@ -14,9 +14,9 @@ entity memoria_ROM is
 			DO_ROM 	: out 	STD_LOGIC_VECTOR(15 downto 0)
 		);
 end memoria_ROM; 
-
+     
 architecture Behavioral of memoria_ROM is
- 
+
 type MEM_TYPE is array(0 to (2**ADDR_SIZE)-1) of STD_LOGIC_VECTOR(15 downto 0);
 
  impure function InitRamFromFile (RamFileName : in string) return MEM_TYPE is

@@ -1,16 +1,16 @@
-Release 14.1 - xst P.15xf (nt64)
-Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
+Release 13.4 - xst O.87xd (nt64)
+Copyright (c) 1995-2011 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to xst/projnav.tmp
 
 
-Total REAL time to Xst completion: 2.00 secs
-Total CPU time to Xst completion: 1.84 secs
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.21 secs
  
 --> Parameter xsthdpdir set to xst
 
 
-Total REAL time to Xst completion: 2.00 secs
-Total CPU time to Xst completion: 1.85 secs
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.21 secs
  
 --> Reading design: circuito.prj
 
@@ -101,35 +101,36 @@ Slice Utilization Ratio Delta      : 5
 
 =========================================================================
 
+INFO:Xst - Part-select index evaluated to out of bound value may lead to incorrect synthesis results; it is recommended not to use them in RTL
 
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
-Parsing VHDL file "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\WB.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\WB.vhd" into library work
 Parsing entity <WB>.
 Parsing architecture <Behavioral> of entity <wb>.
-Parsing VHDL file "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\registos.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\registos.vhd" into library work
 Parsing entity <registos>.
 Parsing architecture <Behavioral> of entity <registos>.
-Parsing VHDL file "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\memoria_ROM.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\memoria_ROM.vhd" into library work
 Parsing entity <memoria_ROM>.
 Parsing architecture <Behavioral> of entity <memoria_rom>.
-Parsing VHDL file "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\memoria_RAM.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\memoria_RAM.vhd" into library work
 Parsing entity <memoria_RAM>.
 Parsing architecture <Behavioral> of entity <memoria_ram>.
-Parsing VHDL file "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\IF.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\IF.vhd" into library work
 Parsing entity <InF>.
 Parsing architecture <Behavioral> of entity <inf>.
-Parsing VHDL file "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\IDeOF.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\IDeOF.vhd" into library work
 Parsing entity <IDeOF>.
 Parsing architecture <Behavioral> of entity <ideof>.
-Parsing VHDL file "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\EXeMEM.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\EXeMEM.vhd" into library work
 Parsing entity <EXeMEM>.
 Parsing architecture <Behavioral> of entity <exemem>.
-Parsing VHDL file "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\Controlo.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\Controlo.vhd" into library work
 Parsing entity <Controlo>.
 Parsing architecture <Behavioral> of entity <controlo>.
-Parsing VHDL file "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\circuito.vhd" into library work
+Parsing VHDL file "C:\Users\Nmac\Documents\GitHub\AAC\uRisc_xilinx_1\circuito.vhd" into library work
 Parsing entity <circuito>.
 Parsing architecture <Behavioral> of entity <circuito>.
 
@@ -160,13 +161,13 @@ Elaborating entity <Controlo> (architecture <Behavioral>) from library <work>.
 =========================================================================
 
 Synthesizing Unit <circuito>.
-    Related source file is "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\circuito.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/circuito.vhd".
     Summary:
 	no macro.
 Unit <circuito> synthesized.
 
 Synthesizing Unit <InF>.
-    Related source file is "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\IF.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/if.vhd".
     Found 1-bit register for signal <rep_pc_out>.
     Found 28-bit register for signal <aux_reg_IF_OUT>.
     Found 12-bit register for signal <aux_reg_pc>.
@@ -179,7 +180,7 @@ Synthesizing Unit <InF>.
 Unit <InF> synthesized.
 
 Synthesizing Unit <IDeOF>.
-    Related source file is "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\IDeOF.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/ideof.vhd".
     Found 74-bit register for signal <aux_reg_IDOF_OUT>.
     Found 1-bit 8-to-1 multiplexer for signal <_n0244> created at line 44.
     Found 16-bit 8-to-1 multiplexer for signal <RA_C> created at line 57.
@@ -191,11 +192,11 @@ Synthesizing Unit <IDeOF>.
 Unit <IDeOF> synthesized.
 
 Synthesizing Unit <EXeMEM>.
-    Related source file is "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\EXeMEM.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/exemem.vhd".
 WARNING:Xst:647 - Input <reg_IDOF_OUT<71:71>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found 68-bit register for signal <aux_reg_EXMEM_OUT>.
     Found 4-bit register for signal <aux_MSR_FLAGS>.
-    Found 17-bit adder for signal <n0228> created at line 111.
+    Found 17-bit adder for signal <n0225> created at line 111.
     Found 17-bit adder for signal <out_ARI> created at line 111.
     Found 16-bit 4-to-1 multiplexer for signal <q_ALU> created at line 43.
     Found 16-bit 8-to-1 multiplexer for signal <out_LOG> created at line 46.
@@ -208,7 +209,8 @@ WARNING:Xst:647 - Input <reg_IDOF_OUT<71:71>> is never used. This port will be p
 Unit <EXeMEM> synthesized.
 
 Synthesizing Unit <WB>.
-    Related source file is "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\WB.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/wb.vhd".
+WARNING:Xst:647 - Input <reg_EXMEM_OUT<51:65>> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <clk> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Found 8-bit 8-to-1 multiplexer for signal <en_regs> created at line 137.
@@ -218,7 +220,7 @@ WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and lef
 Unit <WB> synthesized.
 
 Synthesizing Unit <registos>.
-    Related source file is "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\registos.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/registos.vhd".
     Found 16-bit register for signal <aux_reg_r1>.
     Found 16-bit register for signal <aux_reg_r2>.
     Found 16-bit register for signal <aux_reg_r3>.
@@ -232,7 +234,7 @@ Synthesizing Unit <registos>.
 Unit <registos> synthesized.
 
 Synthesizing Unit <memoria_RAM>.
-    Related source file is "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\memoria_RAM.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/memoria_ram.vhd".
         ADDR_SIZE = 12
     Found 4096x16-bit single-port RAM <Mram_RAM> for signal <RAM>.
     Found 16-bit register for signal <DO_A>.
@@ -243,7 +245,7 @@ Synthesizing Unit <memoria_RAM>.
 Unit <memoria_RAM> synthesized.
 
 Synthesizing Unit <memoria_ROM>.
-    Related source file is "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\memoria_ROM.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/memoria_rom.vhd".
         ADDR_SIZE = 12
 WARNING:Xst:2999 - Signal 'ROM', unconnected in block 'memoria_ROM', is tied to its initial value.
     Found 4096x16-bit single-port Read Only RAM <Mram_ROM> for signal <ROM>.
@@ -252,7 +254,7 @@ WARNING:Xst:2999 - Signal 'ROM', unconnected in block 'memoria_ROM', is tied to 
 Unit <memoria_ROM> synthesized.
 
 Synthesizing Unit <Controlo>.
-    Related source file is "C:\Users\Guilherme\Documents\GitHub\AAC\uRisc_xilinx_1\Controlo.vhd".
+    Related source file is "c:/users/nmac/documents/github/aac/urisc_xilinx_1/controlo.vhd".
 WARNING:Xst:647 - Input <clk> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <rst> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
     Summary:
@@ -292,8 +294,8 @@ Macro Statistics
  68-bit 2-to-1 multiplexer                             : 1
  74-bit 2-to-1 multiplexer                             : 1
  8-bit 8-to-1 multiplexer                              : 1
-# Xors                                                 : 6
- 1-bit xor2                                            : 5
+# Xors                                                 : 5
+ 1-bit xor2                                            : 4
  16-bit xor2                                           : 1
 
 =========================================================================
@@ -365,8 +367,8 @@ Macro Statistics
  68-bit 2-to-1 multiplexer                             : 1
  74-bit 2-to-1 multiplexer                             : 1
  8-bit 8-to-1 multiplexer                              : 1
-# Xors                                                 : 6
- 1-bit xor2                                            : 5
+# Xors                                                 : 5
+ 1-bit xor2                                            : 4
  16-bit xor2                                           : 1
 
 =========================================================================
@@ -419,14 +421,14 @@ Top Level Output File Name         : circuito.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 780
+# BELS                             : 779
 #      GND                         : 1
 #      INV                         : 1
 #      LUT1                        : 11
 #      LUT3                        : 94
-#      LUT4                        : 36
+#      LUT4                        : 37
 #      LUT5                        : 157
-#      LUT6                        : 362
+#      LUT6                        : 360
 #      MUXCY                       : 38
 #      MUXF7                       : 38
 #      VCC                         : 1
@@ -449,15 +451,15 @@ Selected Device : 7a200tffg1156-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:             315  out of  269200     0%  
- Number of Slice LUTs:                  661  out of  134600     0%  
-    Number used as Logic:               661  out of  134600     0%  
+ Number of Slice Registers:             315  out of  259600     0%  
+ Number of Slice LUTs:                  660  out of  129800     0%  
+    Number used as Logic:               660  out of  129800     0%  
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:    758
-   Number with an unused Flip Flop:     443  out of    758    58%  
-   Number with an unused LUT:            97  out of    758    12%  
-   Number of fully used LUT-FF pairs:   218  out of    758    28%  
+ Number of LUT Flip Flop pairs used:    757
+   Number with an unused Flip Flop:     442  out of    757    58%  
+   Number with an unused LUT:            97  out of    757    12%  
+   Number of fully used LUT-FF pairs:   218  out of    757    28%  
    Number of unique control sets:        12
 
 IO Utilization: 
@@ -513,7 +515,7 @@ All values displayed in nanoseconds (ns)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk_in'
   Clock period: 4.770ns (frequency: 209.654MHz)
-  Total number of paths / destination ports: 161755 / 427
+  Total number of paths / destination ports: 162654 / 427
 -------------------------------------------------------------------------
 Delay:               4.770ns (Levels of Logic = 18)
   Source:            inst_InF/aux_reg_IF_OUT_23 (FF)
@@ -551,7 +553,7 @@ Delay:               4.770ns (Levels of Logic = 18)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'clk_in'
-  Total number of paths / destination ports: 46449 / 741
+  Total number of paths / destination ports: 46661 / 741
 -------------------------------------------------------------------------
 Offset:              4.681ns (Levels of Logic = 19)
   Source:            unicicle (PAD)
@@ -562,7 +564,7 @@ Offset:              4.681ns (Levels of Logic = 19)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O           369   0.001   0.842  unicicle_IBUF (unicicle_IBUF)
+     IBUF:I->O           370   0.001   0.842  unicicle_IBUF (unicicle_IBUF)
      LUT6:I1->O           32   0.097   0.486  inst_IDeOF/Mmux_aux_ADD_RA_C11 (inst_IDeOF/aux_ADD_RA_C<0>)
      LUT6:I4->O            1   0.097   0.000  inst_IDeOF/Mmux_RA_C_3 (inst_IDeOF/Mmux_RA_C_3)
      MUXF7:I1->O           8   0.279   0.327  inst_IDeOF/Mmux_RA_C_2_f7 (inst_IDeOF/RA_C<0>)
@@ -621,14 +623,14 @@ clk_in         |    4.770|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 128.00 secs
-Total CPU time to Xst completion: 127.82 secs
+Total REAL time to Xst completion: 51.00 secs
+Total CPU time to Xst completion: 51.55 secs
  
 --> 
 
-Total memory usage is 425032 kilobytes
+Total memory usage is 480092 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    7 (   0 filtered)
-Number of infos    :    2 (   0 filtered)
+Number of warnings :    8 (   0 filtered)
+Number of infos    :    3 (   0 filtered)
 
