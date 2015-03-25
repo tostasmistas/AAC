@@ -60,7 +60,7 @@ ARCHITECTURE behavior OF test IS
    signal saida : std_logic_vector(15 downto 0);
 
    -- Clock period definitions
-   constant clk_in_period : time := 10 ns;
+   constant clk_in_period : time := 1 ns;
  
 BEGIN
  
@@ -93,8 +93,8 @@ BEGIN
 		
 		unicicle <= '1' after 0 ns;
 
-		rst_in <= '1' after 10 ns,
-				    '0' after 10 ns + clk_in_period*2;
+		rst_in <= '1' after 1 ns,
+				    '0' after 1 ns + clk_in_period*2;
 		
       -- insert stimulus here 
 

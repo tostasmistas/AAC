@@ -14,11 +14,11 @@ entity memoria_ROM is
 			DO_ROM 	: out 	STD_LOGIC_VECTOR(15 downto 0)
 		);
 end memoria_ROM; 
-  
+   
 architecture Behavioral of memoria_ROM is
 
 type MEM_TYPE is array(0 to (2**ADDR_SIZE)-1) of STD_LOGIC_VECTOR(15 downto 0);
-
+ 
  impure function InitRamFromFile (RamFileName : in string) return MEM_TYPE is
 		file INFILE : TEXT  is in "rom_inst.txt";
 		variable DATA_TEMP : STD_LOGIC_VECTOR(15 downto 0);	

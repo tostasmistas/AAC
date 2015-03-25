@@ -21,7 +21,7 @@
 #include <malloc.h>
 #define alloca _alloca
 #endif
-static const char *ng0 = "C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/test.vhd";
+static const char *ng0 = "C:/Users/Guilherme/Documents/GitHub/AAC/uRisc_xilinx_1/test.vhd";
 
 
 
@@ -133,7 +133,7 @@ LAB2:    xsi_set_current_line(94, ng0);
     t8 = (t0 + 3648);
     xsi_driver_intertial_reject(t8, t3, t3);
     xsi_set_current_line(96, ng0);
-    t3 = (10 * 1000LL);
+    t3 = (1 * 1000LL);
     t2 = (t0 + 3712);
     t4 = (t2 + 56U);
     t5 = *((char **)t4);
@@ -141,7 +141,7 @@ LAB2:    xsi_set_current_line(94, ng0);
     t7 = *((char **)t6);
     *((unsigned char *)t7) = (unsigned char)3;
     xsi_driver_first_trans_delta(t2, 0U, 1, t3);
-    t9 = (10 * 1000LL);
+    t9 = (1 * 1000LL);
     t8 = (t0 + 1968U);
     t10 = *((char **)t8);
     t11 = *((int64 *)t10);

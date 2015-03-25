@@ -18,7 +18,7 @@ entity memoria_RAM is
 			DO_A 	: out 	STD_LOGIC_VECTOR(15 downto 0)
 		);
 end memoria_RAM;
-
+ 
 architecture Behavioral of memoria_RAM is
 
 type MEM_TYPE is array(0 to (2**ADDR_SIZE)-1) of STD_LOGIC_VECTOR(15 downto 0);
