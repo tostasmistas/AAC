@@ -9,7 +9,8 @@
 \usepackage{fixltx2e}
 \usepackage[bottom]{footmisc}
 \usepackage{color}
-\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{todonotes}
+% \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage[font=footnotesize]{caption}
 \numberwithin{equation}{section}
 
@@ -57,13 +58,42 @@ Nuno Miguel Rodrigues Machado & \hspace{2mm} n.º 74236
 
 \section{Introdução}
 
+Com este trabalho laboratorial pretende-se projectar um processador $\mu$Risc, de 16 \textit{bits} com arquitectura RISC. O processador possui 8 registos de uso geral e 42 instruções. O projecto do processador é feito com recurso a uma linguagem de descrição de \textit{hardware} - VHDL.
+
+\section{Características do Processador}
+
+O processador elaborado foi simulado para uma placa Artix 7 \todo{ver pins da placa e etc para justificar decisao}
+
+O $\mu$Risc projectado tem as seguintes características:
+
+\vspace{-2mm}
+
+\begin{itemize}
+  \item 16 \textit{bits};
+  \vspace{-2.5mm}
+  \item 8 registos de uso geral de 16 \textit{bits} de largura (R0, \ldots, R7);
+  \vspace{-2.5mm}
+  \item 42 instruções;
+  \vspace{-2.5mm}
+  \item instruções de 3 operandos;
+  \vspace{-2.5mm}
+  \item organização de dados na memória do tipo \textit{big endian};
+  \vspace{-2.5mm}
+  \item uma memória ROM de 4K endereçada com palavras de 12 \textit{bits} utilizada para as instruções/programa e uma memória RAM de 4K endereçada com palavras de 16 \textit{bits} para os dados.
+  
+\end{itemize}
+
 \section{Estrutura do Processador}
 
-O processador $\mu$Risc que foi projectado encontra-se dividido em quatro andares 
+O processador $\mu$Risc que foi projectado encontra-se dividido em quatro andares - num primeiro andar é feito o \textit{instruction fetch} (IF), no segundo andar é feito o \textit{instruction decode} (ID) e o \textit{operand fetch} (OF), no terceiro andar são executadas operações da ALU (EX) e de acesso à memória de dados (MEM) e, por fim, no quarto e último andar é feita a escrita no banco de registos, o \textit{write back} (WB).
 
 \subsection{Primeiro Andar - IF}
 \subsection{Segundo Andar - ID e OF}
 \subsection{Terceiro Andar - EX e MEM}
 \subsection{Quarto Andar - WB}
+
+\pagebreak
+
+\listoftodos
 
 \end{document}
