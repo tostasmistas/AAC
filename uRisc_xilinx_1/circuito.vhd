@@ -21,7 +21,7 @@ architecture Behavioral of circuito is
 		-- input
 			clk, rst 				: in std_logic;
 			en_registo 				: in std_logic;
-			atraso_pc					: in std_logic;
+			atraso_pc				: in std_logic;
 			rep_pc					: in std_logic;
 			destino_jump			: in std_logic_vector(11 downto 0);		-- vem da ALU	
 			destino_cond			: in std_logic_vector(11 downto 0);     -- vem da ALU
@@ -32,9 +32,9 @@ architecture Behavioral of circuito is
 
 			-- output
 			reg_PCMEM_OUT			: out std_logic_vector(11 downto 0);	-- PC + 1
-			addr			: out std_logic_vector(11 downto 0);				-- PC + 1
+			addr						: out std_logic_vector(11 downto 0);				-- PC + 1
 			reg_OUT					: out std_logic_vector(11 downto 0);
-			rep_pc_out					: out std_logic;
+			rep_pc_out				: out std_logic;
 			reg_IF_OUT				: out std_logic_vector(27 downto 0)		-- registo entre andares		
 		);
 	end component;

@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -lib "secureip" -o "C:/Users/Guilherme/Documents/GitHub/AAC/uRisc_xilinx_1/test_isim_beh.exe" -prj "C:/Users/Guilherme/Documents/GitHub/AAC/uRisc_xilinx_1/test_beh.prj" "work.test" 
+-intstyle "ise" -incremental -lib "secureip" -o "M:/~ downloads ~/uRisc_xilinx_1/uRisc_xilinx_1/uRisc_xilinx_1/test_isim_beh.exe" -prj "M:/~ downloads ~/uRisc_xilinx_1/uRisc_xilinx_1/uRisc_xilinx_1/test_beh.prj" "work.test" 

@@ -15,7 +15,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="21" />
+   <WVObjectSize size="22" />
    <wvobject fp_name="/test/clk_in" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">clk_in</obj_property>
       <obj_property name="ObjectShortName">clk_in</obj_property>
@@ -109,5 +109,9 @@
    <wvobject fp_name="/test/uut/inst_EXeMEM/aux_flags_ari" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">aux_flags_ari[3:0]</obj_property>
       <obj_property name="ObjectShortName">aux_flags_ari[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_memoria_RAM/we_a" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">we_a</obj_property>
+      <obj_property name="ObjectShortName">we_a</obj_property>
    </wvobject>
 </wave_config>

@@ -69,10 +69,6 @@ process (clk, rst, rep_pc,reg_pc_IN)
 				rep_pc_out <= '0';
 			else
 				aux_reg_pc <= aux_saida_mux;
-				--rep_pc_out <= 	'1';
-			--else 
-				--aux_reg_pc <= reg_pc_IN;
-				--rep_pc_out <= '0';
 			end if;
 		end if;
 end process;		
