@@ -91,9 +91,16 @@ No primeiro andar a próxima instrução a ser executada é carregada da memóri
 
 \subsection{Segundo Andar - ID e OF}
 \subsection{Terceiro Andar - EX e MEM}
+
+Neste andar trata-se de executar operações da ALU bem com operações da memória, sendo que, ao contrário do MIPS, em que é possível utilizar a ALU e a memória na mesma instrução, no processador $\mu$Risc projectado tal não é possível.
+
+\todo{ALU}
+
+Relativamente às operações de memória é necessário tratar de \textit{loads} e \textit{stores}.
+
 \subsection{Quarto Andar - WB}
 
-No último andar os diversos resultados possíveis são escritos no banco de registos - pode ser o resultado de uma operação da ALU, o resultado de uma operação sobre a memória (\textit{load}), o carregamento de uma constante ou guardar em R7 o valor do próximo \textit{program counter}. Como se pode ver na figura seguinte, a seleção de qual os resultados deve ser escrito é feita com recurso a um MUX 4:1. \todo{explicar sinal de selecçao do mux}
+No último andar os diversos resultados possíveis são escritos no banco de registos - pode ser o resultado de uma operação da ALU, o resultado de uma operação sobre a memória (\textit{load}), o carregamento de uma constante ou guardar em R7 o valor do próximo \textit{program counter}. Como se pode ver na figura seguinte, a seleção de qual os resultados deve ser escrito é feita com recurso a um MUX 4:1. 
 
 FIGURA
 
@@ -103,9 +110,17 @@ Para instruções da ALU a escolha do registo onde se quer escrever o resultado 
 
 FIGURA
 
-\todo{exemplo de um jump que depois ia escrever num registo e nao era suposto. dizer que para stores tambem nao se quer escrever em nenhum reg}
+No entanto, a solução acima tem um problema - suponha-se o caso da instrução 1401 (HEX) que corresponde a um \textit{jump if true} mediante a condição do resultado da ALU ser negativo. Os \textit{bits} 11 a 13 da instrução são 010 e, como tal, o \textit{enable} do registo R2 ficaria activo. Porém, não se pretende escrever nesse registo. O mesmo decorre para uma operação de \textit{store} na RAM e NOP. 
 
-Assim, para resolver o problema dos casos em que se pretende fazer um \textit{jump} ou o \textit{store} de dados na RAM é necessário criar um sinal que faça \textit{override} ao \textit{enable} que o \textit{decoder} colocou a \textit{high}, permitindo o sinal de \textit{override} colocar o \textit{enable} a \textit{low}, tal como pretendido, para que não se escreva em nenhum registo.
+Assim, para resolver o problema é necessário criar um sinal que faça \textit{override} ao \textit{enable} que o \textit{decoder} colocou a \textit{high}, permitindo o sinal de \textit{override} colocar o \textit{enable} a \textit{low}, tal como pretendido, para que não se escreva em nenhum registo.
+
+O sinal de \textit{override} é obtido com recurso à seguinte lógica.
+
+FIGURA
+
+Como se pode ver, para o caso de operações da ALU, operações de \textit{load}, carregamento de constantes e o caso de \textit{jump and link}, o sinal de \textit{override} fica a \textit{high}. Para o caso de \textit{store} na memória, transferências de controlo que não \textit{jump and link} e NOP, o sinal de \textit{override} fica a \textit{low}, tal como pretendido. De notar também que a escrita nos registos é feita no flanco positivo do relógio. 
+
+Na figura abaixo encontra-se o esquema completo do andar de \textit{write back}.
 
 \pagebreak
 
