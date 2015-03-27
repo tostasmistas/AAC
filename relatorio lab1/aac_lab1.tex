@@ -87,13 +87,15 @@ O processador $\mu$Risc que foi projectado encontra-se dividido em quatro andare
 
 \subsection{Primeiro Andar - IF}
 
-No primeiro andar obtem-se a instrução a ser executada a cada ciclo. Como todas as instruções do programa são armazenadas na memória ROM, o \textit{instruction fetch} (IF) tem a função de endereçar a ROM com o \textit{program counter} e ler a instrução desse endereço.
+No primeiro andar obtem-se a instrução a ser executada a cada ciclo. Como todas as instruções do programa são armazenadas na memória ROM, o \textit{instruction fetch} tem a função de endereçar a ROM com o \textit{program counter} (\texttt{PC}) e ler a instrução desse endereço.
 
 FIGURA 1
 
-O \textit{instruction fetch} (IF) é simplesmente um somador, que em cada ciclo soma $1$ ao endereço actual, e armazena o resultado no registo  \textit{PC}, como se pode ver na figura 1. O endereço actual além de ser um operando do somador também endereça a memória ROM.
+O \textit{instruction fetch} é simplesmente um somador que, em cada ciclo, soma \texttt{1} ao endereço actual e armazena o resultado no registo \texttt{PC}, como se pode ver na Figura 1. O endereço actual, além de ser um operando do somador, também endereça a memória ROM.
 
-Existe duas situações que altera o funcionamento sequencial do \textit{instruction fetch} (IF), a primeira ocorre quando há uma transfêrencia de controlo do tipo condicional ou incondicional, selecionando o \textit{Destino\_cond} no \textit{MUX\_1} e o resultado do somador no \textit{MUX\_2}, ou seja, \textit{S\_cond} $=1$ e \textit{S\_jump} $=0$. A ultima situação o corre quando existe uma transferência de controlo do tipo \textit{Jump and Link} ou \textit{Jump Registor}, selecionando o \textit{Destino\_jump} no \textit{MUX\_2}, ou seja, \textit{S\_jump} $=1$.
+Podem ocorrer duas situações que alteram o funcionamento sequencial do \textit{instruction fetch} - a primeira ocorre quando há uma transferência de controlo do tipo condicional ou incondicional, seleccionando o sinal \texttt{destino\_cond} no \texttt{MUX\_1} e o resultado do somador no \texttt{MUX\_2}, ou seja, o sinal \texttt{s\_cond} está a \textit{high} e \texttt{s\_jump} a \textit{low}. A última situação ocorre quando existe uma transferência de controlo do tipo \textit{jump and link} ou \textit{jump register}, selecionando o sinal \texttt{destino\_jump} no \texttt{MUX\_2}, ou seja, o sinal \texttt{s\_jump} está a \textit{high}.
+
+\todo{se calhar e melhor explicar o significado destes sinais}
 
 
 \subsection{Segundo Andar - ID e OF}
@@ -103,23 +105,23 @@ Neste andar trata-se de executar operações da ALU bem com operações da memó
 
 \todo{ALU}
 
-Relativamente às operações de memória é necessário tratar de \textit{loads} e \textit{stores}. Em ambos os casos o endereçamento à RAM é feito com o valor guardado no registo A, especificado pelos \textit{bits} 3 a 5 da instrução. Para o caso de um \textit{load} o valor que estiver nessa posição de memória é guardado no registo WC, especificado pelo \textit{bits} 11 a 13 da instrução, estando o \textit{write enable} da RAM a \textit{low}. Para o caso de um \textit{store} pretende-se escrever o conteúdo do registo B, especificado pelos \textit{bits} 0 a 2 da instrução, na posição de memória anteriormente endereçada, sendo necessário colocar o \textit{write enable} da RAM a \textit{high}. 
+Relativamente às operações de memória é necessário tratar de \textit{loads} e \textit{stores}. Em ambos os casos o endereçamento à RAM é feito com o valor guardado no registo \texttt{A}, especificado pelos \textit{bits} \texttt{3} a \texttt{5} da instrução. Para o caso de um \textit{load} o valor que estiver nessa posição de memória é guardado no registo \texttt{WC}, especificado pelo \textit{bits} \texttt{11} a \texttt{13} da instrução, estando o \textit{write enable} da RAM a \textit{low}. Para o caso de um \textit{store} pretende-se escrever o conteúdo do registo \texttt{B}, especificado pelos \textit{bits} \texttt{0} a \texttt{2} da instrução, na posição de memória anteriormente endereçada, sendo necessário colocar o \textit{write enable} da RAM a \textit{high}. 
 
 Uma vez que o conteúdo dos registos é de 16 \textit{bits}, para endereçar a memória RAM recorre-se apenas ao 12 menos significativos. O sinal de \textit{write enable} da RAM é, como já se viu, calculado no andar anterior, mas só neste terceiro andar é que é ligado à RAM. Optou-se por fazer desta maneira para \todo{explicar a ideia de que foi para ser mais simples blah blah}
 
 \subsection{Quarto Andar - WB}
 
-No último andar os diversos resultados possíveis são escritos no banco de registos - pode ser o resultado de uma operação da ALU, o resultado de uma operação sobre a memória (\textit{load}), o carregamento de uma constante ou guardar em R7 o valor do próximo \textit{program counter}. Como se pode ver na figura seguinte, a seleção de qual os resultados deve ser escrito é feita com recurso a um MUX 4:1. 
+No último andar os diversos resultados possíveis são escritos no banco de registos - pode ser o resultado de uma operação da ALU, o resultado de uma operação sobre a memória (\textit{load}), o carregamento de uma constante ou guardar em \texttt{R7} o valor do próximo \textit{program counter}. Como se pode ver na figura seguinte, a seleção de qual os resultados deve ser escrito é feita com recurso a um MUX 4:1. 
 
 FIGURA
 
-Uma vez seleccionado o resultado a escrever é preciso escolher qual o registo onde se pretende escrever esse mesmo resultado, o registo WC. 
+Uma vez seleccionado o resultado a escrever é preciso escolher qual o registo onde se pretende escrever esse mesmo resultado, o registo \texttt{WC}. 
 
-Para instruções da ALU a escolha do registo onde se quer escrever o resultado final é feita com recurso aos \textit{bits} 11 a 13 da instrução, assim como para operações de carregamento de constantes. Porém, para operações de transferência de controlo esses mesmos \textit{bits} representam a operação a realizar, pelo que não basta utilizar os 3 \textit{bits} referidos anteriormente para controlar um \textit{decoder} que colocasse a \textit{high} um dos 7 \textit{enables} (que estão armazenados nos 7 \textit{bits} de um vector), tal como pensado originalmente e como pode ser visto na figura abaixo.
+Para instruções da ALU a escolha do registo onde se quer escrever o resultado final é feita com recurso aos \textit{bits} \texttt{11} a \texttt{13} da instrução, assim como para operações de carregamento de constantes. Porém, para operações de transferência de controlo esses mesmos \textit{bits} representam a operação a realizar, pelo que não basta utilizar os 3 \textit{bits} referidos anteriormente para controlar um \textit{decoder} que colocasse a \textit{high} um dos 7 \textit{enables} (que estão armazenados nos 7 \textit{bits} de um vector), tal como pensado originalmente e como pode ser visto na figura abaixo.
 
 FIGURA
 
-No entanto, a solução acima tem um problema - suponha-se o caso da instrução 1401 (HEX) que corresponde a um \textit{jump if true} mediante a condição do resultado da ALU ser negativo. Os \textit{bits} 11 a 13 da instrução são 010 e, como tal, o \textit{enable} do registo R2 ficaria activo. Porém, não se pretende escrever nesse registo. O mesmo decorre para uma operação de \textit{store} na RAM e NOP. 
+No entanto, a solução acima tem um problema - suponha-se o caso da instrução \texttt{1401} (HEX) que corresponde a um \textit{jump if true} mediante a condição do resultado da ALU ser negativo. Os \textit{bits} \texttt{11} a \texttt{13} da instrução são \texttt{010} e, como tal, o \textit{enable} do registo \texttt{R2} ficaria activo. Porém, não se pretende escrever nesse registo. O mesmo decorre para uma operação de \textit{store} na RAM e NOP. 
 
 Assim, para resolver o problema é necessário criar um sinal que faça \textit{override} ao \textit{enable} que o \textit{decoder} colocou a \textit{high}, permitindo o sinal de \textit{override} colocar o \textit{enable} a \textit{low}, tal como pretendido, para que não se escreva em nenhum registo.
 
