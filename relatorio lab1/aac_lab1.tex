@@ -87,7 +87,14 @@ O processador $\mu$Risc que foi projectado encontra-se dividido em quatro andare
 
 \subsection{Primeiro Andar - IF}
 
-No primeiro andar a próxima instrução a ser executada é carregada da memória ROM. 
+No primeiro andar obtem-se a instrução a ser executada a cada ciclo. Como todas as instruções do programa são armazenadas na memória ROM, o \textit{instruction fetch} (IF) tem a função de endereçar a ROM.
+
+FIGURA 1
+
+O \textit{instruction fetch} (IF) é simplesmente um somador, que em cada ciclo soma $1$ ao endereço actual, e armazena o resultado no registo  \textit{PC}, como se pode ver na figura 1. O endereço actual além de ser um operando do somador também endereça a memória ROM.
+
+Existe duas situações que altera o funcionamento sequencial do \textit{instruction fetch} (IF), a primeira ocorre quando há uma transfêrencia de controlo do tipo condicional ou incondicional, selecionando o \textit{Destino\_cond} no \textit{MUX\_1} e o resultado do somador no \textit{MUX\_2}, ou seja, \textit{S\_cond} $=1$ e \textit{S\_jump} $=0$. A ultima situação o corre quando existe uma transferência de controlo do tipo \textit{Jump and Link} ou \textit{Jump Registor}, selecionando o \textit{Destino\_jump} no \textit{MUX\_2}, ou seja, \textit{S\_jump} $=1$.
+
 
 \subsection{Segundo Andar - ID e OF}
 \subsection{Terceiro Andar - EX e MEM}
