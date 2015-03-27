@@ -93,7 +93,19 @@ No primeiro andar a próxima instrução a ser executada é carregada da memóri
 \subsection{Terceiro Andar - EX e MEM}
 \subsection{Quarto Andar - WB}
 
-No último andar os resultados são escritos no banco de registos, sendo que os resultados possíveis de ser escritos são: 
+No último andar os diversos resultados possíveis são escritos no banco de registos - pode ser o resultado de uma operação da ALU, o resultado de uma operação sobre a memória (\textit{load}), o carregamento de uma constante ou guardar em R7 o valor do próximo \textit{program counter}. Como se pode ver na figura seguinte, a seleção de qual os resultados deve ser escrito é feita com recurso a um MUX 4:1. \todo{explicar sinal de selecçao do mux}
+
+FIGURA
+
+Uma vez seleccionado o resultado a escrever é preciso escolher qual o registo onde se pretende escrever esse mesmo resultado (registo WC). 
+
+Para instruções da ALU a escolha do registo onde se quer escrever o resultado final é feita com recurso aos \textit{bits} 11 a 13 da instrução, assim como para operações de carregamento de constantes. Porém, para operações de transferência de controlo esses mesmos \textit{bits} representam a operação a realizar, pelo que não basta utilizar os 3 \textit{bits} referidos anteriormente para controlar um \textit{decoder} que colocasse a \textit{high} um dos 7 \textit{enables} (que estão armazenados nos 7 \textit{bits} de um vector), tal como pensado originalmente e como pode ser visto na figura abaixo.
+
+FIGURA
+
+\todo{exemplo de um jump que depois ia escrever num registo e nao era suposto. dizer que para stores tambem nao se quer escrever em nenhum reg}
+
+Assim, para resolver o problema dos casos em que se pretende fazer um \textit{jump} ou o \textit{store} de dados na RAM é necessário criar um sinal que faça \textit{override} ao \textit{enable} que o \textit{decoder} colocou a \textit{high}, permitindo o sinal de \textit{override} colocar o \textit{enable} a \textit{low}, tal como pretendido, para que não se escreva em nenhum registo.
 
 \pagebreak
 
