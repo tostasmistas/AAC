@@ -96,7 +96,9 @@ Neste andar trata-se de executar operações da ALU bem com operações da memó
 
 \todo{ALU}
 
-Relativamente às operações de memória é necessário tratar de \textit{loads} e \textit{stores}.
+Relativamente às operações de memória é necessário tratar de \textit{loads} e \textit{stores}. Em ambos os casos o endereçamento à RAM é feito com o valor guardado no registo A, especificado pelos \textit{bits} 3 a 5 da instrução. Para o caso de um \textit{load} o valor que estiver nessa posição de memória é guardado no registo WC, especificado pelo \textit{bits} 11 a 13 da instrução, estando o \textit{write enable} da RAM a \textit{low}. Para o caso de um \textit{store} pretende-se escrever o conteúdo do registo B, especificado pelos \textit{bits} 0 a 2 da instrução, na posição de memória anteriormente endereçada, sendo necessário colocar o \textit{write enable} da RAM a \textit{high}. 
+
+Uma vez que o conteúdo dos registos é de 16 \textit{bits}, para endereçar a memória RAM recorre-se apenas ao 12 menos significativos. O sinal de \textit{write enable} da RAM é, como já se viu, calculado no andar anterior, mas só neste terceiro andar é que é ligado à RAM. Optou-se por fazer desta maneira para \todo{explicar a ideia de que foi para ser mais simples blah blah}
 
 \subsection{Quarto Andar - WB}
 
@@ -104,7 +106,7 @@ No último andar os diversos resultados possíveis são escritos no banco de reg
 
 FIGURA
 
-Uma vez seleccionado o resultado a escrever é preciso escolher qual o registo onde se pretende escrever esse mesmo resultado (registo WC). 
+Uma vez seleccionado o resultado a escrever é preciso escolher qual o registo onde se pretende escrever esse mesmo resultado, o registo WC. 
 
 Para instruções da ALU a escolha do registo onde se quer escrever o resultado final é feita com recurso aos \textit{bits} 11 a 13 da instrução, assim como para operações de carregamento de constantes. Porém, para operações de transferência de controlo esses mesmos \textit{bits} representam a operação a realizar, pelo que não basta utilizar os 3 \textit{bits} referidos anteriormente para controlar um \textit{decoder} que colocasse a \textit{high} um dos 7 \textit{enables} (que estão armazenados nos 7 \textit{bits} de um vector), tal como pensado originalmente e como pode ser visto na figura abaixo.
 
