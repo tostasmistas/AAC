@@ -62,9 +62,7 @@ Com este trabalho laboratorial pretende-se projectar um processador $\mu$Risc, d
 
 \section{Características do Processador}
 
-O processador elaborado foi simulado para uma placa Artix 7 \todo{ver pins da placa e etc para justificar decisao}
-
-O $\mu$Risc projectado tem as seguintes características:
+O processador elaborado foi simulado para uma placa Artix 7 e tem as seguintes características:
 
 \vspace{-2mm}
 
@@ -79,7 +77,7 @@ O $\mu$Risc projectado tem as seguintes características:
   \vspace{-2.5mm}
   \item organização de dados na memória do tipo \textit{big endian};
   \vspace{-2.5mm}
-  \item uma memória ROM de 4K endereçada com palavras de 12 \textit{bits} utilizada para as instruções/programa e uma memória RAM de 4K endereçada com palavras de 16 \textit{bits} para os dados.
+  \item uma memória ROM de 8 KBytes (4k endereços $\times$ 2 \textit{bytes}) endereçada com palavras de 12 \textit{bits} utilizada para as instruções/programa e uma memória RAM de 8 KBytes (4k endereços $\times$ 2 \textit{bytes}) endereçada com palavras de 12 \textit{bits} para os dados.
   
 \end{itemize}
 
@@ -88,9 +86,14 @@ O $\mu$Risc projectado tem as seguintes características:
 O processador $\mu$Risc que foi projectado encontra-se dividido em quatro andares - num primeiro andar é feito o \textit{instruction fetch} (IF), no segundo andar é feito o \textit{instruction decode} (ID) e o \textit{operand fetch} (OF), no terceiro andar são executadas operações da ALU (EX) e de acesso à memória de dados (MEM) e, por fim, no quarto e último andar é feita a escrita no banco de registos, o \textit{write back} (WB).
 
 \subsection{Primeiro Andar - IF}
+
+No primeiro andar a próxima instrução a ser executada é carregada da memória ROM. 
+
 \subsection{Segundo Andar - ID e OF}
 \subsection{Terceiro Andar - EX e MEM}
 \subsection{Quarto Andar - WB}
+
+No último andar os resultados são escritos no banco de registos, sendo que os resultados possíveis de ser escritos são: 
 
 \pagebreak
 
