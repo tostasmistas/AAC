@@ -127,7 +127,24 @@ Do \textit{decoder} são fornecidos os seguintes sinais - \texttt{CONS\_FI\_11B}
 
 Neste andar trata-se de executar operações da ALU bem com operações da memória, sendo que, ao contrário do MIPS, em que é possível utilizar a ALU e a memória na mesma instrução, no processador $\mu$Risc projectado tal não é possível. A memória RAM está colocada no mesmo andar que a execução porque não é necessário fazer cálculos dos endereços, se tal fosse necessário, a memória teria de estar no andar seguinte àquele que contém a ALU. 
 
-\todo{ALU - nao esquecer da simplificaçao de MUXs}
+\subsubsection{ALU}
+
+No Terceiro Andar o bloco da ALU é responsável pelas operações aritméticas e lógicas. Este bloco receberá como entrada os sinais dos operandos A e B, um sinal de 4 bits com as flags actuais para posterior actualização, tal como um sinal de 5 bits que representa a operação que a ALU vai efectuar, este último sinal servirá como apoio para a descodificação das operações da ALU. Como saída terão o sinal de 16 bits que representa o resultado da ALU e um sinal de 4 bits que representa as flags actualizadas.
+
+Para efectuar as operações aritméticas como somas e subtrações foi explorada a opção de usar apenas um somador devido ao tempo que estes gastam. Foi possível atingir este objectivo usando um somador que como operando \textit{P} recebe sempre o operando A, como operando \textit{Q} recebe um sinal diferente dependendo da operação aritmética a realizar, tal como o \textit{Carry_in} que vai ser usado para operações como incrementos, podendo também completar o \textit{!B} em complemento para dois. Os dois sinais de entrada do somador receberão uma concatenação com o bit \textit{'0'} como o bit mais significativo, para que a saída do somador  tenha 17 bits, tornando possível a actualização da flag de \textit{Cary}. Este somador foi programado tal como representado na figura:
+
+FIGURA
+
+No caso das operações de \textit{Shift}, tal como nas operações aritméticas a saída será representada em 17 bits, pela mesma razão. Para escolher entre as operações de \textit{Shift} será usado um simples Mux de duas entradas tal como está \textit{pseudo}-representado na figura:
+
+FIGURA
+
+No caso das operações Lógicas, que representam 16 operações foi feito um esforço para reduzir um mux de 16 entradas para um de 8 entradas devido à diferença de tempo gasto entre os dois mux's.
+\todo{ALU - nao esquecer da simplificaçao de MUXs e depois a actualização de flags}
+
+Finalmente, após a verificação das flags, é realizado um mux de quatro entradas, onde as entradas de 17 bits serão reduzidas para 16, retirando-lhes o bit mais significativo que tinha como objectivo a verificação da flag de \textit{Cary}. A saída deste mux será um sinal de 16 bits que representa o resultado da operação da ALU, tal como se pode verificar na figura:
+
+FIGURA
 
 Relativamente às operações de memória é necessário tratar de \textit{loads} e \textit{stores}. Em ambos os casos o endereçamento à RAM é feito com o valor guardado no registo \texttt{A}, especificado pelos \textit{bits} \texttt{3} a \texttt{5} da instrução. Para o caso de um \textit{load} o valor que estiver nessa posição de memória é guardado no registo \texttt{WC}, especificado pelo \textit{bits} \texttt{11} a \texttt{13} da instrução, estando o \textit{write enable} da RAM a \textit{low}. Para o caso de um \textit{store} pretende-se escrever o conteúdo do registo \texttt{B}, especificado pelos \textit{bits} \texttt{0} a \texttt{2} da instrução, na posição de memória anteriormente endereçada, sendo necessário colocar o \textit{write enable} da RAM a \textit{high}. 
 
