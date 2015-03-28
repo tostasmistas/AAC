@@ -36,6 +36,7 @@
 {\huge \bfseries Simulação de um processador $\mu$Risc\\[1.2cm]}
 
 \begin{tabular}{ l l }
+Guilherme Branco Teixeira & \hspace{2mm} n.º 70214 \\ 
 Maria Margarida Dias dos Reis & \hspace{2mm} n.º 73099 \\
 Nuno Miguel Rodrigues Machado & \hspace{2mm} n.º 74236 
 \end{tabular}
@@ -77,13 +78,15 @@ O processador elaborado foi simulado para uma placa Artix 7 e tem as seguintes c
   \vspace{-2.5mm}
   \item organização de dados na memória do tipo \textit{big endian};
   \vspace{-2.5mm}
-  \item uma memória ROM de 8 KBytes (4k endereços $\times$ 2 \textit{bytes}) endereçada com palavras de 12 \textit{bits} utilizada para as instruções/programa e uma memória RAM de 8 KBytes (4k endereços $\times$ 2 \textit{bytes}) endereçada com palavras de 12 \textit{bits} para os dados.
+  \item uma memória ROM de 8 KBytes (4k endereços $\times$ 2 \textit{bytes}) endereçada com palavras de 12 \textit{bits} utilizada para as instruções/programa e uma memória RAM de 8 KBytes (4k endereços $\times$ 2 \textit{bytes}) endereçada com palavras de 12 \textit{bits} utilizada para os dados.
   
 \end{itemize}
 
 \section{Estrutura do Processador}
 
 O processador $\mu$Risc que foi projectado encontra-se dividido em quatro andares - num primeiro andar é feito o \textit{instruction fetch} (IF), no segundo andar é feito o \textit{instruction decode} (ID) e o \textit{operand fetch} (OF), no terceiro andar são executadas operações da ALU (EX) e de acesso à memória de dados (MEM) e, por fim, no quarto e último andar é feita a escrita no banco de registos, o \textit{write back} (WB).
+
+\todo{fazemos em cada andar uma tabela a dizer que sinais passam para o andar seguinte?}
 
 \subsection{Primeiro Andar - IF}
 
@@ -99,15 +102,44 @@ Podem ocorrer duas situações que alteram o funcionamento sequencial do \textit
 
 
 \subsection{Segundo Andar - ID e OF}
+
+\todo{referir se fazemos todo o decoding neste andar ou se passamos sinais e fazemos algum decoding depois}
+
+\todo{explicar WE da RAM, que eu depois uso quando explico a MEM. nao esta no desenho do decoder?}
+
+É também no segundo andar que é feito o \textit{operand fetch}. Numa primeira fase é preciso definir os operandos \texttt{A} e \texttt{B} da ALU, feito de acordo com a seguinte lógica.
+
+FIGURA 
+
+Para fazer a selecção é necessário recorrer a alguns sinais que o \textit{decoder} explicado anteriormente fornece - \texttt{ADD\_RA\_C} (sinal 3 \textit{bits} que permite fazer a selecção do operando \texttt{A} no \texttt{MUXA}) e \texttt{ADD\_RB} (sinal 3 \textit{bits} que permite fazer a selecção do operando \texttt{B} no \texttt{MUXB}). \todo{estes sinais serao explicados no ID ou explico eu?}
+
+\todo{quem explica a reciclagem do sinal do MUXA/MUXC - eu ou o teddy?}
+
+Os sinais que definem o operando \texttt{A} e o operando \texttt{B} são depois passados para o terceiro andar para que a ALU possa fazer operações com o seu valor.
+
+É também aqui que se faz a selecção das constantes que depois serão carregadas nos registos do banco de registos, algo que é feito de acordo com a próxima figura.
+
+FIGURA
+
+Do \textit{decoder} são fornecidos os seguintes sinais - \texttt{CONS\_FI\_11B} (constante de 11 \textit{bits} que é carregada directamente), \texttt{CONS\_FII\_8B} (constante de 8 \textit{bits} com que é feita uma operação de \textit{lch} ou \textit{lcl}) e \texttt{select\_mux\_constantes} \todo{este sinal nao esta no decoder?} (sinal de 2 \textit{bits} que permite fazer a selecção dos três casos definidos anteriormente no \texttt{MUXCons}).
+
 \subsection{Terceiro Andar - EX e MEM}
 
-Neste andar trata-se de executar operações da ALU bem com operações da memória, sendo que, ao contrário do MIPS, em que é possível utilizar a ALU e a memória na mesma instrução, no processador $\mu$Risc projectado tal não é possível.
+Neste andar trata-se de executar operações da ALU bem com operações da memória, sendo que, ao contrário do MIPS, em que é possível utilizar a ALU e a memória na mesma instrução, no processador $\mu$Risc projectado tal não é possível. A memória RAM está colocada no mesmo andar que a execução porque não é necessário fazer cálculos dos endereços, se tal fosse necessário, a memória teria de estar no andar seguinte àquele que contém a ALU. 
 
-\todo{ALU}
+\todo{ALU - nao esquecer da simplificaçao de MUXs}
 
 Relativamente às operações de memória é necessário tratar de \textit{loads} e \textit{stores}. Em ambos os casos o endereçamento à RAM é feito com o valor guardado no registo \texttt{A}, especificado pelos \textit{bits} \texttt{3} a \texttt{5} da instrução. Para o caso de um \textit{load} o valor que estiver nessa posição de memória é guardado no registo \texttt{WC}, especificado pelo \textit{bits} \texttt{11} a \texttt{13} da instrução, estando o \textit{write enable} da RAM a \textit{low}. Para o caso de um \textit{store} pretende-se escrever o conteúdo do registo \texttt{B}, especificado pelos \textit{bits} \texttt{0} a \texttt{2} da instrução, na posição de memória anteriormente endereçada, sendo necessário colocar o \textit{write enable} da RAM a \textit{high}. 
 
-Uma vez que o conteúdo dos registos é de 16 \textit{bits}, para endereçar a memória RAM recorre-se apenas ao 12 menos significativos. O sinal de \textit{write enable} da RAM é, como já se viu, calculado no andar anterior, mas só neste terceiro andar é que é ligado à RAM. Optou-se por fazer desta maneira para \todo{explicar a ideia de que foi para ser mais simples blah blah}
+Uma vez que o conteúdo dos registos é de 16 \textit{bits}, para endereçar a memória RAM recorre-se apenas ao 12 menos significativos. O sinal de \textit{write enable} da RAM é, como já se viu, calculado no andar anterior, mas só neste terceiro andar é que é ligado à RAM. Optou-se por fazer desta maneira pois o cálculo desse sinal depende apenas de \textit{bits} específicos da instrução, como se pode ver na Figura TAL, fazendo então parte do andar que trata de fazer o \textit{decoding} da instrução.
+
+É também neste andar que se liga a saída de dados da RAM ao sinal que depois será escrito no registo \texttt{WC} do banco de registos (para o caso do \textit{load}) e liga-se também o valor que estiver no registo \texttt{B} à entrada de dados da RAM, para que depois possa ser escrito na posição de memória especificada (para o caso do \textit{store}).
+
+De referir que as leituras da RAM são feitas assincronamente e as escritas são feitas nos flancos positivos de relógio. \todo{nao sei se é preciso explicar melhor o porquê}
+
+Na figura apresentada de seguida encontra-se o esquema de acesso à memória RAM.
+
+FIGURA
 
 \subsection{Quarto Andar - WB}
 
@@ -123,15 +155,27 @@ FIGURA
 
 No entanto, a solução acima tem um problema - suponha-se o caso da instrução \texttt{1401} (HEX) que corresponde a um \textit{jump if true} mediante a condição do resultado da ALU ser negativo. Os \textit{bits} \texttt{11} a \texttt{13} da instrução são \texttt{010} e, como tal, o \textit{enable} do registo \texttt{R2} ficaria activo. Porém, não se pretende escrever nesse registo. O mesmo decorre para uma operação de \textit{store} na RAM e NOP. 
 
-Assim, para resolver o problema é necessário criar um sinal que faça \textit{override} ao \textit{enable} que o \textit{decoder} colocou a \textit{high}, permitindo o sinal de \textit{override} colocar o \textit{enable} a \textit{low}, tal como pretendido, para que não se escreva em nenhum registo.
+Assim, para resolver o problema é necessário criar um sinal que faça \textit{overwrite} ao \textit{enable} que o \textit{decoder} colocou a \textit{high}, permitindo o sinal de \textit{overwrite} colocar o \textit{enable} a \textit{low}, tal como pretendido, para que não se escreva em nenhum registo.
 
-O sinal de \textit{override} é obtido com recurso à seguinte lógica.
+O sinal de \textit{overwrite} foi obtido com recurso à seguinte tabela.
+
+TABELA
+
+A lógica que permite implementar o sinal é demonstrada na figura seguinte.
 
 FIGURA
 
-Como se pode ver, para o caso de operações da ALU, operações de \textit{load}, carregamento de constantes e o caso de \textit{jump and link}, o sinal de \textit{override} fica a \textit{high}. Para o caso de \textit{store} na memória, transferências de controlo que não \textit{jump and link} e NOP, o sinal de \textit{override} fica a \textit{low}, tal como pretendido. De notar também que a escrita nos registos é feita no flanco positivo do relógio. 
+Como se pode ver, para o caso de operações da ALU, operações de \textit{load}, carregamento de constantes e o caso de \textit{jump and link}, o sinal de \textit{overwrite} fica a \textit{high}. Para o caso de \textit{store} na memória, transferências de controlo que não \textit{jump and link} e NOP, o sinal de \textit{overwrite} fica a \textit{low}, tal como pretendido. De notar também que a escrita nos registos é feita no flanco positivo do relógio. 
 
 Na figura abaixo encontra-se o esquema completo do andar de \textit{write back}.
+
+FIGURA
+
+\section{Controlo do Processador}
+
+\todo{explicar ai os registos entre andares e maquina de estados}
+
+\section{Conclusões}
 
 \pagebreak
 

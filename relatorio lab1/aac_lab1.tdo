@@ -1,3 +1,10 @@
+\contentsline {todo}{fazemos em cada andar uma tabela a dizer que sinais passam para o andar seguinte?}{1}
 \contentsline {todo}{se calhar e melhor explicar o significado destes sinais}{2}
-\contentsline {todo}{ALU}{2}
-\contentsline {todo}{explicar a ideia de que foi para ser mais simples blah blah}{2}
+\contentsline {todo}{referir se fazemos todo o decoding neste andar ou se passamos sinais e fazemos algum decoding depois}{2}
+\contentsline {todo}{explicar WE da RAM, que eu depois uso quando explico a MEM. nao esta no desenho do decoder?}{2}
+\contentsline {todo}{estes sinais serao explicados no ID ou explico eu?}{2}
+\contentsline {todo}{quem explica a reciclagem do sinal do MUXA/MUXC - eu ou o teddy?}{2}
+\contentsline {todo}{este sinal nao esta no decoder?}{2}
+\contentsline {todo}{ALU - nao esquecer da simplifica\IeC {\c c}ao de MUXs}{2}
+\contentsline {todo}{nao sei se \IeC {\'e} preciso explicar melhor o porqu\IeC {\^e}}{3}
+\contentsline {todo}{explicar ai os registos entre andares e maquina de estados}{4}
