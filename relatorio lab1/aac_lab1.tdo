@@ -5,6 +5,6 @@
 \contentsline {todo}{estes sinais serao explicados no ID ou explico eu?}{2}
 \contentsline {todo}{quem explica a reciclagem do sinal do MUXA/MUXC - eu ou o teddy?}{2}
 \contentsline {todo}{este sinal nao esta no decoder?}{2}
-\contentsline {todo}{ALU - nao esquecer da simplifica\IeC {\c c}ao de MUXs}{2}
-\contentsline {todo}{nao sei se \IeC {\'e} preciso explicar melhor o porqu\IeC {\^e}}{3}
-\contentsline {todo}{explicar ai os registos entre andares e maquina de estados}{4}
+\contentsline {todo}{ALU - falar das opera\IeC {\c c}\IeC {\~o}es logicas e o mux de 16->8 entradas e a figura para as flags}{3}
+\contentsline {todo}{nao sei se \IeC {\'e} preciso explicar melhor o porqu\IeC {\^e}}{4}
+\contentsline {todo}{explicar ai os registos entre andares e maquina de estados}{6}

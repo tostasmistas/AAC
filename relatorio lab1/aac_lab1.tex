@@ -129,9 +129,9 @@ Neste andar trata-se de executar operações da ALU bem com operações da memó
 
 \subsubsection{ALU}
 
-No Terceiro Andar o bloco da ALU é responsável pelas operações aritméticas e lógicas. Este bloco receberá como entrada os sinais dos operandos A e B, um sinal de 4 bits com as flags actuais para posterior actualização, tal como um sinal de 5 bits que representa a operação que a ALU vai efectuar, este último sinal servirá como apoio para a descodificação das operações da ALU. Como saída terão o sinal de 16 bits que representa o resultado da ALU e um sinal de 4 bits que representa as flags actualizadas.
+No Terceiro Andar o bloco da ALU é responsável pelas operações aritméticas e lógicas. Este bloco receberá como entrada os sinais dos operandos A e B, tal como um sinal de 5 bits que representa a operação que a ALU vai efectuar, este último sinal servirá como apoio para a descodificação das operações da ALU. Como saída terão o sinal de 16 bits que representa o resultado da ALU.
 
-Para efectuar as operações aritméticas como somas e subtrações foi explorada a opção de usar apenas um somador devido ao tempo que estes gastam. Foi possível atingir este objectivo usando um somador que como operando \textit{P} recebe sempre o operando A, como operando \textit{Q} recebe um sinal diferente dependendo da operação aritmética a realizar, tal como o \textit{Carry_in} que vai ser usado para operações como incrementos, podendo também completar o \textit{!B} em complemento para dois. Os dois sinais de entrada do somador receberão uma concatenação com o bit \textit{'0'} como o bit mais significativo, para que a saída do somador  tenha 17 bits, tornando possível a actualização da flag de \textit{Cary}. Este somador foi programado tal como representado na figura:
+Para efectuar as operações aritméticas como somas e subtrações foi explorada a opção de usar apenas um somador devido ao tempo que estes gastam. Foi possível atingir este objectivo usando um somador que como operando \textit{P} recebe sempre o operando A, como operando \textit{Q} recebe um sinal diferente dependendo da operação aritmética a realizar, tal como o \textit{Carry-in} que vai ser usado para operações como incrementos, podendo também completar o \textit{!B} em complemento para dois. Os dois sinais de entrada do somador receberão uma concatenação com o bit \textit{'0'} como o bit mais significativo, para que a saída do somador  tenha 17 bits, tornando possível a actualização da flag de \textit{Cary}. Este somador foi programado tal como representado na figura:
 
 FIGURA
 
@@ -140,12 +140,49 @@ No caso das operações de \textit{Shift}, tal como nas operações aritméticas
 FIGURA
 
 No caso das operações Lógicas, que representam 16 operações foi feito um esforço para reduzir um mux de 16 entradas para um de 8 entradas devido à diferença de tempo gasto entre os dois mux's.
-\todo{ALU - nao esquecer da simplificaçao de MUXs e depois a actualização de flags}
+\todo{ALU - falar das operações logicas e o mux de 16->8 entradas e a figura para as flags}
 
-Finalmente, após a verificação das flags, é realizado um mux de quatro entradas, onde as entradas de 17 bits serão reduzidas para 16, retirando-lhes o bit mais significativo que tinha como objectivo a verificação da flag de \textit{Cary}. A saída deste mux será um sinal de 16 bits que representa o resultado da operação da ALU, tal como se pode verificar na figura:
+Finalmente, após a criação do sinal das flags, é realizado um mux de quatro entradas, onde as entradas de 17 bits serão reduzidas para 16, retirando-lhes o bit mais significativo que tinha como objectivo a verificação da flag de \textit{Cary}. A saída deste mux será um sinal de 16 bits que representa o resultado da operação da ALU, tal como se pode verificar na figura:
 
 FIGURA
 
+Para cada um dos três sinais de saída (\textit{out-ARI}, \textit{out-SHIFT} e \textit{out-LOG}) vai ser criado um sinal que corresponderá às flags que cada operação poderia actualizar. Como por exemplo, no caso das operações aritméticas é criado um sinal de 4 bits com as quatro flags atualizadas indescriminadamente, no caso das operações de \textit{Shift} é criado um sinal de 3 bits apenas com as flags atualizadas nessas duas operações (\textit{Zero}, \textit{Negative} e \textit{Carry}), e no caso das operações lógicas é criado um sinal com apenas dois bits que representam as flags que poderão ser atualizadas neste tipo de operações (\textit{Zero} e \textit{Negative}). Estes três sinais criados serão utilizados no bloco de Atualização de Flags tal como explicado na secção ~\ref{subsec:act-flags}.
+
+\subsubsection{Atualização das Flags}
+\label{subsec:act-flags}
+
+Este bloco irá receber como entrada o sinal de 4 bits que representa as flags do ciclo anterior, os três sinais criados na ALU que representam as flags atualizadas indescriminadamente e também o sinal de 5 bits que representa a operação que a ALU efectuou de modo a que seja possível descriminar que flags atualizar, e tem como saída um sinal de 4 bits que representa as flags atualizadas descriminadamente.
+
+Ao analizar o quadro de operações da ALU, é possível reparar que existem apenas  quatro tipos de atualizações de flags:
+
+\begin{itemize}
+	\item Nenhuma;
+	\vspace{-3.5mm}
+	\item \textit{Zero} e \textit{Negative};
+	\vspace{-3.5mm}
+	\item \textit{Zero}, \textit{Negative} e \textit{Carry};
+	\vspace{-3.5mm}
+	\item \textit{Zero}, \textit{Negative}, \textit{Carry} e \textit{Overflow} (Todas);
+\end{itemize}
+
+Foi então criado um sinal que teria como objectivo discernir entre quais flags atualizar este sinal foi criado com a lógica representada na seguinte figura:
+
+FIGURA
+
+Com o sinal \textit{Sign\_Flags} é possível então criar um mux que tem em cada entrada o que está descrito na seguinte tabela:
+
+\vspace{+2.5mm}
+\begin{tabular}{|c|c|c|c|c|}
+	\hline \rule[-2ex]{0pt}{5.5ex} Atualização & Nenhuma & \textit{Z}, \textit{N} & \textit{Z}, \textit{N}, \textit{C} & \textit{Z}, \textit{N}, \textit{C}, \textit{O} \\ 
+	\hline \rule[-2ex]{0pt}{5.5ex} \textit{Sign\_Flags} & \textit{00} & \textit{01} & \textit{10} & \textit{11} \\ 
+	\hline \rule[-2ex]{0pt}{5.5ex} Flags & [\textit{O}, \textit{O}, \textit{O}, \textit{O}] & [\textit{N{\scriptsize $ _{L} $}}, \textit{N{\scriptsize $ _{L} $}}, \textit{O}, \textit{O}] & [\textit{N{\scriptsize $ _{S} $}}, \textit{N{\scriptsize $ _{S} $}}, \textit{N{\scriptsize $ _{S} $}}, \textit{O}] & [\textit{N{\scriptsize $ _{A} $}}, \textit{N{\scriptsize $ _{A} $}}, \textit{N{\scriptsize $ _{A} $}}, \textit{N{\scriptsize $ _{A} $}}] \\ 
+	\hline 
+\end{tabular} 
+\vspace{+3.5mm}
+
+Onde \textit{O} representa um bit de flags não atualizado, e \textit{N{\scriptsize $ _{L,S,A} $}} representa um novo bit atualizado retirado do sinal de entrada referente às operações lógicas, de \textit{SHIFT} ou aritméticas. Dependendo de \textit{Sign\_Flags} teremos actualizações diferentes nas flags, podendo assim ter uma saída do mux que será também a saída deste bloco de Atualização das Flags.
+
+\subsubsection{Memória}
 Relativamente às operações de memória é necessário tratar de \textit{loads} e \textit{stores}. Em ambos os casos o endereçamento à RAM é feito com o valor guardado no registo \texttt{A}, especificado pelos \textit{bits} \texttt{3} a \texttt{5} da instrução. Para o caso de um \textit{load} o valor que estiver nessa posição de memória é guardado no registo \texttt{WC}, especificado pelo \textit{bits} \texttt{11} a \texttt{13} da instrução, estando o \textit{write enable} da RAM a \textit{low}. Para o caso de um \textit{store} pretende-se escrever o conteúdo do registo \texttt{B}, especificado pelos \textit{bits} \texttt{0} a \texttt{2} da instrução, na posição de memória anteriormente endereçada, sendo necessário colocar o \textit{write enable} da RAM a \textit{high}. 
 
 Uma vez que o conteúdo dos registos é de 16 \textit{bits}, para endereçar a memória RAM recorre-se apenas ao 12 menos significativos. O sinal de \textit{write enable} da RAM é, como já se viu, calculado no andar anterior, mas só neste terceiro andar é que é ligado à RAM. Optou-se por fazer desta maneira pois o cálculo desse sinal depende apenas de \textit{bits} específicos da instrução, como se pode ver na Figura TAL, fazendo então parte do andar que trata de fazer o \textit{decoding} da instrução.
