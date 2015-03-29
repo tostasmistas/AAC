@@ -55,9 +55,11 @@ Nuno Miguel Rodrigues Machado & \hspace{2mm} n.º 74236
 
 \end{center}
 \end{titlepage}
-
+ 
 \pagenumbering{gobble}
 \clearpage
+
+\footnote{É de referir que as imagens e tabelas não foram colocadas em anexo de modo a permitir uma melhor compreensão do relatório.}
 
 \tableofcontents
 \pagebreak
@@ -104,7 +106,7 @@ No segundo andar é realizada a descodificação da instrução a ser executada,
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.35]{imagens/idof}
+	\includegraphics[keepaspectratio=true, scale=0.5]{imagens/idof}
 	\caption{Selecção dos operando \texttt{A} e \texttt{B}.}
 	\vspace{-0.8em}
 \end{figure}
@@ -129,15 +131,21 @@ Os sinais de controlo para o primeiro andar são referentes às instruções do 
 
 Para poder haver um salto é necessário detectar se a instrução é do tipo de transferência de controlo e, com essa ideia em mente, foi criado o sinal auxiliar \texttt{Active\_FlagTest}. A figura abaixo mostra a função lógica de verificação. 
 
-FIGURA active\_flagtest
+\vspace{2mm}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.55]{imagens/active_flagtest}
+	\caption{Construção do sinal Active\_Flagteste}
+	\vspace{-0.8em}
+\end{figure}
 De seguida, é preciso saber qual o tipo de salto a ser executado. 
 
 \vspace{2mm}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/Flagteste}
+	\includegraphics[keepaspectratio=true, scale=0.4]{imagens/Flagteste}
 	\caption{Selecção da constante a carregar.}
 	\vspace{-0.8em}
 \end{figure}
@@ -156,7 +164,7 @@ Há três tipos diferentes de operações em que pode ocorrer este tipo de salto
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/activejump}
+	\includegraphics[keepaspectratio=true, scale=0.55]{imagens/activejump}
 	\caption{Selecção da constante a carregar.}
 	\vspace{-0.8em}
 \end{figure}
@@ -169,7 +177,12 @@ Os sinais de controlo para o segundo andar são referentes ao controlo do \texti
 
 O sinal \texttt{ADD\_RA\_C} define o endereço do operando \texttt{A}. Como a instrução do tipo constantes reutiliza o endereço de escrita como leitura, \texttt{ADD\_RWC}, é necessário acrescentar lógica para poder resolver o problema destas operações. A solução encontrada foi utilizar um MUX de 2:1 de forma a escolher o endereço \texttt{ADD\_RA} (sinal de 3 \textit{bits} que é igual ao sinal \texttt{instrução(5 {\footnotesize downto} 3)}) ou \texttt{ADD\_RWC} (sinal de 3 \textit{bits} que é igual ao sinal \texttt{instrução(13 {\footnotesize downto} 11)}). A figura abaixo define como se obtém o endereço.
 
-Figura ADD\_RA\_RC
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.6]{imagens/ADD_RA_C}
+	\caption{Mux que permite selecionar}
+	\vspace{-0.8em}
+\end{figure}
 
 O sinal \texttt{ADD\_RB} (sinal de 3 \textit{bits} que é igual ao sinal \texttt{instrução(2 {\footnotesize downto} 0)}) é simplesmente o endereço do registo para obter o operando \texttt{B}. 
 
@@ -192,7 +205,7 @@ IDOF\_bit15 ALU\_Con\_Sel ADD\_RWC PC+1
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.35]{imagens/OF1}
+	\includegraphics[keepaspectratio=true, scale=0.6]{imagens/OF1}
 	\caption{Selecção dos operando \texttt{A} e \texttt{B}.}
 	\vspace{-0.8em}
 \end{figure}
@@ -207,7 +220,7 @@ Os sinais que definem o operando \texttt{A} e o operando \texttt{B} são depois 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/OF2}
+	\includegraphics[keepaspectratio=true, scale=0.55]{imagens/OF2}
 	\caption{Selecção da constante a carregar.}
 	\vspace{-0.8em}
 \end{figure}
@@ -248,7 +261,7 @@ O operando \texttt{P} corresponde sempre ao operando \texttt{A}, o operando \tex
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/Arit}
+	\includegraphics[keepaspectratio=true, scale=0.55]{imagens/Arit}
 	\caption{Esquema do bloco aritmético da ALU.}
 	\vspace{-0.8em}
 \end{figure}
@@ -257,7 +270,7 @@ No caso das operações de \textit{shift}, tal como nas operações aritméticas
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/Shift}
+	\includegraphics[keepaspectratio=true, scale=0.55]{imagens/Shift}
 	\caption{Esquema do bloco de operações de \textit{shift} da ALU.}
 	\vspace{-0.8em}
 \end{figure}
@@ -277,7 +290,7 @@ Ao observar o sinal \texttt{oper\_ALU(2 {\footnotesize downto} 0)} e as suas ope
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/Log}
+	\includegraphics[keepaspectratio=true, scale=0.55]{imagens/Log}
 	\caption{Esquema do bloco de operações lógicas da ALU.}
 	\vspace{-0.8em}
 \end{figure}
@@ -292,7 +305,7 @@ Na Figura \ref{fig:ALU} encontra-se um esquema completo da ALU.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/ALU}
+	\includegraphics[keepaspectratio=true, scale=0.475]{imagens/ALU}
 	\caption{Esquema do bloco de operações lógicas da ALU.}
 	\vspace{-0.8em}
 	\label{fig:ALU}
@@ -325,7 +338,7 @@ Foi então criado um sinal que tem como objectivo discernir de entre todas as \t
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/Sign_Flags}
+	\includegraphics[keepaspectratio=true, scale=0.5]{imagens/Sign_Flags}
 	\caption{Lógica que calcula o sinal de selecção de quais as \textit{flags} a actualizar.}
 	\vspace{-0.8em}
 \end{figure}
@@ -356,7 +369,7 @@ Na figura apresentada de seguida encontra-se o esquema de acesso à memória RAM
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/RAM}
+	\includegraphics[keepaspectratio=true, scale=0.55]{imagens/RAM}
 	\caption{Representação da memória de dados, RAM.}
 	\vspace{-0.8em}
 \end{figure}
@@ -376,7 +389,7 @@ No último andar os diversos resultados possíveis são escritos no banco de reg
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.35]{imagens/WB1}
+	\includegraphics[keepaspectratio=true, scale=0.5]{imagens/WB1}
 	\caption{MUX para selecção do que vai ser escrito num dos registos do banco de registos.}
 	\vspace{-0.8em}
 \end{figure}
@@ -391,7 +404,7 @@ Esta solução pode ser vista na figura abaixo.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.35]{imagens/WB2}
+	\includegraphics[keepaspectratio=true, scale=0.6]{imagens/WB2}
 	\caption{Ideia original para o MUX de selecção do sinal que controla os \textit{enables} dos registos do banco de registos.}
 	\vspace{-0.8em}
 \end{figure}
@@ -414,7 +427,7 @@ A lógica que permite implementar o sinal é demonstrada na figura seguinte.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.35]{imagens/WB3}
+	\includegraphics[keepaspectratio=true, scale=0.5]{imagens/WB3}
 	\caption{Lógica que permite calcular o sinal de \textit{overwrite}.}
 	\vspace{-0.8em}
 \end{figure}
