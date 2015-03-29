@@ -1,13 +1,9 @@
-\contentsline {todo}{opera\IeC {\c c}oes a demorar 4 ciclos!}{1}
-\contentsline {todo}{fazemos em cada andar uma tabela a dizer que sinais passam para o andar seguinte?}{1}
-\contentsline {todo}{se calhar e melhor explicar o significado destes sinais}{2}
+\contentsline {todo}{se calhar e melhor explicar o significado destes sinais}{1}
 \contentsline {todo}{referir se fazemos todo o decoding neste andar ou se passamos sinais e fazemos algum decoding, depois}{3}
 \contentsline {todo}{explicar WE da RAM, que eu depois uso quando explico a MEM. nao esta no desenho do decoder?}{3}
 \contentsline {todo}{estes sinais serao explicados no ID ou explico eu?}{3}
 \contentsline {todo}{quem explica a reciclagem do sinal do MUXA/MUXC - eu ou o teddy?}{3}
 \contentsline {todo}{este sinal nao esta no decoder?}{4}
-\contentsline {todo}{tabela com as simplificacoes}{4}
-\contentsline {todo}{ALU - nao esquecer da simplifica\IeC {\c c}ao de MUXs e depois a actualiza\IeC {\c c}\IeC {\~a}o de flags}{5}
-\contentsline {todo}{ALU - falar das opera\IeC {\c c}\IeC {\~o}es logicas e o mux de 16->8 entradas e a figura para as flags}{5}
-\contentsline {todo}{nao sei se \IeC {\'e} preciso explicar melhor o porqu\IeC {\^e}}{6}
-\contentsline {todo}{explicar ai os registos entre andares e maquina de estados}{8}
+\contentsline {todo}{explicar que n\IeC {\~a}o fa\IeC {\c c}o ands, \IeC {\'e} so fios}{4}
+\contentsline {todo}{nao sei se \IeC {\'e} preciso explicar melhor o porqu\IeC {\^e}}{9}
+\contentsline {todo}{explicar ai os registos entre andares e maquina de estados}{11}

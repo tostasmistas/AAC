@@ -16,7 +16,7 @@
 
 \linespread{1.3}
 \usepackage{indentfirst}
-\usepackage[top=2cm, bottom=2cm, right=2.5cm, left=2.5cm]{geometry}
+\usepackage[top=2cm, bottom=2cm, right=2.2cm, left=2.2cm]{geometry}
 \addto\captionsportuguese{\renewcommand{\contentsname}{Índice}}
 
 \begin{document}
@@ -59,29 +59,11 @@ Nuno Miguel Rodrigues Machado & \hspace{2mm} n.º 74236
 
 \section{Introdução}
 
-Com este trabalho laboratorial pretende-se projectar um processador $\mu$Risc, de 16 \textit{bits} com arquitectura RISC, com um funcionamento multi-ciclo. O processador possui 8 registos de uso geral e 42 instruções, sendo que cada instrução demora quatro ciclos a completar, um ciclo por cada andar do processador. O projecto do processador é feito com recurso a uma linguagem de descrição de \textit{hardware} - VHDL.
-
-\todo{operaçoes a demorar 4 ciclos!}
+Com este trabalho laboratorial pretende-se projectar um processador $\mu$Risc, de 16 \textit{bits} com arquitectura RISC, com um funcionamento multi-ciclo. O processador possui 8 registos de uso geral e 42 instruções, sendo que cada instrução demora quatro ciclos a completar, um ciclo por cada andar do processador. O processador é feito com recurso a uma linguagem de descrição de \textit{hardware} - VHDL.
 
 \section{Características do Processador}
 
-O processador elaborado foi simulado para uma placa Artix 7 e tem as seguintes características:
-
-\vspace{-2mm}
-
-\begin{itemize}
-  \item 16 \textit{bits};
-  \vspace{-2.5mm}
-  \item 8 registos de uso geral de 16 \textit{bits} de largura (R0, \ldots, R7);
-  \vspace{-2.5mm}
-  \item 42 instruções;
-  \vspace{-2.5mm}
-  \item instruções de 3 operandos;
-  \vspace{-2.5mm}
-  \item organização de dados na memória do tipo \textit{big endian};
-  \vspace{-2.5mm}
-  \item uma memória ROM de 8 KBytes (4k endereços $\times$ 2 \textit{bytes}) endereçada com palavras de 12 \textit{bits} utilizada para as instruções/programa e uma memória RAM de 8 KBytes (4k endereços $\times$ 2 \textit{bytes}) endereçada com palavras de 12 \textit{bits} utilizada para os dados.
-\end{itemize}
+O processador elaborado foi simulado para uma placa Artix 7 e tem as seguintes características: 16 \textit{bits}; 8 registos de uso geral de 16 \textit{bits} de largura (R0, \ldots, R7); 42 instruções; instruções de 3 operandos; organização de dados na memória do tipo \textit{big endian}; uma memória ROM de 8 KBytes (4k endereços $\times$ 2 \textit{bytes}) endereçada com palavras de 12 \textit{bits} utilizada para as instruções/programa e uma memória RAM de 8 KBytes (4k endereços $\times$ 2 \textit{bytes}) endereçada com palavras de 12 \textit{bits} utilizada para os dados.
 
 \section{Estrutura do Processador}
 
