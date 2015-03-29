@@ -79,7 +79,6 @@ O processador elaborado foi simulado para uma placa Artix 7 e tem as seguintes c
   \item organização de dados na memória do tipo \textit{big endian};
   \vspace{-2.5mm}
   \item uma memória ROM de 8 KBytes (4k endereços $\times$ 2 \textit{bytes}) endereçada com palavras de 12 \textit{bits} utilizada para as instruções/programa e uma memória RAM de 8 KBytes (4k endereços $\times$ 2 \textit{bytes}) endereçada com palavras de 12 \textit{bits} utilizada para os dados.
-  
 \end{itemize}
 
 \section{Estrutura do Processador}
@@ -159,41 +158,44 @@ Finalmente, após a verificação das \textit{flags}, tem-se um MUX de 4:1, onde
 
 FIGURA
 
-Para cada um dos três sinais de saída (\textit{out-ARI}, \textit{out-SHIFT} e \textit{out-LOG}) vai ser criado um sinal que corresponderá às flags que cada operação poderia actualizar. Como por exemplo, no caso das operações aritméticas é criado um sinal de 4 bits com as quatro flags atualizadas indescriminadamente, no caso das operações de \textit{Shift} é criado um sinal de 3 bits apenas com as flags atualizadas nessas duas operações (\textit{Zero}, \textit{Negative} e \textit{Carry}), e no caso das operações lógicas é criado um sinal com apenas dois bits que representam as flags que poderão ser atualizadas neste tipo de operações (\textit{Zero} e \textit{Negative}). Estes três sinais criados serão utilizados no bloco de Atualização de Flags tal como explicado na secção ~\ref{subsec:act-flags}.
+Para cada um dos três sinais de saída (\texttt{out\_ARI}, \texttt{out\_SHIFT} e \texttt{out\_LOG}) é criado um sinal que corresponde às \textit{flags} que cada operação pode actualizar. No caso das operações aritméticas é criado um sinal de 4 \textit{bits} com as quatro \textit{flags} atualizadas indiscriminadamente. No caso das operações de \textit{shift} é criado um sinal de 3 \textit{bits} apenas pois, as \textit{flags} que podem vir a ser actualizadas nessas duas operações, são a flag de \texttt{Zero}, de \texttt{Negative} e de \texttt{Carry}. No caso das operações lógicas é criado um sinal com apenas dois \textit{bits} que representam as \textit{flags} que poderão ser atualizadas neste tipo de operações, a \textit{flag} de \texttt{Zero} e de \texttt{Negative}.
 
-\subsubsection{Atualização das Flags}
+Estes três sinais criados serão utilizados no bloco de actualização de \textit{flags}, tal como explicado na secção ~\ref{subsec:act-flags}.
+
+\subsubsection{Actualização das \textit{Flags}}
 \label{subsec:act-flags}
 
-Este bloco irá receber como entrada o sinal de 4 bits que representa as flags do ciclo anterior, os três sinais criados na ALU que representam as flags atualizadas indescriminadamente e também o sinal de 5 bits que representa a operação que a ALU efectuou de modo a que seja possível descriminar que flags atualizar, e tem como saída um sinal de 4 bits que representa as flags atualizadas descriminadamente.
+Este bloco recebe como entrada o sinal de 4 \textit{bits} que representa as \textit{flags} da operação realizada na instrução anterior, os três sinais criados na ALU que representam as \textit{flags} atualizadas indiscriminadamente e também o sinal de 5 \textit{bits} que representa a operação que a ALU efectuou de modo a que seja possível discriminar que \textit{flags} actualizar. A saída é um sinal de 4 \textit{bits} que representa as \textit{flags} atualizadas discriminadamente.
 
-Ao analizar o quadro de operações da ALU, é possível reparar que existem apenas  quatro tipos de atualizações de flags:
+Ao analisar o quadro de operações da ALU, é possível reparar que existem apenas quatro tipos de atualizações de \textit{flags}:
+
+\vspace{-2mm}
 
 \begin{itemize}
-	\item Nenhuma;
-	\vspace{-3.5mm}
-	\item \textit{Zero} e \textit{Negative};
-	\vspace{-3.5mm}
-	\item \textit{Zero}, \textit{Negative} e \textit{Carry};
-	\vspace{-3.5mm}
-	\item \textit{Zero}, \textit{Negative}, \textit{Carry} e \textit{Overflow} (Todas);
+  \item Nenhuma;
+  \vspace{-2.5mm}
+  \item \texttt{Zero} e \texttt{Negative};
+  \vspace{-2.5mm}
+  \item \texttt{Zero}, \texttt{Negative} e \texttt{Carry};
+  \vspace{-2.5mm}
+  \item \texttt{Zero}, \texttt{Negative}, \texttt{Carry} e \texttt{Overflow} (Todas).
 \end{itemize}
 
-Foi então criado um sinal que teria como objectivo discernir entre quais flags atualizar este sinal foi criado com a lógica representada na seguinte figura:
+Foi então criado um sinal que tem como objectivo discernir de entre todas as \textit{flags} quais a actualizar. Este sinal foi criado com a lógica representada na seguinte figura.
 
 FIGURA
 
-Com o sinal \textit{Sign\_Flags} é possível então criar um mux que tem em cada entrada o que está descrito na seguinte tabela:
+Com o sinal \texttt{Sign\_Flags} como sinal de selecção é então possível criar um MUX de 2:1 que tem em cada entrada o que está descrito na seguinte tabela.
 
-\vspace{+2.5mm}
-\begin{tabular}{|c|c|c|c|c|}
-	\hline \rule[-2ex]{0pt}{5.5ex} Atualização & Nenhuma & \textit{Z}, \textit{N} & \textit{Z}, \textit{N}, \textit{C} & \textit{Z}, \textit{N}, \textit{C}, \textit{O} \\ 
-	\hline \rule[-2ex]{0pt}{5.5ex} \textit{Sign\_Flags} & \textit{00} & \textit{01} & \textit{10} & \textit{11} \\ 
-	\hline \rule[-2ex]{0pt}{5.5ex} Flags & [\textit{O}, \textit{O}, \textit{O}, \textit{O}] & [\textit{N{\scriptsize $ _{L} $}}, \textit{N{\scriptsize $ _{L} $}}, \textit{O}, \textit{O}] & [\textit{N{\scriptsize $ _{S} $}}, \textit{N{\scriptsize $ _{S} $}}, \textit{N{\scriptsize $ _{S} $}}, \textit{O}] & [\textit{N{\scriptsize $ _{A} $}}, \textit{N{\scriptsize $ _{A} $}}, \textit{N{\scriptsize $ _{A} $}}, \textit{N{\scriptsize $ _{A} $}}] \\ 
-	\hline 
-\end{tabular} 
-\vspace{+3.5mm}
+\vspace{1.5mm}
+\begin{table}[h]
+	\centering
+	\caption{Actualização de \textit{flags} consoante a operação realizada.}
+	\vspace{-2mm}
+ 	\includegraphics[width=1\linewidth]{tabelas/tabela1}
+\end{table}
 
-Onde \textit{O} representa um bit de flags não atualizado, e \textit{N{\scriptsize $ _{L,S,A} $}} representa um novo bit atualizado retirado do sinal de entrada referente às operações lógicas, de \textit{SHIFT} ou aritméticas. Dependendo de \textit{Sign\_Flags} teremos actualizações diferentes nas flags, podendo assim ter uma saída do mux que será também a saída deste bloco de Atualização das Flags.
+Onde \texttt{O} representa um bit de \textit{flags} não actualizado, e \texttt{N{\scriptsize {L,S,A}}} representa um novo \textit{bit} actualizado retirado do sinal de entrada referente às operações lógicas, de \textit{shift} ou aritméticas. Dependendo de \texttt{Sign\_Flags} tem-se actualizações diferentes nas \textit{flags}, podendo assim ter uma saída do MUX que será também a saída deste bloco de atualização das \textit{flags}.
 
 \subsubsection{MEM}
 
