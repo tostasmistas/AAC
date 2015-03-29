@@ -87,8 +87,6 @@ O processador elaborado foi simulado para uma placa Artix 7 e tem as seguintes c
 
 O processador $\mu$Risc que foi projectado encontra-se dividido em quatro andares - num primeiro andar é feito o \textit{instruction fetch} (IF), no segundo andar é feito o \textit{instruction decode} (ID) e o \textit{operand fetch} (OF), no terceiro andar são executadas operações da ALU (EX) e de acesso à memória de dados (MEM) e, por fim, no quarto e último andar é feita a escrita no banco de registos, o \textit{write back} (WB).
 
-\todo{fazemos em cada andar uma tabela a dizer que sinais passam para o andar seguinte?}
-
 \subsection{Primeiro Andar - IF}
 
 No primeiro andar obtem-se a instrução a ser executada a cada ciclo. Como todas as instruções do programa são armazenadas na memória ROM, o \textit{instruction fetch} tem a função de endereçar a ROM com o \textit{program counter} (\texttt{PC}) e ler a instrução desse endereço.
@@ -101,6 +99,12 @@ Podem ocorrer duas situações que alteram o funcionamento sequencial do \textit
 
 \todo{se calhar e melhor explicar o significado destes sinais}
 
+\begin{table}[h]
+	\centering
+	\caption{Caracterização do registo de saída do andar de \textit{instruction fecth}.}
+	\vspace{-2mm}
+ 	\includegraphics[keepaspectratio=true, scale=0.35]{tabelas/regIF}
+\end{table}
 
 \subsection{Segundo Andar - ID e OF}
 
@@ -175,7 +179,12 @@ WE\_RAM ALU\_OPER ALU\_VS\_MEM
 
 É também no segundo andar que é feito o \textit{operand fetch}. Numa primeira fase é preciso definir os operandos \texttt{A} e \texttt{B} da ALU, feito de acordo com a seguinte lógica.
 
-FIGURA 
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.35]{imagens/OF1}
+	\caption{Selecção dos operando \texttt{A} e \texttt{B}.}
+	\vspace{-0.8em}
+\end{figure}
 
 Para fazer a selecção é necessário recorrer a alguns sinais que o \textit{decoder} explicado anteriormente fornece - \texttt{ADD\_RA\_C} (sinal 3 \textit{bits} que permite fazer a selecção do operando \texttt{A} no \texttt{MUXA}) e \texttt{ADD\_RB} (sinal 3 \textit{bits} que permite fazer a selecção do operando \texttt{B} no \texttt{MUXB}). \todo{estes sinais serao explicados no ID ou explico eu?}
 
@@ -185,9 +194,25 @@ Os sinais que definem o operando \texttt{A} e o operando \texttt{B} são depois 
 
 É também aqui que se faz a selecção das constantes que depois serão carregadas nos registos do banco de registos, algo que é feito de acordo com a próxima figura.
 
-FIGURA
+\vspace{-2.1mm}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/OF2}
+	\caption{Selecção da constante a carregar.}
+	\vspace{-0.8em}
+\end{figure}
 
 Do \textit{decoder} são fornecidos os seguintes sinais - \texttt{CONS\_FI\_11B} (constante de 11 \textit{bits} que é carregada directamente), \texttt{CONS\_FII\_8B} (constante de 8 \textit{bits} com que é feita uma operação de \textit{lch} ou \textit{lcl}) e \texttt{select\_mux\_constantes} \todo{este sinal nao esta no decoder?} (sinal de 2 \textit{bits} que permite fazer a selecção dos três casos definidos anteriormente no \texttt{MUXCons}).
+
+De referir que, \todo{explicar que não faço ands, é so fios}
+
+\begin{table}[h]
+	\centering
+	\caption{Caracterização do registo de saída do andar de \textit{instruction decoding} e \textit{operand fetch}.}
+	\vspace{-2mm}
+ 	\includegraphics[keepaspectratio=true, scale=0.45]{tabelas/regIDOF}
+\end{table}
 
 \subsection{Terceiro Andar - EX e MEM}
 
@@ -197,29 +222,72 @@ Neste andar trata-se de executar operações da ALU bem com operações da memó
 
 No terceiro andar o bloco da ALU é responsável pelas operações aritméticas e lógicas. Este bloco recebe como entrada os sinais dos operandos \texttt{A} e \texttt{B}, um sinal de 4 \textit{bits} com as \textit{flags} actuais para posterior actualização, se for esse o caso, e também um sinal de 5 \textit{bits} que representa a operação que a ALU vai efectuar. Como saída tem-se um sinal de 16 \textit{bits} que representa o resultado da ALU e um sinal de 4 \textit{bits} que representa as \textit{flags}.
 
-Analisando primeiramente as seis operações aritméticas a realizar concluiu-se que algumas podiam ser simplificadas de modo a que todas pudessem ser efectuadas com recurso a apenas um somador. 
+Analisando primeiramente as seis operações aritméticas a realizar concluiu-se que algumas podiam ser simplificadas de modo a que todas pudessem ser efectuadas com recurso a apenas um somador. A seguinte tabela demonstra como todas as operações aritméticas a realizar podem ser calculadas apenas com um somador.
 
-\todo{tabela com as simplificacoes}
+\begin{table}[h]
+	\centering
+	\caption{Caracterização somador utilizado nas operações aritméticas.}
+	\vspace{-2mm}
+ 	\includegraphics[keepaspectratio=true, scale=0.35]{tabelas/adder}
+\end{table}
 
 Esta solução é mais eficiente pois os somadores têm um tempo de propagação elevado. As seis operações aritméticas podem ser feitas usando um somador com \textit{carry-in}, que efectua o seguinte cálculo: \texttt{out\_ARI} $=$ \texttt{P} + \texttt{Q} + \texttt{cIN}. 
 
 O operando \texttt{P} corresponde sempre ao operando \texttt{A}, o operando \texttt{Q} corresponde a  um sinal diferente dependendo da operação aritmética a realizar, tal como o \textit{carry-in} que é usado para operações como incrementos, podendo também completar o \texttt{!B} em complemento para dois. Os dois sinais de entrada do somador recebem uma concatenação com o bit \texttt{0} como o bit mais significativo, sendo isto feito para que a saída do somador tenha 17 \textit{bits}, tornando possível a actualização da \textit{flag} de \textit{cary}. Este somador foi projectado tal como representado na figura abaixo.
 
-FIGURA
+\vspace{1mm}
 
-No caso das operações de \textit{shift}, tal como nas operações aritméticas, a saída é representada com 17 \textit{bits}, pela mesma razão do \textit{cary}. Para escolher entre as operações de \textit{shift} é usado um MUX de 2:1 tal como está \textit{pseudo}-representado na figura:
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/Arit}
+	\caption{Esquema do bloco aritmético da ALU.}
+	\vspace{-0.8em}
+\end{figure}
 
-FIGURA
+No caso das operações de \textit{shift}, tal como nas operações aritméticas, a saída é representada com 17 \textit{bits}, pela mesma razão do \textit{cary}. Para escolher entre as operações de \textit{shift} é usado um MUX de 2:1 tal como está \textit{pseudo}-representado na figura.
 
-No caso das operações lógicas, que representam 16 operações, fez-se um esforço para reduzir um MUX de 16:1 para um MUX de 8:1 devido à diferença de tempo gasto entre os dois MUXs.
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/Shift}
+	\caption{Esquema do bloco de operações de \textit{shift} da ALU.}
+	\vspace{-0.8em}
+\end{figure}
+
+No caso das operações lógicas, que representam 16 operações, fez-se um esforço para reduzir um MUX de 16:1 para um MUX de 8:1 devido à diferença de tempo gasto entre os dois MUXs. Após uma análise cuidada das operações a realizar, foi possível establecer uma relação entre as operações, tal como se pode observar na tabela abaixo.
+
+\begin{table}[h]
+	\centering
+	\caption{Descrição das operações lógicas a realizar.}
+	\vspace{-2mm}
+ 	\includegraphics[keepaspectratio=true, scale=0.35]{tabelas/MUX8-1}
+\end{table}
+
+Ao observar o sinal \texttt{oper\_ALU(2 {\footnotesize downto} 0)} e as suas operações podemos perceber que quando temos um valor específico de \texttt{oper\_ALU(2 {\footnotesize downto} 0)} com a sua respectiva operação, o valor negado desse valor representa a negação da operação. Podendo assim criar um mux apenas com 8 entradas entradas e com um sinal de selecção que permite selecionar a operação X quando de facto desejamos a operação !X, como representa a seguinte figura.
+
+\vspace{1mm}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/Log}
+	\caption{Esquema do bloco de operações lógicas da ALU.}
+	\vspace{-0.8em}
+\end{figure}
+
+Será no entanto, quando necessário, negar a operação, esta negação será efectuada no mux final da ALU como demonstrado na figura %refrenciar a figura assinalada.
 
 De notar que a saída das operações lógicas necessita apenas de 16 \textit{bits} e não 17 pois uma operação lógica não produz \textit{carry}.
-\todo{ALU - nao esquecer da simplificaçao de MUXs e depois a actualização de flags}
-\todo{ALU - falar das operações logicas e o mux de 16->8 entradas e a figura para as flags}
 
 Finalmente, após a verificação das \textit{flags}, tem-se um MUX de 4:1, onde as entradas de 17 \textit{bits} são reduzidas para 16 \textit{bits}, retirando-lhes o \textit{bit} mais significativo que, relembre-se, tinha como objectivo a verificação da flag de \textit{cary}. A saída deste MUX é um sinal de 16 \textit{bits} que representa o resultado da operação da ALU, tal como se pode verificar na figura seguinte.
 
-FIGURA
+Na Figura \ref{fig:ALU} encontra-se um esquema completo da ALU.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/ALU}
+	\caption{Esquema do bloco de operações lógicas da ALU.}
+	\vspace{-0.8em}
+	\label{fig:ALU}
+\end{figure}
 
 Para cada um dos três sinais de saída (\texttt{out\_ARI}, \texttt{out\_SHIFT} e \texttt{out\_LOG}) é criado um sinal que corresponde às \textit{flags} que cada operação pode actualizar. No caso das operações aritméticas é criado um sinal de 4 \textit{bits} com as quatro \textit{flags} atualizadas indiscriminadamente. No caso das operações de \textit{shift} é criado um sinal de 3 \textit{bits} apenas pois, as \textit{flags} que podem vir a ser actualizadas nessas duas operações, são a flag de \texttt{Zero}, de \texttt{Negative} e de \texttt{Carry}. No caso das operações lógicas é criado um sinal com apenas dois \textit{bits} que representam as \textit{flags} que poderão ser atualizadas neste tipo de operações, a \textit{flag} de \texttt{Zero} e de \texttt{Negative}.
 
@@ -246,7 +314,12 @@ Ao analisar o quadro de operações da ALU, é possível reparar que existem ape
 
 Foi então criado um sinal que tem como objectivo discernir de entre todas as \textit{flags} quais a actualizar. Este sinal foi criado com a lógica representada na seguinte figura.
 
-FIGURA
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/Sign_Flags}
+	\caption{Lógica que calcula o sinal de selecção de quais as \textit{flags} a actualizar.}
+	\vspace{-0.8em}
+\end{figure}
 
 Com o sinal \texttt{Sign\_Flags} como sinal de selecção é então possível criar um MUX de 2:1 que tem em cada entrada o que está descrito na seguinte tabela.
 
@@ -255,7 +328,7 @@ Com o sinal \texttt{Sign\_Flags} como sinal de selecção é então possível cr
 	\centering
 	\caption{Actualização de \textit{flags} consoante a operação realizada.}
 	\vspace{-2mm}
- 	\includegraphics[width=1\linewidth]{tabelas/tabelaFlags}
+ 	\includegraphics[keepaspectratio=true, scale=0.45]{tabelas/tabelaFlags}
 \end{table}
 
 Onde \texttt{O} representa um bit de \textit{flags} não actualizado, e \texttt{N{\scriptsize {L,S,A}}} representa um novo \textit{bit} actualizado retirado do sinal de entrada referente às operações lógicas, de \textit{shift} ou aritméticas. Dependendo de \texttt{Sign\_Flags} tem-se actualizações diferentes nas \textit{flags}, podendo assim ter uma saída do MUX que será também a saída deste bloco de atualização das \textit{flags}.
@@ -272,27 +345,51 @@ De referir que as leituras da RAM são feitas assincronamente e as escritas são
 
 Na figura apresentada de seguida encontra-se o esquema de acesso à memória RAM.
 
-FIGURA
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/RAM}
+	\caption{Representação da memória de dados, RAM.}
+	\vspace{-0.8em}
+\end{figure}
+
+Na tabela abaixo está a descrição do registo de saída deste andar.
+
+\begin{table}[h]
+	\centering
+	\caption{Caracterização do registo de saída do andar de \textit{execute} e \textit{memory access}.}
+	\vspace{-2mm}
+ 	\includegraphics[keepaspectratio=true, scale=0.45]{tabelas/regEXMEM}
+\end{table}
 
 \subsection{Quarto Andar - WB}
 
 No último andar os diversos resultados possíveis são escritos no banco de registos - pode ser o resultado de uma operação da ALU, o resultado de uma operação sobre a memória (\textit{load}), o carregamento de uma constante ou guardar em \texttt{R7} o valor do próximo \textit{program counter}. Como se pode ver na figura seguinte, a seleção de qual os resultados deve ser escrito é feita com recurso a um MUX de 4:1. 
 
-FIGURA
+\begin{figure}[h]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.35]{imagens/WB1}
+	\caption{MUX para selecção do que vai ser escrito num dos registos do banco de registos.}
+	\vspace{-0.8em}
+\end{figure}
 
 Uma vez seleccionado o resultado a escrever é preciso escolher qual o registo onde se pretende escrever esse mesmo resultado, o registo \texttt{WC}. 
 
 Para instruções da ALU a escolha do registo onde se quer escrever o resultado final é feita com recurso aos \textit{bits} \texttt{11} a \texttt{13} da instrução, assim como para operações de carregamento de constantes. Originalmente pensou-se em utilizar os 3 \textit{bits} referidos anteriormente para controlar um MUX de 8:1 que colocasse a \textit{high} um dos 8 \textit{enables} (que estão armazenados nos 8 \textit{bits} de um vector).
 
-Relativamente à escrita no registo \texttt{R7} para quando se está numa operação de \textit{jump and link}, verifica-se quando é que o sinal de selecção do MUX de 4:1 está a \texttt{11}, ou seja, quando se vai escrever num dos registos o valor de \texttt{PC} $+$ 1, e coloca-se o sinal de selecção do MUX de 8:1 com o valor \texttt{111}, ou seja, apenas o enable de \texttt{R7} fica a \textit{high}.
+Relativamente à escrita no registo \texttt{R7} para quando se está numa operação de \textit{jump and link}, verifica-se, com recurso a uma porta AND, quando é que o sinal de selecção do MUX de 4:1 está a \texttt{11}, ou seja, quando se vai escrever num dos registos o valor de \texttt{PC} $+$ 1, e coloca-se o sinal de selecção do MUX de 8:1 com o valor \texttt{111}, ou seja, apenas o enable de \texttt{R7} fica a \textit{high}.
 
 Esta solução pode ser vista na figura abaixo.
 
-FIGURA
+\begin{figure}[h]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.35]{imagens/WB2}
+	\caption{Ideia original para o MUX de selecção do sinal que controla os \textit{enables} dos registos do banco de registos.}
+	\vspace{-0.8em}
+\end{figure}
 
 No entanto, a solução acima tem um problema - suponha-se o caso da instrução \texttt{1401} (HEX) que corresponde a um \textit{jump if true} mediante a condição do resultado da ALU ser negativo. Os \textit{bits} \texttt{11} a \texttt{13} da instrução são \texttt{010} e, como tal, o \textit{enable} do registo \texttt{R2} ficaria activo. Porém, não se pretende escrever nesse registo. O mesmo decorre para uma operação de \textit{store} na RAM e NOP. 
 
-Assim, para resolver o problema é necessário criar um sinal que faça \textit{overwrite} ao \textit{enable} que o MUX colocou a \textit{high}, permitindo o sinal de \textit{overwrite} colocar o \textit{enable} a \textit{low}, tal como pretendido, para que não se escreva em nenhum registo.
+Assim, para resolver o problema é necessário criar um sinal que faça \textit{overwrite} ao \textit{enable} que o MUX colocou a \textit{high}, permitindo o sinal de \textit{overwrite} colocar o \textit{enable} a \textit{low}, tal como pretendido, para que não se escreva em nenhum registo. De notar que este sinal corresponde àquele único que não é descodificado no andar de ID, decisão tomada para que os sinais que controlam a escrita no banco de registos possam estar no andar de WB, andar que corresponde de facto à escrita do resultado final.
 
 O sinal de \textit{overwrite} foi obtido com recurso à seguinte tabela.
 
@@ -301,18 +398,28 @@ O sinal de \textit{overwrite} foi obtido com recurso à seguinte tabela.
 	\centering
 	\caption{Sinais que permitem obter o sinal de \textit{overwrite} pretendido para cada operação.}
 	\vspace{-2mm}
- 	\includegraphics[width=1\linewidth]{tabelas/tabelaWE}
+ 	\includegraphics[keepaspectratio=true, scale=0.40]{tabelas/tabelaWE}
 \end{table}
 
 A lógica que permite implementar o sinal é demonstrada na figura seguinte.
 
-FIGURA
+\begin{figure}[h]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.35]{imagens/WB3}
+	\caption{Lógica que permite calcular o sinal de \textit{overwrite}.}
+	\vspace{-0.8em}
+\end{figure}
 
 Como se pode ver, para o caso de operações da ALU, operações de \textit{load}, carregamento de constantes e o caso de \textit{jump and link}, o sinal de \textit{overwrite} fica a \textit{high}. Para o caso de \textit{store} na memória, transferências de controlo que não \textit{jump and link} e NOP, o sinal de \textit{overwrite} fica a \textit{low}, tal como pretendido. De notar também que a escrita nos registos é feita no flanco positivo do relógio. 
 
 Na figura abaixo encontra-se o esquema completo do andar de \textit{write back}.
 
-FIGURA
+\begin{figure}[h]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.33]{imagens/WB}
+	\caption{Esquema que representa o andar de WB e o banco de registos.}
+	\vspace{-0.8em}
+\end{figure}
 
 \section{Controlo do Processador}
 
