@@ -153,7 +153,6 @@ FIGURA
 No caso das operações lógicas, que representam 16 operações, fez-se um esforço para reduzir um MUX de 16:1 para um MUX de 8:1 devido à diferença de tempo gasto entre os dois MUXs.
 
 De notar que a saída das operações lógicas necessita apenas de 16 \textit{bits} e não 17 pois uma operação lógica não produz \textit{carry}.
-\todo{ALU - nao esquecer da simplificaçao de MUXs e depois a actualização de flags}
 \todo{ALU - falar das operações logicas e o mux de 16->8 entradas e a figura para as flags}
 
 Finalmente, após a verificação das \textit{flags}, tem-se um MUX de 4:1, onde as entradas de 17 \textit{bits} são reduzidas para 16 \textit{bits}, retirando-lhes o \textit{bit} mais significativo que, relembre-se, tinha como objectivo a verificação da flag de \textit{cary}. A saída deste MUX é um sinal de 16 \textit{bits} que representa o resultado da operação da ALU, tal como se pode verificar na figura seguinte.
