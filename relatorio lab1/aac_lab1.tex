@@ -154,12 +154,17 @@ No caso das operações lógicas, que representam 16 operações, fez-se um esfo
 
 TABELA
 
-Ao observar o sinal \texttt{oper\_ALU(2 {\footnotesize downto} 0)}
+Ao observar o sinal \texttt{oper\_ALU(2 {\footnotesize downto} 0)} e as suas operações podemos perceber que quando temos um valor específico de \texttt{oper\_ALU(2 {\footnotesize downto} 0)} com a sua respectiva operação, o valor negado desse valor representa a negação da operação. Podendo assim criar um mux apenas com 8 entradas entradas e com um sinal de selecção que permite selecionar a operação X quando de facto desejamos a operação !X, como representa a seguinte figura:
+
+FIGURA
+
+Será no entanto, quando necessário, negar a operação, esta negação será efectuada no mux final da ALU como demonstrado na figura %refrenciar a figura assinalada.
+
 De notar que a saída das operações lógicas necessita apenas de 16 \textit{bits} e não 17 pois uma operação lógica não produz \textit{carry}.
-\todo{ALU - falar das operações logicas e o mux de 16->8 entradas e a figura para as flags}
 
 Finalmente, após a verificação das \textit{flags}, tem-se um MUX de 4:1, onde as entradas de 17 \textit{bits} são reduzidas para 16 \textit{bits}, retirando-lhes o \textit{bit} mais significativo que, relembre-se, tinha como objectivo a verificação da flag de \textit{cary}. A saída deste MUX é um sinal de 16 \textit{bits} que representa o resultado da operação da ALU, tal como se pode verificar na figura seguinte.
 
+%quero referir esta figura
 FIGURA
 
 Para cada um dos três sinais de saída (\texttt{out\_ARI}, \texttt{out\_SHIFT} e \texttt{out\_LOG}) é criado um sinal que corresponde às \textit{flags} que cada operação pode actualizar. No caso das operações aritméticas é criado um sinal de 4 \textit{bits} com as quatro \textit{flags} atualizadas indiscriminadamente. No caso das operações de \textit{shift} é criado um sinal de 3 \textit{bits} apenas pois, as \textit{flags} que podem vir a ser actualizadas nessas duas operações, são a flag de \texttt{Zero}, de \texttt{Negative} e de \texttt{Carry}. No caso das operações lógicas é criado um sinal com apenas dois \textit{bits} que representam as \textit{flags} que poderão ser atualizadas neste tipo de operações, a \textit{flag} de \texttt{Zero} e de \texttt{Negative}.
