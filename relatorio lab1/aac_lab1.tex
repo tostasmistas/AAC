@@ -189,12 +189,38 @@ O sinal \texttt{ADD\_RB} (sinal de 3 \textit{bits} que é igual ao sinal \texttt
 O sinal \texttt{select\_mux\_constantes} (sinal com dimensão de 2 \textit{bits}) é o \textit{bit} \texttt{15} do sinal \texttt{instrução}  concatenado com o \textit{bit} \texttt{10} do mesmo sinal. Este sinal tem a função de selecionar se a operação de constantes é do tipo \textit{lcl}, \texttt{select\_mux\_constantes = "10"}, do tipo \textit{lch}, \texttt{select\_mux\_constantes = "11"} ou um carregamento directo de uma constante de 11 \textit{bits} com o \textit{bit} de sinal replicado, \texttt{select\_mux\_constantes = "00"} e \texttt{select\_mux\_constantes = "01"}. 
 
 \paragraph{Sinais de controlo para o terceiro andar - EX e MEM}
-WE\_RAM ALU\_OPER ALU\_VS\_MEM 
+
+O sinal de controlo \texttt{oper\_ALU} de 5 \textit{bits} tem como objectivo ajudar na descodificação de todas as operações da ALU, e posteriormente na criação de outros sinais de controlo. Este sinal de 5 \textit{bits} é retirado do sinal referente à instrução recebida. 
+
+O sinal de controlo \texttt{ALU\_vs\_MEM} tem como objectivo destinguir entre instuções que são efectuadas na ALU e instruções de memória, este sinal será útil especialmente para controlar as escritas na memória, tal como exemplificado na tabela \ref{tab:over}. Este sinal é obtido como demonstrado na figura:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.6]{imagens/AluvsMem}
+	\caption{Construção do sinal ALU\_vs\_MEM.}
+	\vspace{-0.8em}
+	\label{fig:AluvsMem}
+\end{figure}
+
+O sinal de controlo \texttt{WE\_RAM} tem como objectivo permitir a escrita na RAM, e utiliza o sinal \texttt{ALU\_vs\_MEM} representado na figura \ref{fig:AluvsMem}, a sua construção pode ser observada na seguinte figura:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.6]{imagens/WE_RAM}
+	\caption{Construção do sinal WE\_RAM.}
+	\vspace{-0.8em}
+\end{figure}
 
 
 \paragraph{Sinais de controlo para o quarto andar - WB}
 IDOF\_bit15 ALU\_Con\_Sel ADD\_RWC PC+1
-	
+
+Os dois sinais de controlo de um \textit{bit}, \texttt{IDOF\_bit15} e \texttt{ALU\_Con\_Sel}, correspondem respectivamente ao \textit{bit} 15 e \textit{bit} 14 do sinal referente à instrução recebida. Estes dois sinais, como se pode verificar na tabela \ref{tab:over}, servem para descodificar o sinal overwrite, a única descodificação fora do andar ID (Primeiro Andar).
+
+O sinal de controlo \texttt{ADD\_RWC}, como explicado na secção \ref{sec:WB}. Este sinal irá servir como sinal de selecção do mux da figura \ref{fig:MuxReg} que selecciona a informação que vai ser escrita nos registos.
+ 
+No caso da instrução recebida ser \textit{jump and link}, o sinal \texttt{PC+1} guarda o valor PC+1 que terá como destino ser escrito no registo 7, como tal este sinal tem entrada no mux apresentado na figura \ref{fig:MuxReg}.
+
 \todo{LEGENDAS BOAS}
 
 \todo{explicar WE da RAM, que eu depois uso quando explico a MEM. nao esta no desenho do decoder?}
@@ -384,6 +410,7 @@ Na tabela abaixo está a descrição do registo de saída deste andar.
 \end{table}
 
 \subsection{Quarto Andar - WB}
+\label{sec:WB}
 
 No último andar os diversos resultados possíveis são escritos no banco de registos - pode ser o resultado de uma operação da ALU, o resultado de uma operação sobre a memória (\textit{load}), o carregamento de uma constante ou guardar em \texttt{R7} o valor do próximo \textit{program counter}. Como se pode ver na figura seguinte, a seleção de qual os resultados deve ser escrito é feita com recurso a um MUX de 4:1. 
 
@@ -392,6 +419,7 @@ No último andar os diversos resultados possíveis são escritos no banco de reg
 	\includegraphics[keepaspectratio=true, scale=0.5]{imagens/WB1}
 	\caption{MUX para selecção do que vai ser escrito num dos registos do banco de registos.}
 	\vspace{-0.8em}
+	\label{fig:MuxReg}
 \end{figure}
 
 Uma vez seleccionado o resultado a escrever é preciso escolher qual o registo onde se pretende escrever esse mesmo resultado, o registo \texttt{WC}. 
@@ -421,6 +449,7 @@ O sinal de \textit{overwrite} foi obtido com recurso à seguinte tabela.
 	\caption{Sinais que permitem obter o sinal de \textit{overwrite} pretendido para cada operação.}
 	\vspace{-2mm}
  	\includegraphics[keepaspectratio=true, scale=0.40]{tabelas/tabelaWE}
+ 	\label{tab:over}
 \end{table}
 
 A lógica que permite implementar o sinal é demonstrada na figura seguinte.
