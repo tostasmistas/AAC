@@ -12,6 +12,14 @@
 \usepackage{todonotes}
 % \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage[font=footnotesize]{caption}
+
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
 \numberwithin{equation}{section}
 
 \linespread{1.3}
@@ -92,74 +100,89 @@ Podem ocorrer duas situações que alteram o funcionamento sequencial do \textit
 
 \subsubsection{ID}
 
-No segundo andar é realizado a descodificação da instrução a ser executada, a principal descodificação é feita neste andar, havendo um só sinal descodificado no último andar, sendo explicado no mesmo.
+No segundo andar é realizada a descodificação da instrução a ser executada, sendo a principal descodificação feita neste andar, com um só sinal descodificado no último, que será explicado mais à frente no relatório.
 
-FIGURA
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.35]{imagens/idof}
+	\caption{Selecção dos operando \texttt{A} e \texttt{B}.}
+	\vspace{-0.8em}
+\end{figure}
 
 Analisando a figura anterior, existe três grupos de sinais de entrada.
 
 \vspace{-2mm}
 
 \begin{itemize}
-	\item  O sinal \textit{Instrução} proveniente do primeiro andar, \textit{instruction fetch}, sinal de 16 \textit{bits} que representa a instrução a ser descodificada   ;
+	\item  O sinal \texttt{instrução} proveniente do primeiro andar, \textit{instruction fetch}, é um sinal de 16 \textit{bits} que representa a instrução a ser descodificada;
 	\vspace{-2.5mm}
-	\item Os sinais (R0, \ldots, R7), procedentes do \textit{Banco de registos}, cada sinal devolve o valor do seu registo, sendo posteriormente selecionado o registo indicado pela instrução ;
+	\item Os sinais \texttt{R0} \ldots \texttt{R7}, provenientes do banco de registos, devolvem o valor do registo respectivo, sendo posteriormente selecionados os registos indicado pela instrução para operandos;
 	\vspace{-2.5mm}
-	\item  O sinal \textit{FLAGS\_IN} é o resultado da actualização das \textit{flags} realizado no terceiro andar, \textit{EXeMEM} ;
+	\item  O sinal \texttt{FLAGS\_IN} é o resultado da actualização das \textit{flags} realizado no terceiro andar.
 \end{itemize}
 
-	Os sinais de saída do descodificador são distribuídos pelos $4$ andares do processador.
+Os sinais de saída do descodificador são distribuídos pelos 4 andares do processador, como se verá.
 	
-\paragraph{Sinais de controlo para primeiro andar, \textit{IF}}
+\paragraph{Sinais de controlo para o primeiro andar - IF} 
 
-	
-	Os sinais de controlo para o primeiro andar são referentes às intruções do tipo de \textit{Transfêrencia de controlo}. Existe dois tipos principais de operações, salto relativo ao \textit{PC + 1} ou salto absoluto. 
-	
-	Para poder haver um salto é necessário detectar se a instrução é do tipo de \textit{Transfêrencia de controlo}, com essa ideia em mente foi criado o sinal auxiliar \textit{Active\_FlagTest}. A figura abaixo mostra a função lógica de verificação. 
-	
-	FIGURA active\_flagtest
-	
-	Em seguida é preciso saber qual o tipo de salto a ser executado. 
-	
-	Figura flagteste
-	
-	A figura anterior representa a função lógica do sinal \textit{s\_cond} que controla o salto relativo ao \textit{PC + 1}. É  de referir que o sinal \textit{TransCont\_OP} = \textit{Instrução(13:12)}(sinal de 2 \textit{bits} que identifica a operação de \textit{Transfêrencia de controlo} ). E o sinal \textit{TransCont\_Cond} = \textit{Instrução(11:8)}( sinal de 4 \textit{bits} que identifica qual a \textit{flag} a ser executada).Existe três diferentes tipos de operações em que pode ocorrer este tipo de salto.
-		\begin{itemize}
-			\item Quando há \textit{Jump Incondicional}, \textit{TransCont\_OP} = $"10"$, o  \textit{Active\_FlagTest} = $0$ e o  \textit{NOP\_Test} = $1$ ;
-			\vspace{-2.5mm}
-			\item Quando há \textit{Jump False}, \textit{TransCont\_OP} = $"00"$, o  \textit{Active\_FlagTest} = $0$, o  \textit{NOP\_Test} = $1$ e o resultado do \textit{MUX 8:1} ser \textit{False},, ou seja, se a \textit{flag} escolhida do registo \textit{FLAGS\_IN} for \textit{Flase};
-			\vspace{-2.5mm}
-			\item Quando há \textit{Jump True}, \textit{TransCont\_OP} = $"00"$, o  \textit{Active\_FlagTest} = $0$, o  \textit{NOP\_Test} = $1$ e o resultado do \textit{MUX 8:1} ser \textit{True}, ou seja, se a \textit{flag} escolhida do registo \textit{FLAGS\_IN} for \textit{True};
-		\end{itemize}
-	
- 	Figura active\_jump;
+Os sinais de controlo para o primeiro andar são referentes às instruções do tipo de transferência de controlo. Há dois tipos principais de operações - salto relativo ao \texttt{PC + 1} ou salto absoluto. 
+
+Para poder haver um salto é necessário detectar se a instrução é do tipo de transferência de controlo e, com essa ideia em mente, foi criado o sinal auxiliar \texttt{Active\_FlagTest}. A figura abaixo mostra a função lógica de verificação. 
+
+FIGURA active\_flagtest
+
+De seguida, é preciso saber qual o tipo de salto a ser executado. 
+
+\vspace{2mm}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/Flagteste}
+	\caption{Selecção da constante a carregar.}
+	\vspace{-0.8em}
+\end{figure}
+
+A figura anterior representa a função lógica do sinal \texttt{s\_cond} que controla o salto relativo ao \texttt{PC + 1}. É  de referir que o sinal \texttt{TransCont\_OP} corresponde aos \textit{bits} \texttt{12} e \texttt{13} da instrução, ou seja, é um sinal de 2 \textit{bits} que identifica as operações de transfêrencia de controlo. O sinal \texttt{TransCont\_Cond} corresponde aos \textit{bits} \texttt{8} a \texttt{11}, ou seja, é um sinal de 4 \textit{bits} que identifica qual a \textit{flag} a ser testada.
+
+Há três tipos diferentes de operações em que pode ocorrer este tipo de salto.
+
+\begin{itemize}
+	\item Quando há um \textit{jump} incondicional: \texttt{TransCont\_OP = "10"}, \texttt{Active\_FlagTest = 0} e \texttt{NOP\_Test = 1};
+	\vspace{-2.5mm}
+	\item Quando há um \textit{jump false}: \texttt{TransCont\_OP = "00"}, \texttt{Active\_FlagTest = 0}, \texttt{NOP\_Test = 1} e o resultado do MUX de 8:1 é \textit{false}, ou seja, a \textit{flag} escolhida do registo \texttt{MSR} é \textit{false};
+	\vspace{-2.5mm}
+	\item Quando há um \textit{jump true}: \texttt{TransCont\_OP = "00"}, \texttt{Active\_FlagTest = 0}, \texttt{NOP\_Test = 1} e o resultado do MUX de 8:1 é \textit{true}, ou seja, a \textit{flag} escolhida do registo \textit{MSR} é \textit{true}.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/activejump}
+	\caption{Selecção da constante a carregar.}
+	\vspace{-0.8em}
+\end{figure}
+
+A figura anterior representa a função lógica do sinal \texttt{s\_jump} que controla o salto absoluto. O sinal \texttt{s\_jump} é activado, \texttt{s\_jump = 1}, quando \texttt{active\_FlagTest = 0} e o \texttt{TransCont\_OP = "11"}.
  	
- 	A figura anterior representa a função lógica do sinal \textit{s\_jump} que controla o salto absoluto. O sinal \textit{s\_jump} é activado, \textit{s\_jump} = $1$, quando \textit{active\_FlagTest} = $0$ e o \textit{TransCont\_OP} = $"11"$.
- 	
- 	
-\paragraph{Sinais de controlo para segundo andar, \textit{ID e OF}}
+\paragraph{Sinais de controlo para o segundo andar - ID e OF}
 
-Os sinais de controlo para o segunda andar são referentes ao controlo do \textit{operand fetch}.Para que o \textit{operand fetch} defina os operandos A e B é necessário identificar os endereços desses operandos.
+Os sinais de controlo para o segundo andar são referentes ao controlo do \textit{operand fetch}. Para que o \textit{operand fetch} defina os operandos A e B é necessário identificar os endereços desses operandos.
 
-	O sinal \texttt{ADD\_RA\_C} define o endereço do operando A. Como a instrução do tipo \textit{Constantes} reutiliza o endereço de escrita como leitura, \texttt{ADD\_RWC}. É necessário acrescentar lógica para poder resolver esse problema. A solução encontrada foi utilizar um \textit{MUX 2:1} de forma a escolher o endereço \texttt{ADD\_RA} ( sinal de 3 \textit{bits} que é igual ao sinal \texttt{Instrução(5:3)} ) ou \texttt{ADD\_RWC} ( sinal de 3 \textit{bits} que é igual ao sinal \texttt{Instrução(13:11)} ). A figura abaixo define como se obtem o endereço.
-	
-	Figura ADD\_RA\_RC
-	
-	O sinal \texttt{ADD\_RB}( sinal de 3 \textit{bits} que é igual ao sinal \texttt{Instrução(2:0)} ) é simplesmente o endereço do registo para obter o operando B. 
-	
-	O sinal \texttt{select\_mux\_constantes} ( sinal com a dimensão de 2 \textit{bits} ) é o \textit{bit} $15$ do sinal \texttt{Instrução},\texttt{Instrução(15)}, concatenado com o \textit{bit} $10$ do sinal \texttt{Instrução},\texttt{Instrução(10)}. Este sinal tem a função de selecionar se a operação de \textit{Constantes} é do tipo \textit{lcl},\texttt{select\_mux\_constantes}="10", ou do tipo \textit{lch},\texttt{select\_mux\_constantes}="11".
-		s
+O sinal \texttt{ADD\_RA\_C} define o endereço do operando \texttt{A}. Como a instrução do tipo constantes reutiliza o endereço de escrita como leitura, \texttt{ADD\_RWC}, é necessário acrescentar lógica para poder resolver o problema destas operações. A solução encontrada foi utilizar um MUX de 2:1 de forma a escolher o endereço \texttt{ADD\_RA} (sinal de 3 \textit{bits} que é igual ao sinal \texttt{instrução(5 {\footnotesize downto} 3)}) ou \texttt{ADD\_RWC} (sinal de 3 \textit{bits} que é igual ao sinal \texttt{instrução(13 {\footnotesize downto} 11)}). A figura abaixo define como se obtém o endereço.
 
-\paragraph{Sinais de controlo para terceiro andar, \textit{EX e MEM}}
+Figura ADD\_RA\_RC
+
+O sinal \texttt{ADD\_RB} (sinal de 3 \textit{bits} que é igual ao sinal \texttt{instrução(2 {\footnotesize downto} 0)}) é simplesmente o endereço do registo para obter o operando \texttt{B}. 
+
+O sinal \texttt{select\_mux\_constantes} (sinal com dimensão de 2 \textit{bits}) é o \textit{bit} \texttt{15} do sinal \texttt{instrução}  concatenado com o \textit{bit} \texttt{10} do mesmo sinal. Este sinal tem a função de selecionar se a operação de constantes é do tipo \textit{lcl}, \texttt{select\_mux\_constantes = "10"}, do tipo \textit{lch}, \texttt{select\_mux\_constantes = "11"} ou um carregamento directo de uma constante de 11 \textit{bits} com o \textit{bit} de sinal replicado, \texttt{select\_mux\_constantes = "00"} e \texttt{select\_mux\_constantes = "01"}. 
+
+\paragraph{Sinais de controlo para o terceiro andar - EX e MEM}
 WE\_RAM ALU\_OPER ALU\_VS\_MEM 
-\paragraph{Sinais de controlo para quarto andar, \textit{WB}}
-	IDOF\_bit15 ALU\_Con\_Sel ADD\_RWC PC+1
 
 
-
-
-
-\todo{referir se fazemos todo o decoding neste andar ou se passamos sinais e fazemos algum decoding, depois}
+\paragraph{Sinais de controlo para o quarto andar - WB}
+IDOF\_bit15 ALU\_Con\_Sel ADD\_RWC PC+1
+	
+\todo{LEGENDAS BOAS}
 
 \todo{explicar WE da RAM, que eu depois uso quando explico a MEM. nao esta no desenho do decoder?}
 
@@ -174,9 +197,7 @@ WE\_RAM ALU\_OPER ALU\_VS\_MEM
 	\vspace{-0.8em}
 \end{figure}
 
-Para fazer a selecção é necessário recorrer a alguns sinais que o \textit{decoder} explicado anteriormente fornece - \texttt{ADD\_RA\_C} (sinal 3 \textit{bits} que permite fazer a selecção do operando \texttt{A} no \texttt{MUXA}) e \texttt{ADD\_RB} (sinal 3 \textit{bits} que permite fazer a selecção do operando \texttt{B} no \texttt{MUXB}). \todo{estes sinais serao explicados no ID ou explico eu?}
-
-\todo{quem explica a reciclagem do sinal do MUXA/MUXC - eu ou o teddy?}
+Para fazer a selecção é necessário recorrer a alguns sinais que o \textit{decoder} explicado anteriormente fornece - \texttt{ADD\_RA\_C} (sinal 3 \textit{bits} que permite fazer a selecção do operando \texttt{A} no \texttt{MUXA}) e \texttt{ADD\_RB} (sinal 3 \textit{bits} que permite fazer a selecção do operando \texttt{B} no \texttt{MUXB}). 
 
 Os sinais que definem o operando \texttt{A} e o operando \texttt{B} são depois passados para o terceiro andar para que a ALU possa fazer operações com o seu valor.
 
@@ -329,7 +350,7 @@ Uma vez que o conteúdo dos registos é de 16 \textit{bits}, para endereçar a m
 
 É também neste andar que se liga a saída de dados da RAM ao sinal que depois será escrito no registo \texttt{WC} do banco de registos (para o caso do \textit{load}) e liga-se também o valor que estiver no registo \texttt{B} à entrada de dados da RAM, para que depois possa ser escrito na posição de memória especificada (para o caso do \textit{store}).
 
-De referir que as leituras da RAM são feitas assincronamente e as escritas são feitas nos flancos positivos de relógio. \todo{nao sei se é preciso explicar melhor o porquê}
+De referir que as leituras da RAM são feitas assincronamente e as escritas são feitas nos flancos positivos de relógio.
 
 Na figura apresentada de seguida encontra-se o esquema de acesso à memória RAM.
 

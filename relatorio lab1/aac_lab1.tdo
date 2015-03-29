@@ -1,9 +1,6 @@
 \contentsline {todo}{se calhar e melhor explicar o significado destes sinais}{1}
-\contentsline {todo}{referir se fazemos todo o decoding neste andar ou se passamos sinais e fazemos algum decoding, depois}{3}
-\contentsline {todo}{explicar WE da RAM, que eu depois uso quando explico a MEM. nao esta no desenho do decoder?}{3}
-\contentsline {todo}{estes sinais serao explicados no ID ou explico eu?}{4}
-\contentsline {todo}{quem explica a reciclagem do sinal do MUXA/MUXC - eu ou o teddy?}{4}
-\contentsline {todo}{este sinal nao esta no decoder?}{4}
-\contentsline {todo}{explicar que n\IeC {\~a}o fa\IeC {\c c}o ands, \IeC {\'e} so fios}{4}
-\contentsline {todo}{nao sei se \IeC {\'e} preciso explicar melhor o porqu\IeC {\^e}}{10}
-\contentsline {todo}{explicar ai os registos entre andares e maquina de estados}{12}
+\contentsline {todo}{LEGENDAS BOAS}{4}
+\contentsline {todo}{explicar WE da RAM, que eu depois uso quando explico a MEM. nao esta no desenho do decoder?}{4}
+\contentsline {todo}{este sinal nao esta no decoder?}{5}
+\contentsline {todo}{explicar que n\IeC {\~a}o fa\IeC {\c c}o ands, \IeC {\'e} so fios}{5}
+\contentsline {todo}{explicar ai os registos entre andares e maquina de estados}{13}
