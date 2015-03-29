@@ -6,6 +6,5 @@
 \contentsline {todo}{quem explica a reciclagem do sinal do MUXA/MUXC - eu ou o teddy?}{2}
 \contentsline {todo}{este sinal nao esta no decoder?}{3}
 \contentsline {todo}{explicar que n\IeC {\~a}o fa\IeC {\c c}o ands, \IeC {\'e} so fios}{3}
-\contentsline {todo}{ALU - falar das opera\IeC {\c c}\IeC {\~o}es logicas e o mux de 16->8 entradas e a figura para as flags}{4}
-\contentsline {todo}{nao sei se \IeC {\'e} preciso explicar melhor o porqu\IeC {\^e}}{6}
-\contentsline {todo}{explicar ai os registos entre andares e maquina de estados}{9}
+\contentsline {todo}{nao sei se \IeC {\'e} preciso explicar melhor o porqu\IeC {\^e}}{8}
+\contentsline {todo}{explicar ai os registos entre andares e maquina de estados}{10}

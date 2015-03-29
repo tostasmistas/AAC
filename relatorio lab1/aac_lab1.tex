@@ -103,7 +103,7 @@ Podem ocorrer duas situações que alteram o funcionamento sequencial do \textit
 	\centering
 	\caption{Caracterização do registo de saída do andar de \textit{instruction fecth}.}
 	\vspace{-2mm}
- 	\includegraphics[width=0.33\linewidth]{tabelas/regIF}
+ 	\includegraphics[keepaspectratio=true, scale=0.35]{tabelas/regIF}
 \end{table}
 
 \subsection{Segundo Andar - ID e OF}
@@ -161,27 +161,56 @@ Neste andar trata-se de executar operações da ALU bem com operações da memó
 
 No terceiro andar o bloco da ALU é responsável pelas operações aritméticas e lógicas. Este bloco recebe como entrada os sinais dos operandos \texttt{A} e \texttt{B}, um sinal de 4 \textit{bits} com as \textit{flags} actuais para posterior actualização, se for esse o caso, e também um sinal de 5 \textit{bits} que representa a operação que a ALU vai efectuar. Como saída tem-se um sinal de 16 \textit{bits} que representa o resultado da ALU e um sinal de 4 \textit{bits} que representa as \textit{flags}.
 
-Analisando primeiramente as seis operações aritméticas a realizar concluiu-se que algumas podiam ser simplificadas de modo a que todas pudessem ser efectuadas com recurso a apenas um somador. A seguinte tabela demonstra como todas as operações aritméticas a realizar podem ser calculadas apenas com um somador:
+Analisando primeiramente as seis operações aritméticas a realizar concluiu-se que algumas podiam ser simplificadas de modo a que todas pudessem ser efectuadas com recurso a apenas um somador. A seguinte tabela demonstra como todas as operações aritméticas a realizar podem ser calculadas apenas com um somador.
 
-TABELA
+\begin{table}[h]
+	\centering
+	\caption{Caracterização somador utilizado nas operações aritméticas.}
+	\vspace{-2mm}
+ 	\includegraphics[keepaspectratio=true, scale=0.35]{tabelas/adder}
+\end{table}
 
 Esta solução é mais eficiente pois os somadores têm um tempo de propagação elevado. As seis operações aritméticas podem ser feitas usando um somador com \textit{carry-in}, que efectua o seguinte cálculo: \texttt{out\_ARI} $=$ \texttt{P} + \texttt{Q} + \texttt{cIN}. 
 
 O operando \texttt{P} corresponde sempre ao operando \texttt{A}, o operando \texttt{Q} corresponde a  um sinal diferente dependendo da operação aritmética a realizar, tal como o \textit{carry-in} que é usado para operações como incrementos, podendo também completar o \texttt{!B} em complemento para dois. Os dois sinais de entrada do somador recebem uma concatenação com o bit \texttt{0} como o bit mais significativo, sendo isto feito para que a saída do somador tenha 17 \textit{bits}, tornando possível a actualização da \textit{flag} de \textit{cary}. Este somador foi projectado tal como representado na figura abaixo.
 
-FIGURA
+\vspace{1mm}
 
-No caso das operações de \textit{shift}, tal como nas operações aritméticas, a saída é representada com 17 \textit{bits}, pela mesma razão do \textit{cary}. Para escolher entre as operações de \textit{shift} é usado um MUX de 2:1 tal como está \textit{pseudo}-representado na figura:
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/Arit}
+	\caption{Esquema do bloco aritmético da ALU.}
+	\vspace{-0.8em}
+\end{figure}
 
-FIGURA
+No caso das operações de \textit{shift}, tal como nas operações aritméticas, a saída é representada com 17 \textit{bits}, pela mesma razão do \textit{cary}. Para escolher entre as operações de \textit{shift} é usado um MUX de 2:1 tal como está \textit{pseudo}-representado na figura.
 
-No caso das operações lógicas, que representam 16 operações, fez-se um esforço para reduzir um MUX de 16:1 para um MUX de 8:1 devido à diferença de tempo gasto entre os dois MUXs. Após uma análise cuidada das operações a realizar, foi possível establecer uma relação entre as operações, tal como se pode observar na tabela:
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/Shift}
+	\caption{Esquema do bloco de operações de \textit{shift} da ALU.}
+	\vspace{-0.8em}
+\end{figure}
 
-TABELA
+No caso das operações lógicas, que representam 16 operações, fez-se um esforço para reduzir um MUX de 16:1 para um MUX de 8:1 devido à diferença de tempo gasto entre os dois MUXs. Após uma análise cuidada das operações a realizar, foi possível establecer uma relação entre as operações, tal como se pode observar na tabela abaixo.
 
-Ao observar o sinal \texttt{oper\_ALU(2 {\footnotesize downto} 0)} e as suas operações podemos perceber que quando temos um valor específico de \texttt{oper\_ALU(2 {\footnotesize downto} 0)} com a sua respectiva operação, o valor negado desse valor representa a negação da operação. Podendo assim criar um mux apenas com 8 entradas entradas e com um sinal de selecção que permite selecionar a operação X quando de facto desejamos a operação !X, como representa a seguinte figura:
+\begin{table}[h]
+	\centering
+	\caption{Descrição das operações lógicas a realizar.}
+	\vspace{-2mm}
+ 	\includegraphics[keepaspectratio=true, scale=0.35]{tabelas/MUX8-1}
+\end{table}
 
-FIGURA
+Ao observar o sinal \texttt{oper\_ALU(2 {\footnotesize downto} 0)} e as suas operações podemos perceber que quando temos um valor específico de \texttt{oper\_ALU(2 {\footnotesize downto} 0)} com a sua respectiva operação, o valor negado desse valor representa a negação da operação. Podendo assim criar um mux apenas com 8 entradas entradas e com um sinal de selecção que permite selecionar a operação X quando de facto desejamos a operação !X, como representa a seguinte figura.
+
+\vspace{1mm}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/Log}
+	\caption{Esquema do bloco de operações lógicas da ALU.}
+	\vspace{-0.8em}
+\end{figure}
 
 Será no entanto, quando necessário, negar a operação, esta negação será efectuada no mux final da ALU como demonstrado na figura %refrenciar a figura assinalada.
 
@@ -189,8 +218,15 @@ De notar que a saída das operações lógicas necessita apenas de 16 \textit{bi
 
 Finalmente, após a verificação das \textit{flags}, tem-se um MUX de 4:1, onde as entradas de 17 \textit{bits} são reduzidas para 16 \textit{bits}, retirando-lhes o \textit{bit} mais significativo que, relembre-se, tinha como objectivo a verificação da flag de \textit{cary}. A saída deste MUX é um sinal de 16 \textit{bits} que representa o resultado da operação da ALU, tal como se pode verificar na figura seguinte.
 
-%quero referir esta figura
-FIGURA
+Na Figura \ref{fig:ALU} encontra-se um esquema completo da ALU.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/ALU}
+	\caption{Esquema do bloco de operações lógicas da ALU.}
+	\vspace{-0.8em}
+	\label{fig:ALU}
+\end{figure}
 
 Para cada um dos três sinais de saída (\texttt{out\_ARI}, \texttt{out\_SHIFT} e \texttt{out\_LOG}) é criado um sinal que corresponde às \textit{flags} que cada operação pode actualizar. No caso das operações aritméticas é criado um sinal de 4 \textit{bits} com as quatro \textit{flags} atualizadas indiscriminadamente. No caso das operações de \textit{shift} é criado um sinal de 3 \textit{bits} apenas pois, as \textit{flags} que podem vir a ser actualizadas nessas duas operações, são a flag de \texttt{Zero}, de \texttt{Negative} e de \texttt{Carry}. No caso das operações lógicas é criado um sinal com apenas dois \textit{bits} que representam as \textit{flags} que poderão ser atualizadas neste tipo de operações, a \textit{flag} de \texttt{Zero} e de \texttt{Negative}.
 
@@ -217,7 +253,12 @@ Ao analisar o quadro de operações da ALU, é possível reparar que existem ape
 
 Foi então criado um sinal que tem como objectivo discernir de entre todas as \textit{flags} quais a actualizar. Este sinal foi criado com a lógica representada na seguinte figura.
 
-FIGURA
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.40]{imagens/Sign_Flags}
+	\caption{Lógica que calcula o sinal de selecção de quais as \textit{flags} a actualizar.}
+	\vspace{-0.8em}
+\end{figure}
 
 Com o sinal \texttt{Sign\_Flags} como sinal de selecção é então possível criar um MUX de 2:1 que tem em cada entrada o que está descrito na seguinte tabela.
 
