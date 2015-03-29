@@ -231,7 +231,7 @@ FIGURA
 
 No entanto, a solução acima tem um problema - suponha-se o caso da instrução \texttt{1401} (HEX) que corresponde a um \textit{jump if true} mediante a condição do resultado da ALU ser negativo. Os \textit{bits} \texttt{11} a \texttt{13} da instrução são \texttt{010} e, como tal, o \textit{enable} do registo \texttt{R2} ficaria activo. Porém, não se pretende escrever nesse registo. O mesmo decorre para uma operação de \textit{store} na RAM e NOP. 
 
-Assim, para resolver o problema é necessário criar um sinal que faça \textit{overwrite} ao \textit{enable} que o MUX colocou a \textit{high}, permitindo o sinal de \textit{overwrite} colocar o \textit{enable} a \textit{low}, tal como pretendido, para que não se escreva em nenhum registo.
+Assim, para resolver o problema é necessário criar um sinal que faça \textit{overwrite} ao \textit{enable} que o MUX colocou a \textit{high}, permitindo o sinal de \textit{overwrite} colocar o \textit{enable} a \textit{low}, tal como pretendido, para que não se escreva em nenhum registo. De notar que este sinal corresponde àquele único que não é descodificado no andar de ID, decisão tomada para que os sinais que controlam a escrita no banco de registos possam estar no andar de WB, andar que corresponde de facto à escrita do resultado final.
 
 O sinal de \textit{overwrite} foi obtido com recurso à seguinte tabela.
 
