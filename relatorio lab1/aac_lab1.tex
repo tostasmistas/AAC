@@ -221,7 +221,11 @@ FIGURA
 
 Uma vez seleccionado o resultado a escrever é preciso escolher qual o registo onde se pretende escrever esse mesmo resultado, o registo \texttt{WC}. 
 
-Para instruções da ALU a escolha do registo onde se quer escrever o resultado final é feita com recurso aos \textit{bits} \texttt{11} a \texttt{13} da instrução, assim como para operações de carregamento de constantes. Porém, para operações de transferência de controlo esses mesmos \textit{bits} representam a operação a realizar, pelo que não basta utilizar os 3 \textit{bits} referidos anteriormente para controlar um MUX que colocasse a \textit{high} um dos 7 \textit{enables} (que estão armazenados nos 7 \textit{bits} de um vector), tal como pensado originalmente e como pode ser visto na figura abaixo.
+Para instruções da ALU a escolha do registo onde se quer escrever o resultado final é feita com recurso aos \textit{bits} \texttt{11} a \texttt{13} da instrução, assim como para operações de carregamento de constantes. Originalmente pensou-se em utilizar os 3 \textit{bits} referidos anteriormente para controlar um MUX de 8:1 que colocasse a \textit{high} um dos 8 \textit{enables} (que estão armazenados nos 8 \textit{bits} de um vector).
+
+Relativamente à escrita no registo \texttt{R7} para quando se está numa operação de \textit{jump and link}, verifica-se quando é que o sinal de selecção do MUX de 4:1 está a \texttt{11}, ou seja, quando se vai escrever num dos registos o valor de \texttt{PC} $+$ 1, e coloca-se o sinal de selecção do MUX de 8:1 com o valor \texttt{111}, ou seja, apenas o enable de \texttt{R7} fica a \textit{high}.
+
+Esta solução pode ser vista na figura abaixo.
 
 FIGURA
 
