@@ -153,10 +153,47 @@ No caso das operações lógicas, que representam 16 operações, fez-se um esfo
 
 De notar que a saída das operações lógicas necessita apenas de 16 \textit{bits} e não 17 pois uma operação lógica não produz \textit{carry}.
 \todo{ALU - nao esquecer da simplificaçao de MUXs e depois a actualização de flags}
+\todo{ALU - falar das operações logicas e o mux de 16->8 entradas e a figura para as flags}
 
 Finalmente, após a verificação das \textit{flags}, tem-se um MUX de 4:1, onde as entradas de 17 \textit{bits} são reduzidas para 16 \textit{bits}, retirando-lhes o \textit{bit} mais significativo que, relembre-se, tinha como objectivo a verificação da flag de \textit{cary}. A saída deste MUX é um sinal de 16 \textit{bits} que representa o resultado da operação da ALU, tal como se pode verificar na figura seguinte.
 
 FIGURA
+
+Para cada um dos três sinais de saída (\textit{out-ARI}, \textit{out-SHIFT} e \textit{out-LOG}) vai ser criado um sinal que corresponderá às flags que cada operação poderia actualizar. Como por exemplo, no caso das operações aritméticas é criado um sinal de 4 bits com as quatro flags atualizadas indescriminadamente, no caso das operações de \textit{Shift} é criado um sinal de 3 bits apenas com as flags atualizadas nessas duas operações (\textit{Zero}, \textit{Negative} e \textit{Carry}), e no caso das operações lógicas é criado um sinal com apenas dois bits que representam as flags que poderão ser atualizadas neste tipo de operações (\textit{Zero} e \textit{Negative}). Estes três sinais criados serão utilizados no bloco de Atualização de Flags tal como explicado na secção ~\ref{subsec:act-flags}.
+
+\subsubsection{Atualização das Flags}
+\label{subsec:act-flags}
+
+Este bloco irá receber como entrada o sinal de 4 bits que representa as flags do ciclo anterior, os três sinais criados na ALU que representam as flags atualizadas indescriminadamente e também o sinal de 5 bits que representa a operação que a ALU efectuou de modo a que seja possível descriminar que flags atualizar, e tem como saída um sinal de 4 bits que representa as flags atualizadas descriminadamente.
+
+Ao analizar o quadro de operações da ALU, é possível reparar que existem apenas  quatro tipos de atualizações de flags:
+
+\begin{itemize}
+	\item Nenhuma;
+	\vspace{-3.5mm}
+	\item \textit{Zero} e \textit{Negative};
+	\vspace{-3.5mm}
+	\item \textit{Zero}, \textit{Negative} e \textit{Carry};
+	\vspace{-3.5mm}
+	\item \textit{Zero}, \textit{Negative}, \textit{Carry} e \textit{Overflow} (Todas);
+\end{itemize}
+
+Foi então criado um sinal que teria como objectivo discernir entre quais flags atualizar este sinal foi criado com a lógica representada na seguinte figura:
+
+FIGURA
+
+Com o sinal \textit{Sign\_Flags} é possível então criar um mux que tem em cada entrada o que está descrito na seguinte tabela:
+
+\vspace{+2.5mm}
+\begin{tabular}{|c|c|c|c|c|}
+	\hline \rule[-2ex]{0pt}{5.5ex} Atualização & Nenhuma & \textit{Z}, \textit{N} & \textit{Z}, \textit{N}, \textit{C} & \textit{Z}, \textit{N}, \textit{C}, \textit{O} \\ 
+	\hline \rule[-2ex]{0pt}{5.5ex} \textit{Sign\_Flags} & \textit{00} & \textit{01} & \textit{10} & \textit{11} \\ 
+	\hline \rule[-2ex]{0pt}{5.5ex} Flags & [\textit{O}, \textit{O}, \textit{O}, \textit{O}] & [\textit{N{\scriptsize $ _{L} $}}, \textit{N{\scriptsize $ _{L} $}}, \textit{O}, \textit{O}] & [\textit{N{\scriptsize $ _{S} $}}, \textit{N{\scriptsize $ _{S} $}}, \textit{N{\scriptsize $ _{S} $}}, \textit{O}] & [\textit{N{\scriptsize $ _{A} $}}, \textit{N{\scriptsize $ _{A} $}}, \textit{N{\scriptsize $ _{A} $}}, \textit{N{\scriptsize $ _{A} $}}] \\ 
+	\hline 
+\end{tabular} 
+\vspace{+3.5mm}
+
+Onde \textit{O} representa um bit de flags não atualizado, e \textit{N{\scriptsize $ _{L,S,A} $}} representa um novo bit atualizado retirado do sinal de entrada referente às operações lógicas, de \textit{SHIFT} ou aritméticas. Dependendo de \textit{Sign\_Flags} teremos actualizações diferentes nas flags, podendo assim ter uma saída do mux que será também a saída deste bloco de Atualização das Flags.
 
 \subsubsection{MEM}
 
