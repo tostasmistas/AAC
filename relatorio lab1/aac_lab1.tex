@@ -129,7 +129,7 @@ Analisando a figura anterior, existe três grupos de sinais de entrada.
 			\vspace{-2.5mm}
 			\item Quando há \textit{Jump False}, \textit{TransCont\_OP} = $"00"$, o  \textit{Active\_FlagTest} = $0$, o  \textit{NOP\_Test} = $1$ e o resultado do \textit{MUX 8:1} ser \textit{False},, ou seja, se a \textit{flag} escolhida do registo \textit{FLAGS\_IN} for \textit{Flase};
 			\vspace{-2.5mm}
-			\item  \item Quando há \textit{Jump True}, \textit{TransCont\_OP} = $"00"$, o  \textit{Active\_FlagTest} = $0$, o  \textit{NOP\_Test} = $1$ e o resultado do \textit{MUX 8:1} ser \textit{True}, ou seja, se a \textit{flag} escolhida do registo \textit{FLAGS\_IN} for \textit{True};
+			\item Quando há \textit{Jump True}, \textit{TransCont\_OP} = $"00"$, o  \textit{Active\_FlagTest} = $0$, o  \textit{NOP\_Test} = $1$ e o resultado do \textit{MUX 8:1} ser \textit{True}, ou seja, se a \textit{flag} escolhida do registo \textit{FLAGS\_IN} for \textit{True};
 		\end{itemize}
 	
  	Figura active\_jump;
@@ -141,8 +141,14 @@ Analisando a figura anterior, existe três grupos de sinais de entrada.
 
 Os sinais de controlo para o segunda andar são referentes ao controlo do \textit{operand fetch}.Para que o \textit{operand fetch} defina os operandos A e B é necessário identificar os endereços desses operandos.
 
-	O sinal \textit{ADD\_RA\_C} define o endereço do operando A. A figura abaixo define como se obtem o endereço
- select\_mux\_constantes ADD\_RA\_C ADD\_RB ADD\_RA
+	O sinal \texttt{ADD\_RA\_C} define o endereço do operando A. Como a instrução do tipo \textit{Constantes} reutiliza o endereço de escrita como leitura, \texttt{ADD\_RWC}. É necessário acrescentar lógica para poder resolver esse problema. A solução encontrada foi utilizar um \textit{MUX 2:1} de forma a escolher o endereço \texttt{ADD\_RA} ( sinal de 3 \textit{bits} que é igual ao sinal \texttt{Instrução(5:3)} ) ou \texttt{ADD\_RWC} ( sinal de 3 \textit{bits} que é igual ao sinal \texttt{Instrução(13:11)} ). A figura abaixo define como se obtem o endereço.
+	
+	Figura ADD\_RA\_RC
+	
+	O sinal \texttt{ADD\_RB}( sinal de 3 \textit{bits} que é igual ao sinal \texttt{Instrução(2:0)} ) é simplesmente o endereço do registo para obter o operando B. 
+	
+	O sinal \texttt{select\_mux\_constantes} ( sinal com a dimensão de 2 \textit{bits} ) é o \textit{bit} $15$ do sinal \texttt{Instrução},\texttt{Instrução(15)}, concatenado com o \textit{bit} $10$ do sinal \texttt{Instrução},\texttt{Instrução(10)}. Este sinal tem a função de selecionar se a operação de \textit{Constantes} é do tipo \textit{lcl},\texttt{select\_mux\_constantes}="10", ou do tipo \textit{lch},\texttt{select\_mux\_constantes}="11".
+		s
 
 \paragraph{Sinais de controlo para terceiro andar, \textit{EX e MEM}}
 WE\_RAM ALU\_OPER ALU\_VS\_MEM 
