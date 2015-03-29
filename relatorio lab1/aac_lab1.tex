@@ -192,7 +192,7 @@ Com o sinal \texttt{Sign\_Flags} como sinal de selecção é então possível cr
 	\centering
 	\caption{Actualização de \textit{flags} consoante a operação realizada.}
 	\vspace{-2mm}
- 	\includegraphics[width=1\linewidth]{tabelas/tabela1}
+ 	\includegraphics[width=1\linewidth]{tabelas/tabelaFlags}
 \end{table}
 
 Onde \texttt{O} representa um bit de \textit{flags} não actualizado, e \texttt{N{\scriptsize {L,S,A}}} representa um novo \textit{bit} actualizado retirado do sinal de entrada referente às operações lógicas, de \textit{shift} ou aritméticas. Dependendo de \texttt{Sign\_Flags} tem-se actualizações diferentes nas \textit{flags}, podendo assim ter uma saída do MUX que será também a saída deste bloco de atualização das \textit{flags}.
@@ -229,7 +229,13 @@ Assim, para resolver o problema é necessário criar um sinal que faça \textit{
 
 O sinal de \textit{overwrite} foi obtido com recurso à seguinte tabela.
 
-TABELA
+\vspace{1.5mm}
+\begin{table}[h]
+	\centering
+	\caption{Sinais que permitem obter o sinal de \textit{overwrite} pretendido para cada operação.}
+	\vspace{-2mm}
+ 	\includegraphics[width=1\linewidth]{tabelas/tabelaWE}
+\end{table}
 
 A lógica que permite implementar o sinal é demonstrada na figura seguinte.
 
