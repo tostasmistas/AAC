@@ -106,7 +106,68 @@ Podem ocorrer duas situações que alteram o funcionamento sequencial do \textit
 
 \subsubsection{ID}
 
-\todo{referir se fazemos todo o decoding neste andar ou se passamos sinais e fazemos algum decoding depois}
+No segundo andar é realizado a descodificação da instrução a ser executada, a principal descodificação é feita neste andar, havendo um só sinal descodificado no último andar, sendo explicado no mesmo.
+
+FIGURA
+
+Analisando a figura anterior, existe três grupos de sinais de entrada.
+
+\vspace{-2mm}
+
+\begin{itemize}
+	\item  O sinal \textit{Instrução} proveniente do primeiro andar, \textit{instruction fetch}, sinal de 16 \textit{bits} que representa a instrução a ser descodificada   ;
+	\vspace{-2.5mm}
+	\item Os sinais (R0, \ldots, R7), procedentes do \textit{Banco de registos}, cada sinal devolve o valor do seu registo, sendo posteriormente selecionado o registo indicado pela instrução ;
+	\vspace{-2.5mm}
+	\item  O sinal \textit{FLAGS\_IN} é o resultado da actualização das \textit{flags} realizado no terceiro andar, \textit{EXeMEM} ;
+\end{itemize}
+
+	Os sinais de saída do descodificador são distribuídos pelos $4$ andares do processador.
+	
+\paragraph{Sinais de controlo para primeiro andar, \textit{IF}}
+
+	
+	Os sinais de controlo para o primeiro andar são referentes às intruções do tipo de \textit{Transfêrencia de controlo}. Existe dois tipos principais de operações, salto relativo ao \textit{PC + 1} ou salto absoluto. 
+	
+	Para poder haver um salto é necessário detectar se a instrução é do tipo de \textit{Transfêrencia de controlo}, com essa ideia em mente foi criado o sinal auxiliar \textit{Active\_FlagTest}. A figura abaixo mostra a função lógica de verificação. 
+	
+	FIGURA active\_flagtest
+	
+	Em seguida é preciso saber qual o tipo de salto a ser executado. 
+	
+	Figura flagteste
+	
+	A figura anterior representa a função lógica do sinal \textit{s\_cond} que controla o salto relativo ao \textit{PC + 1}. É  de referir que o sinal \textit{TransCont\_OP} = \textit{Instrução(13:12)}(sinal de 2 \textit{bits} que identifica a operação de \textit{Transfêrencia de controlo} ). E o sinal \textit{TransCont\_Cond} = \textit{Instrução(11:8)}( sinal de 4 \textit{bits} que identifica qual a \textit{flag} a ser executada).Existe três diferentes tipos de operações em que pode ocorrer este tipo de salto.
+		\begin{itemize}
+			\item Quando há \textit{Jump Incondicional}, \textit{TransCont\_OP} = $"10"$, o  \textit{Active\_FlagTest} = $0$ e o  \textit{NOP\_Test} = $1$ ;
+			\vspace{-2.5mm}
+			\item Quando há \textit{Jump False}, \textit{TransCont\_OP} = $"00"$, o  \textit{Active\_FlagTest} = $0$, o  \textit{NOP\_Test} = $1$ e o resultado do \textit{MUX 8:1} ser \textit{False},, ou seja, se a \textit{flag} escolhida do registo \textit{FLAGS\_IN} for \textit{Flase};
+			\vspace{-2.5mm}
+			\item  \item Quando há \textit{Jump True}, \textit{TransCont\_OP} = $"00"$, o  \textit{Active\_FlagTest} = $0$, o  \textit{NOP\_Test} = $1$ e o resultado do \textit{MUX 8:1} ser \textit{True}, ou seja, se a \textit{flag} escolhida do registo \textit{FLAGS\_IN} for \textit{True};
+		\end{itemize}
+	
+ 	Figura active\_jump;
+ 	
+ 	A figura anterior representa a função lógica do sinal \textit{s\_jump} que controla o salto absoluto. O sinal \textit{s\_jump} é activado, \textit{s\_jump} = $1$, quando \textit{active\_FlagTest} = $0$ e o \textit{TransCont\_OP} = $"11"$.
+ 	
+ 	
+\paragraph{Sinais de controlo para segundo andar, \textit{ID e OF}}
+
+Os sinais de controlo para o segunda andar são referentes ao controlo do \textit{operand fetch}.Para que o \textit{operand fetch} defina os operandos A e B é necessário identificar os endereços desses operandos.
+
+	O sinal \textit{ADD\_RA\_C} define o endereço do operando A. A figura abaixo define como se obtem o endereço
+ select\_mux\_constantes ADD\_RA\_C ADD\_RB ADD\_RA
+
+\paragraph{Sinais de controlo para terceiro andar, \textit{EX e MEM}}
+WE\_RAM ALU\_OPER ALU\_VS\_MEM 
+\paragraph{Sinais de controlo para quarto andar, \textit{WB}}
+	IDOF\_bit15 ALU\_Con\_Sel ADD\_RWC PC+1
+
+
+
+
+
+\todo{referir se fazemos todo o decoding neste andar ou se passamos sinais e fazemos algum decoding, depois}
 
 \todo{explicar WE da RAM, que eu depois uso quando explico a MEM. nao esta no desenho do decoder?}
 
