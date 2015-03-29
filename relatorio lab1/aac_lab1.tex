@@ -136,9 +136,9 @@ Neste andar trata-se de executar operações da ALU bem com operações da memó
 
 No terceiro andar o bloco da ALU é responsável pelas operações aritméticas e lógicas. Este bloco recebe como entrada os sinais dos operandos \texttt{A} e \texttt{B}, um sinal de 4 \textit{bits} com as \textit{flags} actuais para posterior actualização, se for esse o caso, e também um sinal de 5 \textit{bits} que representa a operação que a ALU vai efectuar. Como saída tem-se um sinal de 16 \textit{bits} que representa o resultado da ALU e um sinal de 4 \textit{bits} que representa as \textit{flags}.
 
-Analisando primeiramente as seis operações aritméticas a realizar concluiu-se que algumas podiam ser simplificadas de modo a que todas pudessem ser efectuadas com recurso a apenas um somador. 
+Analisando primeiramente as seis operações aritméticas a realizar concluiu-se que algumas podiam ser simplificadas de modo a que todas pudessem ser efectuadas com recurso a apenas um somador. A seguinte tabela demonstra como todas as operações aritméticas a realizar podem ser calculadas apenas com um somador:
 
-\todo{tabela com as simplificacoes}
+TABELA
 
 Esta solução é mais eficiente pois os somadores têm um tempo de propagação elevado. As seis operações aritméticas podem ser feitas usando um somador com \textit{carry-in}, que efectua o seguinte cálculo: \texttt{out\_ARI} $=$ \texttt{P} + \texttt{Q} + \texttt{cIN}. 
 
@@ -150,8 +150,11 @@ No caso das operações de \textit{shift}, tal como nas operações aritméticas
 
 FIGURA
 
-No caso das operações lógicas, que representam 16 operações, fez-se um esforço para reduzir um MUX de 16:1 para um MUX de 8:1 devido à diferença de tempo gasto entre os dois MUXs.
+No caso das operações lógicas, que representam 16 operações, fez-se um esforço para reduzir um MUX de 16:1 para um MUX de 8:1 devido à diferença de tempo gasto entre os dois MUXs. Após uma análise cuidada das operações a realizar, foi possível establecer uma relação entre as operações, tal como se pode observar na tabela:
 
+TABELA
+
+Ao observar o sinal \texttt{oper\_ALU(2 {\footnotesize downto} 0)}
 De notar que a saída das operações lógicas necessita apenas de 16 \textit{bits} e não 17 pois uma operação lógica não produz \textit{carry}.
 \todo{ALU - falar das operações logicas e o mux de 16->8 entradas e a figura para as flags}
 
