@@ -69,50 +69,52 @@ Grupo n.º 2 de quarta-feira das 11h00 - 12h30
 
 \section{Introdução}
 
-O objectivo deste laboratório é estudar técnicas de projecto de amplificadores lineares de alta frequência, análise das suas caracteristicas (estabilidade, ganho, adaptação e factor de ruído) e comportamentos. A caracterização dos dispositivos do amplificador será realizada através dos pârametros distribuidos (Parâmetros S).
+O objectivo deste laboratório é estudar técnicas de projecto de amplificadores lineares de alta frequência, análise das suas características (estabilidade, ganho, adaptação e factor de ruído) e comportamentos. A caracterização dos dispositivos do amplificador será realizada através dos pârametros distribuídos - parâmetros S.
 
-Iremos utilizar um transistor da Hewlett-Packard(hp) ATF-35176. É um transistor que utiliza tecnologia PHEMT (Pseudomorphic High Mobility Transistor), preparado para trabalhar em altas frequências.
+Utiliza-se um transístor da Hewlett-Packard (HP) ATF-35176, um transístor que utiliza tecnologia PHEMT (\textit{Pseudomorphic High Mobility Transistor}), preparado para trabalhar em altas frequências.
 
 \section{Plano de Trabalhos}
 
-Foi seguido o plano de trabalhos descrito no enunciado do laboratório.
+As especificações do amplificador a construir podem ser consultadas na tabela seguinte, tal como as características do substrato plástico para alta-frequência da Taconic (TLY -3-0310-CH/CH), sobre qual o transístor irá ser implantado. 
 
-As especificações do amplificador a construir podem ser consultadas na Tabela, tal como as caracteristicas do substrato plástico para alta-frequência da Taconic (TLY -3-0310-CH/CH), sobre qual o transistor irá ser implantado. 
+\begin{table}[H]
+	\centering
+	\caption{Características do amplificador a projectar.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/table1}
+\end{table}
 
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
-	\hline  $ G_{T} $ & $ V_{DS} $ & $ I_{DS} $ & $ R_{G} $/$ R_{C} $ & er & h & t & sigma  \\ 
-	\hline  $ G_{Tmax} $ & 1.5 V & 20 mA & 50 & 2.3 & 0.78 & 0.018 & 0.001  \\ 
-	\hline 
-\end{tabular} 
-
-
-Numa primeira fase do laboratório irá ser projectado e simulado o amplificador uniandar com linhas simétricas. Na segunda fase, o amplificador irá ser projectado com tecnologia de microfita.
+Numa primeira fase do trabalho laboratorial é projectado e simulado o amplificador uniandar com linhas simétricas. Na segunda fase o amplificador é projectado com tecnologia de microfita.
 
 \subsection{Projecto de um amplificador uniandar}
 
 \subsubsection{a) Projecto do amplificador com linhas ideais}
 
-Nesta primeira fase o amplificador irá ser constituido pelo transistor descrito anteriormente, no entanto, todos os dispositivos utilizados no seu projecto e simulação serão dispositivos ideais, esta fase inicial tem como objectivo definir os parâmetros do amplificador que permitem obter as especificações pedidas.
+Nesta primeira fase, o amplificador irá ser constituido pelo transistor descrito anteriormente, no entanto, todos os dispositivos utilizados no seu projecto e simulação serão dispositivos ideais, esta fase inicial tem como objectivo definir os parâmetros do amplificador que permitem obter as especificações pedidas.
 
-\paragraph{PFR.}
+\paragraph{PFR Pretendido.}
 
-Em primeiro lugar será feita uma análise DC ao transistor que tenha em vista obter o ponto de funcionamento em repouso especificado, o circuito que nos permitiu alcançar essa análise é o que se vê na Figura \ref{fig:Circuito_0}.
+Em primeiro lugar, é feita uma análise DC ao transístor que tem em vista obter o ponto de funcionamento em repouso (PFR) especificado. O circuito que nos permitiu alcançar essa análise é o que se vê na Figura \ref{fig:Circuito_0}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.7\textwidth]{./imagens/Circuito_0}~\\
-	\caption{Circuito utilizado para obter o PFR desejado}
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_0}
+	\vspace{-0.5em}
+	\caption{Circuito utilizado para obter o PFR desejado.}
 	\label{fig:Circuito_0}
-\end{figure}
+	\vspace{-0.8em}
+\end{figure} 
 
-A análise DC servirá para descobrir o valor de $ V_{GS} $ correspondente ao PFR desejado. No circuito da Figura \ref{fig:Circuito_0} existe um componente denominado de \textit{I\_Probe} que tem como objectivo controlar o valor de $ I_{D} $ à medida que o valor de $ V_{GS} $ varia. Um excerto dos resultados desta análise podem ser consultados na Figura \ref{fig:VGS}, onde se pode concluir que o valor da tensão  $ V_{GS} $ que melhor corresponde a uma corrente  $ I_{D} $ de $ 20 mA $ ($20.03 mA$) é de  $ -0.277 V $ .
+A análise DC serve para descobrir o valor de $ V_{GS} $ correspondente ao PFR desejado. No circuito da Figura \ref{fig:Circuito_0} existe um componente denominado de \texttt{I\_Probe} que tem como objectivo controlar o valor de $ I_{D} $ à medida que o valor de $ V_{GS} $ varia. Um excerto dos resultados desta análise pode ser consultados na Figura \ref{fig:VGS}, onde se pode concluir que o valor da tensão  $V_{GS}$ que melhor corresponde a uma corrente $I_{D}$ de $20$ mA ($20.03$ mA) é de $-0.277$ V.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.35\textwidth]{./imagens/Vgs}~\\
-	\caption{Circuito utilizado para obter o PFR desejado}
+	\includegraphics[keepaspectratio=true, scale=0.35]{exps/Vgs}
+	\vspace{-0.5em}
+	\caption{Valores de $V_{GS}$ correspondentes à corrente de \texttt{I\_Probe}.}
 	\label{fig:VGS}
-\end{figure}
+	\vspace{-0.8em}
+\end{figure} 
 
 Podemos agora continuar a projectar o amplificador, visto que temos agora todos os dados relevantes do ponto de funcionamento em repouso.
 
