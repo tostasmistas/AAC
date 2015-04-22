@@ -84,6 +84,8 @@ As especificações do amplificador a construir podem ser consultadas na tabela 
 	\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/table1}
 \end{table}
 
+De notar que o valor da espessura do substrato foi modificado de 0.78 mm para 0.35 mm com o objectivo de garantir propagação transversal nas linhas de microfita, ou seja, garantir que estas têm um comprimento maior que a largura. 
+
 Numa primeira fase do trabalho laboratorial é projectado e simulado o amplificador uniandar com linhas simétricas. Na segunda fase o amplificador é projectado com tecnologia de microfita.
 
 \subsection{Projecto de um amplificador uniandar}
@@ -92,38 +94,66 @@ Numa primeira fase do trabalho laboratorial é projectado e simulado o amplifica
 
 Nesta primeira fase, o amplificador irá ser constituido pelo transistor descrito anteriormente, no entanto, todos os dispositivos utilizados no seu projecto e simulação serão dispositivos ideais, esta fase inicial tem como objectivo definir os parâmetros do amplificador que permitem obter as especificações pedidas.
 
-\paragraph{PFR Pretendido.}
+\paragraph{PFR Pretendido:}
 
 Em primeiro lugar, é feita uma análise DC ao transístor que tem em vista obter o ponto de funcionamento em repouso (PFR) especificado. O circuito que nos permitiu alcançar essa análise é o que se vê na Figura \ref{fig:Circuito_0}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_0}
+	\includegraphics[keepaspectratio=true, scale=0.42]{exps/Circuito_0}
 	\vspace{-0.5em}
 	\caption{Circuito utilizado para obter o PFR desejado.}
 	\label{fig:Circuito_0}
 	\vspace{-0.8em}
 \end{figure} 
 
-A análise DC serve para descobrir o valor de $ V_{GS} $ correspondente ao PFR desejado. No circuito da Figura \ref{fig:Circuito_0} existe um componente denominado de \texttt{I\_Probe} que tem como objectivo controlar o valor de $ I_{D} $ à medida que o valor de $ V_{GS} $ varia. Um excerto dos resultados desta análise pode ser consultados na Figura \ref{fig:VGS}, onde se pode concluir que o valor da tensão  $V_{GS}$ que melhor corresponde a uma corrente $I_{D}$ de $20$ mA ($20.03$ mA) é de $-0.277$ V.
+A análise DC serve para descobrir o valor de $ V_{GS} $ correspondente ao PFR desejado. No circuito da Figura \ref{fig:Circuito_0} existe um componente denominado de \texttt{I\_Probe} que tem como objectivo controlar o valor de $ I_{D} $ à medida que o valor de $ V_{GS} $ varia. Um excerto dos resultados desta análise pode ser consultado na Figura \ref{fig:VGS}, onde se pode concluir que o valor da tensão  $V_{GS}$ que melhor corresponde a uma corrente $I_{D}$ de $20$ mA ($20.03$ mA) é de $-0.277$ V.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.35]{exps/Vgs}
+	\includegraphics[keepaspectratio=true, scale=0.30]{exps/Vgs}
 	\vspace{-0.5em}
 	\caption{Valores de $V_{GS}$ correspondentes à corrente de \texttt{I\_Probe}.}
 	\label{fig:VGS}
 	\vspace{-0.8em}
 \end{figure} 
 
-Podemos agora continuar a projectar o amplificador, visto que temos agora todos os dados relevantes do ponto de funcionamento em repouso.
+\paragraph{Análise em Alta-Frequência:}
 
-\paragraph{Análise de alta-frequência}
+Com o transístor a funcionar no PFR desejado, é preciso construir um novo circuito que contenha condensadores e bobines ideais, \texttt{DC\_Block} e \texttt{DC\_Feed}, respectivamente, para que seja possível realizar a simulação dos parâmetros S. Este circuito apresenta-se de seguida.
 
-Com o transistor no PFR desejado, é preciso construir um novo circuito que contenha condensadores e bobines ideais, DC\_Block e DC\_Feed respectivamente, para que seja possível realizar a simulação dos Parametros S.
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.42]{exps/Circuito_1}
+	\vspace{-0.5em}
+	\caption{Circuito utilizado para obter o valores dos parâmetros S.}
+	\label{fig:Circuito_1}
+	\vspace{-0.8em}
+\end{figure}
 
+Simulando o circuito anteriormente projectado foram obtidos os seguintes valores para os parâmetros S, K (parâmetro de estabilidade), MAG (ganho de transdução máximo) e para as cargas de adaptação para o transístor à frequência central.
 
-\paragraph{3.}
+\begin{table}[H]
+ 	\centering
+ 	\caption{Parâmetros que definem o transístor.}
+ 	\vspace{-1.5mm}
+ 	\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/table2}
+\end{table}
+
+De notar que os valores obtidos experimentalmente para os parâmetros S não podem ser verificados na \textit{datasheet} do transístor, uma vez que esta apenas especifica o comportamento do ATF-35176 para frequências entre 2 GHz e 18 GHz.
+
+Com os valores da Tabela 2 determinados pode-se calcular o valor de $\Delta$, ou seja, o determinante da matriz de dispersão:
+
+\vspace{-3mm}
+\begin{equation}
+\Delta = S_{11}S_{22} - S_{21}S_{12} = 0.069~/-6.83 ^{\circ}.
+\label{eq:delta}
+\end{equation}
+
+\vspace{1mm} 
+Como se pode ver, K $= 1.235 > 1$, $\lvert \Delta \rvert = 0.069 < 1$ e $\lvert S_{ii} \rvert < 1$, pelo que o transístor é incondicionalmente estável.
+
+\paragraph{Projecção da Malha de Entrada e de Saída:}
 \paragraph{4.}
 
 \subsubsection{b) Projecto do amplificador utilizando tecnologia microfita}
