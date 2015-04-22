@@ -81,7 +81,7 @@ As especificações do amplificador a construir podem ser consultadas na tabela 
 	\centering
 	\caption{Características do amplificador a projectar.}
 	\vspace{-1.5mm}
-	\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/table1}
+	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/table1}
 \end{table}
 
 De notar que o valor da espessura do substrato foi modificado de 0.78 mm para 0.35 mm com o objectivo de garantir propagação transversal nas linhas de microfita, ou seja, garantir que estas têm um comprimento maior que a largura. 
@@ -92,15 +92,15 @@ Numa primeira fase do trabalho laboratorial é projectado e simulado o amplifica
 
 \subsubsection{a) Projecto do amplificador com linhas ideais}
 
-Nesta primeira fase, o amplificador irá ser constituido pelo transistor descrito anteriormente, no entanto, todos os dispositivos utilizados no seu projecto e simulação serão dispositivos ideais, esta fase inicial tem como objectivo definir os parâmetros do amplificador que permitem obter as especificações pedidas.
+Nesta primeira fase, o amplificador é constituído pelo transístor descrito anteriormente, no entanto, todos os dispositivos utilizados no seu projecto e simulação são dispositivos ideais.
 
-\paragraph{PFR Pretendido:}
+\paragraph{PFR Pretendido} \hspace{0pt} 
 
 Em primeiro lugar, é feita uma análise DC ao transístor que tem em vista obter o ponto de funcionamento em repouso (PFR) especificado. O circuito que nos permitiu alcançar essa análise é o que se vê na Figura \ref{fig:Circuito_0}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.42]{exps/Circuito_0}
+	\includegraphics[keepaspectratio=true, scale=0.41]{exps/Circuito_0}
 	\vspace{-0.5em}
 	\caption{Circuito utilizado para obter o PFR desejado.}
 	\label{fig:Circuito_0}
@@ -111,27 +111,27 @@ A análise DC serve para descobrir o valor de $ V_{GS} $ correspondente ao PFR d
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.30]{exps/Vgs}
+	\includegraphics[keepaspectratio=true, scale=0.27]{exps/Vgs}
 	\vspace{-0.5em}
 	\caption{Valores de $V_{GS}$ correspondentes à corrente de \texttt{I\_Probe}.}
 	\label{fig:VGS}
 	\vspace{-0.8em}
 \end{figure} 
 
-\paragraph{Análise em Alta-Frequência:}
+\paragraph{Análise em Alta-Frequência} \hspace{0pt} 
 
 Com o transístor a funcionar no PFR desejado, é preciso construir um novo circuito que contenha condensadores e bobines ideais, \texttt{DC\_Block} e \texttt{DC\_Feed}, respectivamente, para que seja possível realizar a simulação dos parâmetros S. Este circuito apresenta-se de seguida.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.42]{exps/Circuito_1}
+	\includegraphics[keepaspectratio=true, scale=0.41]{exps/Circuito_1}
 	\vspace{-0.5em}
 	\caption{Circuito utilizado para obter o valores dos parâmetros S.}
 	\label{fig:Circuito_1}
 	\vspace{-0.8em}
 \end{figure}
 
-Simulando o circuito anteriormente projectado foram obtidos os seguintes valores para os parâmetros S, K (parâmetro de estabilidade), MAG (ganho de transdução máximo) e para as cargas de adaptação para o transístor à frequência central.
+Simulando o circuito anteriormente projectado foram obtidos os seguintes valores para os parâmetros S, K (parâmetro de estabilidade), MAG (\textit{maximum available gain}) e para as cargas de adaptação para o transístor à frequência central.
 
 \begin{table}[H]
  	\centering
@@ -146,14 +146,36 @@ Com os valores da Tabela 2 determinados pode-se calcular o valor de $\Delta$, ou
 
 \vspace{-3mm}
 \begin{equation}
-\Delta = S_{11}S_{22} - S_{21}S_{12} = 0.069~/-6.83 ^{\circ}.
+\Delta = S_{11}S_{22} - S_{21}S_{12} = 0.067\angle-7.24 ^{\circ}.
 \label{eq:delta}
 \end{equation}
 
 \vspace{1mm} 
-Como se pode ver, K $= 1.235 > 1$, $\lvert \Delta \rvert = 0.069 < 1$ e $\lvert S_{ii} \rvert < 1$, pelo que o transístor é incondicionalmente estável.
+Como se pode ver, K $= 1.236 > 1$, $\lvert \Delta \rvert = 0.067 < 1$ e $\lvert S_{ii} \rvert < 1$, pelo que o transístor é incondicionalmente estável.s
 
-\paragraph{Projecção da Malha de Entrada e de Saída:}
+\paragraph{Projecção da Malha de Entrada e de Saída} \hspace{0pt} 
+
+Optou-se por projectar a malha de entrada e de saída com a Carta de Smith, recorrendo ao ADS. Como K $ > 1$ é possível efectuar adaptação conjugada simultânea (ACS) e, como se pretende adicionar elementos às malhas sabe-se que:
+
+\vspace{-3mm}
+\begin{equation}
+\rho_{\text{in}} = \rho_{\text{S}}^{*} ~~ \text{e} ~ \rho_{\text{out}} = \rho_{\text{L}}^{*}.
+\end{equation}
+
+\vspace{1mm} 
+O circuito com malhas de adaptação é apresentado de seguida.
+
+\todo{imagem teorica}
+
+Começando pela malha de entrada, ou seja, pelo gerador 
+
+\vspace{-3mm}
+\begin{equation}
+\theta_{\text{L}} =  ~~ \text{e} ~ \theta_{\text{S}} = .
+\end{equation}
+
+\vspace{1mm} 
+
 \paragraph{4.}
 
 \subsubsection{b) Projecto do amplificador utilizando tecnologia microfita}
