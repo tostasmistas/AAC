@@ -159,19 +159,58 @@ Optou-se por projectar a malha de entrada e de saída com a Carta de Smith, reco
 
 \vspace{-3mm}
 \begin{equation}
-\rho_{\text{in}} = \rho_{\text{S}}^{*} ~~ \text{e} ~ \rho_{\text{out}} = \rho_{\text{L}}^{*}.
+\rho_{\text{in}} = \rho_{\text{S}}^{*} ~~ \text{e} ~~ \rho_{\text{out}} = \rho_{\text{L}}^{*}.
 \end{equation}
 
 \vspace{1mm} 
 O circuito com malhas de adaptação é apresentado de seguida.
 
-\todo{imagem teorica}
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.35]{teoricas/malhas}
+	\vspace{-0.5em}
+	\caption{Circuito que inclui as malhas de adaptação à entrada e à saída.}
+	\vspace{-0.8em}
+\end{figure}
 
-Começando pela malha de entrada, ou seja, pelo gerador 
+Começando pela malha de entrada, ou seja, pelo gerador e sabendo que a malha de adaptação é do tipo linha-\textit{stub}, o circuito que se pretende projectar é da seguinte forma.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.30]{teoricas/malhaentrada}
+	\vspace{-0.5em}
+	\caption{Malha de adaptação de entrada.}
+	\vspace{-0.8em}
+\end{figure}
+
+O valor de $Z_{\text{S}}^{*}$ é de $0.784\angle59.529 ^{\circ}$.
+
+\todo{valores do ADS}
 
 \vspace{-3mm}
 \begin{equation}
-\theta_{\text{L}} =  ~~ \text{e} ~ \theta_{\text{S}} = .
+\theta_{\text{L}} =  ~~ \text{e} ~~ \theta_{\text{S}} = .
+\end{equation}
+
+\vspace{1mm} 
+
+Olhando agora para a malha de saída, ou seja, para a carga e sabendo que a malha de adaptação é do tipo linha-\textit{stub}, o circuito que se pretende projectar é da seguinte forma.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.30]{teoricas/malhasaida}
+	\vspace{-0.5em}
+	\caption{Malha de adaptação de saída.}
+	\vspace{-0.8em}
+\end{figure}
+
+O valor de $Z_{\text{L}}^{*}$ é de $0.628\angle39.020 ^{\circ}$.
+
+\todo{valores do ADS}
+
+\vspace{-3mm}
+\begin{equation}
+\theta_{\text{L}} =  ~~ \text{e} ~~ \theta_{\text{S}} = .
 \end{equation}
 
 \vspace{1mm} 
