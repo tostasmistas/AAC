@@ -177,45 +177,96 @@ Começando pela malha de entrada, ou seja, pelo gerador e sabendo que a malha de
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.30]{teoricas/malhaentrada}
+	\includegraphics[keepaspectratio=true, scale=0.25]{teoricas/malhaentrada}
 	\vspace{-0.5em}
 	\caption{Malha de adaptação de entrada.}
 	\vspace{-0.8em}
 \end{figure}
 
-O valor de $Z_{\text{S}}^{*}$ é de $0.784\angle59.529 ^{\circ}$.
+Esta malha é construída com a adição de elementos, ou seja, \textit{towards generator}. O valor de $Z_{\text{S}}^{*}$ é de $0.784\angle59.529 ^{\circ}$.
 
-\todo{valores do ADS}
+No ADS, com recurso à Carta de Smith, determinou-se o comprimento eléctrico da linha de entrada, $\theta_{\text{L}_{\text{in}}}$, e o comprimento eléctrico do \textit{stub}, $\theta_{\text{S}_{\text{in}}}$. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Gerador_cc_line}
+	\vspace{-0.5em}
+	\caption{Determinação do comprimento eléctrico da linha de entrada - situação de CC.}
+	\vspace{-0.8em}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Gerador_cc_stub}
+	\vspace{-0.5em}
+	\caption{Determinação do comprimento eléctrico do \textit{stub} de entrada - situação de CC.}
+	\vspace{-0.8em}
+\end{figure}
 
 \vspace{-3mm}
 \begin{equation}
-\theta_{\text{L}} =  ~~ \text{e} ~~ \theta_{\text{S}} = .
+	\theta_{\text{L}_{\text{in}}} = 100.494^{\circ}  ~~ \text{e} ~~ \theta_{\text{S}_{\text{in}}} = 21.751^{\circ}.
 \end{equation}
 
 \vspace{1mm} 
+É de notar que os valores determinados anteriormente são para o \textit{stub} terminado em curto-circuito (CC), pois é nessa situação que o \textit{stub} é menor, tal como pretendido. Para verificar, optou-se por projectar a malha de entrada para o \textit{stub} terminado em circuito-aberto (CA).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Gerador_Ca_line}
+	\vspace{-0.5em}
+	\caption{Determinação do comprimento eléctrico da linha de entrada - situação de CA.}
+	\vspace{-0.8em}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Gerador_Ca_stub}
+	\vspace{-0.5em}
+	\caption{Determinação do comprimento eléctrico do \textit{stub} de entrada - situação de CA.}
+	\vspace{-0.8em}
+\end{figure}
+
+Como se pode ver, para este caso o \textit{stub} é maior e, como tal, não é a solução preferível.
 
 Olhando agora para a malha de saída, ou seja, para a carga e sabendo que a malha de adaptação é do tipo linha-\textit{stub}, o circuito que se pretende projectar é da seguinte forma.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.30]{teoricas/malhasaida}
+	\includegraphics[keepaspectratio=true, scale=0.25]{teoricas/malhasaida}
 	\vspace{-0.5em}
 	\caption{Malha de adaptação de saída.}
 	\vspace{-0.8em}
 \end{figure}
 
-O valor de $Z_{\text{L}}^{*}$ é de $0.628\angle39.020 ^{\circ}$.
+Esta malha é construída com a adição de elementos, ou seja, \textit{towards generator}. O valor de $Z_{\text{L}}^{*}$ é de $0.628\angle39.020 ^{\circ}$.
 
-\todo{valores do ADS}
+No ADS, com recurso à Carta de Smith, determinou-se o comprimento eléctrico da linha, $\theta_{\text{L}_{\text{out}}}$, e o comprimento eléctrico do \textit{stub}, $\theta_{\text{S}_{\text{out}}}$. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Carga_CC_line}
+	\vspace{-0.5em}
+	\caption{Determinação do comprimento eléctrico da linha de saída - situação de CC.}
+	\vspace{-0.8em}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Carga_CC_stub}
+	\vspace{-0.5em}
+	\caption{Determinação do comprimento eléctrico do \textit{stub} de saída - situação de CC.}
+	\vspace{-0.8em}
+\end{figure}
 
 \vspace{-3mm}
 \begin{equation}
-\theta_{\text{L}} =  ~~ \text{e} ~~ \theta_{\text{S}} = .
+\theta_{\text{L}_{\text{out}}} = 83.620^{\circ}  ~~ \text{e} ~~ \theta_{\text{S}_{\text{out}}} = 32.199^{\circ}.
 \end{equation}
 
 \vspace{1mm} 
 
-\paragraph{4.}
+\paragraph{Simulação do Amplificador Ideal} \hspace{0pt}  
 
 \subsubsection{b) Projecto do amplificador utilizando tecnologia microfita}
 
