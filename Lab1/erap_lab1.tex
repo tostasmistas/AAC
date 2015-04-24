@@ -82,6 +82,7 @@ As especificações do amplificador a construir podem ser consultadas na tabela 
 	\caption{Características do amplificador a projectar.}
 	\vspace{-1.5mm}
 	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/table1}
+	\label{tab:car}
 \end{table}
 
 De notar que o valor da espessura do substrato foi modificado de 0.78 mm para 0.35 mm com o objectivo de garantir propagação transversal nas linhas de microfita, ou seja, garantir que estas têm um comprimento maior que a largura. 
@@ -268,20 +269,118 @@ No ADS, com recurso à Carta de Smith, determinou-se o comprimento eléctrico da
 
 \paragraph{Simulação do Amplificador Ideal} \hspace{0pt}  
 
-Após obtermos os valores dos comprimentos eléctricos dos dispositivos que compõem as malhas de adaptação de entrada e saída através do ADS, poderemos então projectar um amplificador com malhas ideais compostas por dispositivos sem perdas. O circuito projectado pode ser observado na Figura \ref{fig_circ_ideal}.
+Após obtermos os valores dos comprimentos eléctricos dos dispositivos que compõem as malhas de adaptação de entrada e saída através do ADS, poderemos então projectar um amplificador com malhas ideais compostas por dispositivos sem perdas. O circuito projectado pode ser observado na Figura \ref{fig:circ_ideal}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_ideal}
 	\vspace{-0.5em}
-	\caption{Determinação do comprimento eléctrico do \textit{stub} de saída - situação de CC.}
+	\caption{Circuito do Amplificador com linhas ideais.}
 	\vspace{-0.8em}
-	\label{fig_circ_ideal}
+	\label{fig:circ_ideal}
 \end{figure}
  
+Após o circuito estar montado, as linhas ideais com os seus comprimentos eléctricos e com frequência de referência centrada nos $ 22 GHz $, foram realizadas várias simulações numa banda de frequências que compreende entre $ 10 GHz $ a $ 30GHz $ de modo a obter os parâmetros pedidos, tal como se pode observar nas Figuras \ref{fig:ideal_estavel}, \ref{fig:ideal_S} e \ref{fig:ideal_noise}.
+
+Em primeiro lugar iremos testar a estabilidade do circuito, estabilidade esta que,teoricamente, já tinha sido garantida com a Equação \ref{eq:delta}. Tal como se pode ver na Figura \ref{fig:ideal_estavel}, a variável de estabilidade apresenta sempre valores superiores a zero, o que confirma a estabilidade do amplificador na banda de $ 10 GHz $ a $ 30GHz $.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Ideal_estab}
+	\vspace{-0.5em}
+	\caption{Estabilidade do Amplificador com linhas ideais.}
+	\vspace{-0.8em}
+	\label{fig:ideal_estavel}
+\end{figure}
+
+Através da simulação foi possível obter os Parâmetros-S, sendo que a parcela S(1,2) não representa uma caracteristica relevante no nosso amplificador, e por isso não foi projectada. Ao observar a Figura \ref{fig:ideal_S}, e tendo em conta que a parcela S(1,1) representa o factor de reflexão à entrada, S(2,2) representa o factor de reflexão na saída e S(2,1) representa o ganho de transdução.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Ideal_S}
+	\vspace{-0.5em}
+	\caption{Parâmetros-S do Amplificador com linhas ideais.}
+	\vspace{-0.8em}
+	\label{fig:ideal_S}
+\end{figure}
+
+Foi também possível medir o \textit{noise} do amplificador ao longo da banda, e mais especificamente na frequência de referência sobre a qual o amplificador irá operar, tal como se pode observar na Figura \ref{fig:ideal_noise}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Ideal_noise}
+	\vspace{-0.5em}
+	\caption{\textit{Noise} no Amplificador com linhas ideais.}
+	\vspace{-0.8em}
+	\label{fig:ideal_noise}
+\end{figure}
+
+
+\todo{Margarida se quiseres passa estes valores para uma tabela, deve ser mais bonito}
+
+Tendo obtido os seguintes resultados da simulação:
+\begin{list}{-}{}
+	\item Ganho de transdução =$ 9.625 dB $;
+	\item Factor de reflexão à entrada =$ -64.510 dB $;
+	\item Factor de reflexão na saída =$ -42.123 dB $;
+	\item \textit{noise} =$ 3.281 $;
+\end{list}
+
+\todo{Tirar conclusões sobre isto, mas poucas isto é tipo a experiência base, o ideal, se calhar explicava-se o que significa cada coisa}
 
 
 \subsubsection{b) Projecto do amplificador utilizando tecnologia microfita}
+
+Tendo já completado o projecto do amplificador com linha ideais, temos agora as características ideais que representam um objectivo que tentaremos alcançar, mas que no entanto o máximo que se pode aspirar é chegar o mais perto possível, pois no caso ideal não foram consideradas qualquer tipo de perdas.
+
+Em primeiro lugar os blocos \texttt{DC\_Block} e \texttt{DC\_Feed} terão de ser substituídos por dispositivos reais com valores reais (condensadores e bobines respectivamente). 
+
+\todo{O Gui ainda vai espectar aqui as expressões que utilizou para calcular C e L}
+
+Em segundo lugar teremos de substituir as linhas ideais por dispositivos reais, dispositivos estes que representam a tecnologia microfita utilizada no amplificador. Para tal objectivo será utilizado a ferramenta do ADS, \texttt{LineCalc}, como se pode ver na Figura \ref{fig:LineCalc}, para calcular as dimensões das microfitas a utilizar é necessário colocar as características do nosso substrato (Tabela \ref{tab:car}), a frequência de referência e finalmente a impedância e comprimento eléctrico desejados para a microfita.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/LineCalc}
+	\vspace{-0.5em}
+	\caption{exemplo de \texttt{LineCalc}.}
+	\vspace{-0.8em}
+	\label{fig:LineCalc}
+\end{figure}
+
+Numa primeira fase, as malhas de adaptação foram construídas com os elementos \texttt{MLIN}(linhas) e \texttt{MLSC}(stubs), o circuito que se obteve está representado na Figura \ref{fig:mf_stub_circuito} e os seus parametros-S podem ser observados na Figura \ref{fig:mf_stub_S}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_mf_stub}
+	\vspace{-0.5em}
+	\caption{Circuito com microfitas, linhas e stubs.}
+	\vspace{-0.8em}
+	\label{fig:mf_stub_circuito}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/mf_stub_S}
+	\vspace{-0.5em}
+	\caption{Parâmetros-S do amplificador com malhas de linhas e stubs.}
+	\vspace{-0.8em}
+	\label{fig:mf_stub_S}
+\end{figure}
+
+Os resultados desta simulação são bastante satisfatórios, no entanto, como foi explicado anteriormente, não será possível utilizar este circuito. Ao observarmos as dimensões dos dispositivos \texttt{MLSC}, reparamos que a sua largura é superior ao seu comprimento, tendo então de representar estes elementos com outros dispositivos, \texttt{MLOC}. Ao dimensionar \texttt{MLOC}, no entanto, o comprimento eléctrico considerado tem de ser incrementado com 90 graus,um exemplo da progressão do processo da dimensão do stub da malha de adaptação pode ser observado na Figura \ref{fig:stub_fail}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.3]{exps/stub_fail}
+	\vspace{-0.5em}
+	\caption{Linha ideal - stub - loc}
+	\vspace{-0.8em}
+	\label{fig:stub_fail}
+\end{figure}
+
+\todo{Legenda melhor nesta figura}
+
 
 \subsection{Concretização do amplificador em tecnologia de microfita}
 
