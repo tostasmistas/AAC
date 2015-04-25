@@ -69,6 +69,8 @@ Grupo n.º 2 de quarta-feira das 11h00 - 12h30
 
 \section{Introdução}
 
+\todo{Porque a magui é simpática, ela vai rever as escalas das imagens e por da melhor forma possível}
+
 O objectivo deste laboratório é estudar técnicas de projecto de amplificadores lineares de alta frequência, análise das suas características (estabilidade, ganho, adaptação e factor de ruído) e comportamentos. A caracterização dos dispositivos do amplificador será realizada através dos pârametros distribuídos - parâmetros S.
 
 Utiliza-se um transístor da Hewlett-Packard (HP) ATF-35176, um transístor que utiliza tecnologia PHEMT (\textit{Pseudomorphic High Mobility Transistor}), preparado para trabalhar em altas frequências.
@@ -339,24 +341,21 @@ Em primeiro lugar os blocos \texttt{DC\_Block} e \texttt{DC\_Feed} terão de ser
 No caso do condensador, o seu valor tem de cumprir a condição especificada na Equação \ref{eq:cond_cap}.No caso da bobine, o seu valor tem de cumprir a condição especificada na Equação \ref{eq:cond_ind}.
 
 \begin{equation}
-\dfrac{1}{w C_{p}}>>50 \hspace{4mm} => \hspace{4mm}   C_{p}>\dfrac{5}{2 \pi . 22*10^{9}}
+\dfrac{1}{w_{0} C_{p}}>>50 \hspace{4mm} => \hspace{4mm}   C_{p}<\dfrac{1}{5.2 \pi . 22*10^{9}}
 \label{eq:cond_cap}
 \end{equation}
 
 \begin{equation}
-w L_{CRK}>>50 \hspace{4mm} => \hspace{4mm}   C_{p}>\dfrac{500}{2 \pi . 22*10^{9}}
+w_{0} L_{CRK}>>50 \hspace{4mm} => \hspace{4mm}   L_{CRK}>\dfrac{500}{2 \pi . 22*10^{9}}
 \label{eq:cond_ind}
 \end{equation}
 
 Tendo escolhido valores que correspondam a condensadores/bobines que existam no mercado, os valores escolhidos podem ser consultados na Equação \ref{eq:valores}.
 
 \begin{equation}
-C_{p} = 39 nF ~~ \text{e} ~~ L_{CRK} = 3.9 mH
+C_{p} = 1.3 pF ~~ \text{e} ~~ L_{CRK} = 3.9 nH
 \label{eq:valores}
 \end{equation}
-
-\todo{o gui reparou num erro no calculo do condensador. o gui se calhar vai ter de simular as coisas outra vez. o gui nao gosta}
-
 
 Em segundo lugar teremos de substituir as linhas ideais por dispositivos reais, dispositivos estes que representam a tecnologia microfita utilizada no amplificador. Para tal objectivo será utilizado a ferramenta do ADS, \texttt{LineCalc}, como se pode ver na Figura \ref{fig:LineCalc}, para calcular as dimensões das microfitas a utilizar é necessário colocar as características do nosso substrato (Tabela \ref{tab:car}), a frequência de referência e finalmente a impedância e comprimento eléctrico desejados para a microfita.
 
@@ -452,9 +451,104 @@ A diferença entre os gráficos obtidos no amplificador de linhas ideais (Figura
 
 \subsection{Concretização do amplificador em tecnologia de microfita}
 
+Nesta segunda fase o circuito do amplificador será todo projectado com a tecnologia de microfita e irá ser projectado um layout do circuito.
+
 \subsubsection{a) Introdução de elementos que simulam descontinuidades nas linhas}
 
+Em primeiro lugar teremos de substituir ambas as bobines por dispositivos que utilizem a tecnologia de microfita, ambas as bobines com as suas fontes de tensão terão de ser substituídas pelo bloco demonstrado na Figura \ref{fig:bobine}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/bobine}
+	\vspace{-0.5em}
+	\caption{Bloco que substitui bobines e fontes de tensão.}
+	\vspace{-0.8em}
+	\label{fig:bobine}
+\end{figure}
+
+O elemento \texttt{MLIN} com o nome de \texttt{TL7} representado na Figura \ref{fig:bobine} tem dimensões obtidas através da ferramenta \texttt{LineCalc} já antes utilizada, no entanto, como argumentos, recebe impedância característica de $ 100 \Omega $ e comprimento eléctrico de $ 90^{o} $. O elemento\texttt{MLIN} com o nome de \texttt{TL8} tem dimensões calculadas através do mesmo método no entanto recebe como impedância característica um valor de $ 30 \Omega $. Esta alteração no cálculo das dimensões de ambos os elementos \texttt{MLIN} irá causar uma diferença na largura de ambos, sendo necessário usar um elemento \texttt{MSTEP} que tem como objectivo servir de "adaptador" para a diferença das larguras entre os canais.
+
+Em relação às quatro descontinuidades criadas nos nós dos circuitos serão usados elementos \texttt{MTEE} que terão como função criar uma junção entre três canais e também, se necessário, adaptar as suas larguras. O resultado destas modificações no circuito do amplificador podem ser observadas na Figura \ref{fig:Circuito_pre_tune}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_descont_pre_tune}
+	\vspace{-0.5em}
+	\caption{Amplificador com as descontinuidades simuladas.}
+	\vspace{-0.8em}
+	\label{fig:Circuito_pre_tune}
+\end{figure}
+
+Após ter o circuito projectado é possível observar os parâmetros-S que caracterizam o amplificador na Figura \ref{fig:descont_S_pre_tune}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/descont_S_pre_tune}
+	\vspace{-0.5em}
+	\caption{Simulação dos Parâmetros-S do amplificador com descontinuidades simuladas pré\_\texttt{TUNE}.}
+	\vspace{-0.8em}
+	\label{fig:descont_S_pre_tune}
+\end{figure}
+
+Como se pode observar,os resultados obtidos não são satisfatórios, os valores máximos/mínimos não se encontram centrados na frequência desejada e não apresentam valores tão próximos do esperado, foi então usada a ferramenta \texttt{TUNE} nos comprimentos dos elementos \texttt{MLIN} com o nome de \texttt{TL2}, \texttt{TL1}, \texttt{TL4}, \texttt{TL5}, \texttt{TL7}, \texttt{TL10}, \texttt{TL6} e \texttt{TL11} representados na Figura \ref{fig:Circuito_pre_tune}, onde foi possível obter as características representadas na Figura \ref{fig:descont_S_pos_tune}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/descont_S_pos_tune}
+	\vspace{-0.5em}
+	\caption{Simulação dos Parâmetros-S do amplificador com descontinuidades simuladas pré\_\texttt{TUNE}.}
+	\vspace{-0.8em}
+	\label{fig:descont_S_pos_tune}
+\end{figure}
+
+Podemos observar também o gráfico de estabilidade (Figura\ref{fig:descont_estab_pos_tune}) e o gráfico do \textit{noise} (Figura \ref{fig:descont_noise_pos_tune}).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/descont_estab_pos_tune}
+	\vspace{-0.5em}
+	\caption{Estabilidade do amplificador com descontinuidades simuladas pré\_\texttt{TUNE}.}
+	\vspace{-0.8em}
+	\label{fig:descont_estab_pos_tune}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/descont_noise_pos_tune}
+	\vspace{-0.5em}
+	\caption{Estabilidade do amplificador com descontinuidades simuladas pré\_\texttt{TUNE}.}
+	\vspace{-0.8em}
+	\label{fig:descont_noise_pos_tune}
+\end{figure}
+
+\todo{Fazer uma tabela com os parametros-S e noise com os valores da linha ideal, miicrofita, descont\_pre\_tune e descont\_pre\_tune. Depois comenta-se}
+
+%Comentar tabela que falta fazer.
+%Comentar que queria-se pelo menos -15dB nos factores de reflexão, e que os dois factores de reflexão são tão bons como o pior deles, ou seja não queremos um em -15 e outro em -60, é bem melhor os dois em -20. ou seja tao forte como o mais fraco lol
+
 \subsubsection{b) Substituição do transístor e condensadores}
+
+Em primeiro lugar temos de descobrir as dimensões dos condensadores, sabendo que estes têm um valor de $ 1.3 pF $, foi necessário recorrer a uma \textit{datasheet} de condensadores com esse valor, as suas dimensões podem ser consultadas na Figura \ref{fig:capacitor} (de notar que esses valores se encontram em \textit{inches}), e são calculadas na Equação \ref{eq:capacitor}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/capacitor}
+	\vspace{-0.5em}
+	\caption{Dimensões dos condensadores.}
+	\vspace{-0.8em}
+	\label{fig:capacitor}
+\end{figure}
+
+\begin{equation}
+W = 0.508 mm ~~ \text{e} ~~ S = L - 2*\frac{E}{B} = 0.8128 mm
+\label{eq:capacitor}
+\end{equation}
+
+Podemos então descobrir a dimensão dos elementos \texttt{MGAP} a utilizar para substituir os condensadores, no entanto, como os condensadores têm uma largura diferente da do canal onde está a ser inserido, teremos de usar \texttt{MSTEP}'s para adaptar os nossos condensadores ao canal.
+
+Para substituir o transistor pelo elemento \texttt{MGAP} teremos de descobrir as dimensões de largura e comprimento a utilizar...
+
+\todo{mandei um mail a prof sobre as dimensões do transistor quando ela mandar acabo isto, ninguem esta a utilizar dimensões reais para estas cenas só nós xD}
 
 \section{Conclusões}
 
