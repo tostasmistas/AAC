@@ -139,6 +139,7 @@ Simulando o circuito anteriormente projectado foram obtidos os seguintes valores
  	\caption{Parâmetros que definem o transístor.}
  	\vspace{-1.5mm}
  	\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/table2}
+ 	\label{tab:param_S}
 \end{table}
 
 De notar que os valores obtidos experimentalmente para os parâmetros S não podem ser verificados na \textit{datasheet} do transístor, uma vez que esta apenas especifica o comportamento do ATF-35176 para frequências entre 2 GHz e 18 GHz.
@@ -282,7 +283,7 @@ Após obtermos os valores dos comprimentos eléctricos dos dispositivos que comp
  
 Após o circuito estar montado, as linhas ideais com os seus comprimentos eléctricos e com frequência de referência centrada nos $ 22 GHz $, foram realizadas várias simulações numa banda de frequências que compreende entre $ 10 GHz $ a $ 30GHz $ de modo a obter os parâmetros pedidos, tal como se pode observar nas Figuras \ref{fig:ideal_estavel}, \ref{fig:ideal_S} e \ref{fig:ideal_noise}.
 
-Em primeiro lugar iremos testar a estabilidade do circuito, estabilidade esta que,teoricamente, já tinha sido garantida com a Equação \ref{eq:delta}. Tal como se pode ver na Figura \ref{fig:ideal_estavel}, a variável de estabilidade apresenta sempre valores superiores a zero, o que confirma a estabilidade do amplificador na banda de $ 10 GHz $ a $ 30GHz $.
+Em primeiro lugar iremos testar a estabilidade do circuito, estabilidade esta que,teoricamente, já tinha sido garantida com a Equação \ref{eq:delta} e com certos valores da Tabela \ref{tab:param_S}. Tal como se pode ver na Figura \ref{fig:ideal_estavel}, a variável de estabilidade apresenta sempre valores superiores a zero, o que confirma a estabilidade do amplificador na banda de $ 10 GHz $ a $ 30GHz $.
 
 \begin{figure}[H]
 	\centering
@@ -335,7 +336,27 @@ Tendo já completado o projecto do amplificador com linha ideais, temos agora as
 
 Em primeiro lugar os blocos \texttt{DC\_Block} e \texttt{DC\_Feed} terão de ser substituídos por dispositivos reais com valores reais (condensadores e bobines respectivamente). 
 
-\todo{O Gui ainda vai espectar aqui as expressões que utilizou para calcular C e L}
+No caso do condensador, o seu valor tem de cumprir a condição especificada na Equação \ref{eq:cond_cap}.No caso da bobine, o seu valor tem de cumprir a condição especificada na Equação \ref{eq:cond_ind}.
+
+\begin{equation}
+\dfrac{1}{w C_{p}}>>50 \hspace{4mm} => \hspace{4mm}   C_{p}>\dfrac{5}{2 \pi . 22*10^{9}}
+\label{eq:cond_cap}
+\end{equation}
+
+\begin{equation}
+w L_{CRK}>>50 \hspace{4mm} => \hspace{4mm}   C_{p}>\dfrac{500}{2 \pi . 22*10^{9}}
+\label{eq:cond_ind}
+\end{equation}
+
+Tendo escolhido valores que correspondam a condensadores/bobines que existam no mercado, os valores escolhidos podem ser consultados na Equação \ref{eq:valores}.
+
+\begin{equation}
+C_{p} = 39 nF ~~ \text{e} ~~ L_{CRK} = 3.9 mH
+\label{eq:valores}
+\end{equation}
+
+\todo{o gui reparou num erro no calculo do condensador. o gui se calhar vai ter de simular as coisas outra vez. o gui nao gosta}
+
 
 Em segundo lugar teremos de substituir as linhas ideais por dispositivos reais, dispositivos estes que representam a tecnologia microfita utilizada no amplificador. Para tal objectivo será utilizado a ferramenta do ADS, \texttt{LineCalc}, como se pode ver na Figura \ref{fig:LineCalc}, para calcular as dimensões das microfitas a utilizar é necessário colocar as características do nosso substrato (Tabela \ref{tab:car}), a frequência de referência e finalmente a impedância e comprimento eléctrico desejados para a microfita.
 
@@ -348,7 +369,7 @@ Em segundo lugar teremos de substituir as linhas ideais por dispositivos reais, 
 	\label{fig:LineCalc}
 \end{figure}
 
-Numa primeira fase, as malhas de adaptação foram construídas com os elementos \texttt{MLIN}(linhas) e \texttt{MLSC}(stubs), o circuito que se obteve está representado na Figura \ref{fig:mf_stub_circuito} e os seus parametros-S podem ser observados na Figura \ref{fig:mf_stub_S}.
+Numa primeira fase, as malhas de adaptação foram construídas com os elementos \texttt{MLIN}(linhas) e \texttt{MLSC}(stubs), o circuito que se obteve está representado na Figura \ref{fig:mf_stub_circuito} e os seus parâmetros-S podem ser observados na Figura \ref{fig:mf_stub_S}.
 
 \begin{figure}[H]
 	\centering
@@ -380,6 +401,53 @@ Os resultados desta simulação são bastante satisfatórios, no entanto, como f
 \end{figure}
 
 \todo{Legenda melhor nesta figura}
+
+Com esta modificação obtemos um circuito diferente do anterior(Figura \ref{fig:circuito_mf}) onde testaremos os seus parâmetros tal como fizemos para o circuito com linhas ideais(Figura \ref{fig:circ_ideal}). Estas simulações estão representadas nas Figuras \ref{fig:mf_est}, \ref{fig:mf_S} e \ref{fig:mf_noise}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_mf}
+	\vspace{-0.5em}
+	\caption{Circuito com microfitas, linhas e locs.}
+	\vspace{-0.8em}
+	\label{fig:circuito_mf}
+\end{figure}
+
+Como se pode observar na Figura \ref{fig:mf_est}, mais uma vez a variável mantêm-se superior a zero, podendo afirmar que o amplificador é estável.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/mf_estab}
+	\vspace{-0.5em}
+	\caption{Estabilidade do Amplificador com malhas de linhas e locs.}
+	\vspace{-0.8em}
+	\label{fig:mf_est}
+\end{figure}
+
+Na Figura \ref{fig:mf_S} podemos observar que os gráficos apresentam uma forma muito diferente da apresentada antes da alteração nos stubs (Figura \ref{fig:mf_stub_S}), esta mudança também é verificada na Figura \ref{fig:mf_noise}, ambos os gráficos não apresentaram a forma esperada da simulação do amplificador de linhas ideais, efeito este causado pela alteração realizada nos stubs.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/mf_S}
+	\vspace{-0.5em}
+	\caption{Parâmetros-S do Amplificador com malhas de linhas e locs.}
+	\vspace{-0.8em}
+	\label{fig:mf_S}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/mf_noise}
+	\vspace{-0.5em}
+	\caption{\textit{Noise} do Amplificador com malhas de linhas e locs.}
+	\vspace{-0.8em}
+	\label{fig:mf_noise}
+\end{figure}
+
+\todo{Tabela com os resultados, talvez continhamos os resultados das linhas ideais para ser mais fácil comparar}
+
+
+A diferença entre os gráficos obtidos no amplificador de linhas ideais (Figuras \ref{fig:ideal_estavel}, \ref{fig:ideal_S} e \ref{fig:ideal_noise}) e o amplificador com a tecnologia de microfita (Figuras \ref{fig:mf_est}, \ref{fig:mf_S} e \ref{fig:mf_noise}) são ainda relevantes, especialmente em zonas perto das frequências $ 16 GHz $ e $ 18 GHz $, no entanto, os valores que se obtêm para a frequência de $ 22 GHz $ não apresentam diferenças tão relevantes, tal como se pode observar na Tabela %Referir a tabela.
 
 
 \subsection{Concretização do amplificador em tecnologia de microfita}
