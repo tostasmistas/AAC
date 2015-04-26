@@ -546,9 +546,29 @@ W = 0.508 mm ~~ \text{e} ~~ S = L - 2*\frac{E}{B} = 0.8128 mm
 
 Podemos então descobrir a dimensão dos elementos \texttt{MGAP} a utilizar para substituir os condensadores, no entanto, como os condensadores têm uma largura diferente da do canal onde está a ser inserido, teremos de usar \texttt{MSTEP}'s para adaptar os nossos condensadores ao canal.
 
-Para substituir o transistor pelo elemento \texttt{MGAP} teremos de descobrir as dimensões de largura e comprimento a utilizar...
+Para substituir o transistor pelo elemento \texttt{MGAP} teremos de descobrir as dimensões de largura e comprimento a utilizar, ao se consultar o \textit{datasheet} do transistor é possível  concluir que o encapsulamento tem $ 1.76 mm $, pelo que é necessário uma dimensão S do elemento \texttt{MGAP} ligeiramente superior, digamos $ 2.5 mm $. Em relação à largura do \texttt{MGAP}, esta tem de coincidir com o tamanho das patas da \textit{gate} e do \textit{dreno} do transistor, $ 0.51 mm $. Mais uma vez, como a dimensão da largura do \texttt{MGAP} não é igual à do canal em que este será inserido, foram usados elementos\texttt{MSTEP} para adaptar o canal.
 
-\todo{mandei um mail a prof sobre as dimensões do transistor quando ela mandar acabo isto, ninguem esta a utilizar dimensões reais para estas cenas só nós xD}
+O Circuito que resulta destas substituições dos condensadores e transistores pode ser observado na Figura \ref{fig:Circuito_layout}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_layout}
+	\vspace{-0.5em}
+	\caption{Circuito que corresponde ao projecto de layout do amplificador.}
+	\vspace{-0.8em}
+	\label{fig:Circuito_layout}
+\end{figure}
+
+Ao ter o circuito totalmente projectado, é possível usar a ferramenta \texttt{layout} do ADS para construir o layout do circuito, que pode ser observado na Figura \ref{fig:layout}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/layout}
+	\vspace{-0.5em}
+	\caption{Circuito que corresponde ao projecto de layout do amplificador.}
+	\vspace{-0.8em}
+	\label{fig:layout}
+\end{figure}
 
 \section{Conclusões}
 
