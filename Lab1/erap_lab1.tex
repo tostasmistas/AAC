@@ -324,7 +324,7 @@ Das simulações anteriores foram obtidos os seguintes resultados.
 
 \begin{table}[H]
 	\centering
-	\caption{Parâmetros experimentais que definem o transístor.}
+	\caption{Parâmetros experimentais que definem o transístor quando projectado com linhas ideais.}
 	\vspace{-1.5mm}
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/pergunta4}
 \end{table}
@@ -349,8 +349,6 @@ No caso do condensador de desacoplamento, $C_{D}$, o seu valor tem de cumprir a 
 \label{eq:cond_cap}
 \end{equation}
 
-\todo{corrigi esta equacao do condensador, julgo que o sinal de menor estava mal e isso afecta o valor do condensador}
-
 \vspace{1mm}
 No caso da bobine de bloqueio, $L_{CHK}$, o seu valor tem de cumprir a condição especificada na Equação \ref{eq:cond_ind}, pois sabe-se que a impedância das bobines de bloqueio deve ser bastante superior à impedância característica das linhas de transmissão.  
 
@@ -367,20 +365,20 @@ Em segundo lugar é necessário de substituir as linhas ideais por dispositivos 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.45]{exps/LineCalc}
+	\includegraphics[keepaspectratio=true, scale=0.35]{exps/LineCalc}
 	\vspace{-0.5em}
-	\caption{exemplo de \texttt{LineCalc}.}
+	\caption{\texttt{LineCalc} feito para a linha da malha de adaptação de entrada.}
 	\vspace{-0.8em}
 	\label{fig:LineCalc}
 \end{figure}
 
-Numa primeira fase, as malhas de adaptação foram construídas com os elementos \texttt{MLIN}(linhas) e \texttt{MLSC}(stubs), o circuito que se obteve está representado na Figura \ref{fig:mf_stub_circuito} e os seus parâmetros-S podem ser observados na Figura \ref{fig:mf_stub_S}.
+Numa primeira fase, as malhas de adaptação foram construídas com os elementos \texttt{MLIN} (linhas) e \texttt{MLSC} (\textit{stubs}) estando o circuito representado na Figura \ref{fig:mf_stub_circuito} e os seus parâmetros S na Figura \ref{fig:mf_stub_S}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_mf_stub}
 	\vspace{-0.5em}
-	\caption{Circuito com microfitas, linhas e stubs.}
+	\caption{Circuito com microfitas, linhas e \textit{stubs}.}
 	\vspace{-0.8em}
 	\label{fig:mf_stub_circuito}
 \end{figure}
@@ -389,53 +387,53 @@ Numa primeira fase, as malhas de adaptação foram construídas com os elementos
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/mf_stub_S}
 	\vspace{-0.5em}
-	\caption{Parâmetros-S do amplificador com malhas de linhas e stubs.}
+	\caption{Parâmetros S do amplificador com malhas linha-\textit{stub}.}
 	\vspace{-0.8em}
 	\label{fig:mf_stub_S}
 \end{figure}
 
-Os resultados desta simulação são bastante satisfatórios, no entanto, como foi explicado anteriormente, não será possível utilizar este circuito. Ao observarmos as dimensões dos dispositivos \texttt{MLSC}, reparamos que a sua largura é superior ao seu comprimento, tendo então de representar estes elementos com outros dispositivos, \texttt{MLOC}. Ao dimensionar \texttt{MLOC}, no entanto, o comprimento eléctrico considerado tem de ser incrementado com 90 graus,um exemplo da progressão do processo da dimensão do stub da malha de adaptação pode ser observado na Figura \ref{fig:stub_fail}.
+Os resultados desta simulação são bastante satisfatórios, no entanto, como foi explicado anteriormente \todo{nao me lembro dessa explicacao}, não será possível utilizar este circuito. Ao observarmos as dimensões dos dispositivos \texttt{MLSC}, reparamos que a sua largura é superior ao seu comprimento, tendo então de representar estes elementos com outros dispositivos, \texttt{MLOC}. Ao dimensionar \texttt{MLOC}, no entanto, o comprimento eléctrico considerado tem de ser incrementado em $90^{\circ}$. Um exemplo da progressão do processo da dimensão do \textit{stub} da malha de adaptação pode ser observado na Figura \ref{fig:stub_fail}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.3]{exps/stub_fail}
 	\vspace{-0.5em}
-	\caption{Linha ideal - stub - loc}
+	\caption{Representado na direita está a linha ideal (\texttt{TLSC}), no meio o \textit{stub} (\texttt{MLSC}) e na esquerda o \textit{loc} (\texttt{MLOC}).}
 	\vspace{-0.8em}
 	\label{fig:stub_fail}
 \end{figure}
 
-\todo{Legenda melhor nesta figura}
+\todo{o nome desta imagem preocupa-me xD e mudei esta legenda as requested, está boa assim?}
 
-Com esta modificação obtemos um circuito diferente do anterior(Figura \ref{fig:circuito_mf}) onde testaremos os seus parâmetros tal como fizemos para o circuito com linhas ideais(Figura \ref{fig:circ_ideal}). Estas simulações estão representadas nas Figuras \ref{fig:mf_est}, \ref{fig:mf_S} e \ref{fig:mf_noise}
+Com esta modificação obtém-se um circuito diferente do anterior, Figura \ref{fig:circuito_mf}, onde se testa os seus parâmetros, tal como feito para o circuito com linhas ideais, Figura \ref{fig:circ_ideal}. Estas simulações estão representadas nas Figuras \ref{fig:mf_est}, \ref{fig:mf_S} e \ref{fig:mf_noise}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_mf}
+	\includegraphics[keepaspectratio=true, scale=0.41]{exps/Circuito_mf}
 	\vspace{-0.5em}
-	\caption{Circuito com microfitas, linhas e locs.}
+	\caption{Circuito com microfitas, linhas e \textit{locs}.}
 	\vspace{-0.8em}
 	\label{fig:circuito_mf}
 \end{figure}
 
-Como se pode observar na Figura \ref{fig:mf_est}, mais uma vez a variável mantêm-se superior a zero, podendo afirmar que o amplificador é estável.
+Como se pode observar na Figura \ref{fig:mf_est}, e à semelhança do que se verifica na Figura 14, o parâmetro de estabilidade mantém-se superior a zero, pelo que se pode afirmar que o amplificador é estável.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.45]{exps/mf_estab}
+	\includegraphics[keepaspectratio=true, scale=0.41]{exps/mf_estab}
 	\vspace{-0.5em}
-	\caption{Estabilidade do Amplificador com malhas de linhas e locs.}
+	\caption{Estabilidade do amplificador com malhas de linhas e \textit{locs}.}
 	\vspace{-0.8em}
 	\label{fig:mf_est}
 \end{figure}
 
-Na Figura \ref{fig:mf_S} podemos observar que os gráficos apresentam uma forma muito diferente da apresentada antes da alteração nos stubs (Figura \ref{fig:mf_stub_S}), esta mudança também é verificada na Figura \ref{fig:mf_noise}, ambos os gráficos não apresentaram a forma esperada da simulação do amplificador de linhas ideais, efeito este causado pela alteração realizada nos stubs.
+Na Figura \ref{fig:mf_S} verifica-se que os gráficos apresentam uma forma muito diferente da apresentada antes da alteração nos \textit{stubs}, Figura \ref{fig:mf_stub_S}, sendo esta mudança também verificada na Figura \ref{fig:mf_noise}. Ambos os gráficos não apresentam a forma esperada aquando da simulação do amplificador com linhas ideais, efeito causado pela alteração realizada nos \textit{stubs}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/mf_S}
 	\vspace{-0.5em}
-	\caption{Parâmetros-S do Amplificador com malhas de linhas e locs.}
+	\caption{Parâmetros S do amplificador com malhas de linhas e \textit{locs}.}
 	\vspace{-0.8em}
 	\label{fig:mf_S}
 \end{figure}
@@ -444,24 +442,31 @@ Na Figura \ref{fig:mf_S} podemos observar que os gráficos apresentam uma forma 
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/mf_noise}
 	\vspace{-0.5em}
-	\caption{\textit{Noise} do Amplificador com malhas de linhas e locs.}
+	\caption{Factor de ruído no amplificador com malhas de linhas e \textit{locs}.}
 	\vspace{-0.8em}
 	\label{fig:mf_noise}
 \end{figure}
 
-\todo{Tabela com os resultados, talvez continhamos os resultados das linhas ideais para ser mais fácil comparar}
+Na tabela abaixo encontra-se uma tabela com uma síntese dos parâmetros do amplificador quando projectado com linhas ideais e com microfita.
 
+\begin{table}[H]
+	\centering
+	\caption{Parâmetros experimentais que definem o amplificador quando projectado com linhas ideais e tecnologia microfita.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/comparacaoamp}
+	\label{tab:comparacao}
+\end{table}
 
-A diferença entre os gráficos obtidos no amplificador de linhas ideais (Figuras \ref{fig:ideal_estavel}, \ref{fig:ideal_S} e \ref{fig:ideal_noise}) e o amplificador com a tecnologia de microfita (Figuras \ref{fig:mf_est}, \ref{fig:mf_S} e \ref{fig:mf_noise}) são ainda relevantes, especialmente em zonas perto das frequências $ 16 GHz $ e $ 18 GHz $, no entanto, os valores que se obtêm para a frequência de $ 22 GHz $ não apresentam diferenças tão relevantes, tal como se pode observar na Tabela %Referir a tabela.
+A diferença entre os gráficos obtidos no amplificador de linhas ideais (Figuras \ref{fig:ideal_estavel}, \ref{fig:ideal_S} e \ref{fig:ideal_noise}) e o amplificador com a tecnologia de microfita (Figuras \ref{fig:mf_est}, \ref{fig:mf_S} e \ref{fig:mf_noise}) são relevantes, especialmente em zonas perto das frequências 16 GHz e 18 GHz, no entanto, os valores que se obtêm para a frequência de 22 GHz não apresentam diferenças tão relevantes, tal como se pode observar na Tabela \ref{tab:comparacao}. \todo{discordo - ha ali um valor que é o dobro do outro, temos de comentar isso}
 
 
 \subsection{Concretização do amplificador em tecnologia de microfita}
 
-Nesta segunda fase o circuito do amplificador será todo projectado com a tecnologia de microfita e irá ser projectado um layout do circuito.
+Nesta segunda fase o circuito do amplificador será todo projectado com a tecnologia de microfita e irá ser projectado um \textit{layout} do circuito.
 
 \subsubsection{a) Introdução de elementos que simulam descontinuidades nas linhas}
 
-Em primeiro lugar teremos de substituir ambas as bobines por dispositivos que utilizem a tecnologia de microfita, ambas as bobines com as suas fontes de tensão terão de ser substituídas pelo bloco demonstrado na Figura \ref{fig:bobine}.
+Em primeiro lugar substitui-se ambas as bobines por dispositivos que utilizem a tecnologia de microfita, ambas as bobines com as suas fontes de tensão terão de ser substituídas pelo bloco demonstrado na Figura \ref{fig:bobine}. \todo{this sentence is weird}
 
 \begin{figure}[H]
 	\centering
@@ -472,7 +477,7 @@ Em primeiro lugar teremos de substituir ambas as bobines por dispositivos que ut
 	\label{fig:bobine}
 \end{figure}
 
-O elemento \texttt{MLIN} com o nome de \texttt{TL7} representado na Figura \ref{fig:bobine} tem dimensões obtidas através da ferramenta \texttt{LineCalc} já antes utilizada, no entanto, como argumentos, recebe impedância característica de $ 100 \Omega $ e comprimento eléctrico de $ 90^{o} $. O elemento\texttt{MLIN} com o nome de \texttt{TL8} tem dimensões calculadas através do mesmo método no entanto recebe como impedância característica um valor de $ 30 \Omega $. Esta alteração no cálculo das dimensões de ambos os elementos \texttt{MLIN} irá causar uma diferença na largura de ambos, sendo necessário usar um elemento \texttt{MSTEP} que tem como objectivo servir de "adaptador" para a diferença das larguras entre os canais.
+O elemento \texttt{MLIN} com o nome de \texttt{TL7} representado na Figura \ref{fig:bobine} tem dimensões obtidas através da ferramenta \texttt{LineCalc} já antes utilizada, no entanto, como argumentos, recebe impedância característica de $100 \Omega$ e comprimento eléctrico de $90^{\circ}$. O elemento \texttt{MLIN} com o nome de \texttt{TL8} tem dimensões calculadas através do mesmo método, no entanto, recebe como impedância característica um valor de $30 \Omega$. Esta alteração no cálculo das dimensões dos elementos \texttt{MLIN} irá causar uma diferença na largura de ambos, sendo necessário usar um elemento \texttt{MSTEP} que tem como objectivo servir de ``adaptador'' para a diferença das larguras entre os canais.
 
 Em relação às quatro descontinuidades criadas nos nós dos circuitos serão usados elementos \texttt{MTEE} que terão como função criar uma junção entre três canais e também, se necessário, adaptar as suas larguras. O resultado destas modificações no circuito do amplificador podem ser observadas na Figura \ref{fig:Circuito_pre_tune}.
 
@@ -485,35 +490,33 @@ Em relação às quatro descontinuidades criadas nos nós dos circuitos serão u
 	\label{fig:Circuito_pre_tune}
 \end{figure}
 
-Após ter o circuito projectado é possível observar os parâmetros-S que caracterizam o amplificador na Figura \ref{fig:descont_S_pre_tune}
+Após ter o circuito projectado é possível observar os parâmetros S, Figura \ref{fig:descont_S_pre_tune}, que caracterizam o amplificador.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/descont_S_pre_tune}
 	\vspace{-0.5em}
-	\caption{Simulação dos Parâmetros-S do amplificador com descontinuidades simuladas pré\_\texttt{TUNE}.}
+	\caption{Simulação dos parâmetros S do amplificador com descontinuidades simuladas pré-\texttt{TUNE}.}
 	\vspace{-0.8em}
 	\label{fig:descont_S_pre_tune}
 \end{figure}
 
-Como se pode observar,os resultados obtidos não são satisfatórios, os valores máximos/mínimos não se encontram centrados na frequência desejada e não apresentam valores tão próximos do esperado, foi então usada a ferramenta \texttt{TUNE} nos comprimentos dos elementos \texttt{MLIN} com o nome de \texttt{TL2}, \texttt{TL1}, \texttt{TL4}, \texttt{TL5}, \texttt{TL7}, \texttt{TL10}, \texttt{TL6} e \texttt{TL11} representados na Figura \ref{fig:Circuito_pre_tune}, onde foi possível obter as características representadas na Figura \ref{fig:descont_S_pos_tune}.
+Como se pode observar, os resultados obtidos não são satisfatórios, os valores máximos/mínimos não se encontram centrados na frequência desejada e não apresentam valores tão próximos do esperado. Assim, foi utilizada a ferramenta \texttt{TUNE} nos comprimentos dos elementos \texttt{MLIN} com o nome de \texttt{TL2}, \texttt{TL1}, \texttt{TL4}, \texttt{TL5}, \texttt{TL7}, \texttt{TL10}, \texttt{TL6} e \texttt{TL11} representados na Figura \ref{fig:Circuito_pre_tune}, onde foi possível obter as características representadas na Figura \ref{fig:descont_S_pos_tune}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/descont_S_pos_tune}
 	\vspace{-0.5em}
-	\caption{Simulação dos Parâmetros-S do amplificador com descontinuidades simuladas pré\_\texttt{TUNE}.}
+	\caption{Simulação dos parâmetros S do amplificador com descontinuidades simuladas pós-\texttt{TUNE}.}
 	\vspace{-0.8em}
 	\label{fig:descont_S_pos_tune}
 \end{figure}
-
-Podemos observar também o gráfico de estabilidade (Figura\ref{fig:descont_estab_pos_tune}) e o gráfico do \textit{noise} (Figura \ref{fig:descont_noise_pos_tune}).
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/descont_estab_pos_tune}
 	\vspace{-0.5em}
-	\caption{Estabilidade do amplificador com descontinuidades simuladas pré\_\texttt{TUNE}.}
+	\caption{Estabilidade do amplificador com descontinuidades simuladas pós-\texttt{TUNE}.}
 	\vspace{-0.8em}
 	\label{fig:descont_estab_pos_tune}
 \end{figure}
@@ -522,12 +525,12 @@ Podemos observar também o gráfico de estabilidade (Figura\ref{fig:descont_esta
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/descont_noise_pos_tune}
 	\vspace{-0.5em}
-	\caption{Estabilidade do amplificador com descontinuidades simuladas pré\_\texttt{TUNE}.}
+	\caption{Factor de ruído no amplificador com descontinuidades simuladas pós-\texttt{TUNE}.}
 	\vspace{-0.8em}
 	\label{fig:descont_noise_pos_tune}
 \end{figure}
 
-\todo{Fazer uma tabela com os parametros-S e noise com os valores da linha ideal, miicrofita, descont\_pre\_tune e descont\_pre\_tune. Depois comenta-se}
+\todo{Fazer uma tabela}
 
 %Comentar tabela que falta fazer.
 %Comentar que queria-se pelo menos -15dB nos factores de reflexão, e que os dois factores de reflexão são tão bons como o pior deles, ou seja não queremos um em -15 e outro em -60, é bem melhor os dois em -20. ou seja tao forte como o mais fraco lol
