@@ -155,7 +155,7 @@ Com os valores da Tabela 2 determinados pode-se calcular o valor de $\Delta$, ou
 \end{equation}
 
 \vspace{1mm} 
-Como se pode ver, K $= 1.236 > 1$, $\lvert \Delta \rvert = 0.067 < 1$ e $\lvert S_{ii} \rvert < 1$, pelo que o transístor é incondicionalmente estável.s
+Como se pode ver, K $= 1.236 > 1$, $\lvert \Delta \rvert = 0.067 < 1$ e $\lvert S_{ii} \rvert < 1$, pelo que o transístor é incondicionalmente estável.
 
 \paragraph{Projecção da Malha de Entrada e de Saída} \hspace{0pt} 
 
@@ -272,92 +272,98 @@ No ADS, com recurso à Carta de Smith, determinou-se o comprimento eléctrico da
 
 \paragraph{Simulação do Amplificador Ideal} \hspace{0pt}  
 
-Após obtermos os valores dos comprimentos eléctricos dos dispositivos que compõem as malhas de adaptação de entrada e saída através do ADS, poderemos então projectar um amplificador com malhas ideais compostas por dispositivos sem perdas. O circuito projectado pode ser observado na Figura \ref{fig:circ_ideal}.
+Após se obter através do ADS os valores dos comprimentos eléctricos dos dispositivos que compõem as malhas de adaptação de entrada e saída, pode-se então projectar um amplificador com malhas ideais, compostas por dispositivos sem perdas. O circuito projectado pode ser observado na Figura \ref{fig:circ_ideal}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_ideal}
+	\includegraphics[keepaspectratio=true, scale=0.41]{exps/Circuito_ideal}
 	\vspace{-0.5em}
 	\caption{Circuito do Amplificador com linhas ideais.}
 	\vspace{-0.8em}
 	\label{fig:circ_ideal}
 \end{figure}
  
-Após o circuito estar montado, as linhas ideais com os seus comprimentos eléctricos e com frequência de referência centrada nos $ 22 GHz $, foram realizadas várias simulações numa banda de frequências que compreende entre $ 10 GHz $ a $ 30GHz $ de modo a obter os parâmetros pedidos, tal como se pode observar nas Figuras \ref{fig:ideal_estavel}, \ref{fig:ideal_S} e \ref{fig:ideal_noise}.
+Após o circuito estar montado, as linhas ideais definidas com os seus comprimentos eléctricos e com frequência de referência centrada nos 22 GHz, foram realizadas várias simulações numa banda de frequências compreendida entre 10 GHz e 30 GHz de modo a obter os parâmetros pedidos, tal como se pode observar nas Figuras \ref{fig:ideal_estavel}, \ref{fig:ideal_S} e \ref{fig:ideal_noise}.
 
-Em primeiro lugar iremos testar a estabilidade do circuito, estabilidade esta que,teoricamente, já tinha sido garantida com a Equação \ref{eq:delta} e com certos valores da Tabela \ref{tab:param_S}. Tal como se pode ver na Figura \ref{fig:ideal_estavel}, a variável de estabilidade apresenta sempre valores superiores a zero, o que confirma a estabilidade do amplificador na banda de $ 10 GHz $ a $ 30GHz $.
+Em primeiro lugar testa-se a estabilidade do circuito, estabilidade esta que, teoricamente, já tinha sido garantida com a Equação \ref{eq:delta} e com certos valores da Tabela \ref{tab:param_S}. Tal como se pode ver na Figura \ref{fig:ideal_estavel}, o parâmetro de estabilidade apresenta sempre valores superiores a zero, o que confirma a estabilidade do amplificador na banda de 10 GHz a 30 GHz.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Ideal_estab}
 	\vspace{-0.5em}
-	\caption{Estabilidade do Amplificador com linhas ideais.}
+	\caption{Estabilidade do amplificador com linhas ideais.}
 	\vspace{-0.8em}
 	\label{fig:ideal_estavel}
 \end{figure}
 
-Através da simulação foi possível obter os Parâmetros-S, sendo que a parcela S(1,2) não representa uma caracteristica relevante no nosso amplificador, e por isso não foi projectada. Ao observar a Figura \ref{fig:ideal_S}, e tendo em conta que a parcela S(1,1) representa o factor de reflexão à entrada, S(2,2) representa o factor de reflexão na saída e S(2,1) representa o ganho de transdução.
+Através da simulação foi possível obter os parâmetros S, sendo que a parcela $S_{12}$ não representa uma característica relevante no amplificador e, por isso, não foi projectada. Ao observar a Figura \ref{fig:ideal_S}, e tendo em conta que a parcela $S_{11}$ representa o factor de reflexão à entrada, $S_{22}$ representa o factor de reflexão na saída e $S_{21}$ representa o ganho de transdução.
+
+\todo{parece que a frase de cima ficou a meio, falta algo aqui?}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Ideal_S}
 	\vspace{-0.5em}
-	\caption{Parâmetros-S do Amplificador com linhas ideais.}
+	\caption{Parâmetros S do amplificador com linhas ideais.}
 	\vspace{-0.8em}
 	\label{fig:ideal_S}
 \end{figure}
 
-Foi também possível medir o \textit{noise} do amplificador ao longo da banda, e mais especificamente na frequência de referência sobre a qual o amplificador irá operar, tal como se pode observar na Figura \ref{fig:ideal_noise}.
+Foi também possível medir o \textit{noise} do amplificador ao longo da banda e, mais especificamente, na frequência de referência sobre a qual o amplificador irá operar, tal como se pode observar na Figura \ref{fig:ideal_noise}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Ideal_noise}
 	\vspace{-0.5em}
-	\caption{\textit{Noise} no Amplificador com linhas ideais.}
+	\caption{Factor de ruído no amplificador com linhas ideais.}
 	\vspace{-0.8em}
 	\label{fig:ideal_noise}
 \end{figure}
 
+Das simulações anteriores foram obtidos os seguintes resultados.
 
-\todo{Margarida se quiseres passa estes valores para uma tabela, deve ser mais bonito}
+\begin{table}[H]
+	\centering
+	\caption{Parâmetros experimentais que definem o transístor.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/pergunta4}
+\end{table}
 
-Tendo obtido os seguintes resultados da simulação:
-\begin{list}{-}{}
-	\item Ganho de transdução =$ 9.625 dB $;
-	\item Factor de reflexão à entrada =$ -64.510 dB $;
-	\item Factor de reflexão na saída =$ -42.123 dB $;
-	\item \textit{noise} =$ 3.281 $;
-\end{list}
+\todo{consegues tirar o valor do parametro de estabilidade? ela pede no enunciado}
+
 
 \todo{Tirar conclusões sobre isto, mas poucas isto é tipo a experiência base, o ideal, se calhar explicava-se o que significa cada coisa}
 
 
 \subsubsection{b) Projecto do amplificador utilizando tecnologia microfita}
 
-Tendo já completado o projecto do amplificador com linha ideais, temos agora as características ideais que representam um objectivo que tentaremos alcançar, mas que no entanto o máximo que se pode aspirar é chegar o mais perto possível, pois no caso ideal não foram consideradas qualquer tipo de perdas.
+Tendo já completado o projecto do amplificador com linha ideais, tem-se agora as características ideais que representam um objectivo que se tenta alcançar. É de referir que no caso ideal não foram considerados quaisquer tipo de perdas e, assim, o amplificador real será diferente.
 
-Em primeiro lugar os blocos \texttt{DC\_Block} e \texttt{DC\_Feed} terão de ser substituídos por dispositivos reais com valores reais (condensadores e bobines respectivamente). 
+Em primeiro lugar os blocos \texttt{DC\_Block} e \texttt{DC\_Feed} terão de ser substituídos por dispositivos reais com valores reais, condensadores e bobines respectivamente. 
 
-No caso do condensador, o seu valor tem de cumprir a condição especificada na Equação \ref{eq:cond_cap}.No caso da bobine, o seu valor tem de cumprir a condição especificada na Equação \ref{eq:cond_ind}.
+No caso do condensador de desacoplamento, $C_{D}$, o seu valor tem de cumprir a condição especificada na equação \ref{eq:cond_cap}, pois sabe-se que a impedância dos condensadores de desacoplamento deve ser bastante inferior à impedância característica das linhas de transmissão. 
 
+\vspace{-3mm}
 \begin{equation}
-\dfrac{1}{w_{0} C_{p}}>>50 \hspace{4mm} => \hspace{4mm}   C_{p}<\dfrac{1}{5.2 \pi . 22*10^{9}}
+\lvert Z_C \rvert = \frac{1}{w_{0} C_{D}} << Z_0 \hspace{2mm} \rightarrow \hspace{2mm} C_{D} > \frac{1}{w_{0}Z_0 \times 0.1} \hspace{2mm} \rightarrow \hspace{2mm} C_{D} > \dfrac{1}{5 \times 2 \pi \times 22 \times 10^{9}} = 1.45~\text{pF}.
 \label{eq:cond_cap}
 \end{equation}
 
+\todo{corrigi esta equacao do condensador, julgo que o sinal de menor estava mal e isso afecta o valor do condensador}
+
+\vspace{1mm}
+No caso da bobine de bloqueio, $L_{CHK}$, o seu valor tem de cumprir a condição especificada na Equação \ref{eq:cond_ind}, pois sabe-se que a impedância das bobines de bloqueio deve ser bastante superior à impedância característica das linhas de transmissão.  
+
+\vspace{-3mm}
 \begin{equation}
-w_{0} L_{CRK}>>50 \hspace{4mm} => \hspace{4mm}   L_{CRK}>\dfrac{500}{2 \pi . 22*10^{9}}
+\lvert Z_L \rvert = w_{0} L_{CHK} >> Z_0 \hspace{2mm} \rightarrow \hspace{2mm} L_{CHK} > \frac{Z_0 \times 10}{w_{0}} \hspace{2mm} \rightarrow \hspace{2mm} L_{CHK} > \frac{500}{2 \pi \times 22 \times 10^{9}} = 3.62~\text{nH}.
 \label{eq:cond_ind}
 \end{equation}
 
-Tendo escolhido valores que correspondam a condensadores/bobines que existam no mercado, os valores escolhidos podem ser consultados na Equação \ref{eq:valores}.
+\vspace{1mm}
+Tendo escolhido valores que correspondam a condensadores e bobines que existam no mercado, o valor de $C_{D}$ é de 1.3 pF e o valor de $L_{CHK}$ é de 3.9 nH. \todo{o valor de CD agora nao bate certo com a eq 2.5}
 
-\begin{equation}
-C_{p} = 1.3 pF ~~ \text{e} ~~ L_{CRK} = 3.9 nH
-\label{eq:valores}
-\end{equation}
-
-Em segundo lugar teremos de substituir as linhas ideais por dispositivos reais, dispositivos estes que representam a tecnologia microfita utilizada no amplificador. Para tal objectivo será utilizado a ferramenta do ADS, \texttt{LineCalc}, como se pode ver na Figura \ref{fig:LineCalc}, para calcular as dimensões das microfitas a utilizar é necessário colocar as características do nosso substrato (Tabela \ref{tab:car}), a frequência de referência e finalmente a impedância e comprimento eléctrico desejados para a microfita.
+Em segundo lugar é necessário de substituir as linhas ideais por dispositivos reais, dispositivos estes que representam a tecnologia microfita utilizada no amplificador. Para tal, recorre-se à ferramenta \texttt{LineCalc} do ADS, como se pode ver na Figura \ref{fig:LineCalc}, para calcular as dimensões das microfitas a utilizar. É necessário colocar as características do substrato, Tabela \ref{tab:car}, a frequência de referência e finalmente a impedância e comprimento eléctrico desejados para a microfita.
 
 \begin{figure}[H]
 	\centering
