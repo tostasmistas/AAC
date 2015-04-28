@@ -53,7 +53,7 @@ Grupo n.º 2 de quarta-feira das 11h00 - 12h30
 
 \vfill
 
-{\large Lisboa, 25 de Abril de 2015} 
+{\large Lisboa, 29 de Abril de 2015} 
 
 \end{center}
 \end{titlepage}
@@ -68,8 +68,6 @@ Grupo n.º 2 de quarta-feira das 11h00 - 12h30
 \pagenumbering{arabic}
 
 \section{Introdução}
-
-\todo{Porque a magui é simpática, ela vai rever as escalas das imagens e por da melhor forma possível}
 
 O objectivo deste laboratório é estudar técnicas de projecto de amplificadores lineares de alta frequência, análise das suas características (estabilidade, ganho, adaptação e factor de ruído) e comportamentos. A caracterização dos dispositivos do amplificador será realizada através dos pârametros distribuídos - parâmetros S.
 
@@ -329,10 +327,10 @@ Das simulações anteriores foram obtidos os seguintes resultados.
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/pergunta4}
 \end{table}
 
-\todo{consegues tirar o valor do parametro de estabilidade? ela pede no enunciado}
+\todo{valor do parametro de estabilidade?}
 
 
-\todo{Tirar conclusões sobre isto, mas poucas isto é tipo a experiência base, o ideal, se calhar explicava-se o que significa cada coisa}
+\todo{Tirar conclusões sobre isto, mas poucas isto é tipo a experiência base, o ideal, se calhar explicava-se o que significa cada coisa. é para comparar com a teoria?}
 
 
 \subsubsection{b) Projecto do amplificador utilizando tecnologia microfita}
@@ -402,8 +400,6 @@ Os resultados desta simulação são bastante satisfatórios, no entanto, como f
 	\vspace{-0.8em}
 	\label{fig:stub_fail}
 \end{figure}
-
-\todo{o nome desta imagem preocupa-me xD e mudei esta legenda as requested, está boa assim?}
 
 Com esta modificação obtém-se um circuito diferente do anterior, Figura \ref{fig:circuito_mf}, onde se testa os seus parâmetros, tal como feito para o circuito com linhas ideais, Figura \ref{fig:circ_ideal}. Estas simulações estão representadas nas Figuras \ref{fig:mf_est}, \ref{fig:mf_S} e \ref{fig:mf_noise}.
 
@@ -537,7 +533,7 @@ Como se pode observar, os resultados obtidos não são satisfatórios, os valore
 
 \subsubsection{b) Substituição do transístor e condensadores}
 
-Em primeiro lugar temos de descobrir as dimensões dos condensadores, sabendo que estes têm um valor de $ 1.3 pF $, foi necessário recorrer a uma \textit{datasheet} de condensadores com esse valor, as suas dimensões podem ser consultadas na Figura \ref{fig:capacitor} (de notar que esses valores se encontram em \textit{inches}), e são calculadas na Equação \ref{eq:capacitor}.
+Em primeiro lugar, tem de se descobrir as dimensões dos condensadores e, sabendo que estes têm um valor de \todo{valor de CD}, foi necessário recorrer a uma \textit{datasheet} de condensadores com esse valor. As suas dimensões podem ser consultadas na Figura \ref{fig:capacitor}, sendo de notar que esses valores se encontram em \textit{inches}), e são calculados na Equação \ref{eq:capacitor}.
 
 \begin{figure}[H]
 	\centering
@@ -548,33 +544,35 @@ Em primeiro lugar temos de descobrir as dimensões dos condensadores, sabendo qu
 	\label{fig:capacitor}
 \end{figure}
 
+\vspace{-3mm}
 \begin{equation}
-W = 0.508 mm ~~ \text{e} ~~ S = L - 2*\frac{E}{B} = 0.8128 mm
+W = 0.508~\text{mm} ~~ \text{e} ~~ S = L - 2*\frac{E}{B} = 0.8128~\text{mm}
 \label{eq:capacitor}
 \end{equation}
 
-Podemos então descobrir a dimensão dos elementos \texttt{MGAP} a utilizar para substituir os condensadores, no entanto, como os condensadores têm uma largura diferente da do canal onde está a ser inserido, teremos de usar \texttt{MSTEP}'s para adaptar os nossos condensadores ao canal.
+\vspace{1mm}
+Pode-se então determinar a dimensão dos elementos \texttt{MGAP} a utilizar para substituir os condensadores. No entanto, como os condensadores têm uma largura diferente da do canal onde estão a ser inseridos, é necessário usar \texttt{MSTEP's} para adaptar os condensadores ao canal.
 
-Para substituir o transistor pelo elemento \texttt{MGAP} teremos de descobrir as dimensões de largura e comprimento a utilizar, ao se consultar o \textit{datasheet} do transistor é possível  concluir que o encapsulamento tem $ 1.76 mm $, pelo que é necessário uma dimensão S do elemento \texttt{MGAP} ligeiramente superior, digamos $ 2.5 mm $. Em relação à largura do \texttt{MGAP}, esta tem de coincidir com o tamanho das patas da \textit{gate} e do \textit{dreno} do transistor, $ 0.51 mm $. Mais uma vez, como a dimensão da largura do \texttt{MGAP} não é igual à do canal em que este será inserido, foram usados elementos\texttt{MSTEP} para adaptar o canal.
+Para substituir o transístor pelo elemento \texttt{MGAP} tem de se calcular as dimensões de largura e comprimento a utilizar. Aa se consultar o \textit{datasheet} do transístor é possível concluir que o encapsulamento tem $1.76$ mm, pelo que é necessário uma dimensão S do elemento \texttt{MGAP} ligeiramente superior, diga-se $2.5$ mm. Em relação à largura do \texttt{MGAP}, esta tem de coincidir com o tamanho dos \textit{pins} da \textit{gate} e do \textit{dreno} do transístor, $0.51$ mm. Mais uma vez, como a dimensão da largura do \texttt{MGAP} não é igual à do canal em que este será inserido, foram usados elementos\texttt{MSTEP} para adaptar o canal.
 
-O Circuito que resulta destas substituições dos condensadores e transistores pode ser observado na Figura \ref{fig:Circuito_layout}.
+O circuito que resulta destas substituições dos condensadores e transístores pode ser observado na Figura \ref{fig:Circuito_layout}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_layout}
 	\vspace{-0.5em}
-	\caption{Circuito que corresponde ao projecto de layout do amplificador.}
+	\caption{Circuito que corresponde ao projecto de \textit{layout} do amplificador.}
 	\vspace{-0.8em}
 	\label{fig:Circuito_layout}
 \end{figure}
 
-Ao ter o circuito totalmente projectado, é possível usar a ferramenta \texttt{layout} do ADS para construir o layout do circuito, que pode ser observado na Figura \ref{fig:layout}.
+Ao ter o circuito totalmente projectado, é possível usar a ferramenta \texttt{layout} do ADS para construir o \textit{layout} do circuito, que pode ser observado na Figura \ref{fig:layout}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/layout}
 	\vspace{-0.5em}
-	\caption{Circuito que corresponde ao projecto de layout do amplificador.}
+	\caption{\textit{Layout} do amplificador.}
 	\vspace{-0.8em}
 	\label{fig:layout}
 \end{figure}
