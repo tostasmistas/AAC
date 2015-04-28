@@ -284,7 +284,7 @@ Após se obter através do ADS os valores dos comprimentos eléctricos dos dispo
  
 Após o circuito estar montado, as linhas ideais definidas com os seus comprimentos eléctricos e com frequência de referência centrada nos 22 GHz, foram realizadas várias simulações numa banda de frequências compreendida entre 10 GHz e 30 GHz de modo a obter os parâmetros pedidos, tal como se pode observar nas Figuras \ref{fig:ideal_estavel}, \ref{fig:ideal_S} e \ref{fig:ideal_noise}.
 
-Em primeiro lugar testa-se a estabilidade do circuito, estabilidade esta que, teoricamente, já tinha sido garantida com a Equação \ref{eq:delta} e com certos valores da Tabela \ref{tab:param_S}. Tal como se pode ver na Figura \ref{fig:ideal_estavel}, o parâmetro de estabilidade apresenta sempre valores superiores a zero, o que confirma a estabilidade do amplificador na banda de 10 GHz a 30 GHz.
+Em primeiro lugar testa-se a estabilidade do circuito a 22 GHz, estabilidade esta que, teoricamente, já tinha sido garantida com a Equação \ref{eq:delta} e com certos valores da Tabela \ref{tab:param_S}. Tal como se pode observar na Figura \ref{fig:ideal_estavel}, o parâmetro de estabilidade apresenta o valor esperado tabelado na Tabela \ref{tab:param_S}, confirmando a estabilidade do amplificador na frequência 22 GHz.
 
 \begin{figure}[H]
 	\centering
@@ -412,7 +412,8 @@ Com esta modificação obtém-se um circuito diferente do anterior, Figura \ref{
 	\label{fig:circuito_mf}
 \end{figure}
 
-Como se pode observar na Figura \ref{fig:mf_est}, e à semelhança do que se verifica na Figura 14, o parâmetro de estabilidade mantém-se superior a zero, pelo que se pode afirmar que o amplificador é estável.
+Como se pode observar na Figura \ref{fig:mf_est}(a escala da figura foi ajustada de modo a permitir uma melhor observação da evolução do parâmetro de estabilidade), e em comparação com o que se verifica na Figura \ref{fig:ideal_estavel}, o parâmetro de estabilidade para 22 GHz apresenta um erro relativo baixo e garante a estabilidade do amplificador para 22GHz.
+\todo{Verificar estabilidade em banda larga.}
 
 \begin{figure}[H]
 	\centering
