@@ -297,7 +297,6 @@ Em primeiro lugar testa-se a estabilidade do circuito a 22 GHz, estabilidade est
 
 Através da simulação foi possível obter os parâmetros S, sendo que a parcela $S_{12}$ não representa uma característica relevante no amplificador e, por isso, não foi projectada. Ao observar a Figura \ref{fig:ideal_S}, e tendo em conta que a parcela $S_{11}$ representa o factor de reflexão à entrada, $S_{22}$ representa o factor de reflexão na saída e $S_{21}$ representa o ganho de transdução, podemos reparar que o amplificador está projectado para a frequência de $ 22 GHz $, e que apresenta um valor para o ganho de transdução esperado.
 
-
 \begin{figure}[H]
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Ideal_S}
@@ -357,9 +356,9 @@ No caso da bobine de bloqueio, $L_{CHK}$, o seu valor tem de cumprir a condiçã
 \end{equation}
 
 \vspace{1mm}
-Tendo escolhido valores que correspondam a condensadores e bobines que existam no mercado, o valor de $L_{CHK}$ é de 3.9 nH e o valor de $C_{D}$ é de 10 pF. No entanto com o avanço do laboratório o de $C_{D}$ foi alterado para 39 pF pois com este valor as simulações apresentavam melhores resultados.
+Tendo escolhido valores que correspondam a condensadores e bobines que existam no mercado, o valor de $L_{CHK}$ é de 3.9 nH e o valor de $C_{D}$ é de 10 pF. No entanto, com o avanço do laboratório o valor de $C_{D}$ foi alterado para 39 pF pois com este valor as simulações apresentavam melhores resultados.
 
-Em segundo lugar é necessário de substituir as linhas ideais por dispositivos reais, dispositivos estes que representam a tecnologia microfita utilizada no amplificador. Para tal, recorre-se à ferramenta \texttt{LineCalc} do ADS, como se pode ver na Figura \ref{fig:LineCalc}, para calcular as dimensões das microfitas a utilizar. É necessário colocar as características do substrato, Tabela \ref{tab:car}, a frequência de referência e finalmente a impedância e comprimento eléctrico desejados para a microfita.
+Em segundo lugar, é necessário de substituir as linhas ideais por dispositivos reais, dispositivos estes que representam a tecnologia microfita utilizada no amplificador. Para tal, recorre-se à ferramenta \texttt{LineCalc} do ADS, como se pode ver na Figura \ref{fig:LineCalc}, para calcular as dimensões das microfitas a utilizar. É necessário colocar as características do substrato, Tabela \ref{tab:car}, a frequência de referência e finalmente a impedância e comprimento eléctrico desejados para a microfita.
 
 \begin{figure}[H]
 	\centering
@@ -454,8 +453,7 @@ Na tabela abaixo encontra-se uma tabela com uma síntese dos parâmetros do ampl
 	\label{tab:comparacao}
 \end{table}
 
-A diferença entre os gráficos obtidos no amplificador de linhas ideais (Figuras \ref{fig:ideal_estavel}, \ref{fig:ideal_S} e \ref{fig:ideal_noise}) e o amplificador com a tecnologia de microfita (Figuras \ref{fig:mf_est}, \ref{fig:mf_S} e \ref{fig:mf_noise}) são relevantes, especialmente em zonas perto das frequências 16 GHz e 18 GHz, no entanto, a maior parte dos valores que se obtêm para a frequência de 22 GHz não apresentam diferenças tão relevantes, tal como se pode observar na Tabela \ref{tab:comparacao}. O valor do factor de reflexão à entrada tem uma queda do seu valor em módulo para quase metade, no entanto, essa diferença não terá um efeito tão significativo no funcionamento do amplificador. No amplificador com linhas ideais, o factor de reflexão com menor módulo é o factor de reflexão à saída, com um valor de $ -42.123 dB $, no entanto, no amplificador com tecnologia de microfita, já é o factor de reflexão à entrada que apresenta o menor módulo, tomando o valor de $ -36.175 dB $, é esta a alteração de valores que é relevante para o funcionamento do circuito, e que pode ser justificada, tal como as outras diferenças entre os amplificadores, com as perdas nas microfitas.\todo{Acho que já está fixe.}
-
+A diferença entre os gráficos obtidos no amplificador de linhas ideais (Figuras \ref{fig:ideal_estavel}, \ref{fig:ideal_S} e \ref{fig:ideal_noise}) e o amplificador com a tecnologia de microfita (Figuras \ref{fig:mf_est}, \ref{fig:mf_S} e \ref{fig:mf_noise}) são relevantes, especialmente em zonas perto das frequências 16 GHz e 18 GHz. No entanto, a maior parte dos valores que se obtêm para a frequência de 22 GHz não apresentam diferenças tão relevantes, tal como se pode observar na Tabela \ref{tab:comparacao}. O valor do factor de reflexão à entrada tem uma queda no valor do módulo para quase metade, no entanto, essa diferença não terá um efeito tão significativo no funcionamento do amplificador. No amplificador com linhas ideais, o factor de reflexão com menor módulo é o factor de reflexão à saída, com um valor de $-42.123$ dB, no entanto, no amplificador com tecnologia de microfita, já é o factor de reflexão à entrada que apresenta o menor módulo, tomando o valor de $-36.175$ dB. É esta alteração de valores que é relevante para o funcionamento do circuito, e que pode ser justificada, tal como as outras diferenças entre os amplificadores, com as perdas nas microfitas.
 
 \subsection{Concretização do amplificador em tecnologia de microfita}
 
@@ -463,7 +461,7 @@ Nesta segunda fase o circuito do amplificador será todo projectado com a tecnol
 
 \subsubsection{a) Introdução de elementos que simulam descontinuidades nas linhas}
 
-Em primeiro lugar substitui-se ambas as bobines  e as suas respectivas fontes de tensão pelo bloco demonstrado na Figura \ref{fig:bobine}, De modo a utilizar tecnologia de microfita para simular as bobines. \todo{this sentence is no longer so weird}
+Em primeiro lugar, substitui-se ambas as bobines e as suas fontes de tensão pelo bloco demonstrado na Figura \ref{fig:bobine}, isto de modo a utilizar tecnologia de microfita para simular as bobines. 
 
 \begin{figure}[H]
 	\centering
@@ -527,49 +525,41 @@ Como se pode observar, os resultados obtidos não são satisfatórios, os valore
 	\label{fig:descont_noise_pos_tune}
 \end{figure}
 
-\todo{Fazer uma tabela}
+Na tabela que se apresenta de seguida está uma comparação entre os vários métodos utilizados para projectar o amplificador.
+
+\begin{table}[H]
+	\centering
+	\caption{Comparação dos parâmetros que definem o amplificador entre vários métodos de implementação.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/compfinal}
+\end{table}
 
 %Comentar tabela que falta fazer.
 %Comentar que queria-se pelo menos -15dB nos factores de reflexão, e que os dois factores de reflexão são tão bons como o pior deles, ou seja não queremos um em -15 e outro em -60, é bem melhor os dois em -20. ou seja tao forte como o mais fraco lol
 
 \subsubsection{b) Substituição do transístor e condensadores}
 
-<<<<<<< HEAD
-Em primeiro lugar temos de descobrir as dimensões dos condensadores, sabendo que estes têm um valor de $ 39 pF $, foi necessário recorrer a uma \textit{datasheet} de condensadores com esse valor, foi escolhida a \textit{datasheet} do elemento \texttt{KEMET Part Number: C0402C390J5GACTU} e as suas dimensões podem ser consultadas na Figura \ref{fig:capacitor}.
-=======
-Em primeiro lugar, tem de se descobrir as dimensões dos condensadores e, sabendo que estes têm um valor de \todo{valor de CD}, foi necessário recorrer a uma \textit{datasheet} de condensadores com esse valor. As suas dimensões podem ser consultadas na Figura \ref{fig:capacitor}, sendo de notar que esses valores se encontram em \textit{inches}), e são calculados na Equação \ref{eq:capacitor}.
->>>>>>> origin/branch-de-ERap
+Em primeiro lugar, tem de se descobrir as dimensões dos condensadores e, sabendo que estes têm um valor de 39 Pf, foi necessário recorrer a uma \textit{datasheet} de condensadores com esse valor, sendo escolhida a do elemento \texttt{KEMET Part Number: C0402C390J5GACTU}. As suas dimensões podem ser consultadas na Figura \ref{fig:capacitor}, sendo de notar que esses valores se encontram em \textit{inches}), e são calculados na Equação \ref{eq:capacitor2}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/capacitor}
 	\vspace{-0.5em}
 	\caption{Dimensões dos condensadores.}
-	\vspace{-0.8em}
+	\vspace{-9mm}
 	\label{fig:capacitor}
 \end{figure}
 
-<<<<<<< HEAD
-Podemos então usar os valores calculados na Equação \ref{eq:capacitor} para as dimensões dos elementos \texttt{MGAP} a utilizar para substituir os condensadores, no entanto, como os condensadores têm uma largura diferente da do canal onde está a ser inserido, teremos de usar \texttt{MSTEP}'s para adaptar os nossos condensadores ao canal.
-
-\begin{equation}
-W_{\texttt{MGAP}} = W_{\textit{datasheet}} + |tolerance| = 0.505 mm ~~ \text{e} ~~ S_{\texttt{MGAP}} = L_{\textit{datasheet}} + |tolerance| = 1.06 mm
-\label{eq:capacitor}
-\end{equation}
-
-Para substituir o transistor pelo elemento \texttt{MGAP} teremos de descobrir as dimensões de largura e comprimento a utilizar, ao se consultar o \textit{datasheet} do transistor é possível  concluir que o encapsulamento tem $ 1.76 mm $, pelo que é necessário uma dimensão S do elemento \texttt{MGAP} ligeiramente superior, digamos $ 2.5 mm $. Em relação à largura do \texttt{MGAP}, esta tem de coincidir com o tamanho das patas da \textit{gate} e do \textit{dreno} do transistor, $ 0.51 mm $. Mais uma vez, como a dimensão da largura do \texttt{MGAP} não é igual à do canal em que este será inserido, foram usados elementos\texttt{MSTEP} para adaptar o canal.
-=======
 \vspace{-3mm}
 \begin{equation}
-W = 0.508~\text{mm} ~~ \text{e} ~~ S = L - 2*\frac{E}{B} = 0.8128~\text{mm}
-\label{eq:capacitor}
+	W_{\texttt{MGAP}} = W_{\textit{datasheet}} + \lvert\text{tolerance}\rvert = 0.505~\text{mm} ~~ \text{e} ~~ S_{\texttt{MGAP}} = L_{\textit{datasheet}} + \lvert\text{tolerance}\rvert = 1.06~\text{mm}.
+	\label{eq:capacitor2}
 \end{equation}
 
-\vspace{1mm}
+\vspace{-1mm}
 Pode-se então determinar a dimensão dos elementos \texttt{MGAP} a utilizar para substituir os condensadores. No entanto, como os condensadores têm uma largura diferente da do canal onde estão a ser inseridos, é necessário usar \texttt{MSTEP's} para adaptar os condensadores ao canal.
 
-Para substituir o transístor pelo elemento \texttt{MGAP} tem de se calcular as dimensões de largura e comprimento a utilizar. Aa se consultar o \textit{datasheet} do transístor é possível concluir que o encapsulamento tem $1.76$ mm, pelo que é necessário uma dimensão S do elemento \texttt{MGAP} ligeiramente superior, diga-se $2.5$ mm. Em relação à largura do \texttt{MGAP}, esta tem de coincidir com o tamanho dos \textit{pins} da \textit{gate} e do \textit{dreno} do transístor, $0.51$ mm. Mais uma vez, como a dimensão da largura do \texttt{MGAP} não é igual à do canal em que este será inserido, foram usados elementos\texttt{MSTEP} para adaptar o canal.
->>>>>>> origin/branch-de-ERap
+Para substituir o transístor pelo elemento \texttt{MGAP} tem de se calcular as dimensões de largura e comprimento a utilizar. Ao se consultar o \textit{datasheet} do transístor é possível concluir que o encapsulamento tem $1.76$ mm, pelo que é necessário uma dimensão S do elemento \texttt{MGAP} ligeiramente superior, diga-se $2.5$ mm. Em relação à largura do \texttt{MGAP}, esta tem de coincidir com o tamanho dos \textit{pins} da \textit{gate} e do \textit{dreno} do transístor, $0.51$ mm. Mais uma vez, como a dimensão da largura do \texttt{MGAP} não é igual à do canal em que este será inserido, foram usados elementos\texttt{MSTEP} para adaptar o canal.
 
 O circuito que resulta destas substituições dos condensadores e transístores pode ser observado na Figura \ref{fig:Circuito_layout}.
 
