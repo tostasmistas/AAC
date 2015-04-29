@@ -400,18 +400,13 @@ Com esta modificação obtém-se um circuito diferente do anterior, Figura \ref{
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.41]{exps/Circuito_mf}
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_mf}
 	\vspace{-0.5em}
 	\caption{Circuito com microfitas, linhas e \textit{locs}.}
 	\vspace{-0.8em}
 	\label{fig:circuito_mf}
 \end{figure}
 
-Como se pode observar na Figura \ref{fig:mf_est} (a escala da figura foi ajustada de modo a permitir uma melhor observação da evolução do parâmetro de estabilidade), e em comparação com o que se verifica na Figura \ref{fig:ideal_estavel}, o parâmetro de estabilidade para 22 GHz apresenta um erro relativo baixo e garante a estabilidade do amplificador para 22GHz. Como se pode observar, apenas se pode garantir a estabilidade incondicional numa banda de aproximadamente 15 GHz a 30 GHz.
-
-Como se pode observar na Carta de Smith, pode-se concluir que quando carregado com 50ohm garante-se a estabilidade do circuito em banda larga (10 a 30).
-
-\todo{Verificar estabilidade em banda larga.}
 
 \begin{figure}[H]
 	\centering
@@ -422,7 +417,22 @@ Como se pode observar na Carta de Smith, pode-se concluir que quando carregado c
 	\label{fig:mf_est}
 \end{figure}
 
-Na Figura \ref{fig:mf_S} verifica-se que os gráficos apresentam uma forma muito diferente da apresentada antes da alteração nos \textit{stubs}, Figura \ref{fig:mf_stub_S}, sendo esta mudança também verificada na Figura \ref{fig:mf_noise}. Ambos os gráficos não apresentam a forma esperada aquando da simulação do amplificador com linhas ideais, efeito causado pela alteração realizada nos \textit{stubs}.
+Como se pode observar na Figura \ref{fig:mf_est} (a escala da figura foi ajustada de modo a permitir uma melhor observação da evolução do parâmetro de estabilidade), e em comparação com o que se verifica na Figura \ref{fig:ideal_estavel}, o parâmetro de estabilidade para 22 GHz apresenta um erro relativo baixo e garante a estabilidade do amplificador para 22GHz. Como se pode observar, apenas se pode garantir a estabilidade incondicional numa banda que vai de aproximadamente 14.5 GHz a 30 GHz.
+
+Foi realizada uma nova simulação para determinar a estabilidade do amplificador em banda larga, que pode ser vista na Figura \ref{fig:mf_smith}. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.41]{exps/mf_smith}
+	\vspace{-0.5em}
+	\caption{Estabilidade do amplificador com malhas de linhas e \textit{locs}.}
+	\vspace{-0.8em}
+	\label{fig:mf_smith}
+\end{figure}
+
+Como se pode observar na Carta de Smith, pode-se concluir que quando carregado com 50$\Omega$, garante-se a estabilidade do circuito em banda larga (10 GHz a 30 GHz). Isto verifica-se pois os parâmetros $S_{11}$ e $S_{22}$ (correspondentes às circunferências de estabilidade) encontram-se contidos no interior da Carta de Smith.
+
+\vspace{2mm}
 
 \begin{figure}[H]
 	\centering
@@ -441,6 +451,8 @@ Na Figura \ref{fig:mf_S} verifica-se que os gráficos apresentam uma forma muito
 	\vspace{-0.8em}
 	\label{fig:mf_noise}
 \end{figure}
+
+Na Figura \ref{fig:mf_S} verifica-se que os gráficos apresentam uma forma muito diferente da apresentada antes da alteração nos \textit{stubs}, Figura \ref{fig:mf_stub_S}, sendo esta mudança também verificada na Figura \ref{fig:mf_noise}. Ambos os gráficos não apresentam a forma esperada aquando da simulação do amplificador com linhas ideais, efeito causado pela alteração realizada nos \textit{stubs}.
 
 Na tabela abaixo encontra-se uma tabela com uma síntese dos parâmetros do amplificador quando projectado com linhas ideais e com microfita.
 
@@ -499,7 +511,7 @@ Como se pode observar, os resultados obtidos não são satisfatórios, os valore
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.45]{exps/descont_S_pos_tune}
+	\includegraphics[keepaspectratio=true, scale=0.41]{exps/descont_S_pos_tune}
 	\vspace{-0.5em}
 	\caption{Simulação dos parâmetros S do amplificador com descontinuidades simuladas pós-\texttt{TUNE}.}
 	\vspace{-0.8em}
@@ -508,16 +520,29 @@ Como se pode observar, os resultados obtidos não são satisfatórios, os valore
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.45]{exps/descont_estab_pos_tune}
+	\includegraphics[keepaspectratio=true, scale=0.41]{exps/descont_estab_pos_tune}
 	\vspace{-0.5em}
 	\caption{Estabilidade do amplificador com descontinuidades simuladas pós-\texttt{TUNE}.}
 	\vspace{-0.8em}
 	\label{fig:descont_estab_pos_tune}
 \end{figure}
 
+Como se pode observar na Figura \ref{fig:descont_estab_pos_tune}, o parâmetro de estabilidade para 22 GHz apresenta um valor que garante a estabilidade incondicional do amplificador para 22GHz. Como se pode observar, apenas se pode garantir a estabilidade incondicional numa banda que vai de aproximadamente 15 GHz a 30 GHz. No entando, foi realizada uma nova simulação para determinar a estabilidade do amplificador em banda larga, que pode ser vista na Figura \ref{fig:descont_smith_pos_tune}. 
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.45]{exps/descont_noise_pos_tune}
+	\includegraphics[keepaspectratio=true, scale=0.41]{exps/descont_smith_pos_tune}
+	\vspace{-0.5em}
+	\caption{Estabilidade do amplificador com descontinuidades simuladas pós-\texttt{TUNE}.}
+	\vspace{-0.8em}
+	\label{fig:descont_smith_pos_tune}
+\end{figure}
+
+Como se pode observar na Carta de Smith, pode-se concluir que quando carregado com 50$\Omega$, garante-se a estabilidade do circuito em banda larga (10 GHz a 30 GHz). Isto verifica-se pois os parâmetros $S_{11}$ e $S_{22}$ (correspondentes às circunferências de estabilidade) encontram-se contidos no interior da Carta de Smith.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.41]{exps/descont_noise_pos_tune}
 	\vspace{-0.5em}
 	\caption{Factor de ruído no amplificador com descontinuidades simuladas pós-\texttt{TUNE}.}
 	\vspace{-0.8em}
@@ -530,7 +555,7 @@ Na Tabela \ref{tab:comparacao_final} está uma comparação entre os vários mé
 	\centering
 	\caption{Comparação dos parâmetros que definem o amplificador entre vários métodos de implementação.}
 	\vspace{-1.5mm}
-	\includegraphics[keepaspectratio=true, scale=0.45]{exps/compfinal}
+	\includegraphics[keepaspectratio=true, scale=0.41]{exps/compfinal}
 	\label{tab:comparacao_final}
 \end{table}
 
@@ -588,7 +613,7 @@ O \textit{layout} obtido é satisfatório visto que apresenta as microfitas proj
  
 \section{Conclusões}
 
-Foi projectado e simulado um amplificador preparado para trabalhar na frequência de 22 GHz utilizando a tecnologia de microfita. Em análise à Tabela \ref{tab:comparacao_final} podemos concluir que as especificações da Tabela \ref{tab:car} foram alcançadas, desde o ponto de funcionamento em repouso, ao ganho de transdução.
+Foi projectado e simulado um amplificador preparado para trabalhar na frequência de 22 GHz utilizando a tecnologia de microfita. Em análise à Tabela \ref{tab:comparacao_final} pode-se concluir que as especificações da Tabela \ref{tab:car} foram alcançadas, desde o ponto de funcionamento em repouso, ao ganho de transdução.
 
 Ao utilizar o ADS e as suas ferramentas, concluiu-se que é um programa de grande utilidade, e que o seu potencial é enorme para projectar circuitos que trabalhem em altas frequências.
 
