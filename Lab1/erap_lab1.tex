@@ -170,7 +170,7 @@ O circuito com malhas de adaptação é apresentado de seguida.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[keepaspectratio=true, scale=0.35]{teoricas/malhas}
+	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/malhas}
 	\vspace{-0.5em}
 	\caption{Circuito que inclui as malhas de adaptação à entrada e à saída.}
 	\vspace{-0.8em}
@@ -232,7 +232,7 @@ No ADS, com recurso à Carta de Smith, determinou-se o comprimento eléctrico da
 
 Como se pode ver, para este caso o \textit{stub} é maior e, como tal, não é a solução preferível.
 
-Olhando agora para a malha de saída, ou seja, para a carga e sabendo que a malha de adaptação é do tipo linha-\textit{stub}, o circuito que se pretende projectar é da seguinte forma.
+Olhando agora para a malha de saída, ou seja, para a carga e sabendo que a malha de adaptação é do tipo linha-\textit{stub}, o circuito que se pretende projectar é apresentado na próxima página.
 
 \begin{figure}[H]
 	\centering
@@ -326,10 +326,7 @@ Das simulações anteriores foram obtidos os seguintes resultados.
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/pergunta4}
 \end{table}
 
-O ganho de transdução, $G_T$, é definido como o rácio entre a potência entregue à carga (\textit{load}) e a potência disponível da fonte (\textit{source}). Quando numa situação de adaptação conjugada simultânea $G_T = \text{MAG}$.
-
-Teoricamente, o factor de reflexão na saída deve ser infinito,  
-\todo{teoria}
+O ganho de transdução, $G_T$, é definido como o rácio entre a potência entregue à carga (\textit{load}) e a potência disponível da fonte (\textit{source}). Quando numa situação de adaptação conjugada simultânea $G_T = \text{MAG}$. Em relação aos factores de reflexão na saída e entrada, o seu valor teórico é de $-\infty$, o que corresponde aos valores obtidos em dB na simulação. 
 
 \subsubsection{b) Projecto do amplificador utilizando tecnologia microfita}
 
@@ -410,7 +407,9 @@ Com esta modificação obtém-se um circuito diferente do anterior, Figura \ref{
 	\label{fig:circuito_mf}
 \end{figure}
 
-Como se pode observar na Figura \ref{fig:mf_est} (a escala da figura foi ajustada de modo a permitir uma melhor observação da evolução do parâmetro de estabilidade), e em comparação com o que se verifica na Figura \ref{fig:ideal_estavel}, o parâmetro de estabilidade para 22 GHz apresenta um erro relativo baixo e garante a estabilidade do amplificador para 22GHz.
+Como se pode observar na Figura \ref{fig:mf_est} (a escala da figura foi ajustada de modo a permitir uma melhor observação da evolução do parâmetro de estabilidade), e em comparação com o que se verifica na Figura \ref{fig:ideal_estavel}, o parâmetro de estabilidade para 22 GHz apresenta um erro relativo baixo e garante a estabilidade do amplificador para 22GHz. Como se pode observar, apenas se pode garantir a estabilidade incondicional numa banda de aproximadamente 15 GHz a 30 GHz.
+
+Como se pode observar na Carta de Smith, pode-se concluir que quando carregado com 50ohm garante-se a estabilidade do circuito em banda larga (10 a 30).
 
 \todo{Verificar estabilidade em banda larga.}
 
@@ -589,8 +588,8 @@ O \textit{layout} obtido é satisfatório visto que apresenta as microfitas proj
  
 \section{Conclusões}
 
-Foi projectado e simulado um amplificador preparado para trabalhar na frequência de 22 GHz utilizando a tecnologia de microfita. Em análise à Tabela \ref{tab:comparacao_final} podemos concluir que as especificações(Tabela \ref{tab:car}) foram alcançadas, desde o ponto de funcionamento em repouso, ao ganho em de transdução.
+Foi projectado e simulado um amplificador preparado para trabalhar na frequência de 22 GHz utilizando a tecnologia de microfita. Em análise à Tabela \ref{tab:comparacao_final} podemos concluir que as especificações da Tabela \ref{tab:car} foram alcançadas, desde o ponto de funcionamento em repouso, ao ganho de transdução.
 
-Ao utilizar o ADS e as suas ferramentas, concluiu-se que é um programa de grande utilidade e que o seu potencial é enorme para projectar circuitos que trabalhem em altas frequências.
+Ao utilizar o ADS e as suas ferramentas, concluiu-se que é um programa de grande utilidade, e que o seu potencial é enorme para projectar circuitos que trabalhem em altas frequências.
 
 \end{document}
