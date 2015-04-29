@@ -86,7 +86,7 @@ As especificações do amplificador a construir podem ser consultadas na tabela 
 	\label{tab:car}
 \end{table}
 
-De notar que o valor da espessura do substrato foi modificado de 0.78 mm para 0.35 mm com o objectivo de garantir propagação transversal nas linhas de microfita, ou seja, garantir que estas têm um comprimento maior que a largura. 
+De notar que o valor da espessura do substrato foi modificado de 0.78 mm para 0.35 mm, com o objectivo de garantir propagação transversal nas linhas de microfita, ou seja, garantir que estas têm um comprimento maior que a largura. 
 
 Numa primeira fase do trabalho laboratorial é projectado e simulado o amplificador uniandar com linhas simétricas. Na segunda fase o amplificador é projectado com tecnologia de microfita.
 
@@ -295,7 +295,7 @@ Em primeiro lugar testa-se a estabilidade do circuito a 22 GHz, estabilidade est
 	\label{fig:ideal_estavel}
 \end{figure}
 
-Através da simulação foi possível obter os parâmetros S, sendo que a parcela $S_{12}$ não representa uma característica relevante no amplificador e, por isso, não foi projectada. Ao observar a Figura \ref{fig:ideal_S}, e tendo em conta que a parcela $S_{11}$ representa o factor de reflexão à entrada, $S_{22}$ representa o factor de reflexão na saída e $S_{21}$ representa o ganho de transdução, podemos reparar que o amplificador está projectado para a frequência de $ 22 GHz $, e que apresenta um valor para o ganho de transdução esperado.
+Através da simulação foi possível obter os parâmetros S, sendo que a parcela $S_{12}$ não representa uma característica relevante no amplificador e, por isso, não foi projectada. Ao observar a Figura \ref{fig:ideal_S}, e tendo em conta que a parcela $S_{11}$ representa o factor de reflexão à entrada, $S_{22}$ representa o factor de reflexão na saída e $S_{21}$ representa o ganho de transdução, podemos reparar que o amplificador está projectado para a frequência de 22 GHz, e que apresenta um valor para o ganho de transdução esperado.
 
 \begin{figure}[H]
 	\centering
@@ -326,11 +326,7 @@ Das simulações anteriores foram obtidos os seguintes resultados.
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/pergunta4}
 \end{table}
 
-\todo{valor do parametro de estabilidade?}
-
-
 \todo{Tirar conclusões sobre isto, mas poucas isto é tipo a experiência base, o ideal, se calhar explicava-se o que significa cada coisa. é para comparar com a teoria?}
-
 
 \subsubsection{b) Projecto do amplificador utilizando tecnologia microfita}
 
@@ -411,7 +407,8 @@ Com esta modificação obtém-se um circuito diferente do anterior, Figura \ref{
 	\label{fig:circuito_mf}
 \end{figure}
 
-Como se pode observar na Figura \ref{fig:mf_est}(a escala da figura foi ajustada de modo a permitir uma melhor observação da evolução do parâmetro de estabilidade), e em comparação com o que se verifica na Figura \ref{fig:ideal_estavel}, o parâmetro de estabilidade para 22 GHz apresenta um erro relativo baixo e garante a estabilidade do amplificador para 22GHz.
+Como se pode observar na Figura \ref{fig:mf_est} (a escala da figura foi ajustada de modo a permitir uma melhor observação da evolução do parâmetro de estabilidade), e em comparação com o que se verifica na Figura \ref{fig:ideal_estavel}, o parâmetro de estabilidade para 22 GHz apresenta um erro relativo baixo e garante a estabilidade do amplificador para 22GHz.
+
 \todo{Verificar estabilidade em banda larga.}
 
 \begin{figure}[H]
@@ -525,7 +522,7 @@ Como se pode observar, os resultados obtidos não são satisfatórios, os valore
 	\label{fig:descont_noise_pos_tune}
 \end{figure}
 
-Na tabela \ref{tab:comparacao_final} está uma comparação entre os vários métodos utilizados para projectar o amplificador.
+Na Tabela \ref{tab:comparacao_final} está uma comparação entre os vários métodos utilizados para projectar o amplificador.
 
 \begin{table}[H]
 	\centering
@@ -535,13 +532,13 @@ Na tabela \ref{tab:comparacao_final} está uma comparação entre os vários mé
 	\label{tab:comparacao_final}
 \end{table}
 
-Um dos objectivos do do projecto do amplificador, tal como se pode \ref{tab:car} era obter um ganho de transdução máximo, tendo sido realizada a adaptação conjugada simultânea com esse objectivo, sendo que o valor esperado para o ganho de transdução seria o apresentado na Tabela \ref{tab:param_S} como MAG, e como se pode observar, o valor obtido é bastante próximo e apresenta uma diferença de $ 0.257 dB $, que pode ser causada pelas perdas nas microfitas. Não existia qualquer tipo de especificação em relação ao factor de ruído, no entanto, em relação ao amplificador com linhas ideais, o projecto final do amplificador (Amplificador sem descontinuidades Pós-Tune) apresenta um valor mais satisfatório, diminuindo ainda mais a importância da diferença entre o ganho de transdução dos dois amplificadores (linhas ideais e projecto final).
+Um dos objectivos do projecto do amplificador, tal como se pode ver na Tabela \ref{tab:car}, era obter um ganho de transdução máximo, tendo sido realizada a adaptação conjugada simultânea com esse objectivo, sendo que o valor esperado para o ganho de transdução seria o apresentado na Tabela \ref{tab:param_S} como MAG. Como se pode observar, o valor obtido é bastante próximo e apresenta uma diferença de $0.257$ dB, que é causada pelas perdas nas microfitas. Não existia qualquer tipo de especificação em relação ao factor de ruído, no entanto, em relação ao amplificador com linhas ideais, o projecto final do amplificador (amplificador sem descontinuidades pós-\textit{tune}) apresenta um valor mais satisfatório, diminuindo ainda mais a importância da diferença entre o ganho de transdução dos dois amplificadores (linhas ideais e projecto final).
 
-Os valores de ambos os factores de reflexão são muito inferiores em módulo em relação aos simulados no amplificador com linhas ideais, isto acontece pois o objectivo durante a utilização da ferramenta de optimização (\texttt{TUNE}) era maximizar o valor do ganho de transdução, manter o máximo do ganho de transdução e os mínimos de ambos os factores de reflexão centrados na frequência 22 GHz, sem comprometer em demasia os valores mínimos de ambos os factores de reflexão. Tendo em conta que, por exemplo, obter um factor de reflexão à entrada com o valor de -79 dB e à saída com um valor de -10 dB, é muito menos favorável que ter ambos os factores de reflexão a -15 dB. Foi definido como valor mínimo aceitável para ambos os factores de reflexão, -15 dB, no entanto, enquanto o processo de optimização avançava, a precisão do \texttt{TUNE} era aumentada progressivamente. Foram então obtidos os valores apresentados na Tabela \ref{tab:comparacao_final}.
+Os valores de ambos os factores de reflexão são muito inferiores em módulo em relação aos simulados no amplificador com linhas ideais. Isto acontece pois o objectivo durante a utilização da ferramenta de optimização (\texttt{TUNE}) era maximizar o valor do ganho de transdução, manter o máximo do ganho de transdução e os mínimos de ambos os factores de reflexão centrados na frequência 22 GHz, sem comprometer em demasia os valores mínimos de ambos os factores de reflexão. É preciso ter em conta que, por exemplo, obter um factor de reflexão à entrada com o valor de -79 dB e à saída com um valor de -10 dB é muito menos favorável que ter ambos os factores de reflexão a -15 dB. Assim, foi definido como valor mínimo aceitável para ambos os factores de reflexão -15 dB, no entanto, enquanto o processo de optimização avançava, a precisão do \texttt{TUNE} era aumentada progressivamente. Foram então obtidos os valores apresentados na Tabela \ref{tab:comparacao_final}.
 
 \subsubsection{b) Substituição do transístor e condensadores}
 
-Em primeiro lugar, tem de se descobrir as dimensões dos condensadores e, sabendo que estes têm um valor de 39 pF, foi necessário recorrer a uma \textit{datasheet} de condensadores com esse valor, sendo escolhida a do elemento \texttt{KEMET Part Number: C0402C390J5GACTU}. As suas dimensões podem ser consultadas na Figura \ref{fig:capacitor}, e são calculados na Equação \ref{eq:capacitor2}.
+Em primeiro lugar, tem de se determinar as dimensões dos condensadores e, sabendo que estes têm um valor de 39 pF, foi necessário recorrer a uma \textit{datasheet} de condensadores com esse valor, sendo escolhida a do elemento \texttt{KEMET Part Number: C0402C390J5GACTU}. As suas dimensões podem ser consultadas na Figura \ref{fig:capacitor}, e são calculados na Equação \ref{eq:capacitor2}.
 
 \begin{figure}[H]
 	\centering
