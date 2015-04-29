@@ -525,21 +525,23 @@ Como se pode observar, os resultados obtidos não são satisfatórios, os valore
 	\label{fig:descont_noise_pos_tune}
 \end{figure}
 
-Na tabela que se apresenta de seguida está uma comparação entre os vários métodos utilizados para projectar o amplificador.
+Na tabela \ref{tab:comparacao_final} está uma comparação entre os vários métodos utilizados para projectar o amplificador.
 
 \begin{table}[H]
 	\centering
 	\caption{Comparação dos parâmetros que definem o amplificador entre vários métodos de implementação.}
 	\vspace{-1.5mm}
 	\includegraphics[keepaspectratio=true, scale=0.45]{exps/compfinal}
+	\label{tab:comparacao_final}
 \end{table}
 
-%Comentar tabela que falta fazer.
-%Comentar que queria-se pelo menos -15dB nos factores de reflexão, e que os dois factores de reflexão são tão bons como o pior deles, ou seja não queremos um em -15 e outro em -60, é bem melhor os dois em -20. ou seja tao forte como o mais fraco lol
+Um dos objectivos do do projecto do amplificador, tal como se pode \ref{tab:car} era obter um ganho de transdução máximo, tendo sido realizada a adaptação conjugada simultânea com esse objectivo, sendo que o valor esperado para o ganho de transdução seria o apresentado na Tabela \ref{tab:param_S} como MAG, e como se pode observar, o valor obtido é bastante próximo e apresenta uma diferença de $ 0.257 dB $, que pode ser causada pelas perdas nas microfitas. Não existia qualquer tipo de especificação em relação ao factor de ruído, no entanto, em relação ao amplificador com linhas ideais, o projecto final do amplificador (Amplificador sem descontinuidades Pós-Tune) apresenta um valor mais satisfatório, diminuindo ainda mais a importância da diferença entre o ganho de transdução dos dois amplificadores (linhas ideais e projecto final).
+
+Os valores de ambos os factores de reflexão são muito inferiores em módulo em relação aos simulados no amplificador com linhas ideais, isto acontece pois o objectivo durante a utilização da ferramenta de optimização (\texttt{TUNE}) era maximizar o valor do ganho de transdução, manter o máximo do ganho de transdução e os mínimos de ambos os factores de reflexão centrados na frequência 22 GHz, sem comprometer em demasia os valores mínimos de ambos os factores de reflexão. Tendo em conta que, por exemplo, obter um factor de reflexão à entrada com o valor de -79 dB e à saída com um valor de -10 dB, é muito menos favorável que ter ambos os factores de reflexão a -15 dB. Foi definido como valor mínimo aceitável para ambos os factores de reflexão, -15 dB, no entanto, enquanto o processo de optimização avançava, a precisão do \texttt{TUNE} era aumentada progressivamente. Foram então obtidos os valores apresentados na Tabela \ref{tab:comparacao_final}.
 
 \subsubsection{b) Substituição do transístor e condensadores}
 
-Em primeiro lugar, tem de se descobrir as dimensões dos condensadores e, sabendo que estes têm um valor de 39 Pf, foi necessário recorrer a uma \textit{datasheet} de condensadores com esse valor, sendo escolhida a do elemento \texttt{KEMET Part Number: C0402C390J5GACTU}. As suas dimensões podem ser consultadas na Figura \ref{fig:capacitor}, sendo de notar que esses valores se encontram em \textit{inches}), e são calculados na Equação \ref{eq:capacitor2}.
+Em primeiro lugar, tem de se descobrir as dimensões dos condensadores e, sabendo que estes têm um valor de 39 pF, foi necessário recorrer a uma \textit{datasheet} de condensadores com esse valor, sendo escolhida a do elemento \texttt{KEMET Part Number: C0402C390J5GACTU}. As suas dimensões podem ser consultadas na Figura \ref{fig:capacitor}, e são calculados na Equação \ref{eq:capacitor2}.
 
 \begin{figure}[H]
 	\centering
