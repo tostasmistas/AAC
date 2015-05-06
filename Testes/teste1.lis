@@ -1,64 +1,63 @@
-|	.module flags
-|	.pseg
-0000:  0xc000	|	        lcl	r0, LOWBYTE ARR1
-0001:  0xc400	|	        lch	r0, HIGHBYTE ARR1
-0002:  0x8c00	|		zeros	r1
-0003:  0x90c8	|		inca	r2,r1
-0004:  0x82c2	|		store	r0,r2
-0005:  0x80c0	|		inca    r0,r0
-0006:  0x82c2	|		store	r0,r2
-0007:  0x80c0	|		inca    r0,r0
-0008:  0x82c2	|		store	r0,r2
-0009:  0x80c0	|		inca    r0,r0
-000a:  0x82c2	|		store	r0,r2
-000b:  0x80c0	|		inca    r0,r0
-000c:  0x82c2	|		store	r0,r2
-000d:  0x80c0	|		inca    r0,r0
-000e:  0x82c2	|		store	r0,r2
-000f:  0x80c0	|		inca    r0,r0
-0010:  0x82c2	|		store	r0,r2
-0011:  0x80c0	|		inca    r0,r0
-0012:  0x82c2	|		store	r0,r2
-0013:  0x80c0	|		inca    r0,r0
-0014:  0x82c2	|		store	r0,r2
-0015:  0x8180	|		deca	r0,r0
-0016:  0x8180	|		deca	r0,r0
-0017:  0x8180	|		deca	r0,r0
-0018:  0x8180	|		deca	r0,r0
-0019:  0x8180	|		deca	r0,r0
-001a:  0x8180	|		deca	r0,r0
-001b:  0x8180	|		deca	r0,r0
-001c:  0x8180	|		deca	r0,r0
-001d:  0x9d48	|		passa	r3,r1
-001e:  0x0501	|		jf.zero L1
-001f:  0x82c1	|		store	r0,r1
-0020:  0x80c0	|	L1:	inca	r0,r0
-0021:  0x9cc1	|		passb	r3,r1
-0022:  0x1501	|		jt.zero L2
-0023:  0x82c1	|		store	r0,r1
-0024:  0x80c0	|	L2:	inca	r0,r0		
-0025:  0x9c00	|		zeros	r3
-0026:  0x9998	|		deca	r3,r3
-0027:  0x98d8	|		inca	r3,r3
-0028:  0x0601	|		jf.carry L31
-0029:  0x82c1	|		store	r0,r1
-002a:  0x1302	|	L31:	jt.overflow L3
-002b:  0x80c0	|		inca	r0,r0
-002c:  0x82c1	|		store	r0,r1	
-002d:  0x80c0	|	L3:	inca	r0,r0
-002e:  0xd8ff	|		lcl	r3,255
-002f:  0xdc7f	|		lch	r3,127
-0030:  0x98d8	|		inca	r3,r3
-0031:  0x0301	|		jf.overflow L4
-0032:  0x82c1	|		store	r0,r1
-0033:  0x80c0	|	L4:	inca	r0,r0
-0034:  0x9250	|		asr	r2,r2
-0035:  0x0502	|		jf.zero L5
-0036:  0x90d0	|		inca	r2,r2
-0037:  0x82c1	|		store	r0,r1
-0038:  0x80c0	|	L5:	inca	r0,r0
-0039:  0x2fff	|	HLT:    j HLT
-003a:  0x0000	|	        nop
+c000
+c400
+8c00
+90c8
+82c2
+80c0
+82c2
+80c0
+82c2
+80c0
+82c2
+80c0
+82c2
+80c0
+82c2
+80c0
+82c2
+80c0
+82c2
+80c0
+82c2
+8180
+8180
+8180
+8180
+8180
+8180
+8180
+8180
+9d48
+0501
+82c1
+80c0
+9cc1
+1501
+82c1
+80c0		
+9c00
+9998
+98d8
+0601
+82c1
+1302
+80c0
+82c1	
+80c0
+d8ff
+dc7f
+98d8
+0301
+82c1
+80c0
+9250
+0502
+90d0
+82c1
+80c0
+2fff
+0000
+
 |	.dseg
 |	ARR1:
 0000:  0x0000	|	        .word  0               ; zero -> errou Z passa (1)

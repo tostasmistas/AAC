@@ -1,76 +1,74 @@
-|	.module teste3
-|	.pseg
-|	main:
-0000:  0xf000	|	     lcl r6, LOWBYTE ARR1
-0001:  0xf400	|	     lch r6, HIGHBYTE ARR1
-0002:  0xc00b	|	     lcl r0, LOWBYTE STACK
-0003:  0xc400	|	     lch r0, HIGHBYTE STACK
-0004:  0xc826	|	     lcl r1, LOWBYTE MUL
-0005:  0xcc00	|	     lch r1, HIGHBYTE MUL
-0006:  0x92b0	|	     load r2,r6                 
-0007:  0x9832	|	L1:  add r3,r6,r2  
-0008:  0xa298	|	     load r4,r3
-0009:  0xaa98	|	     load r5,r3
-000a:  0x3001	|	     jal r1
-000b:  0x82dd	|	     store r3,r5
-000c:  0x9190	|	     deca r2,r2  
-000d:  0x05f9	|	     jf.zero L1
-000e:  0xf000	|	SRT: lcl r6, LOWBYTE ARR1
-000f:  0xf400	|	     lch r6, HIGHBYTE ARR1
-0010:  0xbab0	|	     load r7,r6
-0011:  0xf000	|	L2:  lcl r6, LOWBYTE ARR1
-0012:  0xf400	|	     lch r6, HIGHBYTE ARR1
-0013:  0x82b0	|	     load r0,r6
-0014:  0x8180	|	     deca r0,r0
-0015:  0xb0f0	|	     inca r6,r6
-0016:  0xa8f0	|	L3:  inca r5,r6
-0017:  0x8ab0	|	     load r1,r6
-0018:  0x92a8	|	     load r2,r5
-0019:  0x994a	|	     sub r3,r1,r2
-001a:  0x1403	|	     jt.neg NOSW
-001b:  0xa548	|	     passa r4,r1
-001c:  0x8d50	|	     passa r1,r2
-001d:  0x9560	|	     passa r2,r4
-001e:  0x82f1	|	NOSW:store r6,r1
-001f:  0x82ea	|	     store r5,r2
-0020:  0xb0f0	|	     inca r6,r6
-0021:  0x8180	|	     deca r0,r0
-0022:  0x05f3	|	     jf.zero L3
-0023:  0xb9b8	|	     deca r7,r7
-0024:  0x05ec	|	     jf.zero L2
-0025:  0x2fff	|	HLT: j HLT
-0026:  0x82c1	|	MUL: store r0, r1
-0027:  0x80c0	|	     inca  r0, r0
-0028:  0x82c2	|	     store r0, r2
-0029:  0x80c0	|	     inca  r0, r0
-002a:  0x82c3	|	     store r0, r3 
-002b:  0x80c0	|	     inca  r0, r0
-002c:  0x82c4	|	     store r0, r4
-002d:  0x80c0	|	     inca  r0, r0
-002e:  0x82c6	|	     store r0, r6
-002f:  0x480f	|	     loadlit r1,15
-0030:  0x5001	|	     loadlit r2,1
-0031:  0x7000	|	     loadlit r6,0
-0032:  0x9c62	|	ML0: and r3,r4,r2
-0033:  0x1501	|	     jt.zero ML1
-0034:  0xb035	|	     add r6,r6,r5
-0035:  0xa260	|	ML1: asr r4,r4
-0036:  0xaa28	|	     lsl r5,r5
-0037:  0x8988	|	     deca r1,r1
-0038:  0x05f9	|	     jf.zero ML0
-0039:  0xad70	|	     passa r5,r6    
-003a:  0xb280	|	     load r6, r0
-003b:  0x8180	|	     deca r0, r0
-003c:  0xa280	|	     load r4, r0
-003d:  0x8180	|	     deca r0, r0
-003e:  0x9a80	|	     load r3, r0
-003f:  0x8180	|	     deca r0, r0
-0040:  0x9280	|	     load r2, r0
-0041:  0x8180	|	     deca r0, r0
-0042:  0x8a80	|	     load r1, r0
-0043:  0x3807	|	     jr r7
-|	.dseg
-|	ARR1:
+f000
+f400
+c00b
+c400
+c826
+cc00
+92b0
+9832
+a298
+aa98
+3001
+82dd
+9190
+05f9
+f000
+f400
+bab0
+f000
+f400
+82b0
+8180
+b0f0
+a8f0
+8ab0
+92a8
+994a
+1403
+a548
+8d50
+9560
+82f1
+82ea
+b0f0
+8180
+05f3
+b9b8
+05ec
+2fff
+82c1
+80c0
+82c2
+80c0
+82c3
+80c0
+82c4
+80c0
+82c6
+480f
+5001
+7000
+9c62
+1501
+b035
+a260
+aa28
+8988
+05f9
+ad70
+b280
+8180
+a280
+8180
+9a80
+8180
+9280
+8180
+8a80
+3807
+
+
+
 0000:  0x000a	|	      .word  10        ; Length of array
 0001:  0x0003	|	      .word  3
 0002:  0x0004	|	      .word  4
