@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/Nmac/Desktop/AAC/Unicicle/uRisc_multicicle/test_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_signed" />
+            <top_module name="std_logic_textio" />
+            <top_module name="std_logic_unsigned" />
+            <top_module name="test" />
+            <top_module name="textio" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="18" />
+   <wvobject fp_name="/test/clk_in" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_in</obj_property>
+      <obj_property name="ObjectShortName">clk_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/rst_in" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst_in</obj_property>
+      <obj_property name="ObjectShortName">rst_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/addr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">addr[11:0]</obj_property>
+      <obj_property name="ObjectShortName">addr[11:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/saida" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">saida[15:0]</obj_property>
+      <obj_property name="ObjectShortName">saida[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/clk_in_period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_in_period</obj_property>
+      <obj_property name="ObjectShortName">clk_in_period</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_InF/reg_pc_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_pc_in[11:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_pc_in[11:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_InF/jump_btb" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">jump_btb[11:0]</obj_property>
+      <obj_property name="ObjectShortName">jump_btb[11:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_InF/out_rom" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_rom[15:0]</obj_property>
+      <obj_property name="ObjectShortName">out_rom[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_InF/aux_saida_mux" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">aux_saida_mux[11:0]</obj_property>
+      <obj_property name="ObjectShortName">aux_saida_mux[11:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_InF/rep_pc_out" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rep_pc_out</obj_property>
+      <obj_property name="ObjectShortName">rep_pc_out</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_IDeOF/r0" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r0[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r0[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_IDeOF/r1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r1[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_IDeOF/r2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r2[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_IDeOF/r3" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r3[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r3[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_IDeOF/r4" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r4[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r4[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_IDeOF/r5" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r5[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r5[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_IDeOF/conflit_on" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">conflit_on</obj_property>
+      <obj_property name="ObjectShortName">conflit_on</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_IDeOF/conflit_dc" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">conflit_dc</obj_property>
+      <obj_property name="ObjectShortName">conflit_dc</obj_property>
+   </wvobject>
+</wave_config>

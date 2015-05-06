@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/Nmac/Documents/GitHub/AAC/uRisc_xilinx_1/test_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_signed" />
+            <top_module name="std_logic_textio" />
+            <top_module name="std_logic_unsigned" />
+            <top_module name="test" />
+            <top_module name="textio" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="30" />
+   <wave_markers>
+      <marker time="435000000" label="" />
+   </wave_markers>
+   <wvobject fp_name="/test/clk_in" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_in</obj_property>
+      <obj_property name="ObjectShortName">clk_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/rst_in" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst_in</obj_property>
+      <obj_property name="ObjectShortName">rst_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/unicicle" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">unicicle</obj_property>
+      <obj_property name="ObjectShortName">unicicle</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/addr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">addr[11:0]</obj_property>
+      <obj_property name="ObjectShortName">addr[11:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_InF/out_rom" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_rom[15:0]</obj_property>
+      <obj_property name="ObjectShortName">out_rom[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_IDeOF/flags_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">flags_in[3:0]</obj_property>
+      <obj_property name="ObjectShortName">flags_in[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/r1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r1[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/r2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r2[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/r3" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r3[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r3[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/r4" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r4[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r4[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/r5" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r5[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r5[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/r6" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r6[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r6[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/r7" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r7[15:0]</obj_property>
+      <obj_property name="ObjectShortName">r7[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_EXeMEM/p_alu" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">p_alu[15:0]</obj_property>
+      <obj_property name="ObjectShortName">p_alu[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_EXeMEM/q_alu" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">q_alu[15:0]</obj_property>
+      <obj_property name="ObjectShortName">q_alu[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_EXeMEM/sel_mux_q" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">sel_mux_q[1:0]</obj_property>
+      <obj_property name="ObjectShortName">sel_mux_q[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_EXeMEM/out_ari" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_ari[16:0]</obj_property>
+      <obj_property name="ObjectShortName">out_ari[16:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_memoria_RAM/addr_a" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">addr_a[11:0]</obj_property>
+      <obj_property name="ObjectShortName">addr_a[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_memoria_RAM/we_a" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">we_a</obj_property>
+      <obj_property name="ObjectShortName">we_a</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_memoria_RAM/di_a" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">di_a[15:0]</obj_property>
+      <obj_property name="ObjectShortName">di_a[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_EXeMEM/flags_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">flags_in[3:0]</obj_property>
+      <obj_property name="ObjectShortName">flags_in[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_InF/destino_cond" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">destino_cond[11:0]</obj_property>
+      <obj_property name="ObjectShortName">destino_cond[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_InF/jump_muxpc_in" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">jump_muxpc_in</obj_property>
+      <obj_property name="ObjectShortName">jump_muxpc_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_InF/flagtest_muxpc_in" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">flagtest_muxpc_in</obj_property>
+      <obj_property name="ObjectShortName">flagtest_muxpc_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_InF/reg_pc_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_pc_in[11:0]</obj_property>
+      <obj_property name="ObjectShortName">reg_pc_in[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_IDeOF/aux_active_flagtest" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">aux_active_flagtest</obj_property>
+      <obj_property name="ObjectShortName">aux_active_flagtest</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_IDeOF/aux_flagmux" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">aux_flagmux</obj_property>
+      <obj_property name="ObjectShortName">aux_flagmux</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_IDeOF/aux_flagtest" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">aux_flagtest</obj_property>
+      <obj_property name="ObjectShortName">aux_flagtest</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_IDeOF/aux_flagtest_muxpc" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">aux_flagtest_muxpc</obj_property>
+      <obj_property name="ObjectShortName">aux_flagtest_muxpc</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test/uut/inst_IDeOF/aux_test_nop" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">aux_test_nop</obj_property>
+      <obj_property name="ObjectShortName">aux_test_nop</obj_property>
+   </wvobject>
+</wave_config>
