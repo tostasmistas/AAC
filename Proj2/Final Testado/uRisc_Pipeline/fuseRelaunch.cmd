@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "secureip" -o "C:/Users/Nmac/Desktop/AAC/Unicicle/uRisc_Pipeline/test_isim_beh.exe" -prj "C:/Users/Nmac/Desktop/AAC/Unicicle/uRisc_Pipeline/test_beh.prj" "work.test" 
