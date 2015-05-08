@@ -79,7 +79,7 @@ Será apresentado em primeiro lugar, os métodos e técnicas de resolução dos 
 
 
 \subsection{Conflitos de dados, \textit{data hazards}}
-Conflito que surge quando uma instrução depende dos	resultados de uma instrução anterior de uma forma que afecta o resultado obtido pela linha de processamento.
+Conflito que surge quando uma instrução depende dos	resultados de uma instrução anterior, de forma a afectar o resultado obtido pela linha de processamento.
 
 \begin{itemize}
 	\item \textbf{Solução 1}: Bloqueio dos andares do pipeline, \textit{stall}, até que os dados correctos estejam disponíveis;
@@ -88,7 +88,14 @@ Conflito que surge quando uma instrução depende dos	resultados de uma instruç
 	\item \textbf{Solução 3}: Escalonar/reordenar as instruções, se a ordenação for feita pelo compilador, tem-se um escalonamento estático, se for feita pelo \textit{hardware}, escalonamento dinâmico;
 \end{itemize}
 
+\subsection{Conflitos de controlo, \textit{control hazards}}
+Conflito que surge quando uma instrução de controlo condicional depende dos	resultados de uma instrução anterior, de uma forma a impedir um predição correcta.
 
+\begin{itemize}
+	\item \textbf{Solução 1}: BTB, foi contruída uma BTB com 9 bits de largura e apenas um bit de predição (BPB);
+	\item \textbf{Solução 2}: \textit{forwarding} de flags, após se obter o resultado necessário para a predição, establece-se um bypass para verificar a condição do salto;
+	\vspace{-2.5mm}
+\end{itemize}
 
 \subsection{Conflitos de controlo, \textit{control hazards}}
 
