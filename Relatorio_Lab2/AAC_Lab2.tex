@@ -79,7 +79,7 @@ Será apresentado em primeiro lugar, os métodos e técnicas de resolução dos 
 
 
 \subsection{Conflitos de dados, \textit{data hazards}}
-Conflito que surge quando uma instrução depende dos	resultados de uma instrução anterior de uma forma que afecta o resultado obtido pela linha de processamento.
+Conflito que surge quando uma instrução depende dos	resultados de uma instrução anterior de uma forma que afecta o resultado obtido pela linha de processamento. De seguida está representado 3 soluções possíveis: 
 
 \begin{itemize}
 	\item \textbf{Solução 1}: Bloqueio dos andares do pipeline, \textit{stall}, até que os dados correctos estejam disponíveis;
@@ -87,7 +87,8 @@ Conflito que surge quando uma instrução depende dos	resultados de uma instruç
 	\vspace{-2.5mm}
 	\item \textbf{Solução 3}: Escalonar/reordenar as instruções, se a ordenação for feita pelo compilador, tem-se um escalonamento estático, se for feita pelo \textit{hardware}, escalonamento dinâmico;
 \end{itemize}
-
+\vspace{-2.5mm}
+Analisando as soluções apresentadas verificou-se que o escalonamento estático e dinâmico não seria a solução desejada devido a complexidade para um processador de 4 andares comparativamente às outras anteriores. Ponderou-se inicialmente a utilização de \textit{stalls} devido à facilidade de implementação mas devido ao inconveniente de reduzir o número médio de instruções por ciclo, optou-se pela segunda solução de forma a aumentar o número médio de instruções por ciclo como também a complexidade de implementação.
 
 
 \subsection{Conflitos de controlo, \textit{control hazards}}
