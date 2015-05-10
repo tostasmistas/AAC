@@ -9,8 +9,14 @@
 \usepackage{fixltx2e}
 \usepackage[bottom]{footmisc}
 \usepackage{color}
-\usepackage{todonotes}
-% \usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{xargs}                      % Use more than one optional parameter in a new commands
+\usepackage[pdftex,dvipsnames]{xcolor}  % Coloured text etc.
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
+\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
 \usepackage[font=footnotesize]{caption}
 
 \usepackage{titlesec}
@@ -41,7 +47,7 @@
 \textsc{\Large Mestrado Integrado em Engenharia Electrotécnica e de Computadores}\\[1.8cm]
 \textsc{\huge Arquitecturas Avançadas de Computadores}\\[0.25cm]
 
-{\huge \bfseries Descrição do processador $\mu$Risc a funcionar em pipeline\\[1.2cm]}
+{\huge \bfseries Descrição do processador $\mu$Risc a funcionar em \textit{pipeline}\\[1.2cm]}
 
 \begin{tabular}{ l l }
 Guilherme Branco Teixeira & \hspace{2mm} n.º 70214 \\ 
@@ -51,15 +57,13 @@ Nuno Miguel Rodrigues Machado & \hspace{2mm} n.º 74236
 
 \vfill
 
-{\large Lisboa, 7 de Maio 2014} 
+{\large Lisboa, 10 de Maio 2015} 
 
 \end{center}
 \end{titlepage}
  
 \pagenumbering{gobble}
 \clearpage
-
-\footnote{É de referir que as imagens e tabelas não foram colocadas em anexo de modo a permitir uma melhor compreensão do relatório.}
 
 \tableofcontents
 \pagebreak
@@ -69,35 +73,36 @@ Nuno Miguel Rodrigues Machado & \hspace{2mm} n.º 74236
 
 \section{Introdução}
 
-Com este trabalho laboratorial pretende-se projectar um processador $\mu$Risc com funcionamento \textit{pipelining}. O processador possui 4 andares de \textit{pipelining}, no primeiro andar é feito o \textit{instruction fetch} (IF), no segundo andar é feito o \textit{instruction decode} (ID) e o \textit{operand fetch} (OF), no terceiro andar são executadas operações da ALU (EX) e de acesso à memória de dados (MEM) e, por fim, no quarto é feita a escrita no banco de registos, o \textit{write back }(WB). Com o funcionamento em \textit{pipelining} poderá correr dois tipos de conflitos, dados \textit{(data hazards)} e de controlo \textit{(control hazards)}. 
+Com este trabalho laboratorial pretende-se projectar um processador $\mu$Risc com funcionamento em \textit{pipeline}. O processador possui 4 andares de \textit{pipelining}: no primeiro andar é feito o \textit{instruction fetch} (IF), no segundo andar é feito o \textit{instruction decode} (ID) e o \textit{operand fetch} (OF), no terceiro andar são executadas operações da ALU (EX) e de acesso à memória de dados (MEM) e, por fim, no quarto é feita a escrita no banco de registos, o \textit{write back }(WB). Com o funcionamento em \textit{pipelining} podem ocorrer dois tipos de conflitos - de dados \textit{(data hazards)} e de controlo \textit{(control hazards)}. 
  
-
 \section{Métodos de resolução para dependências e conflitos}
 
+Em primeiro lugar apresentam-se os métodos e técnicas de resolução dos conflitos de controlo e dados. Em segundo lugar quais as técnicas que foram de facto utilizadas.
 
-Será apresentado em primeiro lugar, os métodos e técnicas de resolução dos conflitos de controlo e dados. E em segundo lugar quais as técnicas utilizadas.
+\subsection{Conflitos de dados: \textit{data hazards}}
 
+\todo{referir que no nosso caso so ha conflitos do tipo RAW}
 
-\subsection{Conflitos de dados, \textit{data hazards}}
-Conflito que surge quando uma instrução depende dos	resultados de uma instrução anterior, de forma a afectar o resultado obtido pela linha de processamento.
+Um conflito de dados surge quando uma instrução depende dos	resultados da instrução anterior, de forma a afectar o resultado obtido pela linha de processamento.
 
 \begin{itemize}
-	\item \textbf{Solução 1}: Bloqueio dos andares do pipeline, \textit{stall}, até que os dados correctos estejam disponíveis;
-	\item \textbf{Solução 2}: Se o dado correcto existir algures no pipeline, estabelece-se um bypass para o andar correcto, aplica-se a técnica de \textit{forwarding};
+	\item \textbf{Solução 1}: Bloqueio dos andares do \textit{pipeline}, \textit{stall}, até que os dados correctos estejam disponíveis;
+	\item \textbf{Solução 2}: Se o dado correcto existir algures no \textit{pipeline}, estabelece-se um \textit{bypass} para o andar correcto, aplicando a técnica de \textit{forwarding};
 	\vspace{-2.5mm}
 	\item \textbf{Solução 3}: Escalonar/reordenar as instruções, se a ordenação for feita pelo compilador, tem-se um escalonamento estático, se for feita pelo \textit{hardware}, escalonamento dinâmico;
 \end{itemize}
 
-\subsection{Conflitos de controlo, \textit{control hazards}}
-Conflito que surge quando uma instrução de controlo condicional depende dos	resultados de uma instrução anterior, de uma forma a impedir um predição correcta.
+\subsection{Conflitos de controlo: \textit{control hazards}}
+
+Um conflito de controlo surge quando uma instrução de controlo condicional depende dos resultados de uma instrução anterior, de uma forma a impedir um predição correcta. \change{nao impede a prediccao}
 
 \begin{itemize}
-	\item \textbf{Solução 1}: BTB, foi contruída uma BTB com 9 bits de largura e apenas um bit de predição (BPB);
+	\item \textbf{Solução 1}: BTB, foi construída uma BTB com 9 bits de largura e apenas um bit de predição (BPB);
 	\item \textbf{Solução 2}: \textit{forwarding} de flags, após se obter o resultado necessário para a predição, establece-se um bypass para verificar a condição do salto;
 	\vspace{-2.5mm}
 \end{itemize}
 
-\subsection{Conflitos de controlo, \textit{control hazards}}
+\change{explicar o que é uma BTB, explicar BPB}
 
 \section{Estrutura do Processador}
 
