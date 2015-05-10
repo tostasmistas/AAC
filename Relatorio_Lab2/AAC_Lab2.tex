@@ -342,6 +342,11 @@ No primeiro teste (Tabela \ref{tab:teste1}) foi possível observar que nem sempr
 Em relação ao segundo teste (Tabela \ref{tab:teste2}), foi possível verificar que um processador com uma BTB, embora mais lento, apenas falhou apenas 23,3\% das predições, e que no terceiro teste falhou 65,2\% das predições. No caso destes dois testes, este aumento de precisão não correspondeu a um tempo de execução menor, no entanto, caso o teste fosse mais extenso seria possível observar um tempo de execução menor para um processador com \textit{branch prediction}.
 \section{Conclusões}
 
+Em primeiro lugar foi necessário colocar o circuito a funcionar em \textit{pipelining}, no entanto, no primeiro trabalho o circuito não estava a trabalhar em multi-ciclo, funcionava com todos os andares num só ciclo, este facto tornou a tarefa de colocar o circuito a funcionar em \textit{pipelining} mais complicada.
+A identificação de quais os conflitos de dados e controlo a considerar foi uma tarefa relativamente simples comparada com a implementação da resolução desses conflitos. A maior dificuldade deste trabalho foi a implementação de umas das soluções para os conflitos de controlo, nomeadamente a BTB.
+
+De referir que embora em testes tenham-se obtido resultados mais favorecedores (em termos de tempo de execução) para outros processadores sem a BTB, foi decidido que em testes mais exigentes(e com mais instruções de salto), um processador com BTB obteria resultados melhores, decidindo assim manter a BTB no processador final.
+
 \pagebreak
 
 \section{Anexos}
