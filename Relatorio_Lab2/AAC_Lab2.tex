@@ -107,57 +107,54 @@ Nuno Miguel Rodrigues Machado & \hspace{2mm} n.º 74236
 
 Com este trabalho laboratorial pretende-se projectar um processador $\mu$Risc com funcionamento em \textit{pipeline}. O processador possui 4 andares de \textit{pipelining}: no primeiro andar é feito o \textit{instruction fetch} (IF), no segundo andar é feito o \textit{instruction decode} (ID) e o \textit{operand fetch} (OF), no terceiro andar são executadas operações da ALU (EX) e de acesso à memória de dados (MEM) e, por fim, no quarto é feita a escrita no banco de registos, o \textit{write back }(WB). Com o funcionamento em \textit{pipelining} podem ocorrer dois tipos de conflitos - de dados \textit{(data hazards)} e de controlo \textit{(control hazards)}. 
 
-\todo{estrutura ideal do relatorio: 1:referir no geral que conflitos ha. 2:referir quais os conflitod que temos neste prcessador. 3:referir como os resolvemos. 4:comparar as arquitecturas que testámos. 5:entregar antes da meia-noite LooLoL}
-
 \section{Conflitos associados a uma arquitectura \textit{pipeline}}
-
-\textit{Read after Write} é um conflito de dados que acontece quando uma instrução precisa de ler um valor que ainda não foi escrito na memória pois pertence a uma intrução anterior que ainda não escreveu no seu registo de destino.
-
-\textit{Write after Read} é um conflito de dados que que ocorre quando uma instrução necessita de escrever num registo quando a uma instrução anterior ainda não leu o valor desse registo.
-
-\textit{Write after Write} é um conflito quando duas operações necessitam de escrever no mesmo registo ao mesmo tempo ou numa ordem incorrecta.
-
-Os conflitos \textit{Write after Read} e \textit{Write after Write} não ocorrem no nosso processador pois não existe qualquer tipo de \textit{bypassing} entre os seus andares, mantendo sempre a ordem das instruções intacta.
 
 \subsection{Conflitos estruturais}
 
 \subsection{Conflitos de dados}
 
-\todo{aqui por exemplo nos so vamos ter RAW. mas temos de explicar todos os que ha}
-
-\subsection{Conflitos de controlo}
- 
-\section{Métodos de resolução de conflitos}
-
-Em primeiro lugar apresentam-se os métodos e técnicas de resolução dos conflitos de controlo e dados. Em segundo lugar quais as técnicas que foram de facto utilizadas.
-
-\subsection{Conflitos de dados}
-
-Conflito que surge quando uma instrução depende dos	resultados de uma instrução anterior, de forma a afectar o resultado obtido pela linha de processamento.
+Um conflito de dados surge quando uma instrução depende dos	resultados de uma instrução anterior, de forma a afectar o resultado obtido pela linha de processamento. \todo{melhor intro, explicar o que e um conflito de dados}
 
 \begin{itemize}
-	\item \textbf{Solução 1}: Bloqueio dos andares do \textit{pipeline}, \textit{stall}, até que os dados correctos estejam disponíveis;
-	\item \textbf{Solução 2}: Se o dado correcto existir algures no \textit{pipeline}, estabelece-se um \textit{bypass} para o andar correcto, aplicando a técnica de \textit{forwarding};
+	\item \textit{Read After Write} (RAW): ocorre quando uma instrução precisa de ler um valor que ainda não foi escrito na memória, pois pertence a uma instrução anterior que ainda não escreveu no seu registo de destino;
 	\vspace{-2.5mm}
-	\item \textbf{Solução 3}: Escalonar/reordenar as instruções, se a ordenação for feita pelo compilador, tem-se um escalonamento estático, se for feita pelo \textit{hardware}, escalonamento dinâmico;
+	\item \textit{Write After Read} (WAR): ocorre quando uma instrução necessita de escrever num registo, numa altura em que a instrução anterior ainda não leu o valor desse registo e necessita;
+	\vspace{-2.5mm}
+	\item \textit{Write After Write} (WAW): ocorre quando duas operações necessitam de escrever no mesmo registo ao mesmo tempo ou numa ordem incorrecta;
 \end{itemize}
+
+No processador $\mu$Risc a projectar apenas ocorrem conflitos do tipo RAW. De facto, os conflitos do tipo WAR e do tipo WAW não ocorrem no nosso processador, pois não existe qualquer tipo de \textit{bypassing} entre os seus andares, mantendo sempre a ordem das instruções intacta.
 
 \subsection{Conflitos de controlo}
 
 Um conflito de controlo surge quando uma instrução de controlo condicional depende dos resultados de uma instrução anterior, de uma forma a impedir um predição correcta. \change{nao impede a prediccao}
-\vspace{-2.5mm}
-Analisando as soluções apresentadas verificou-se que o escalonamento estático e dinâmico não seria a solução desejada devido a complexidade para um processador de 4 andares comparativamente às outras anteriores. Ponderou-se inicialmente a utilização de \textit{stalls} devido à facilidade de implementação mas devido ao inconveniente de reduzir o número médio de instruções por ciclo, optou-se pela segunda solução de forma a aumentar o número médio de instruções por ciclo como também a complexidade de implementação.
+ 
+\section{Métodos de resolução de conflitos}
+
+\subsection{Conflitos de dados}
 
 \begin{itemize}
-	\item \textbf{Solução 1}: BTB, uma tabela que contém informação sobre os saltos de forma a prever se estes são \textit{taken} ou \textit{not-taken}, previsão esta que é realizada por uma BPB (composta por 1 ou 2 bits), diminuindo assim o número de ciclos desperdiçados em instruções do tipo controlo;
-	\item \textbf{Solução 2}: \textit{forwarding} de flags, após se obter o resultado necessário para a predição, establece-se um bypass para verificar a condição do salto;
+	\item Solução 1: bloqueio dos andares do \textit{pipeline}, \textit{stall}, até que os dados correctos estejam disponíveis;
+	\item Solução 2: se o dado correcto existir algures no \textit{pipeline}, estabelece-se um \textit{bypass} para o andar correcto, aplicando a técnica de \textit{forwarding};
 	\vspace{-2.5mm}
+	\item Solução 3: escalonar/reordenar as instruções - se a ordenação for feita pelo compilador tem-se um escalonamento estático e se for feita por \textit{hardware} é um escalonamento dinâmico;
 \end{itemize}
 
+Analisando as soluções apresentadas verificou-se que o escalonamento estático e dinâmico não seria a solução desejada devido a complexidade para um processador de 4 andares comparativamente às outras anteriores. Ponderou-se inicialmente a utilização de \textit{stalls} devido à facilidade de implementação mas devido ao inconveniente de reduzir o número médio de instruções por ciclo, optou-se pela segunda solução de forma a aumentar o número médio de instruções por ciclo como também a complexidade de implementação.
+
+\subsection{Conflitos de controlo}
+
+\begin{itemize}
+	\item Solução 1: BTB, uma tabela que contém informação sobre os saltos de forma a prever se estes são \textit{taken} ou \textit{not-taken}, previsão esta que é realizada por uma BPB (composta por 1 ou 2 bits), diminuindo assim o número de ciclos desperdiçados em instruções do tipo controlo;
+	\item Solução 2: \textit{forwarding} de flags, após se obter o resultado necessário para a predição, establece-se um bypass para verificar a condição do salto;
+	\vspace{-2.5mm}
+\end{itemize}
 
 \section{Estrutura do processador}
 
 \section{Testes de \textit{performance}}
+
+Após o projecto do processador estar concluído procede-se à fase de testes. As métricas utilizadas foram: a frequência obtida com base no caminho crítico, o número de ciclos de execução até que o programa corra por completo, o tempo de execucão e o número de predicções falhadas por parte da BTB. Na tabela seguinte encontram-se os resultados obtidos para os três testes fornecidos.
 
 \begin{table}[H]
 	\centering
@@ -203,13 +200,15 @@ Para se perceber melhor a influência que os métodos utilizados têm no desempe
 
 Em análise aos resultados dos três testes realizados (Tabelas \ref{tab:teste1}, \ref{tab:teste2} e \ref{tab:teste3}), foi possível tirar as seguintes conclusões em relação ao \textit{forwarding} de dados e à BTB.
 
-\paragraph{\textit{forwarding} de dados}
-Ao observar as caracteristicas dos quatro processadores, percebemos que é comparando os resultados entre os processadores \#1 e \#2 e também entre os processadores \#3 e \#4 que conseguimos avaliar os efeitos de usar \textit{forwarding} de dados.
+\subsection{Efeitos de \textit{forwarding} de dados}
+
+Ao observar as características dos quatro processadores, percebe-se que é comparando os resultados entre os processadores \#1 e \#2 e também entre os processadores \#3 e \#4 que se consegue avaliar os efeitos de usar \textit{forwarding} de dados.
 
 Em relação ao primeiro teste (Tabela \ref{tab:teste1}), foi possível establecer um \textit{speed\_up} de 
 
+\todo{continuar}
 
-\paragraph{BTB}
+\subsection{Efeitos de \textit{branch prediction}}
 
 \section{Conclusões}
 
@@ -217,37 +216,7 @@ Em relação ao primeiro teste (Tabela \ref{tab:teste1}), foi possível establec
 
 \section{Anexos}
 
-\subsection{Código do andar de IF}
-
-\lstinputlisting[language=VHDL]{IF.vhd}
-
-\subsection{Código do andar de ID e OF}
-
-\lstinputlisting[language=VHDL]{IDeOF.vhd}
-
-\subsection{Código do andar de EX e MEM}
-
-\lstinputlisting[language=VHDL]{EXeMEM.vhd}
-
-\subsection{Código do andar de WB}
-
-\lstinputlisting[language=VHDL]{WB.vhd}
-
-\subsection{Código da memória ROM}
-
-\lstinputlisting[language=VHDL]{memoria_ROM.vhd}
-
-\subsection{Código da memória RAM}
-
-\lstinputlisting[language=VHDL]{memoria_RAM.vhd}
-
-\subsection{Código da BTB}
-
-\lstinputlisting[language=VHDL]{BTB_bram.vhd}
-
-\subsection{Código da máquina de estados}
-
-\lstinputlisting[language=VHDL]{Controlo.vhd}
+Em anexo ao relatório encontra-se o código VHDL que implementa o processador em regime de \textit{pipeline}.
 
 \pagebreak
 
