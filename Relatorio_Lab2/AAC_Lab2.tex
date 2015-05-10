@@ -159,6 +159,29 @@ Em análise às duas soluções apresentadas foi decidido que ambas as soluç~es
 
 \section{Estrutura do processador}
 
+Como foi referido anteriormente os conflitos de dados são resolvidos por \textit{forwarding} de dados e os conflitos de controlo são resolvidos por BTB e \textit{forwarding} de flags. De seguida estão representados os circuitos e sinais que representação das unidades de resolução de conflitos:
+	\subsection{Circuitos e sinais na resolução de conflitos de dados}
+	A solução desejada é aplicação de \textit{forwarding} de dados. O \textit{forwarding} de dados divide-se em duas partes, detecção de conflitos de dados e encaminhamento do resultado pretendido no andar que gera o conflito.
+	
+	Nas figuras seguintes apresenta-se a lógica responsável para a detecção dos conflitos de dados, 
+	
+	\todo{Imagem DetecaodeconflitoEXMEM}  
+	
+	Este circuito representa a detecção de conflito de dados referente ao andar EX/MEM, consiste em verificar o endereço de escrita  com o endereço do registo pretendido, se estes forem iguais o sinal \texttt{RA\_C\_EXMEM\_CONFLITO} tem sinal lógico a 1 se o registo pretendido for o operando A ou o sinal \texttt{RB\_EXMEM\_CONFLITO} tem sinal lógico a 1 se o registo pretendido for o operando B.
+	
+	\todo{Imagem DetecaodeconflitoEXMEM2}
+	
+	O circuito anterior verifica se a instrução é dependente de registos. É o caso de uma instrução de \textit{load} de constantes em a constante a ser guardada pode endereçar um registo em que o valor pode estar no pipeline.   
+	
+	\todo{Imagem DetecaodeconflitoWB}
+	
+	Este circuito representa a detecção de conflito de dados referente ao andar WB, \textit{forwarding} é necessário pois o banco de registo é síncrono, como na situação anterior consiste em verificar o endereço de escrita  com o endereço do registo pretendido, se estes forem iguais o sinal \texttt{RA\_C\_WB\_CONFLITO} tem sinal lógico a 1 se o registo pretendido for o operando A ou o sinal \texttt{RB\_WB\_CONFLITO} tem sinal lógico a 1 se o registo pretendido for o operando B.
+	
+	
+	
+	
+	\subsection{Circuitos e sinais na resolução de conflitos de controlo}
+
 \section{Testes de \textit{performance}}
 
 Após o projecto do processador estar concluído procede-se à fase de testes. As métricas utilizadas foram: a frequência obtida com base no caminho crítico, o número de ciclos de execução até que o programa corra por completo, o tempo de execucão e o número de predicções falhadas por parte da BTB. Na tabela seguinte encontram-se os resultados obtidos para os três testes fornecidos.
