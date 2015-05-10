@@ -111,9 +111,13 @@ Com este trabalho laboratorial pretende-se projectar um processador $\mu$Risc co
 
 \subsection{Conflitos estruturais}
 
+Um conflito estrutural é quando uma estrutura de um processador não tem os recursos suficientes para executar uma sequência de instruções em \textit{pipelining}. No entanto o processador projectado não irá ter conflitos estruturais, isto porque terá recursos suficientes para executar todos os andares em \textit{pipelinig}.
+
 \subsection{Conflitos de dados}
 
-Um conflito de dados surge quando uma instrução depende dos	resultados de uma instrução anterior, de forma a afectar o resultado obtido pela linha de processamento. \todo{melhor intro, explicar o que e um conflito de dados}
+Um conflito de dados ocorre quando o \textit{pipelinig} muda a ordem de acesso a processos de escrita/leitura de operandos de modo que mude a ordem pretendida ou não permita obter o valor desejado.
+
+Descrição dos tês tipos de conflitos de dados:
 
 \begin{itemize}
 	\item \textit{Read After Write} (RAW): ocorre quando uma instrução precisa de ler um valor que ainda não foi escrito na memória, pois pertence a uma instrução anterior que ainda não escreveu no seu registo de destino;
@@ -127,8 +131,8 @@ No processador $\mu$Risc a projectar apenas ocorrem conflitos do tipo RAW. De fa
 
 \subsection{Conflitos de controlo}
 
-Um conflito de controlo surge quando uma instrução de controlo condicional depende dos resultados de uma instrução anterior, de uma forma a impedir um predição correcta. \change{nao impede a prediccao}
- 
+Quando uma instrução de controlo condicional é executada, esta tem duas possibilidades, ou altera ou o PC (\textit{program counter}) para a próxima instrução ou para onde a instrução define. No entanto esta decisão só pode ser tomada no final do andar EX-MEM, perdendo assim ciclos do processador pois não se sabe se o salto é \textit{taken} ou \textit{not taken}.
+
 \section{Métodos de resolução de conflitos}
 
 \subsection{Conflitos de dados}
@@ -145,10 +149,13 @@ Analisando as soluções apresentadas verificou-se que o escalonamento estático
 \subsection{Conflitos de controlo}
 
 \begin{itemize}
-	\item Solução 1: BTB, uma tabela que contém informação sobre os saltos de forma a prever se estes são \textit{taken} ou \textit{not-taken}, previsão esta que é realizada por uma BPB (composta por 1 ou 2 bits), diminuindo assim o número de ciclos desperdiçados em instruções do tipo controlo;
+	\item Solução 1: \textit{Branch target Buffer} (BTB), uma tabela que contém informação sobre os saltos já executados com o objectivo de tentar prever se uma nova instrução de salto é \textit{taken} ou \textit{not-taken}, previsão esta que é realizada por uma \textit{Branch target Buffer} (BPB, composta por 1 ou 2 \textit{bits}), caso a predição esteja correcta, diminui o número de stalls necessários, e por sua vez o número de ciclos de um teste;
 	\item Solução 2: \textit{forwarding} de flags, após se obter o resultado necessário para a predição, establece-se um bypass para verificar a condição do salto;
 	\vspace{-2.5mm}
 \end{itemize}
+
+Em análise às duas soluções apresentadas foi decidido que ambas as soluç~es seriam usadas no processador, em relação à \textit{Branch target Buffer}, decidiu-se usar um \textit{Branch target Buffer} de 1 \textit{bit}, pois não seria necessário predição com a profundidade de \textit{strong taken} e \textit{strong not-taken}.
+\todo{o teddy que verifique o que se fez no processador}
 
 \section{Estrutura do processador}
 
