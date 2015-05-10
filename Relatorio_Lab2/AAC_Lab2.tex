@@ -83,7 +83,12 @@ Em primeiro lugar apresentam-se os métodos e técnicas de resolução dos confl
 
 \todo{referir que no nosso caso so ha conflitos do tipo RAW}
 
+
 Um conflito de dados surge quando uma instrução depende dos	resultados da instrução anterior, de forma a afectar o resultado obtido pela linha de processamento.
+
+\subsection{Conflitos de dados, \textit{data hazards}}
+
+Conflito que surge quando uma instrução depende dos	resultados de uma instrução anterior, de forma a afectar o resultado obtido pela linha de processamento.
 
 \begin{itemize}
 	\item \textbf{Solução 1}: Bloqueio dos andares do \textit{pipeline}, \textit{stall}, até que os dados correctos estejam disponíveis;
@@ -95,6 +100,11 @@ Um conflito de dados surge quando uma instrução depende dos	resultados da inst
 \subsection{Conflitos de controlo: \textit{control hazards}}
 
 Um conflito de controlo surge quando uma instrução de controlo condicional depende dos resultados de uma instrução anterior, de uma forma a impedir um predição correcta. \change{nao impede a prediccao}
+\vspace{-2.5mm}
+Analisando as soluções apresentadas verificou-se que o escalonamento estático e dinâmico não seria a solução desejada devido a complexidade para um processador de 4 andares comparativamente às outras anteriores. Ponderou-se inicialmente a utilização de \textit{stalls} devido à facilidade de implementação mas devido ao inconveniente de reduzir o número médio de instruções por ciclo, optou-se pela segunda solução de forma a aumentar o número médio de instruções por ciclo como também a complexidade de implementação.
+
+\subsection{Conflitos de controlo, \textit{control hazards}}
+Conflito que surge quando uma instrução de controlo condicional depende dos	resultados de uma instrução anterior, de uma forma a impedir um predição correcta.
 
 \begin{itemize}
 	\item \textbf{Solução 1}: BTB, foi construída uma BTB com 9 bits de largura e apenas um bit de predição (BPB);
