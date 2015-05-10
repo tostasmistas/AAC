@@ -74,19 +74,26 @@ Nuno Miguel Rodrigues Machado & \hspace{2mm} n.º 74236
 \section{Introdução}
 
 Com este trabalho laboratorial pretende-se projectar um processador $\mu$Risc com funcionamento em \textit{pipeline}. O processador possui 4 andares de \textit{pipelining}: no primeiro andar é feito o \textit{instruction fetch} (IF), no segundo andar é feito o \textit{instruction decode} (ID) e o \textit{operand fetch} (OF), no terceiro andar são executadas operações da ALU (EX) e de acesso à memória de dados (MEM) e, por fim, no quarto é feita a escrita no banco de registos, o \textit{write back }(WB). Com o funcionamento em \textit{pipelining} podem ocorrer dois tipos de conflitos - de dados \textit{(data hazards)} e de controlo \textit{(control hazards)}. 
+
+\todo{estrutura ideal do relatorio: 1:referir no geral que conflitos ha. 2:referir quais os conflitod que temos neste prcessador. 3:referir como os resolvemos. 4:comparar as arquitecturas que testámos. 5:entregar antes da meia-noite LooLoL}
+
+\section{Conflitos associados a uma arquitectura \textit{pipeline}}
+
+\todo{referir nesta seccao explicacoes teoricas dos conflitos que ha. e referir que conflitos ha de facto no nosso processador}
+
+\subsection{Conflitos estruturais}
+
+\subsection{Conflitos de dados}
+
+\todo{aqui por exemplo nos so vamos ter RAW. mas temos de explicar todos os que ha}
+
+\subsection{Conflitos de controlo}
  
-\section{Métodos de resolução para dependências e conflitos}
+\section{Métodos de resolução de conflitos}
 
 Em primeiro lugar apresentam-se os métodos e técnicas de resolução dos conflitos de controlo e dados. Em segundo lugar quais as técnicas que foram de facto utilizadas.
 
-\subsection{Conflitos de dados: \textit{data hazards}}
-
-\todo{referir que no nosso caso so ha conflitos do tipo RAW}
-
-
-Um conflito de dados surge quando uma instrução depende dos	resultados da instrução anterior, de forma a afectar o resultado obtido pela linha de processamento.
-
-\subsection{Conflitos de dados, \textit{data hazards}}
+\subsection{Conflitos de dados}
 
 Conflito que surge quando uma instrução depende dos	resultados de uma instrução anterior, de forma a afectar o resultado obtido pela linha de processamento.
 
@@ -97,14 +104,11 @@ Conflito que surge quando uma instrução depende dos	resultados de uma instruç
 	\item \textbf{Solução 3}: Escalonar/reordenar as instruções, se a ordenação for feita pelo compilador, tem-se um escalonamento estático, se for feita pelo \textit{hardware}, escalonamento dinâmico;
 \end{itemize}
 
-\subsection{Conflitos de controlo: \textit{control hazards}}
+\subsection{Conflitos de controlo}
 
 Um conflito de controlo surge quando uma instrução de controlo condicional depende dos resultados de uma instrução anterior, de uma forma a impedir um predição correcta. \change{nao impede a prediccao}
 \vspace{-2.5mm}
 Analisando as soluções apresentadas verificou-se que o escalonamento estático e dinâmico não seria a solução desejada devido a complexidade para um processador de 4 andares comparativamente às outras anteriores. Ponderou-se inicialmente a utilização de \textit{stalls} devido à facilidade de implementação mas devido ao inconveniente de reduzir o número médio de instruções por ciclo, optou-se pela segunda solução de forma a aumentar o número médio de instruções por ciclo como também a complexidade de implementação.
-
-\subsection{Conflitos de controlo, \textit{control hazards}}
-Conflito que surge quando uma instrução de controlo condicional depende dos	resultados de uma instrução anterior, de uma forma a impedir um predição correcta.
 
 \begin{itemize}
 	\item \textbf{Solução 1}: BTB, uma tabela que contém informação sobre os saltos de forma a prever se estes são \textit{taken} ou \textit{not-taken}, previsão esta que é realizada por uma BPB (composta por 1 ou 2 bits), diminuindo assim o número de ciclos desperdiçados em instruções do tipo controlo;
@@ -114,9 +118,9 @@ Conflito que surge quando uma instrução de controlo condicional depende dos	re
 
 \change{explicar o que é uma BTB, explicar BPB}
 
-\section{Estrutura do Processador}
+\section{Estrutura do processador}
 
-\section{Testes de \textit{Performance}}
+\section{Testes de \textit{performance}}
 
 \begin{table}[H]
 	\centering
