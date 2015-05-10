@@ -1,21 +1,4 @@
-\textit{Read after Write} é um conflito de dados que acontece quando uma instrução precisa de ler um valor que ainda não foi escrito na memória pois pertence a uma intrução anterior que ainda não escreveu no seu registo de destino.
-
-\textit{Write after Read} é um conflito de dados que que ocorre quando uma instrução necessita de escrever num registo quando a uma instrução anterior ainda não leu o valor desse registo.
-
-\textit{Write after Write} é um conflito quando duas operações necessitam de escrever no mesmo registo ao mesmo tempo ou numa ordem incorrecta.
-
-Os conflitos \textit{Write after Read} e \textit{Write after Write} não ocorrem no nosso processador pois não existe qualquer tipo de \textit{bypassing} entre os seus andares, mantendo sempre a ordem das instruções intacta. 
-
-
-
-Texto para os testes!!
-
-Para se perceber melhor a influência que os métodos utilizados têm no desempenho do processador foram realizados vários testes para o processador projectado (Processador \#1) e outros três processadores diferentes, cada processador apresenta diferentes combinações de métodos usados para corrigir os conflitos de dados e controlo, tal como se pode observar na Tabela \todo{referir tabela 3}.
-
-\paragraph{\textit{forwarding} de dados}
-Ao observar as caracteristicas dos quatro processadores, percebemos que é comparando os resultados entre os processadores \#1 e \#2 e também entre os processadores \#3 e \#4 que conseguimos avaliar os efeitos de usar \textit{forwarding} de dados.
-
-Em relação ao primeiro teste (Tabela \todo{referir tabela 4})
+Em relação ao primeiro teste (Tabela \ref{tab:teste1}), foi possível establecer um \textit{speed\_up} de 
 
 
 \paragraph{BTB}
