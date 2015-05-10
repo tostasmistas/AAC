@@ -111,13 +111,15 @@ Com este trabalho laboratorial pretende-se projectar um processador $\mu$Risc co
 
 \subsection{Conflitos estruturais}
 
-Um conflito estrutural é quando uma estrutura de um processador não tem os recursos suficientes para executar uma sequência de instruções em \textit{pipelining}. No entanto o processador projectado não irá ter conflitos estruturais, isto porque terá recursos suficientes para executar todos os andares em \textit{pipelinig}.
+Um conflito estrutural é quando a estrutura de um processador não tem os recursos suficientes para executar uma sequência de instruções em \textit{pipelining}. No entanto, o processador projectado não irá ter conflitos estruturais, isto porque terá recursos suficientes para executar todos os andares em \textit{pipelinig}.
 
 \subsection{Conflitos de dados}
 
-Um conflito de dados ocorre quando o \textit{pipelinig} muda a ordem de acesso a processos de escrita/leitura de operandos de modo que mude a ordem pretendida ou não permita obter o valor desejado.
+Um conflito de dados ocorre quando o \textit{pipelinig} muda a ordem de acesso a processos de escrita/leitura de operandos de modo que mude a ordem pretendida ou não permita obter o valor desejado \change{this sentence is weird}
 
-Descrição dos tês tipos de conflitos de dados:
+Quando se fala em conflitos de dados fala-se de três tipos distintos:
+
+\vspace{-1.5mm}
 
 \begin{itemize}
 	\item \textit{Read After Write} (RAW): ocorre quando uma instrução precisa de ler um valor que ainda não foi escrito na memória, pois pertence a uma instrução anterior que ainda não escreveu no seu registo de destino;
@@ -127,11 +129,15 @@ Descrição dos tês tipos de conflitos de dados:
 	\item \textit{Write After Write} (WAW): ocorre quando duas operações necessitam de escrever no mesmo registo ao mesmo tempo ou numa ordem incorrecta;
 \end{itemize}
 
-No processador $\mu$Risc a projectar apenas ocorrem conflitos do tipo RAW. De facto, os conflitos do tipo WAR e do tipo WAW não ocorrem no nosso processador, pois não existe qualquer tipo de \textit{bypassing} entre os seus andares, mantendo sempre a ordem das instruções intacta.
+\vspace{-1.5mm}
+
+No processador $\mu$Risc a projectar apenas ocorrem conflitos do tipo RAW. De facto, os conflitos do tipo WAR e do tipo WAW não ocorrem no processador a projectar, pois não existe qualquer tipo de \textit{bypassing} entre os seus andares, mantendo-se sempre a ordem das instruções intacta.
 
 \subsection{Conflitos de controlo}
 
-Quando uma instrução de controlo condicional é executada, esta tem duas possibilidades, ou altera ou o PC (\textit{program counter}) para a próxima instrução ou para onde a instrução define. No entanto esta decisão só pode ser tomada no final do andar EX-MEM, perdendo assim ciclos do processador pois não se sabe se o salto é \textit{taken} ou \textit{not taken}.
+Quando uma instrução de controlo condicional é executada, esta tem duas possibilidades - ou altera o valor de PC (\textit{program counter}) para a próxima instrução (salto \textit{not taken}) ou para onde a instrução pretendida (salto \textit{taken}). 
+
+\change{falar mais aqui}
 
 \section{Métodos de resolução de conflitos}
 
@@ -139,23 +145,30 @@ Quando uma instrução de controlo condicional é executada, esta tem duas possi
 
 \begin{itemize}
 	\item Solução 1: bloqueio dos andares do \textit{pipeline}, \textit{stall}, até que os dados correctos estejam disponíveis;
+	\vspace{-2.5mm}
 	\item Solução 2: se o dado correcto existir algures no \textit{pipeline}, estabelece-se um \textit{bypass} para o andar correcto, aplicando a técnica de \textit{forwarding};
 	\vspace{-2.5mm}
 	\item Solução 3: escalonar/reordenar as instruções - se a ordenação for feita pelo compilador tem-se um escalonamento estático e se for feita por \textit{hardware} é um escalonamento dinâmico;
 \end{itemize}
 
-Analisando as soluções apresentadas verificou-se que o escalonamento estático e dinâmico não seria a solução desejada devido a complexidade para um processador de 4 andares comparativamente às outras anteriores. Ponderou-se inicialmente a utilização de \textit{stalls} devido à facilidade de implementação mas devido ao inconveniente de reduzir o número médio de instruções por ciclo, optou-se pela segunda solução de forma a aumentar o número médio de instruções por ciclo como também a complexidade de implementação.
+\vspace{-1.5mm}
+
+Analisando as soluções apresentadas verificou-se que o escalonamento estático e dinâmico não é a solução desejada devido a complexidade para um processador de 4 andares comparativamente às soluções expostas anteriores. 
+
+Ponderou-se inicialmente a utilização de \textit{stalls} devido à facilidade de implementação mas, devido ao inconveniente de reduzir o número médio de instruções por ciclo (IPC), optou-se pela segunda solução que permite aumentar o valor de IPC com a contrapartida de ter uma maior complexidade de implementação.
 
 \subsection{Conflitos de controlo}
 
 \begin{itemize}
-	\item Solução 1: \textit{Branch target Buffer} (BTB), uma tabela que contém informação sobre os saltos já executados com o objectivo de tentar prever se uma nova instrução de salto é \textit{taken} ou \textit{not-taken}, previsão esta que é realizada por uma \textit{Branch target Buffer} (BPB, composta por 1 ou 2 \textit{bits}), caso a predição esteja correcta, diminui o número de stalls necessários, e por sua vez o número de ciclos de um teste;
-	\item Solução 2: \textit{forwarding} de flags, após se obter o resultado necessário para a predição, establece-se um bypass para verificar a condição do salto;
+	\item Solução 1: \textit{Branch Target Buffer} (BTB) que é uma tabela que contém informação sobre os saltos já executados com o objectivo de tentar prever se uma nova instrução de salto é \textit{taken} ou \textit{not-taken}. A previsão é realizada por uma \textit{Branch Predict Buffer} (BPB), que é composta por 1 ou 2 \textit{bits}, e, caso a predição esteja correcta, diminui o número de \textit{stalls} necessários e, por sua vez, o número de ciclos de execução do programa;
+	\vspace{-2.5mm}
+	\item Solução 2: \textit{forwarding} de \textit{flags}, ou seja, lógica adicional que permite verificar se a previsão feita anteriormente pela BTB está correcta ou não, consoante a condição de salto;
 	\vspace{-2.5mm}
 \end{itemize}
 
-Em análise às duas soluções apresentadas foi decidido que ambas as soluç~es seriam usadas no processador, em relação à \textit{Branch target Buffer}, decidiu-se usar um \textit{Branch target Buffer} de 1 \textit{bit}, pois não seria necessário predição com a profundidade de \textit{strong taken} e \textit{strong not-taken}.
-\todo{o teddy que verifique o que se fez no processador}
+Em análise às duas soluções apresentadas foi decidido que ambas seriam usadas no processador. Em relação à BTB, decidiu-se usar uma BPB de 1 \textit{bit}, pois não se achou necessário prever saltos com a profundidade de \textit{strong taken} e \textit{strong not-taken}.
+
+De referir que, ao acrescentar \textit{forwarding} de \textit{flags}, o processador fica mais complexo mas, para verificar se a previsão foi efectuada correctamente, não é necessário aguardar dois ciclos mas sim apenas um, o que compensa para o valor de IPC.
 
 \section{Estrutura do processador}
 
@@ -194,7 +207,17 @@ Após o projecto do processador estar concluído procede-se à fase de testes. A
 	\label{tab:processadororiginal}
 \end{table}
 
-Para se perceber melhor a influência que os métodos utilizados têm no desempenho do processador foram realizados vários testes para o processador projectado (Processador \#1) e outros três processadores diferentes, cada processador apresenta diferentes combinações de métodos usados para corrigir os conflitos de dados e controlo, tal como se pode observar na Tabela \ref{tab:processadores}.
+De referir que o caminho crítico do processador passa pelo circuito responsável pelo \textit{forwarding} de \textit{flags}, como se pode ver na próxima imagem.
+
+\todo{imagem do xilinx do caminho critico - 183}
+
+No entanto, já após a demonstração do processador na aula laboratorial e depois de uma análise mais cuidada do caminho crítico concluiu-se que ainda era possível efecutar uma melhoria na \textit{performance} do $\mu$Risc. De facto, no caminho crítico existe um somador no andar de ID que pode passar para o andar anterior, ou seja, o andar de IF, o que permite aumentar a frequência do processador. 
+
+Desta maneira, o novo caminho crítico permite ter uma frequência de 211,338 MHz. Na figura seguinte apresenta-se o novo caminho crítico como gerado pela ferramenta.
+
+\todo{imagem do xilinx do caminho critico - 211}
+
+Para se perceber melhor a influência que os métodos utilizados para resolver os conflitos têm no desempenho do processador foram realizados vários testes com diversas topologias do mesmo processador. Assim, fez-se testes para o processador falado anteriormente (Processador \#1) e outros três processadores diferentes, cada um com diferentes combinações de métodos usados para corrigir os conflitos de dados e controlo, tal como se pode observar na Tabela \ref{tab:processadores}.
 
 \begin{table}[H]
 	\centering
