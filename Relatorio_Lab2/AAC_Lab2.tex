@@ -107,7 +107,7 @@ Analisando as soluções apresentadas verificou-se que o escalonamento estático
 Conflito que surge quando uma instrução de controlo condicional depende dos	resultados de uma instrução anterior, de uma forma a impedir um predição correcta.
 
 \begin{itemize}
-	\item \textbf{Solução 1}: BTB, foi construída uma BTB com 9 bits de largura e apenas um bit de predição (BPB);
+	\item \textbf{Solução 1}: BTB, uma tabela que contém informação sobre os saltos de forma a prever se estes são \textit{taken} ou \textit{not-taken}, previsão esta que é realizada por uma BPB (composta por 1 ou 2 bits), diminuindo assim o número de ciclos desperdiçados em instruções do tipo controlo;
 	\item \textbf{Solução 2}: \textit{forwarding} de flags, após se obter o resultado necessário para a predição, establece-se um bypass para verificar a condição do salto;
 	\vspace{-2.5mm}
 \end{itemize}
