@@ -93,7 +93,7 @@ signal lcl 						: std_logic_vector(15 downto 0):= (others => '0');	-- operando 
 signal lch 						: std_logic_vector(15 downto 0):= (others => '0');	-- operando B para a ALU
 signal select_mux_constantes: std_logic_vector(1 downto 0):= (others => '0');
 signal out_mux_constantes		: std_logic_vector(15 downto 0):= (others => '0');	-- operando para carregamento de constantes		
-signal bit14						: std_logic := '0'; 				-- sinal de selecção para MUX entre operação da ALU e operação de carregamento de constantes
+signal bit14						: std_logic := '0'; 				-- sinal de selecaao para MUX entre operacao da ALU e operacao de carregamento de constantes
 signal bit15						: std_logic := '0';
 signal WE_RAM						: std_logic := '0';
 signal TRANS_FI_COND_IN			: std_logic_vector(3 downto 0) := (others => '0');
@@ -174,7 +174,7 @@ Conflit_EXMEN_RB_ON		<= (RB_EXMEM_CONFLITO  and inst_IN(15)) OR (RB_EXMEM_CONFLI
 Conflit_WB_RB_ON			<= (RB_WB_CONFLITO	and inst_IN(15)) OR (RB_EXMEM_CONFLITO AND NOT(inst_IN(15)) AND NOT(inst_IN(14)) AND inst_IN(13) AND inst_IN(12));
 
 --------------------------------------------------------------------------
------- Conjuntos de instrucções ------------------------------------------
+------ Conjuntos de instruccoes ------------------------------------------
 ------ Inst_IN(15:14)           ------------------------------------------
 ------ 0 0 => Transferencia de Controlo    -------------------------------
 ------ 0 1 => Constantes Formato I		    -------------------------------
@@ -188,7 +188,7 @@ aux_TEST_NOP <= inst_IN(15) or inst_IN(14) or inst_IN(13) or inst_IN(12) or
 							inst_IN(7) or inst_IN(6) or inst_IN(5) or inst_IN(4) or
 							inst_IN(3) or inst_IN(2) or inst_IN(1) or inst_IN(0);
 --------------------------------------------------------------------------
--------- 0 0 -> Transferência de Controlo --------------------------------
+-------- 0 0 -> Transferencia de Controlo --------------------------------
 -------- exitsem 3 formatos ----------------------------------------------
 --------------------------------------------------------------------------
 aux_TRANS_OP 		<= inst_IN(13 downto 12);
@@ -203,7 +203,7 @@ aux_TRANS_FII_DES	<= inst_IN(11 downto 0);
 
 -------- 1 1 -> Formato III jumps ----------------------------------------
 
-aux_JUMPS_active 	<= not(aux_active_FLAGTEST) and inst_IN(13) and inst_IN(12); ----- TESTE de activação do FIII, escolhe o mux2:1
+aux_JUMPS_active 	<= not(aux_active_FLAGTEST) and inst_IN(13) and inst_IN(12); ----- TESTE de activacao do FIII, escolhe o mux2:1
 aux_JUMPS_MUX_WB 	<= not(inst_IN(11)) and aux_JUMPS_active;
 
 --------------------------------------------------------------------------
@@ -214,7 +214,7 @@ aux_CONS_FI_11B 	<= 	inst_IN(10 downto 0 );
 
  
 --------------------------------------------------------------------------
--------- 1 0 -> Instrucções para a ALU/Memoria ----------------------------
+-------- 1 0 -> Instruccoes para a ALU/Memoria ----------------------------
 --------------------------------------------------------------------------
 
 aux_ALU_OPER		<=	inst_IN(10 downto 6);
@@ -357,7 +357,7 @@ sel_mux_WB <= aux_sel_bit1&aux_sel_bit0;
 ------------------------------- Exit -------------------------------------
 --------------------------------------------------------------------------
 
---------------- registo de saída do segundo andar: ID e OF ---------------
+--------------- registo de saida do segundo andar: ID e OF ---------------
 process (clk, rst)
 	begin
 		if clk'event and clk = '1' then

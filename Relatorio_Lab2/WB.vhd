@@ -56,8 +56,8 @@ aux_out_alu 	<= reg_EXMEM_OUT_OutALU;
 aux_out_const 	<= reg_EXMEM_OUT_MuxConst;
 aux_out_pcadd1 	<= X"0" & reg_EXMEM_OUT_PCadd1;
 
-aux_mux_WB <=		aux_out_alu								when sel_mux_WB = "00" else    	-- escrever a saída da ALU 		(out_ALU)
-					   reg_EXMEM_OUT_OutMEM					when sel_mux_WB = "01" else    	-- escrever saída da MEM 			(out_MEM)
+aux_mux_WB <=		aux_out_alu								when sel_mux_WB = "00" else    	-- escrever a saida da ALU 		(out_ALU)
+					   reg_EXMEM_OUT_OutMEM					when sel_mux_WB = "01" else    	-- escrever saida MEM 			(out_MEM)
 					   aux_out_const							when sel_mux_WB = "10" else	 	-- fazer load de uma constante		(out_mux_constantes)
 						aux_out_pcadd1;								 										-- guardar em R7 o valor de PC+1 	(save_pc_add_1)
 

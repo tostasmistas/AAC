@@ -35,7 +35,7 @@ entity EXeMEM is
 		ADD_RWC_EXMEM				: out std_logic_vector(2 downto 0);
 		ovWE_EXMEM					: out std_logic;
 
-		out_ADD_MEM					: out std_logic_vector(11 downto 0);		-- para endereçar a RAM
+		out_ADD_MEM					: out std_logic_vector(11 downto 0);		-- para enderecar a RAM
 		out_WE_MEM					: out std_logic;							-- para controlar o WE da RAM 
 		FLAGS_OUT					: out std_logic_vector(3 downto 0);
 		Forw_FLAGSTEST_OUT		: out std_logic_vector(3 downto 0);
@@ -51,8 +51,8 @@ architecture Behavioral of EXeMEM is
 --------------------------------------------------------------------------
 --------------------------- Aux Signals ----------------------------------
 --------------------------------------------------------------------------
-signal out_ALU					: std_logic_vector(15 downto 0) := (others => '0'); -- saída da ALU
-signal out_MEM					: std_logic_vector(15 downto 0) := (others => '0'); -- saída da memória
+signal out_ALU					: std_logic_vector(15 downto 0) := (others => '0'); -- saida da ALU
+signal out_MEM					: std_logic_vector(15 downto 0) := (others => '0'); -- saida da memoria
 signal aux_FLAGS_ARI			: std_logic_vector(3 downto 0) := (others => '0'); 	-- Z,N,C,O
 signal aux_FLAGS_SHIFT			: std_logic_vector(2 downto 0) := (others => '0'); 	-- Z,N,C
 signal aux_FLAGS_LOG			: std_logic_vector(1 downto 0) := (others => '0'); 	-- Z,N
@@ -108,23 +108,23 @@ oper_ALU 				<= reg_IDOF_OUT_ALUOPER;
 aux_EXMEM_bit15			<= reg_IDOF_OUT_bit15;
 
 ---------------------------------------------------------------------------------------------
----------------------------------- MEMÓRIA --------------------------------------------------
+---------------------------------- MEMORIA --------------------------------------------------
 ---------------------------------------------------------------------------------------------
 
-out_ADD_MEM_aux <= operando_A(11 downto 0); -- para endereçar leitura e escrita da RAM
+out_ADD_MEM_aux <= operando_A(11 downto 0); -- para enderecar leitura e escrita da RAM
 
 out_ADD_MEM <= out_ADD_MEM_aux;
 
 out_WE_MEM <=  reg_IDOF_OUT_WERAM;
-out_MEM <= out_RAM; -- armazenar depois em RC o valor contido na posição de memória endereçada por A
+out_MEM <= out_RAM; -- armazenar depois em RC o valor contido na posicao de memoria enderecada por A
 
-in_RAM <= operando_B; -- armazenar na posição de memória endereçada por A o valor contido em B
+in_RAM <= operando_B; -- armazenar na posicao de memoria enderecada por A o valor contido em B
 
 ---------------------------------------------------------------------------------------------
 ----------------------------------- ALU -----------------------------------------------------
 ---------------------------------------------------------------------------------------------
 
------------------------------------ aritméticas ---------------------------------------------
+----------------------------------- aritmeticas ---------------------------------------------
 
 p_ALU <= operando_A; 
 
@@ -139,7 +139,7 @@ cIN_ALU <= oper_ALU(0);
 
 out_ARI <= ('0' & p_ALU) + ('0' & q_ALU) + cIN_ALU;
 
---------------------------------------- lógicas ---------------------------------------------
+--------------------------------------- logicas ---------------------------------------------
 
 sel_mux_LOG <= (oper_ALU(3) xor oper_ALU(2)) & (oper_ALU(3) xor oper_ALU(1)) & (oper_ALU(3) xor oper_ALU(0));
 
@@ -255,7 +255,7 @@ FLAGSTEST_OUT	<= aux_MSR_FLAGS;
 ------------------------------- Exit -------------------------------------
 --------------------------------------------------------------------------
 
---------------- registo de saída do terceiro andar: EX e MEM -------------
+--------------- registo de saida do terceiro andar: EX e MEM -------------
 process (clk, rst)
 	begin
 		if clk'event and clk = '1' then
