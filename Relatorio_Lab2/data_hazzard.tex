@@ -1,0 +1,7 @@
+\textit{Read after Write} é um conflito de dados que acontece quando uma instrução precisa de ler um valor que ainda não foi escrito na memória pois pertence a uma intrução anterior que ainda não escreveu no seu registo de destino.
+
+\textit{Write after Read} é um conflito de dados que que ocorre quando uma instrução necessita de escrever num registo quando a uma instrução anterior ainda não leu o valor desse registo.
+
+\textit{Write after Write} é um conflito quando duas operações necessitam de escrever no mesmo registo ao mesmo tempo ou numa ordem incorrecta.
+
+Os conflitos \textit{Write after Read} e \textit{Write after Write} não ocorrem no nosso processador pois não existe qualquer tipo de \textit{bypassing} entre os seus andares, mantendo sempre a ordem das instruções intacta. 
