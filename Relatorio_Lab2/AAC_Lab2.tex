@@ -204,11 +204,14 @@ Em análise aos resultados dos três testes realizados (Tabelas \ref{tab:teste1}
 
 Ao observar as características dos quatro processadores, percebe-se que é comparando os resultados entre os processadores \#1 e \#2 e também entre os processadores \#3 e \#4 que se consegue avaliar os efeitos de usar \textit{forwarding} de dados.
 
-Em relação ao primeiro teste (Tabela \ref{tab:teste1}), foi possível establecer um \textit{speed\_up} de 
-
-\todo{continuar}
+Em relação ao primeiro teste (Tabela \ref{tab:teste1}), foi possível estabelecer um \textit{speed\_up} de exactamente 2. Em relação ao segundo teste (Tabela \ref{tab:teste2}) os \textit{speed\_up}'s alcançados foram de 1.291 e de 1.228, enquanto que no terceiro teste (Tabela \ref{tab:teste2}) foram alcançados \textit{speed\_up}'s de 1.495 e de 1.467. Como nos três testes, tal como esperado, utilizar o método de \textit{forwarding de dados} influenciou a frequência dos processadores, podemos admitir que este método obtém resultados muito positivos.
 
 \subsection{Efeitos de \textit{branch prediction}}
+Ao observar as caracteristicas dos quatro processadores, percebemos que é comparando os resultados entre os processadores \#1 e \#3 e também entre os processadores \#2 e \#4 que conseguimos avaliar os efeitos de usar uma BTB.
+
+No primeiro teste (Tabela \ref{tab:teste1}) foi possível observar que nem sempre é positivo ter uma BTB, pois esta aumenta o tempo do caminho critico, diminuindo assim a frequência do processador, e caso o teste não tenha saltos, o que se observa é um \textit{speed\_up} menor que '1'.
+
+Em relação ao segundo teste (Tabela \ref{tab:teste2}), foi possível verificar que um processador com uma BTB, embora mais lento, apenas falhou apenas 23.3\% das predições, e que no terceiro teste falhou 65.2\% das predições. No caso destes dois testes, este aumento de precisão não se transfigurou num tempo de execução menor, no entanto, caso o teste fosse mais extenso seria possível observar um tempo de execução menor para um processador com \textit{branch prediction}.
 
 \section{Conclusões}
 
