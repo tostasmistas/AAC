@@ -249,7 +249,7 @@ A leitura da BTB é endereçada com os 9 \textit{bits} menos significativos do s
 	\vspace{-0.8em}
 \end{figure}
 
-Ao analisar o esquema anterior, defini-se dois sinais de controlo importantes na selecção do PC, \texttt{MUX\_BrPred} e \texttt{MUX\_NEXTPC}. 
+Ao analisar o esquema anterior, definiu-se dois sinais de controlo importantes na selecção do PC, \texttt{MUX\_BrPred} e \texttt{MUX\_NEXTPC}. 
 
 O sinal \texttt{MUX\_BrPred} seleciona se o novo valor do PC é o sinal de salto da BTB ou PC + 1. Este sinal é gerado verificando se a \textit{tag} lida na BTB é igual aos 3 bits mais significativos do PC. Se for igual, o sinal \texttt{MUX\_BrPred} fica com o mesmo valor lógico do \textit{bit} de predição da BTB, \texttt{Prediction\_Bit}. De seguida está representado o esquema do sinal \texttt{Prediction\_Bit}:
 
@@ -261,7 +261,7 @@ O sinal \texttt{MUX\_BrPred} seleciona se o novo valor do PC é o sinal de salto
 	\vspace{-0.8em}
 \end{figure}
 
-O sinal \texttt{MUX\_NEXTPC} tem a função de seleccionar o PC a ser endereçado na ROM, existe 4 possibilidades, o PC gerado pelo sinal de controlo anterior, ou o salto condicional proveniente do andar ID/OF \texttt{Jump\_BTB}, ou o salto incondicional proveniente do andar ID/OF \texttt{Jump\_Incond}, ou o PC de \textit{backup}. De seguida está implementado a lógica do sinal  \texttt{MUX\_NEXTPC}.
+O sinal \texttt{MUX\_NEXTPC} tem a função de seleccionar o PC a ser endereçado na ROM, existem 4 possibilidades - o PC gerado pelo sinal de controlo anterior, o salto condicional proveniente do andar ID/OF \texttt{Jump\_BTB}, o salto incondicional proveniente do andar ID/OF \texttt{Jump\_Incond} ou o PC de \textit{backup}. De seguida está implementado a lógica do sinal \texttt{MUX\_NEXTPC}.
 
 \begin{figure}[H]
 	\centering
@@ -271,10 +271,17 @@ O sinal \texttt{MUX\_NEXTPC} tem a função de seleccionar o PC a ser endereçad
 	\vspace{-0.8em}
 \end{figure}
 
-Actualização é controlada pelo sinal de \textit{enable} da tabela BTB, \texttt{we\_BTB}, este sinal verifica se ocorrer um salto \textit{not taken} e se o salto for \textit{taken}, actualiza a tabela BTB com os novos valores de perdição, ou seja, é guardado na tabela a \textit{tag}, os 3 \textbf{bits} mais significativos do \textit{program conter}, o salto calculado no ID/OF, \texttt{Jump\_BTB}, e o \textit{bit} de predição a 1 como também o \textit{bit} de validação. Se o salto previsto for \textit{taken} e na realidade for \textit{not taken}, a actualização da BTB é feita de forma igual com a diferença do \textit{bit} de predição a 0.
-Na figura seguinte está representado a lógica do sinal \texttt{we\_BTB} como também o sinal de entrada da BTB, \texttt{IN\_BTB} e o endereço de escrita do \texttt{addr\_BTB\_A}:
+A actualização é controlada pelo sinal de \textit{enable} da tabela BTB, \texttt{we\_BTB}, este sinal verifica se ocorre um salto \textit{not taken} e se o salto for \textit{taken}, actualiza a tabela BTB com os novos valores de perdição, ou seja, é guardado na tabela a \textit{tag}, os 3 \textbf{bits} mais significativos do \textit{program conter}, o salto calculado no ID/OF, \texttt{Jump\_BTB}, e o \textit{bit} de predição é colocado a 1 bem como o \textit{bit} de validação. Se o salto previsto for \textit{taken} e na realidade for \textit{not taken}, a actualização da BTB é feita de forma igual com a diferença do \textit{bit} de predição a 0.
 
-\todo{Imagem weaddrBTB}
+Na figura seguinte está representado a lógica do sinal \texttt{we\_BTB} como também o sinal de entrada da BTB, \texttt{IN\_BTB} e o endereço de escrita do \texttt{addr\_BTB\_A}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.27]{imagens/weaddrBTB}
+	\vspace{-0.5em}
+	\caption{Sinais de escrita da BTB.}
+	\vspace{-0.8em}
+\end{figure} 
 
 \section{Testes de \textit{performance}}
 
@@ -380,22 +387,19 @@ Ao observar as características dos quatro processadores, percebemos que é comp
 
 No primeiro teste (Tabela \ref{tab:teste1}) foi possível observar que nem sempre é positivo ter uma BTB, pois esta aumenta o tempo do caminho crítico, diminuindo assim a frequência do processador, e caso o teste não tenha saltos, o que se observa é um \textit{speed-up} menor que 1.
 
-Em relação ao segundo teste (Tabela \ref{tab:teste2}), foi possível verificar que um processador com uma BTB, embora mais lento, apenas falhou apenas 23,3\% das predições, e que no terceiro teste falhou 65,2\% das predições. No caso destes dois testes, este aumento de precisão não correspondeu a um tempo de execução menor, no entanto, caso o teste fosse mais extenso seria possível observar um tempo de execução menor para um processador com \textit{branch prediction}.
+Em relação ao segundo teste (Tabela \ref{tab:teste2}), foi possível verificar que um processador com uma BTB, embora mais lento, apenas falhou 23,3\% das predições, e que no terceiro teste falhou 65,2\% das predições. No caso destes dois testes, este aumento de precisão não correspondeu a um tempo de execução menor, no entanto, caso o teste fosse mais extenso seria possível observar um tempo de execução menor para um processador com \textit{branch prediction}.
+
 \section{Conclusões}
 
 Em primeiro lugar foi necessário colocar o circuito a funcionar em \textit{pipelining}, no entanto, no primeiro trabalho o circuito não estava a trabalhar em multi-ciclo, funcionava com todos os andares num só ciclo, este facto tornou a tarefa de colocar o circuito a funcionar em \textit{pipelining} mais complicada.
 A identificação de quais os conflitos de dados e controlo a considerar foi uma tarefa relativamente simples comparada com a implementação da resolução desses conflitos. A maior dificuldade deste trabalho foi a implementação de umas das soluções para os conflitos de controlo, nomeadamente a BTB.
 
-De referir que embora em testes tenham-se obtido resultados mais favorecedores (em termos de tempo de execução) para outros processadores sem a BTB, foi decidido que em testes mais exigentes(e com mais instruções de salto), um processador com BTB obteria resultados melhores, decidindo assim manter a BTB no processador final.
-
-\pagebreak
+De referir que embora em testes tenham-se obtido resultados mais favorecedores (em termos de tempo de execução) para outros processadores sem a BTB, foi decidido que em testes mais exigentes (e com mais instruções de salto), um processador com BTB obteria resultados melhores, decidindo assim manter a BTB no processador final.
 
 \section{Anexos}
 
 Em anexo ao relatório encontra-se o código VHDL que implementa o processador em regime de \textit{pipeline}.
 
 \pagebreak
-
-\listoftodos
 
 \end{document}
