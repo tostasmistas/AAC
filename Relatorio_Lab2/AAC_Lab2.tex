@@ -252,6 +252,11 @@ De seguida esta representado o esquema geral de \textit{forwarding} nos andares 
 	
 	\todo{Imagem MuxNEXTPC}
 	    
+	Actualização é controlada pelo sinal de \textit{enable} da tabela BTB, \texttt{we\_BTB}, este sinal verifica se ocorrer um salto \textit{not taken} e se o salto for \textit{taken}, actualiza a tabela BTB com os novos valores de perdição, ou seja, é guardado na tabela a \textit{tag}, os 3 \textbf{bits} mais significativos do \textit{program conter}, o salto calculado no ID/OF, \texttt{Jump\_BTB}, e o \textit{bit} de predição a 1 como também o \textit{bit} de validação. Se o salto previsto for \textit{taken} e na realidade for \textit{not taken}, a actualização da BTB é feita de forma igual com a diferença do \textit{bit} de predição a 0.
+	Na figura seguinte está representado a lógica do sinal \texttt{we\_BTB} como também o sinal de entrada da BTB, \texttt{IN\_BTB} e o endereço de escrita do \texttt{addr\_BTB\_A}:
+	
+	\todo{Imagem weaddrBTB}
+	
 
 \section{Testes de \textit{performance}}
 
