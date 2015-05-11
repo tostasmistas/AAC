@@ -198,7 +198,7 @@ O circuito seguinte verifica se a instrução não é dependente de registos, pa
 	\vspace{-0.8em}
 \end{figure} 
 
-O circuito seguinte tem o mesmo objectivo que o circuito anterior mas para o registo B, pois existem instruçôes de salto que utilizam o registo B para efectuar os saltos relativos, como é o caso das instruções \textit{jump-and-link} e \textit{jump register}. Obtém-se assim dois sinais - um referente ao registo B, \texttt{Conflit\_EXMEM\_RB\_ON} e outro referente ao registo A, \texttt{Conflit\_EXMEM\_RA\_C\_ON}.
+O circuito seguinte tem o mesmo objectivo que o circuito anterior mas para o registo B, pois existem instruções de salto que utilizam o registo B para efectuar os saltos relativos, como é o caso das instruções \textit{jump-and-link} e \textit{jump register}. Obtém-se assim dois sinais - um referente ao registo B, \texttt{Conflit\_EXMEM\_RB\_ON} e outro referente ao registo A, \texttt{Conflit\_EXMEM\_RA\_C\_ON}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.27]{imagens/DetecaodeconflitoEXMEMRB}
@@ -207,7 +207,7 @@ O circuito seguinte tem o mesmo objectivo que o circuito anterior mas para o reg
 	\vspace{-0.8em}
 \end{figure} 
 
-O circuito seguinte representa a detecção de conflito de dados referente ao andar WB, \textit{forwarding} é necessário pois o banco de registo é síncrono, como na situação anterior consiste em verificar o endereço de escrita  com o endereço do registo pretendido, se estes forem iguais o sinal \texttt{RA\_C\_WB\_CONFLITO} tem sinal lógico a 1 se o registo pretendido for o operando A ou o sinal \texttt{RB\_WB\_CONFLITO} tem sinal lógico a 1 se o registo pretendido for o operando B.
+O circuito seguinte representa a detecção de conflito de dados referente ao andar WB, \textit{forwarding} que é necessário pois o banco de registo é síncrono. Como na situação anterior consiste em verificar o endereço de escrita com o endereço do registo pretendido e, se estes forem iguais, o sinal \texttt{RA\_C\_WB\_CONFLITO} tem sinal lógico a 1 se o registo pretendido for o operando A ou o sinal \texttt{RB\_WB\_CONFLITO} tem sinal lógico a 1 se o registo pretendido for o operando B.
 
 \begin{figure}[H]
 	\centering
@@ -217,11 +217,11 @@ O circuito seguinte representa a detecção de conflito de dados referente ao an
 	\vspace{-0.8em}
 \end{figure} 
 
-Relativamente à detecção no andar de WB também é aplicado o circuito da figura 2 para a detecção dos conflitos com registo A e o circuito figura 3 para os conflitos com o registo B. Obtém-se assim dois sinais, um referente ao registo B, \texttt{Conflit\_WB\_RB\_ON} e outro referente ao registo A, \texttt{Conflit\_WB\_RA\_C\_ON}.
+Relativamente à detecção no andar de WB também é aplicado o circuito da Figura 2 para a detecção dos conflitos com registo A e o circuito Figura 3 para os conflitos com o registo B. Obtém-se assim dois sinais, um referente ao registo B, \texttt{Conflit\_WB\_RB\_ON} e outro referente ao registo A, \texttt{Conflit\_WB\_RA\_C\_ON}.
 
-Gerando assim dois sinais de controlo que seleccionam os valores dos operandos A e B, o sinal \texttt{mux\_RA} sinal de 2 \textit{bits} que consiste na concatenação do sinal\texttt{Conflit\_WB\_RA\_C\_ON} com \texttt{Conflit\_EXMEM\_RA\_C\_ON}, e  o sinal \texttt{mux\_RB} sinal de 2 \textit{bits} que consiste na concatenação do sinal\texttt{Conflit\_WB\_RB\_ON} com \texttt{Conflit\_EXMEM\_RB\_ON}.
+Geram-se assim dois sinais de controlo que seleccionam os valores dos operandos A e B - o sinal \texttt{mux\_RA} é um sinal de 2 \textit{bits} que consiste na concatenação do sinal \texttt{Conflit\_WB\_RA\_C\_ON} com \texttt{Conflit\_EXMEM\_RA\_C\_ON}, e o sinal \texttt{mux\_RB} é um sinal de 2 \textit{bits} que consiste na concatenação do sinal \texttt{Conflit\_WB\_RB\_ON} com \texttt{Conflit\_EXMEM\_RB\_ON}.
 
-De seguida esta representado o esquema geral de \textit{forwarding} nos andares de \textit{pipelining}.
+De seguida está representado o esquema geral de \textit{forwarding} nos andares de \textit{pipelining}.
 
 \begin{figure}[H]
 	\centering
@@ -235,23 +235,41 @@ De seguida esta representado o esquema geral de \textit{forwarding} nos andares 
 
 \subsection{Circuitos e sinais na resolução de conflitos de controlo}
 
-	Os circuitos e sinais para a resolução de conflitos de controlo são compostos por \textit{forwarding} de \textit{flags} e a criação de uma BTB, \textit{Branch Target Buffer}.  Estes circuitos e sinais estão dividos pelo andar IF e ID/OF.
-	
-	No andar IF, está implementado a tabela BTB, \textit{Branch Target Buffer}, foi definido que a tabela tem um tamanho de 512 posições, 9 \textit{bits} de endereçamento, e palavras de 16 \textit{bits}, 3 \textit{bits} de \textit{tag}, 12 \textit{bits} para o valor do salto, um \textit{bit} de predição e um \textit{bit} de validação.
-	A leitura da BTB é endereça com os 9 \textit{bits} menos significativos do sinal \texttt{reg\_pc\_IN}, originando quatro sinais, \texttt{MSB\_BTB}, \texttt{Jump\_From\_BTB},\texttt{Prediction\_Bit} e \texttt{Validate\_Bit}. Sinais que constituem o Controlo de conflitos de controlo do andar IF. Ver imagem seguinte:
-	
-	\todo{Iamgem ConflitodeContrologeral} 
-	
-	Ao analisar o esquema anterior, defini-se dois sinais de controlo importantes na selecção do PC, \texttt{MUX\_BrPred} e \texttt{MUX\_NEXTPC}. 
-	
-	O sinal \texttt{MUX\_BrPred} seleciona se o novo valor do PC é o sinal de salto da BTB ou PC + 1. Este sinal é gerado verificando se a \textit{tag} lida na BTB é igual aos 3 bits mais significativos do PC. Se for igual, o sinal  \texttt{MUX\_BrPred} fica com o mesmo valor lógico do \textit{bit} de predição da BTB, \texttt{Prediction\_Bit}. De seguida está representado o esquema do sinal \texttt{Prediction\_Bit}:
-	
-	\todo{Imagem Muxbrprd}
-	
-	O sinal \texttt{MUX\_NEXTPC} tem a função de seleccionar o PC a ser endereçado na ROM, existe 4 possibilidades, o PC gerado pelo sinal de controlo anterior, ou o salto condicional proveniente do andar ID/OF \texttt{Jump\_BTB}, ou o salto incondicional proveniente do andar ID/OF \texttt{Jump\_Incond}, ou o PC de \textit{backup}. De seguida está implementado a lógica do sinal  \texttt{MUX\_NEXTPC}:
-	
-	\todo{Imagem MuxNEXTPC}
-	    
+Os circuitos e sinais para a resolução de conflitos de controlo são compostos por \textit{forwarding} de \textit{flags} e a criação de uma BTB. Estes circuitos e sinais estão divididos pelo andar IF e ID/OF.
+
+No andar IF está implementado a tabela BTB. Esta tabela tem um tamanho de 512 posições, 9 \textit{bits} de endereçamento, e palavras de 16 \textit{bits} - 3 \textit{bits} de \textit{tag}, 12 \textit{bits} para o valor do salto, um \textit{bit} de predição e um \textit{bit} de validação.
+
+A leitura da BTB é endereçada com os 9 \textit{bits} menos significativos do sinal \texttt{reg\_pc\_IN}, o valor do \textit{program counter}, originando quatro sinais - \texttt{MSB\_BTB}, \texttt{Jump\_From\_BTB},\texttt{Prediction\_Bit} e \texttt{Validate\_Bit}. estes sinais constituem o controlo de conflitos de controlo do andar IF, como se pode ver na imagem seguinte.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.27]{imagens/ConflitodeContrologeral}
+	\vspace{-0.5em}
+	\caption{Esquema geral de resolução de conflitos de dados.}
+	\vspace{-0.8em}
+\end{figure}
+
+Ao analisar o esquema anterior, defini-se dois sinais de controlo importantes na selecção do PC, \texttt{MUX\_BrPred} e \texttt{MUX\_NEXTPC}. 
+
+O sinal \texttt{MUX\_BrPred} seleciona se o novo valor do PC é o sinal de salto da BTB ou PC + 1. Este sinal é gerado verificando se a \textit{tag} lida na BTB é igual aos 3 bits mais significativos do PC. Se for igual, o sinal \texttt{MUX\_BrPred} fica com o mesmo valor lógico do \textit{bit} de predição da BTB, \texttt{Prediction\_Bit}. De seguida está representado o esquema do sinal \texttt{Prediction\_Bit}:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.27]{imagens/Muxbrprd}
+	\vspace{-0.5em}
+	\caption{Esquema geral de resolução de conflitos de dados.}
+	\vspace{-0.8em}
+\end{figure}
+
+O sinal \texttt{MUX\_NEXTPC} tem a função de seleccionar o PC a ser endereçado na ROM, existe 4 possibilidades, o PC gerado pelo sinal de controlo anterior, ou o salto condicional proveniente do andar ID/OF \texttt{Jump\_BTB}, ou o salto incondicional proveniente do andar ID/OF \texttt{Jump\_Incond}, ou o PC de \textit{backup}. De seguida está implementado a lógica do sinal  \texttt{MUX\_NEXTPC}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.27]{imagens/MuxNEXTPC}
+	\vspace{-0.5em}
+	\caption{Esquema geral de resolução de conflitos de dados.}
+	\vspace{-0.8em}
+\end{figure}
 
 \section{Testes de \textit{performance}}
 
