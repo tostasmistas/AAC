@@ -182,7 +182,7 @@ Nas figuras seguintes apresenta-se a lógica responsável para a detecção dos 
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.27]{imagens/DetecaodeconflitoEXMEM}
 	\vspace{-0.5em}
-	\caption{Detecção dos conflitos de dados para o operando A, no andar de EX/MEM.}
+	\caption{Detecção dos conflitos de dados para o registo A, referente ao andar de EX/MEM.}
 	\vspace{-0.8em}
 \end{figure} 
 
@@ -194,7 +194,7 @@ O circuito seguinte verifica se a instrução não é dependente de registos, pa
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.27]{imagens/DetecaodeconflitoEXMEM2}
 	\vspace{-0.5em}
-	\caption{Detecção dos conflitos de dados para o operando B, no andar de EX/MEM.}
+	\caption{Circuito que permite verificar se uma instrução está associada à leitura do registo A.}
 	\vspace{-0.8em}
 \end{figure} 
 
@@ -203,7 +203,7 @@ O circuito seguinte tem o mesmo objectivo que o circuito anterior mas para o reg
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.27]{imagens/DetecaodeconflitoEXMEMRB}
 	\vspace{-0.5em}
-	\caption{Circuito que permite verificar se uma instrução está associada à leitura de registos.}
+	\caption{Circuito que permite verificar se uma instrução está associada à leitura do registo B.}
 	\vspace{-0.8em}
 \end{figure} 
 
@@ -213,7 +213,7 @@ O circuito seguinte representa a detecção de conflito de dados referente ao an
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.27]{imagens/DetecaodeconflitoWB}
 	\vspace{-0.5em}
-	\caption{Circuito que permite verificar se uma instrução está associada à leitura de registos.}
+	\caption{Detecção dos conflitos de dados para o registo A, referente ao andar de WB.}
 	\vspace{-0.8em}
 \end{figure} 
 
@@ -257,7 +257,7 @@ O sinal \texttt{MUX\_BrPred} seleciona se o novo valor do PC é o sinal de salto
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.27]{imagens/Muxbrprd}
 	\vspace{-0.5em}
-	\caption{Esquema geral de resolução de conflitos de dados.}
+	\caption{Esquema lógico do sinal \texttt{MUX\_BrPred}.}
 	\vspace{-0.8em}
 \end{figure}
 
@@ -267,10 +267,9 @@ O sinal \texttt{MUX\_NEXTPC} tem a função de seleccionar o PC a ser endereçad
 	\centering
 	\includegraphics[keepaspectratio=true, scale=0.27]{imagens/MuxNEXTPC}
 	\vspace{-0.5em}
-	\caption{Esquema geral de resolução de conflitos de dados.}
+	\caption{Esquema lógico do sinal \texttt{MUX\_NEXTPC}.}
 	\vspace{-0.8em}
 \end{figure}
->>>>>>> origin/branch-de-TeX
 
 Actualização é controlada pelo sinal de \textit{enable} da tabela BTB, \texttt{we\_BTB}, este sinal verifica se ocorrer um salto \textit{not taken} e se o salto for \textit{taken}, actualiza a tabela BTB com os novos valores de perdição, ou seja, é guardado na tabela a \textit{tag}, os 3 \textbf{bits} mais significativos do \textit{program conter}, o salto calculado no ID/OF, \texttt{Jump\_BTB}, e o \textit{bit} de predição a 1 como também o \textit{bit} de validação. Se o salto previsto for \textit{taken} e na realidade for \textit{not taken}, a actualização da BTB é feita de forma igual com a diferença do \textit{bit} de predição a 0.
 Na figura seguinte está representado a lógica do sinal \texttt{we\_BTB} como também o sinal de entrada da BTB, \texttt{IN\_BTB} e o endereço de escrita do \texttt{addr\_BTB\_A}:
