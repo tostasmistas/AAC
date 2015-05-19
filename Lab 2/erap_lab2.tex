@@ -1,0 +1,196 @@
+\documentclass[11pt]{article}
+
+\usepackage[portuguese]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{fixltx2e}
+\usepackage[bottom]{footmisc}
+\usepackage{listings}
+\usepackage{color} 
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[font=footnotesize]{caption}
+
+\setcounter{tocdepth}{3}
+
+\numberwithin{equation}{section}
+
+\linespread{1.3}
+\usepackage{indentfirst}
+\usepackage[top=2cm, bottom=2cm, right=2.3cm, left=2.3cm]{geometry}
+\addto\captionsportuguese{\renewcommand{\contentsname}{Índice}}
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+
+\hfill \break
+\hfill \break
+
+\includegraphics[width=0.3\textwidth]{./logo}~\\[1cm] 
+
+\textsc{\LARGE Instituto Superior Técnico}\\[0.25cm]
+\textsc{\Large Mestrado Integrado em Engenharia Electrotécnica e de Computadores}\\[1.8cm]
+\textsc{\huge Electrónica Rápida}\\[0.25cm]
+
+\vspace{6mm}
+
+{\huge \bfseries Projecto e Simulação de Misturadores para Altas Frequências\\[1cm]}
+
+\begin{tabular}{ l l }
+Guilherme Branco Teixeira & \hspace{2mm} n.º 70214 \\
+Maria Margarida Dias dos Reis & \hspace{2mm} n.º 73099 \\
+Nuno Miguel Rodrigues Machado & \hspace{2mm} n.º 74236
+\end{tabular}
+
+\vspace{7mm}
+
+Grupo n.º 2 de quarta-feira das 11h00 - 12h30
+
+\vfill
+
+{\large Lisboa, 29 de Abril de 2015} 
+
+\end{center}
+\end{titlepage}
+
+\pagenumbering{gobble}
+\clearpage
+
+\tableofcontents
+\pagebreak
+
+\clearpage
+\pagenumbering{arabic}
+
+\section{Introdução}
+
+Este laboratório tem como objectivo a familiarização dos alunos com circuitos misturadores  para altas-frequências com componentes discretos. O projecto do circuito e a sua simulação são dois passos essenciais neste laboratório, tendo como objectivo final o projecto da máscara para fabrico.
+
+As especificações do misturador a construir podem ser consultadas na Tabela \ref{tab:car}, tal como as características do substrato plástico para alta-frequência da Taconic (TLY -3-0310-CH/CH), sobre qual o transístor irá ser implantado. 
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+		\hline $ f_{OL} $ & $ f_{FI} $ & $ V_{CE} $ & $ I_{C} $ & $ R_{RF}, R_{OL}, R_{FI} $ & $ P_{RF} $ & $ \epsilon_{r} $ & h & t & $ \sigma $\\ 
+		\hline $ 1.0GHz $ & $ 100MHz $ & $ 2V $ & $ 55mA $ & $ 50\Omega $ & $ -20dB $ & 3.2 & $ 0.35mm $ & $ 0.018mm $ & $ 0.007 $ \\ 
+		\hline 
+	\end{tabular} 
+	\caption{Caracteristicas do misturador e substrato.}
+	\label{tab:car}
+\end{table}
+
+De notar que o valor da espessura do substrato foi modificado de 0.78 mm para 0.35 mm, com o objectivo de garantir propagação transversal nas linhas de microfita, ou seja, garantir que estas têm um comprimento maior que a largura. 
+
+\section{Misturador com oscilador local na base}
+
+\subsection{PFR}
+
+Tal como referido na Tabela \ref{tab:car}, temos características do ponto de funcionamento em repouso já pré-definidas, tal como o $ V_{CE} $ e o $ I_{C} $, podendo assim através de uma \texttt{I\_Probe} e fazendo variar os valores de tensão que se pretende calcular, e obter os valores que estas tensões assumem quando se obtem o ponto de funcionamento em repouso desejado, sendo que os valores obtidos foram os seguintes
+
+\begin{equation}
+\centering
+V_{BB}=0.72V ~ e ~ V_{GG}=2V
+\end{equation}
+
+Para descobrir os valores referidos anteriormente, a simulação foi realizada com componentes ideais, nomeadamente as bobines e condensadores, no entanto, estes terão de ser calculados de modo a que os elementos reais realizem as suas funções sem perturbar o funcionamento do circuito.
+
+Usando as Equações \ref{eq:cond_cap} e \ref{eq:cond_ind}, é possível determinar os valores dos condensadores e bobines que respeitem as condições referentes às impedância característica das linhas de transmissão.
+
+\begin{equation}
+\lvert Z_C \rvert = \frac{1}{w.C} << Z_0 \hspace{2mm} \rightarrow \hspace{2mm} C > \frac{1}{w.Z \times 0.1}.
+\label{eq:cond_cap}
+\end{equation}
+
+\begin{equation}
+\lvert Z_L \rvert = w.L >> Z_0 \hspace{2mm} \rightarrow \hspace{2mm} L > \frac{Z \times 10}{w}.
+\label{eq:cond_ind}
+\end{equation}
+
+Podendo então chegar aos valores apresentados na Equação \ref{eq:cap_ind}.
+
+\begin{equation}
+\centering
+C_{1}=\frac{1}{5.2\pi.1*10^{9}}=31.8pF; C_{2}=\frac{1}{5.2\pi.100*10^{6}}=318pF; L_{CH1}=\frac{500}{2\pi.1*10^{9}}=80nH; L_{CH2}=\frac{500}{2\pi.100*10^{6}}=800nH.
+\label{eq:cap_ind}
+\end{equation}
+
+Os valores do condensador $ C_{1} $ e da bobine $ L_{CH1} $ foram calculados com um valor de frequência de $ 100MHz $, correspondente à frequência $ f_{FI} $, pois é esta a frequência esperada nesse ramo do circuito, no entanto, os valores do condensador $ C_{2} $ e da bobine $ L_{CH2} $ foram calculados com um valor de frequência de $ 1GHz $, correspondente à frequência $ f_{OL} $, pois é esta a frequência esperada nesse ramo do circuito.
+
+\subsection{Potenciar o Ganho}
+
+O circuito, agora com elementos reais, pode ser simulado. é possível observar o desenho do circuito na Figura 
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_2c}
+	\vspace{-0.5em}
+	\caption{Circuito inicial com Bobines e condensadores reais.}
+	\vspace{-0.8em}
+	\label{fig:Circuito_0}
+\end{figure}
+
+
+
+
+\subsection{Concretização do amplificador em tecnologia de microfita}
+
+Nesta segunda fase o circuito do amplificador será todo projectado com a tecnologia de microfita e irá ser projectado um \textit{layout} do circuito.
+
+\subsubsection{a) Introdução de elementos que simulam descontinuidades nas linhas}
+
+Em primeiro lugar, substitui-se ambas as bobines e as suas fontes de tensão pelo bloco demonstrado na Figura , isto de modo a utilizar tecnologia de microfita para simular as bobines. 
+
+
+O elemento \texttt{MLIN} com o nome de \texttt{TL7} representado na Figura  tem dimensões obtidas através da ferramenta \texttt{LineCalc} já antes utilizada, no entanto, como argumentos, recebe impedância característica de $100 \Omega$ e comprimento eléctrico de $90^{\circ}$. O elemento \texttt{MLIN} com o nome de \texttt{TL8} tem dimensões calculadas através do mesmo método, no entanto, recebe como impedância característica um valor de $30 \Omega$. Esta alteração no cálculo das dimensões dos elementos \texttt{MLIN} irá causar uma diferença na largura de ambos, sendo necessário usar um elemento \texttt{MSTEP} que tem como objectivo servir de ``adaptador'' para a diferença das larguras entre os canais.
+
+Em relação às quatro descontinuidades criadas nos nós dos circuitos serão usados elementos \texttt{MTEE} que terão como função criar uma junção entre três canais e também, se necessário, adaptar as suas larguras. O resultado destas modificações no circuito do amplificador podem ser observadas na Figura.
+
+Após ter o circuito projectado é possível observar os parâmetros S, Figura , que caracterizam o amplificador.
+
+
+Como se pode observar, os resultados obtidos não são satisfatórios, os valores máximos/mínimos não se encontram centrados na frequência desejada e não apresentam valores tão próximos do esperado. Assim, foi utilizada a ferramenta \texttt{TUNE} nos comprimentos dos elementos \texttt{MLIN} com o nome de \texttt{TL2}, \texttt{TL1}, \texttt{TL4}, \texttt{TL5}, \texttt{TL7}, \texttt{TL10}, \texttt{TL6} e \texttt{TL11} representados na Figura , onde foi possível obter as características representadas na Figura.
+
+
+Como se pode observar na Figura , o parâmetro de estabilidade para 22 GHz apresenta um valor que garante a estabilidade incondicional do amplificador para 22GHz. Como se pode observar, apenas se pode garantir a estabilidade incondicional numa banda que vai de aproximadamente 15 GHz a 30 GHz. No entando, foi realizada uma nova simulação para determinar a estabilidade do amplificador em banda larga, que pode ser vista na Figura. 
+
+Como se pode observar na Carta de Smith, pode-se concluir que quando carregado com 50$\Omega$, garante-se a estabilidade do circuito em banda larga (10 GHz a 30 GHz). Isto verifica-se pois os parâmetros $S_{11}$ e $S_{22}$ (correspondentes às circunferências de estabilidade) encontram-se contidos no interior da Carta de Smith.
+
+
+Na Tabela  está uma comparação entre os vários métodos utilizados para projectar o amplificador.
+
+
+Um dos objectivos do projecto do amplificador, tal como se pode ver na Tabela \ref{tab:car}, era obter um ganho de transdução máximo, tendo sido realizada a adaptação conjugada simultânea com esse objectivo, sendo que o valor esperado para o ganho de transdução seria o apresentado na Tabela \ref{tab:param_S} como MAG. Como se pode observar, o valor obtido é bastante próximo e apresenta uma diferença de $0.257$ dB, que é causada pelas perdas nas microfitas. Não existia qualquer tipo de especificação em relação ao factor de ruído, no entanto, em relação ao amplificador com linhas ideais, o projecto final do amplificador (amplificador sem descontinuidades pós-\textit{tune}) apresenta um valor mais satisfatório, diminuindo ainda mais a importância da diferença entre o ganho de transdução dos dois amplificadores (linhas ideais e projecto final).
+
+Os valores de ambos os factores de reflexão são muito inferiores em módulo em relação aos simulados no amplificador com linhas ideais. Isto acontece pois o objectivo durante a utilização da ferramenta de optimização (\texttt{TUNE}) era maximizar o valor do ganho de transdução, manter o máximo do ganho de transdução e os mínimos de ambos os factores de reflexão centrados na frequência 22 GHz, sem comprometer em demasia os valores mínimos de ambos os factores de reflexão. É preciso ter em conta que, por exemplo, obter um factor de reflexão à entrada com o valor de -79 dB e à saída com um valor de -10 dB é muito menos favorável que ter ambos os factores de reflexão a -15 dB. Assim, foi definido como valor mínimo aceitável para ambos os factores de reflexão -15 dB, no entanto, enquanto o processo de optimização avançava, a precisão do \texttt{TUNE} era aumentada progressivamente. Foram então obtidos os valores apresentados na Tabela.
+
+\subsubsection{b) Substituição do transístor e condensadores}
+
+Em primeiro lugar, tem de se determinar as dimensões dos condensadores e, sabendo que estes têm um valor de 39 pF, foi necessário recorrer a uma \textit{datasheet} de condensadores com esse valor, sendo escolhida a do elemento \texttt{KEMET Part Number: C0402C390J5GACTU}. As suas dimensões podem ser consultadas na Figura, e são calculados na Equação .
+
+
+\vspace{-1mm}
+Pode-se então determinar a dimensão dos elementos \texttt{MGAP} a utilizar para substituir os condensadores. No entanto, como os condensadores têm uma largura diferente da do canal onde estão a ser inseridos, é necessário usar \texttt{MSTEP's} para adaptar os condensadores ao canal.
+
+Para substituir o transístor pelo elemento \texttt{MGAP} tem de se calcular as dimensões de largura e comprimento a utilizar. Ao se consultar o \textit{datasheet} do transístor é possível concluir que o encapsulamento tem $1.76$ mm, pelo que é necessário uma dimensão S do elemento \texttt{MGAP} ligeiramente superior, diga-se $2.5$ mm. Em relação à largura do \texttt{MGAP}, esta tem de coincidir com o tamanho dos \textit{pins} da \textit{gate} e do \textit{dreno} do transístor, $0.51$ mm. Mais uma vez, como a dimensão da largura do \texttt{MGAP} não é igual à do canal em que este será inserido, foram usados elementos\texttt{MSTEP} para adaptar o canal.
+
+O circuito que resulta destas substituições dos condensadores e transístores pode ser observado na Figura .
+
+
+Ao ter o circuito totalmente projectado, é possível usar a ferramenta \texttt{layout} do ADS para construir o \textit{layout} do circuito, que pode ser observado na Figura.
+
+
+O \textit{layout} obtido é satisfatório visto que apresenta as microfitas projectadas, e os espaços destinados aos condensadores e transistor com as dimensões projectadas.
+ 
+\section{Conclusões}
+
+Foi projectado e simulado um amplificador preparado para trabalhar na frequência de 22 GHz utilizando a tecnologia de microfita. Em análise à Tabela pode-se concluir que as especificações da Tabela \ref{tab:car} foram alcançadas, desde o ponto de funcionamento em repouso, ao ganho de transdução.
+
+Ao utilizar o ADS e as suas ferramentas, concluiu-se que é um programa de grande utilidade, e que o seu potencial é enorme para projectar circuitos que trabalhem em altas frequências.
+
+\end{document}
