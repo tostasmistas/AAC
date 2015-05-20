@@ -111,15 +111,28 @@ Usando as Equações \ref{eq:cond_cap} e \ref{eq:cond_ind}, é possível determi
 \label{eq:cond_ind}
 \end{equation}
 
-Podendo então chegar aos valores apresentados na Equação \ref{eq:cap_ind}.
+Podendo então chegar às condições dos valores de cada condensador e cada bobine na Equação \ref{eq:cap_ind_cond}.
 
 \begin{equation}
 \centering
-C_{1}=\frac{1}{5.2\pi.1*10^{9}}=31.8pF; C_{2}=\frac{1}{5.2\pi.100*10^{6}}=318pF; L_{CH1}=\frac{500}{2\pi.1*10^{9}}=80nH; L_{CH2}=\frac{500}{2\pi.100*10^{6}}=800nH.
-\label{eq:cap_ind}
+C_{1}>\frac{1}{5.2\pi.1*10^{9}}; C_{2}>\frac{1}{5.2\pi.100*10^{6}}; L_{CH1}>\frac{500}{2\pi.1*10^{9}}; L_{CH2}>\frac{500}{2\pi.100*10^{6}}.
+\label{eq:cap_ind_cond}
 \end{equation}
 
-Os valores do condensador $ C_{1} $ e da bobine $ L_{CH1} $ foram calculados com um valor de frequência de $ 100MHz $, correspondente à frequência $ f_{FI} $, pois é esta a frequência esperada nesse ramo do circuito, no entanto, os valores do condensador $ C_{2} $ e da bobine $ L_{CH2} $ foram calculados com um valor de frequência de $ 1GHz $, correspondente à frequência $ f_{OL} $, pois é esta a frequência esperada nesse ramo do circuito.
+As condições dos valores do condensador $ C_{1} $ e da bobine $ L_{CH1} $ foram calculadas com um valor de frequência de $ 100MHz $, correspondente à frequência $ f_{FI} $, pois é esta a frequência esperada nesse ramo do circuito, no entanto, as condições correspondentes ao condensador $ C_{2} $ e à bobine $ L_{CH2} $ foram calculadas com um valor de frequência de $ 1GHz $, correspondente à frequência $ f_{OL} $, pois é esta a frequência esperada nesse ramo do circuito. Foram escolhidos valores para estes componentes que correspondam a valores de mercado, estes valores podem ser consultados na Tabela \ref{tab:cap_ind}.
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c||c|}
+		\hline $ C_{1} $ & $ 33pF $ \\ 
+		\hline $ C_{2} $ & $ 330pF $ \\ 
+		\hline $ L_{CH1} $ & $ 82nH $ \\ 
+		\hline $ L_{CH2} $ & $ 820nH $ \\ 
+		\hline 
+	\end{tabular} 
+	\caption{Valores usados para os condensadores e bobine.}
+	\label{tab:cap_ind}
+\end{table}
 
 \subsection{Ganho de transdução}
 
@@ -147,12 +160,37 @@ O circuito, agora com elementos reais, pode ser simulado. é possível observar 
 
 Ao se observar a Figura \ref{fig:GT_0} é possível determinar o valor de $ P_{OLDISP(\omega_{OL})} $ para qual o ganho de transcondução é máximo, $ -4.5 $.
 
-
-
 \subsection{Espectros de potência}
 
+Usando o mesmo circuito da Figura \ref{fig:Circuito_0} foi possível obter o gráfico com os espectros de potência na Figura \ref{fig:EP_0}.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/EP_0}
+	\vspace{-0.5em}
+	\caption{Gráfico do ganho de transcondução em função de $ P_{OLDISP(\omega_{OL})} $.}
+	\vspace{-0.8em}
+	\label{fig:EP_0}
+\end{figure}
 
+Ao observar a Figura \ref{fig:EP_0} 
+
+\todo{fazer os espectros}
+
+\subsection{Ganho de conversão}
+
+\todo{fazer o ganho de conversão}
+
+\subsection{Filtro de FI}
+ 
+Teremos como referência o valor da frequência $ f_{FI} $, ou seja, $ \omega_{0}=2\pi f_{FI} $ e um factor de qualidade do filtro de 10. 
+
+\begin{equation}
+\omega_{0}=\frac{1}{\sqrt{C_{0}L_{0}}} ~ e ~ B=\frac{1}{R_{FI}C_{0}} ~ e ~ Q=\frac{\omega_{0}}{B}.
+\label{eq:filtro_0}
+\end{equation}
+
+Tendo em conta as expressões na Equação \ref{eq:filtro_0}, é possível determinar os componentes que compõem o filtro.
 
 \subsection{Concretização do amplificador em tecnologia de microfita}
 
