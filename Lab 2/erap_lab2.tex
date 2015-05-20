@@ -10,8 +10,14 @@
 \usepackage[bottom]{footmisc}
 \usepackage{listings}
 \usepackage{color} 
-\usepackage[usenames,dvipsnames]{xcolor}
-\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{xargs}                      % Use more than one optional parameter in a new commands
+\usepackage[pdftex,dvipsnames]{xcolor}  % Coloured text etc.
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
+\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
 \usepackage[font=footnotesize]{caption}
 
 \setcounter{tocdepth}{3}
@@ -24,10 +30,10 @@
 \addto\captionsportuguese{\renewcommand{\contentsname}{Índice}}
 
 \begin{document}
-
+	
 \begin{titlepage}
 \begin{center}
-
+	
 \hfill \break
 \hfill \break
 
@@ -42,9 +48,9 @@
 {\huge \bfseries Projecto e Simulação de Misturadores para Altas Frequências\\[1cm]}
 
 \begin{tabular}{ l l }
-Guilherme Branco Teixeira & \hspace{2mm} n.º 70214 \\
-Maria Margarida Dias dos Reis & \hspace{2mm} n.º 73099 \\
-Nuno Miguel Rodrigues Machado & \hspace{2mm} n.º 74236
+	Guilherme Branco Teixeira & \hspace{2mm} n.º 70214 \\
+	Maria Margarida Dias dos Reis & \hspace{2mm} n.º 73099 \\
+	Nuno Miguel Rodrigues Machado & \hspace{2mm} n.º 74236
 \end{tabular}
 
 \vspace{7mm}
@@ -53,8 +59,8 @@ Grupo n.º 2 de quarta-feira das 11h00 - 12h30
 
 \vfill
 
-{\large Lisboa, 29 de Abril de 2015} 
-
+{\large Lisboa, 27 de Maio de 2015}
+	
 \end{center}
 \end{titlepage}
 
@@ -69,120 +75,135 @@ Grupo n.º 2 de quarta-feira das 11h00 - 12h30
 
 \section{Introdução}
 
-Este laboratório tem como objectivo a familiarização dos alunos com circuitos misturadores  para altas-frequências com componentes discretos. O projecto do circuito e a sua simulação são dois passos essenciais neste laboratório, tendo como objectivo final o projecto da máscara para fabrico.
+Este laboratório tem como objectivo a familiarização com circuitos misturadores para altas frequências com componentes discretos. O projecto do circuito e a sua simulação são dois passos essenciais neste laboratório, tendo como objectivo final o projecto da máscara para fabrico.
 
-As especificações do misturador a construir podem ser consultadas na Tabela \ref{tab:car}, tal como as características do substrato plástico para alta-frequência da Taconic (TLY -3-0310-CH/CH), sobre qual o transístor irá ser implantado. 
+As especificações do misturador a construir podem ser consultadas na Tabela \ref{tab:car}, tal como as características do substrato plástico para alta frequência da Taconic (TLY -3-0310-CH/CH), sobre o qual o transístor irá ser implantado. 
 
-\begin{table}[H]
-	\centering
-	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
-		\hline $ f_{OL} $ & $ f_{FI} $ & $ V_{CE} $ & $ I_{C} $ & $ R_{RF}, R_{OL}, R_{FI} $ & $ P_{RF} $ & $ \epsilon_{r} $ & h & t & $ \sigma $\\ 
-		\hline $ 1.0GHz $ & $ 100MHz $ & $ 2V $ & $ 55mA $ & $ 50\Omega $ & $ -20dB $ & 3.2 & $ 0.35mm $ & $ 0.018mm $ & $ 0.007 $ \\ 
-		\hline 
-	\end{tabular} 
-	\caption{Caracteristicas do misturador e substrato.}
-	\label{tab:car}
+\begin{table}[h]
+\centering
+\caption{Características do misturador e substrato.}
+\vspace{-1.5mm}
+\includegraphics[keepaspectratio=true, scale=0.35]{teoricas/table1}
+\label{tab:car}
 \end{table}
 
-De notar que o valor da espessura do substrato foi modificado de 0.78 mm para 0.35 mm, com o objectivo de garantir propagação transversal nas linhas de microfita, ou seja, garantir que estas têm um comprimento maior que a largura. 
+De notar que o valor da espessura do substrato foi modificado de 0.78 mm para 0.35 mm, com o objectivo de garantir propagação transversal nas linhas de microfita, ou seja, garantir que estas têm um comprimento maior que a largura. \unsure{isto e para manter?}
 
 \section{Misturador com oscilador local na base}
 
-\subsection{PFR}
+\subsection{a) Dimensionamento dos componentes}
 
-Tal como referido na Tabela \ref{tab:car}, temos características do ponto de funcionamento em repouso já pré-definidas, tal como o $ V_{CE} $ e o $ I_{C} $, podendo assim através de uma \texttt{I\_Probe} e fazendo variar os valores de tensão que se pretende calcular, e obter os valores que estas tensões assumem quando se obtem o ponto de funcionamento em repouso desejado, sendo que os valores obtidos foram os seguintes
+Numa primeira fase considera-se o circuito da Figura TAL sem filtro de frequência intermédia (FI) e sem malha de adaptação.
 
+\paragraph{PFR pretendido} \hspace{0pt} 
+
+Pretende-se determinar os valores das tensões de polarização $V_{BB}$ e $V_{CC}$. Tal como referido na Tabela \ref{tab:car}, as características do ponto de funcionamento em repouso (PFR) já estão pré-definidas, como o valor de $V_{CE}$ e $I_{C}$. Assim, através de uma \texttt{I\_Probe} e fazendo variar os valores de tensão que se pretende calcular, e possível obter os valores que estas tensões assumem quando se obtém o ponto de funcionamento em repouso desejado. Assim,
+
+\vspace{-3mm}
 \begin{equation}
 \centering
-V_{BB}=0.72V ~ e ~ V_{GG}=2V
+V_{BB} = 0.72~\text{V} ~ e ~ V_{CC} = 2~\text{V}.
 \end{equation}
 
-Para descobrir os valores referidos anteriormente, a simulação foi realizada com componentes ideais, nomeadamente as bobines e condensadores, no entanto, estes terão de ser calculados de modo a que os elementos reais realizem as suas funções sem perturbar o funcionamento do circuito.
+\vspace{1mm} 
+Para determinar os valores referidos anteriormente, a simulação foi realizada com componentes ideais, nomeadamente as bobines de bloqueio e os condensadores de desacoplamento, no entanto, estes terão de ser dimensionados de modo a que os elementos reais realizem as suas funções sem perturbar o funcionamento do circuito.
 
-Usando as Equações \ref{eq:cond_cap} e \ref{eq:cond_ind}, é possível determinar os valores dos condensadores e bobines que respeitem as condições referentes às impedância característica das linhas de transmissão.
+Recorrendo às equações \ref{eq:cond_cap} e \ref{eq:cond_ind}, é possível calcular os valores dos condensadores e bobines que respeitem as condições referentes às impedâncias características das linhas de transmissão.
 
+No caso do condensador de desacoplamento, $C_{D}$, o seu valor tem de cumprir a condição especificada na equação \ref{eq:cond_cap}, pois sabe-se que a impedância dos condensadores de desacoplamento deve ser bastante inferior à impedância característica das linhas de transmissão. 
+
+\vspace{-3mm}
 \begin{equation}
-\lvert Z_C \rvert = \frac{1}{w.C} << Z_0 \hspace{2mm} \rightarrow \hspace{2mm} C > \frac{1}{w.Z \times 0.1}.
-\label{eq:cond_cap}
+	\lvert Z_C \rvert = \frac{1}{w_{0} C_{D}} << Z_0 \hspace{2mm} \rightarrow \hspace{2mm} C_{D} > \frac{1}{w_{0}Z_0 \times 0.1} \hspace{2mm} \rightarrow \hspace{2mm} C_{D} > \dfrac{1}{5 \times w_{0}}.
+	\label{eq:cond_cap}
 \end{equation}
 
+\vspace{1mm}
+No caso da bobine de bloqueio, $L_{CHK}$, o seu valor tem de cumprir a condição especificada na equação \ref{eq:cond_ind}, pois sabe-se que a impedância das bobines de bloqueio deve ser bastante superior à impedância característica das linhas de transmissão.  
+
+\vspace{-3mm}
 \begin{equation}
-\lvert Z_L \rvert = w.L >> Z_0 \hspace{2mm} \rightarrow \hspace{2mm} L > \frac{Z \times 10}{w}.
-\label{eq:cond_ind}
+	\lvert Z_L \rvert = w_{0} L_{CHK} >> Z_0 \hspace{2mm} \rightarrow \hspace{2mm} L_{CHK} > \frac{Z_0 \times 10}{w_{0}} \hspace{2mm} \rightarrow \hspace{2mm} L_{CHK} > \frac{500}{w_{0}}.
+	\label{eq:cond_ind}
 \end{equation}
 
-Podendo então chegar às condições dos valores de cada condensador e cada bobine na Equação \ref{eq:cap_ind_cond}.
+\vspace{1mm}
 
+Assim, os valores obtidos para os componentes a dimensionar são:
+
+\vspace{-3mm}
 \begin{equation}
 \centering
-C_{1}>\frac{1}{5.2\pi.1*10^{9}}; C_{2}>\frac{1}{5.2\pi.100*10^{6}}; L_{CH1}>\frac{500}{2\pi.1*10^{9}}; L_{CH2}>\frac{500}{2\pi.100*10^{6}}.
-\label{eq:cap_ind_cond}
+C_{1} > \frac{1}{5 \times 2 \pi \times 1 \times 10^{9}} = 31.83~\text{pF};~ C_{2} > \frac{1}{5 \times 2\pi \times 100 \times 10^{6}} = 318.3~\text{pF}; 
+\end{equation}
+\vspace{-3mm}
+\begin{equation}
+\centering
+L_{CH1} > \frac{500}{2\pi \times 1 \times 10^{9}} = 79.58~\text{nH};~L_{CH2} > \frac{500}{2\pi \times 100 \times 10^{6}} = 795.8~\text{nH}.
 \end{equation}
 
-As condições dos valores do condensador $ C_{1} $ e da bobine $ L_{CH1} $ foram calculadas com um valor de frequência de $ 100MHz $, correspondente à frequência $ f_{FI} $, pois é esta a frequência esperada nesse ramo do circuito, no entanto, as condições correspondentes ao condensador $ C_{2} $ e à bobine $ L_{CH2} $ foram calculadas com um valor de frequência de $ 1GHz $, correspondente à frequência $ f_{OL} $, pois é esta a frequência esperada nesse ramo do circuito. Foram escolhidos valores para estes componentes que correspondam a valores de mercado, estes valores podem ser consultados na Tabela \ref{tab:cap_ind}.
+\vspace{2mm}
+As condições dos valores do condensador $ C_{1} $ e da bobine $ L_{CH1} $ foram calculadas com um valor de frequência de 100 MHz, correspondente à frequência $f_{FI}$, pois é esta a frequência esperada nesse ramo do circuito. Já as condições correspondentes ao condensador $ C_{2} $ e à bobine $ L_{CH2} $ foram calculadas com um valor de frequência de 1 GHz, correspondente à frequência $ f_{OL} $, pois é esta a frequência esperada nesse ramo do circuito. Foram escolhidos valores para estes componentes que correspondam a valores de mercado, tal como se pode consultar	 na Tabela \ref{tab:cap_ind}.
 
-\begin{table}
+\begin{table}[h]
 	\centering
-	\begin{tabular}{|c||c|}
-		\hline $ C_{1} $ & $ 33pF $ \\ 
-		\hline $ C_{2} $ & $ 330pF $ \\ 
-		\hline $ L_{CH1} $ & $ 82nH $ \\ 
-		\hline $ L_{CH2} $ & $ 820nH $ \\ 
-		\hline 
-	\end{tabular} 
-	\caption{Valores usados para os condensadores e bobine.}
+	\caption{Valores utilizados para os condensadores de desacoplamento e bobines de bloqueio.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.35]{teoricas/componentes}
 	\label{tab:cap_ind}
 \end{table}
 
-\subsection{Ganho de transdução}
+\todo{e necessario descrever as funcoes dos componentes}
 
-O circuito, agora com elementos reais, pode ser simulado. é possível observar o desenho do circuito na Figura \ref{fig:Circuito_0}.
+\paragraph{Ganho de transdução de conversão} \hspace{0pt} 
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_2c}
-	\vspace{-0.5em}
-	\caption{Circuito inicial com Bobines e condensadores reais.}
-	\vspace{-0.8em}
-	\label{fig:Circuito_0}
+O circuito, agora com elementos reais, pode ser simulado. de acordo com o que se pode observar na Figura \ref{fig:Circuito_0}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_2c}
+\vspace{-0.5em}
+\caption{Circuito inicial com bobines e condensadores reais.}
+\vspace{-0.8em}
+\label{fig:Circuito_0}
 \end{figure}
 
-É possível agora simular o circuito de forma a obter o gráfico do ganho de transdução deste circuito.
+Simulando o circuito de forma a obter o gráfico do ganho de transdução de conversão deste circuito vem:
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[keepaspectratio=true, scale=0.45]{exps/GT_0}
-	\vspace{-0.5em}
-	\caption{Gráfico do ganho de transcondução em função de $ P_{OLDISP(\omega_{OL})} $.}
-	\vspace{-0.8em}
-	\label{fig:GT_0}
+\begin{figure}[h]
+\centering
+\includegraphics[keepaspectratio=true, scale=0.45]{exps/GT_0}
+\vspace{-0.5em}
+\caption{Gráfico do ganho de transdução de conversão em função de $ P_{\text{OLDISP}\left(\omega_{OL}\right)} $}.
+\vspace{-0.8em}
+\label{fig:GT_0}
 \end{figure}
 
-Ao se observar a Figura \ref{fig:GT_0} é possível determinar o valor de $ P_{OLDISP(\omega_{OL})} $ para qual o ganho de transcondução é máximo, $ -4.5 $.
+Ao observar a Figura \ref{fig:GT_0} é possível determinar o valor de $ P_{\text{OLDISP}\left(\omega_{OL}\right)} $ para qual o ganho de transdução de conversão é máximo, ou seja, -4.5 dBm.
 
-\subsection{Espectros de potência}
+\paragraph{Espectros de potência} \hspace{0pt} 
 
 Usando o mesmo circuito da Figura \ref{fig:Circuito_0} foi possível obter o gráfico com os espectros de potência na Figura \ref{fig:EP_0}.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[keepaspectratio=true, scale=0.45]{exps/EP_0}
-	\vspace{-0.5em}
-	\caption{Gráfico do ganho de transcondução em função de $ P_{OLDISP(\omega_{OL})} $.}
-	\vspace{-0.8em}
-	\label{fig:EP_0}
+\begin{figure}[h]
+\centering
+\includegraphics[keepaspectratio=true, scale=0.45]{exps/EP_0}
+\vspace{-0.5em}
+\caption{Gráfico do ganho de transcondução de conversão em função de $ P_{OLDISP(\omega_{OL})} $.}
+\vspace{-0.8em}
+\label{fig:EP_0}
 \end{figure}
 
 Ao observar a Figura \ref{fig:EP_0} 
 
 \todo{fazer os espectros}
 
-\subsection{Ganho de conversão}
+\paragraph{Ganho de conversão} \hspace{0pt} 
 
 \todo{fazer o ganho de conversão}
 
-\subsection{Filtro de FI}
- 
+\paragraph{Filtro de FI}
+
 Teremos como referência o valor da frequência $ f_{FI} $, ou seja, $ \omega_{0}=2\pi f_{FI} $ e um factor de qualidade do filtro de 10. 
 
 \begin{equation}
@@ -192,7 +213,7 @@ Teremos como referência o valor da frequência $ f_{FI} $, ou seja, $ \omega_{0
 
 Tendo em conta as expressões na Equação \ref{eq:filtro_0}, é possível determinar os componentes que compõem o filtro.
 
-\subsection{Concretização do amplificador em tecnologia de microfita}
+\paragraph{Concretização do amplificador em tecnologia de microfita}
 
 Nesta segunda fase o circuito do amplificador será todo projectado com a tecnologia de microfita e irá ser projectado um \textit{layout} do circuito.
 
@@ -240,7 +261,7 @@ Ao ter o circuito totalmente projectado, é possível usar a ferramenta \texttt{
 
 
 O \textit{layout} obtido é satisfatório visto que apresenta as microfitas projectadas, e os espaços destinados aos condensadores e transistor com as dimensões projectadas.
- 
+
 \section{Conclusões}
 
 Foi projectado e simulado um amplificador preparado para trabalhar na frequência de 22 GHz utilizando a tecnologia de microfita. Em análise à Tabela pode-se concluir que as especificações da Tabela \ref{tab:car} foram alcançadas, desde o ponto de funcionamento em repouso, ao ganho de transdução.
