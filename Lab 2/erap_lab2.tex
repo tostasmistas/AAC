@@ -116,7 +116,7 @@ valores que foram retirados com recurso à seguinte simulação:
 
 \begin{figure}[h]
 \centering
-\includegraphics[keepaspectratio=true, scale=0.40]{exps/Vbb}
+\includegraphics[keepaspectratio=true, scale=0.35]{exps/Vbb}
 \vspace{-0.5em}
 \caption{Valor do PFR da tensão $V_{BE}$.}
 \vspace{-0.8em}
@@ -165,7 +165,7 @@ As condições dos valores do condensador $ C_{1} $ e da bobine $ L_{CH1} $ fora
 	\centering
 	\caption{Valores utilizados para os condensadores de desacoplamento e bobines de bloqueio.}
 	\vspace{-1.5mm}
-	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/componentes}
+	\includegraphics[keepaspectratio=true, scale=0.37]{teoricas/componentes}
 	\label{tab:cap_ind}
 \end{table}
 
@@ -186,7 +186,7 @@ O circuito, agora com elementos reais, pode ser simulado. de acordo com o que se
 
 O ganho de transdução de um circuito, $G_{TC}$, é a relação entre a potência entregue à carga e a potência disponível no gerador. Havendo conversão, é necessário especificar qual a operação que se está a realizar - neste caso efectua-se uma diferença entre $OL$ e $RF$ para se ter $FI$, ou seja, o valor de $f_{OL}$ é 1 GHz, $f_{FI}$ é 100 MHz e $f_{RF}$ é 900 MHz. 
 
-Simulando o circuito de forma a obter o gráfico do ganho de transdução de conversão deste circuito vem:
+Simulando o circuito de forma a obter o gráfico do ganho de transdução de conversão vem:
 
 \begin{figure}[h]
 \centering
@@ -201,30 +201,46 @@ Ao observar a Figura \ref{fig:GT_0} é possível determinar o valor de $ P_{\tex
 
 \subsection{Espectros de potência} 
 
-Usando o mesmo circuito da Figura \ref{fig:Circuito_0} foi possível obter o gráfico com os espectros de potência, usando como referência o máximo do ganho de transdução, ou seja, esta simulação foi realizada com um valor fico de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $, '4.5'.
-
-\begin{figure}[h]
-\centering
-\includegraphics[keepaspectratio=true, scale=0.45]{exps/EP_0}
-\vspace{-0.5em}
-\caption{Espectros de potência.}
-\vspace{-0.8em}
-\label{fig:EP_0}
-\end{figure}
-
-Na Figura \ref{fig:EP_0}, a risca com o marcador \texttt{m1} corresponde ao espectro de potência da frequência $f_{FI}$, a risca com o marcador \texttt{m2} corresponde ao espectro de potência da frequência $f_{RF}$ e a risca com o marcador \texttt{m3} corresponde ao espectro de potência da frequência $f_{OL}$.
-
-A partir da Figura \ref{fig:EP_0}, pode-se calcular os valores dos isolamentos $OL - RF$ e $OL - FI$. O cálculo corresponde a ir ao porto de FI e ver quanto de OL chega até lá, sendo que idealmente não chegaria nada e o porto seria perfeito. Assim, o que se deve fazer é a diferença entre as componentes espectrais respectivas do isolamento que se está a considerar, ou seja, $I_{\text{OLRF}} = P_{\text{OLDISP}}\left(\omega_{OL}\right) / P_{\text{RF}}\left(\omega_{OL}\right) $ e $I_{\text{OLFI}} = P_{\text{OLDISP}}\left(\omega_{OL}\right) / P_{\text{FI}}\left(\omega_{OL}\right) $.
+Recorrendo ao circuito projectado anteriormente obteve-se os espectros de potência no porto de RF e no porto de FI. Este espectros foram obtidos utilizando como referência o máximo do ganho de transdução, ou seja, esta simulação foi realizada com um valor fixo de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $.
 
 \begin{table}[h]
 	\centering
-	\caption{Valor dos isolamentos.}
+	\caption{Valor óptimo de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ numa situação em que o circuito não tem filtro.}
 	\vspace{-1.5mm}
-	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/isolamentos}
+	\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/poldispSemFiltro}
 \end{table}
 
-É também possível a partir dos espectros de potência calcular o valor do ganho de conversão, $G_{PC}$, que corresponde a $ P_{\text{FI}}\left(\omega_{OL}\right)/P_{\text{RF}}\left(\omega_{OL}\right) $. \todo{como calcular?}
+\vspace{-7mm}
 
+\begin{figure}[h]
+	\centering
+	\subfloat[]{\includegraphics[keepaspectratio=true, scale=0.44]{exps/EP_0_RF}}
+	\hspace{8mm}
+	\subfloat[]{\includegraphics[keepaspectratio=true, scale=0.44]{exps/EP_0_FI}}
+	\vspace{-0.8em}
+	\caption{Espectro de potência do porto RF (a) e do porto de FI (b), para um circuito sem filtro de FI.}
+	\vspace{-0.8em}
+\end{figure}
+
+A partir das figuras anteriores pode-se calcular os valores dos isolamentos $OL - RF$ e $OL - FI$. O cálculo do isolamento $OL-RF$ corresponde a ir ao porto de RF e ver quanto de OL chega até lá, já o cálculo do isolamento $OL-FI$ corresponde a ir ao porto de FI e ver quanto de OL chega até lá, sendo que idealmente não chegaria nada, o isolamento seria $- \infty$, e o portos seriam perfeitos. Assim, o que se deve fazer é a diferença entre as componentes espectrais respectivas do isolamento que se está a considerar, ou seja, $I_{\text{OLRF}} = P_{\text{OLDISP}}\left(\omega_{OL}\right) / P_{\text{RF}}\left(\omega_{OL}\right) $ e $I_{\text{OLFI}} = P_{\text{OLDISP}}\left(\omega_{OL}\right) / P_{\text{FI}}\left(\omega_{OL}\right) $.
+
+\begin{table}[h]
+	\centering
+	\caption{Valores dos isolamentos numa situação em que o circuito não tem filtro.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/isolamentosSemFiltro}
+\end{table}
+
+Como se pode ver, o isolamento $OL - FI$ toma um valor longe do teórico de $- \infty$, ou seja, não existe um bom isolamento.
+
+É também possível a partir dos espectros de potência calcular o valor do ganho de conversão, $G_{PC}$, que corresponde a $ P_{\text{FI}}\left(\omega_{OL}\right)/P_{\text{RF}}\left(\omega_{OL}\right) $, ou seja, corresponde a subtrair a componente espectral da frequência intermédia vista do porto de FI, -5.172 dBm, à potência disponível do gerador de RF, -20 dBm.
+
+\begin{table}[h]
+	\centering
+	\caption{Ganho de conversão numa situação em que o circuito não tem filtro.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/ganhoSemFiltro}
+\end{table}
 
 \subsection{Filtro de frequência intermédia}
 
@@ -273,31 +289,50 @@ Como se pode observar na Figura \ref{fig:Circuito_1}, a bobine de bloqueio $L_{C
 \label{fig:GT_1}
 \end{figure}
 
-Como se pode ver, o valor de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ que maximiza o ganho de transdução de conversão passou de 4.5 dBm para 4 dBm. \todo{why?}
-
-É também possível comparar os espectros de potência, Figura \ref{fig:EP_1}.
-
-\begin{figure}[h]
-\centering
-\includegraphics[keepaspectratio=true, scale=0.45]{exps/EP_1}
-\vspace{-0.5em}
-\caption{Espectros de potência após a inserção do filtro.}
-\vspace{-0.8em}
-\label{fig:EP_1}
-\end{figure}
-
-A partir da Figura \ref{fig:EP_1} pode-se calcular os valores dos isolamentos $OL-RF$ e $OL-FI$ com a introdução do filtro.
+Como se pode ver, o valor de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ que maximiza o ganho de transdução de conversão passou de 4.5 dBm para 4 dBm.
 
 \begin{table}[h]
 	\centering
-	\caption{Valor dos isolamentos.}
+	\caption{Valor óptimo de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ para dois estados diferentes do circuito.}
 	\vspace{-1.5mm}
-	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/isolamentosFiltro}
+	\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/poldispSemComFiltro}
 \end{table}
 
-\todo{explicar diferenças nos isolamentos}
+É também possível obter os espectros de potência, à semelhança do que se fez para o caso em que não havia filtro.
 
-À semelhança do que foi feito anteriormente calcula-se também o valor do ganho de conversão \todo{mesmo problema de antes - como fazer?}
+\begin{figure}[h]
+	\centering
+	\subfloat[]{\includegraphics[keepaspectratio=true, scale=0.35]{exps/EP_1_RF}}
+	\hspace{8mm}
+	\subfloat[]{\includegraphics[keepaspectratio=true, scale=0.33]{exps/EP_1_FI}}
+	\vspace{-0.8em}
+	\caption{Espectro de potência do porto RF (a) e do porto de FI (b), para um circuito com filtro de FI.}
+	\vspace{-0.8em}
+\end{figure}
+
+A partir das figuras anteriores pode-se calcular os valores dos isolamentos $OL - RF$ e $OL - FI$.
+
+\pagebreak
+
+\begin{table}[h]
+	\centering
+	\caption{Valores dos isolamentos para dois estados diferentes do circuito.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/isolamentosSemComFiltro}
+\end{table}
+
+Como se pode ver, o valor do isolamento $OL - FI$ sofreu uma mudança drástica com a introdução do filtro, passando a ser negativo e estar mais próximo de  $- \infty$, ou seja, é no momento que se introduz o filtro de FI que se passa a ter isolamento no porto de FI.
+
+É também possível a partir dos espectros de potência calcular o valor do ganho de conversão, $G_{PC}$.
+
+\begin{table}[h]
+	\centering
+	\caption{Ganho de conversão para dois estados diferentes do circuito.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/ganhoSemComFiltro}
+\end{table}
+
+\todo{explicar diferenças nos ganhos - nao sei bem}
 
 \subsection{Componentes da tensão $V_{BE}$ e da corrente $I_{C}$} 
 
