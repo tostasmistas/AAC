@@ -323,7 +323,7 @@ A partir das figuras anteriores pode-se calcular os valores dos isolamentos $OL 
 
 Como se pode ver, o valor do isolamento $OL - FI$ sofreu uma mudança drástica com a introdução do filtro, passando a ser negativo e estar mais próximo de  $- \infty$, ou seja, é no momento que se introduz o filtro de FI que se passa a ter isolamento no porto de FI.
 
-É também possível a partir dos espectros de potência calcular o valor do ganho de conversão, $G_{PC}$.
+É também possível a partir dos espectros de potência calcular o valor do ganho de transdução de conversão, $G_{PC}$.
 
 \begin{table}[h]
 	\centering
@@ -336,7 +336,7 @@ Como se pode ver, o valor do isolamento $OL - FI$ sofreu uma mudança drástica 
 
 \subsection{Componentes da tensão $V_{BE}$ e da corrente $I_{C}$} 
 
-Pretende-se agora obter as componentes da tensão $v_{BE}$ e da corrente $I_{C}$ nas frequências $f_{OL}$, $f_{RF}$ e $f_{FI}$.
+Pretende-se agora obter as componentes da tensão $v_{BE}$ e da corrente $I_{C}$ nas frequências $f_{OL}$, $f_{RF}$ e $f_{FI}$. \unsure{isto é para fazer? nos so tiramos do PFR}
 
 \begin{figure}[h]
 \centering
@@ -356,35 +356,32 @@ Pretende-se agora obter as componentes da tensão $v_{BE}$ e da corrente $I_{C}$
 \label{fig:Vbe}
 \end{figure}
 
-A corrente $I_{C}$ para a qual o circuito foi dimensionado é de 55 mA, no entanto verifica-se que o valor obtido para a frequência de trabalho é de \todo{valor experimental}. De facto, isto ocorre porque a corrente $I_{C}$ é uma função de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $, ou seja, o circuito é na verdade dimensionado para uma corrente $I_{CQ}$ (a componente contínua) mas depois no misturador passa para $I_{C}$. Este fenómeno é inevitável mas trabalha a nosso favor porque faz aumentar o ganho.
+A corrente $I_{C}$ para a qual o circuito foi dimensionado é de 55 mA, no entanto verifica-se que o valor verdadeiramente obtido para o PFR é de 73 mA. De facto, isto ocorre porque a corrente $I_{C}$ é uma função de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $, ou seja, o circuito é na verdade dimensionado para uma corrente $I_{CQ}$ (a componente contínua) mas depois no misturador passa para $I_{C}$. Este fenómeno é inevitável mas trabalha a nosso favor porque faz aumentar o ganho.
 
-Relativamente ao valor de $V_{BE}$ este já não é uma função de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ porque o circuito foi polarizado em tensão, ou seja, o seu valor foi forçado. Assim se explica que para uma frequência de 1 GHz o valor obtido corresponda ao dimensionado.
+Relativamente ao valor de $V_{BE}$ este já não é uma função de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ porque o circuito foi polarizado em tensão, ou seja, o seu valor foi forçado. Assim se explica que o valor obtido corresponda ao dimensionado, 0.72 V.
 
-\todo{margarida mete as explicações do caderno}
-
-Pode-se também obter o valor do ganho de compressão a -1 dB do ganho de transdução de conversão, ou seja, registar a 
+Pode-se também obter o valor do ganho de compressão a -1 dB do ganho de transdução de conversão, ou seja, registar o valor de \todo{o que e o Pin} para o qual o ganho diminuiu 1 dB, ou seja, para o qual o ganho é 19 dB. 
 
 \begin{figure}[h]
 \centering
 \includegraphics[keepaspectratio=true, scale=0.45]{exps/Compression}
 \vspace{-0.5em}
-\caption{Ponto de Compressão a $-1dB$ do ganho de conversão.}
+\caption{Ponto de compressão a -1 dB do ganho de transdução de conversão.}
 \vspace{-0.8em}
 \label{fig:Compressao}
 \end{figure}
-
 
 \todo{explicar}
 
 \subsection{Acoplador de Wilkinson}
 
-\paragraph{Malha de Entrada Adaptada} \hspace{0pt} 
+\paragraph{Malha de entrada adaptada} \hspace{0pt} 
 
-Usando as equações da Figura \ref{fig:Eq}, é possível, na simulação do circuito, observar as impedâncias de de entrada de RF e de OL, Figura \ref{fig:Imp_OL_RF}.
+Utilizando as equações da Figura \ref{fig:Eq}, é possível, na simulação do circuito, observar as impedâncias de de entrada de RF e de OL, Figura \ref{fig:Imp_OL_RF}.
 
 \begin{figure}[h]
 \centering
-\includegraphics[keepaspectratio=true, scale=0.2]{exps/Eq}
+\includegraphics[keepaspectratio=true, scale=0.33]{exps/Eq}
 \vspace{-0.5em}
 \caption{Equações das impedâncias de entrada de OL (em cima) e RF (em baixo).}
 \vspace{-0.8em}
@@ -394,47 +391,40 @@ Usando as equações da Figura \ref{fig:Eq}, é possível, na simulação do cir
 
 \begin{figure}[h]
 \centering
-\includegraphics[keepaspectratio=true, scale=0.45]{exps/Z_20}
+\includegraphics[keepaspectratio=true, scale=0.39]{exps/Z_20}
 \vspace{-0.5em}
 \caption{Valores das impedâncias de entrada de OL (à direita) e RF (à esquerda).}
 \vspace{-0.8em}
 \label{fig:Imp_OL_RF}
 \end{figure}
 
-Ao observar a Figura \ref{fig:Imp_OL_RF}, é possível verificar que não se verificam oscilações no valor de $ Z_{\text{in}_{OL}} $ com a variação de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $, \todo{qual o impacto teórico que isto tem}. Verificando a Figura \ref{fig:GT_1}, o valor de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ que corresponde ao máximo do ganho de transdução é 4. No entanto, nesta situação, ficar-se-ia com uma componente real negativa de $ Z_{\text{in}_{RF}} $, sendo então necessário encontrar outro máximo do ganho de transdução, que corresponda a uma componente real positiva para $ Zin_{RF} $.
+Ao observar a Figura \ref{fig:Imp_OL_RF}, é possível verificar que não há oscilações no valor de $ Z_{\text{in}_{OL}} $ com a variação de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $. Verificando a Figura \ref{fig:GT_1}, o valor de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ que corresponde ao máximo do ganho de transdução é 4 dBm. No entanto, nesta situação, ficar-se-ia com uma componente real negativa de $ Z_{\text{in}_{RF}} $, sendo então necessário encontrar outro máximo do ganho de transdução, que corresponda a uma componente real positiva para  $ Z_{\text{in}_{RF}} $.
 
 \begin{figure}[h]
 \centering
 \includegraphics[keepaspectratio=true, scale=0.45]{exps/GT_20}
 \vspace{-0.5em}
-\caption{Gráfico do ganho de transdução de conversão em função de $ P_{OLDISP(\omega_{OL})} $, encontrar o novo máximo.}
+\caption{Gráfico do ganho de transdução de conversão em função de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ que permite encontrar o novo valor óptimo.}
 \vspace{-0.8em}
 \label{fig:GT_20}
 \end{figure}
 
-O novo valor encontrado para $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ na Figura \ref{fig:GT_20} é de TAL e, como se pode verificar na Figura \ref{fig:Imp_OL_RF}, representa um valor de $ Z_{\text{in}_{RF}} $ cuja componente real é positiva, $ 2.191 -j14.026 \Omega $.
+O novo valor encontrado para $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ na Figura \ref{fig:GT_20} é de \unsure{3.5?} e, como se pode verificar na Figura \ref{fig:Imp_OL_RF}, representa um valor de $ Z_{\text{in}_{RF}} $ cuja componente real é positiva, 2.191 -j14.026 $\Omega $.
 
-Usando a ferramenta SmithChart do ADS é possível então determinar que adaptação se deve realizar na malha de entrada. Em primeiro lugar é necessário normalizar o valor da impedância de entrada de RF, ou seja, dividir o seu valor pela impedância característica (50 $\Omega$), de onde se obtém o valor $0.04382 -j0.28052$, como se pode observar na Figura \ref{fig:M_adapt}.
+Recorrendo à ferramenta SmithChart do ADS é possível determinar que adaptação se deve realizar na malha de entrada. Em primeiro lugar é necessário normalizar o valor da impedância de entrada de RF, ou seja, dividir o seu valor pela impedância característica (50 $\Omega$), de onde se obtém o valor $0.04382 -j0.28052$, como se pode observar na Figura \ref{fig:M_adapt}.
 
 \begin{figure}[h]
 \centering
-\includegraphics[keepaspectratio=true, scale=0.45]{exps/M_adapt}
+\includegraphics[keepaspectratio=true, scale=0.50]{exps/M_adapt}
 \vspace{-0.5em}
 \caption{Cálculo da malha de adaptação.}
 \vspace{-0.8em}
 \label{fig:M_adapt}
 \end{figure}
 
-Assim, foram alcançado novos valores para os componentes $L_{CH1}$ e $C_{1}$, que são apresentados na Tabela \todo{referir a tabela que vais fazer}.
+Assim, foram alcançado novos valores para os componentes $L_{CH1}$ e $C_{1}$, que são apresentados na tabela seguinte.
 
-\begin{table}[h]
-	\centering
-	\caption{Valores utilizados para os condensadores de desacoplamento e bobines de bloqueio.}
-	\vspace{-1.5mm}
-	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/componentes2}
-\end{table}
-
-\todo{Faz uma tabela igual à tabela \ref{tab:cap_ind} bobine ch1 e condensador1, são os que estao na imagem 2.223nH e 3.86pF, como valores usados mete 2.2nH e 3.9pF}
+\todo{Faz uma tabela igual à tabela \ref{tab:cap_ind} bobine ch1 e condensador1, são os que estao na imagem 2.223nH e 3.86pF, como valores usados mete 2.2nH e 3.9pF} \unsure{como e esta tabela?}
 
 Com esta alteração o gráfico de transdução sofreu alterações, que podem se observadas na Figura \ref{fig:GT_21}.
 
@@ -442,22 +432,68 @@ Com esta alteração o gráfico de transdução sofreu alterações, que podem s
 \centering
 \includegraphics[keepaspectratio=true, scale=0.45]{exps/GT_21}
 \vspace{-0.5em}
-\caption{Gráfico do ganho de transdução em função de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ sem filtro (a vermelho), com filtro e sem malha de adaptação (a roxo)e s/ malha de adaptação, azul- c/malha de adaptação e filtro)}
+\caption{Gráfico do ganho de transdução em função de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ sem filtro (a vermelho), com filtro e sem malha de adaptação (a roxo), e com filtro e com malha de adaptação (a azul).}
 \vspace{-0.8em}
 \label{fig:GT_21}
 \end{figure}
 
-É possível então verificar que quando $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ é de '0', obtém-se um ganho de transdução desejável(0dB). Podemos também verificar que  os valores das impedâncias de entrada de RF e OL(Figura \ref{}) mantêm-se estáveis sem se verificar grandes oscilações.
+É possível verificar que, quando $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ é 0 dBm, obtém-se um ganho de transdução desejável, 0 dB. Pode-se também verificar que  os valores das impedâncias de entrada de RF e OL mantêm-se estáveis, ou seja, não se verificam grandes oscilações.
 
 \begin{figure}[h]
 \centering
-\includegraphics[keepaspectratio=true, scale=0.45]{exps/Z_21}
+\includegraphics[keepaspectratio=true, scale=0.46]{exps/Z_21}
 \vspace{-0.5em}
-\caption{Valores das Impedâncias de entrada de OL(Direita) e RF(Esquerda) após da adaptação da malha de entrada.}
+\caption{Valores das Impedâncias de entrada de OL (â direita) e RF (à esquerda) após da adaptação da malha de entrada.}
 \vspace{-0.8em}
 \label{fig:Imp_OL_RF_21}
 \end{figure}
 
+Também para este caso em que se tem o filtro com a malha de entrada foram calculados os valores dos isolamentos $OL - RF$ e $OL - FI$ e do ganho de transdução de conversão.
+
+Como se pode ver, o valor de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ que maximiza o ganho de transdução de conversão passou de 4 dBm para 5 dBm.
+
+\begin{table}[h]
+	\centering
+	\caption{Valor óptimo de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ para três estados diferentes do circuito.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/poldispSemComFiltroMalha}
+\end{table}
+
+De seguida apresentam-se os espectros de potência, à semelhança do que se fez para o caso em que não havia filtro.
+
+\begin{figure}[h]
+	\centering
+	\subfloat[]{\includegraphics[keepaspectratio=true, scale=0.35]{exps/EP_2_RF}}
+	\hspace{8mm}
+	\subfloat[]{\includegraphics[keepaspectratio=true, scale=0.33]{exps/EP_2_FI}}
+	\vspace{-0.8em}
+	\caption{Espectro de potência do porto RF (a) e do porto de FI (b), para um circuito com filtro de FI e com malha de entrada adaptada.}
+	\vspace{-0.8em}
+\end{figure}
+
+A partir das figuras anteriores pode-se calcular os valores dos isolamentos $OL - RF$ e $OL - FI$.
+
+\pagebreak
+
+\begin{table}[h]
+	\centering
+	\caption{Valores dos isolamentos para três estados diferentes do circuito.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/isolamentosSemComFiltroMalha}
+\end{table}
+
+\todo{comentar isto}
+
+É também possível a partir dos espectros de potência calcular o valor do ganho de transdução de conversão, $G_{PC}$.
+
+\begin{table}[h]
+	\centering
+	\caption{Ganho de conversão para três estados diferentes do circuito.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/ganhoSemComFiltroMalha}
+\end{table}
+
+\todo{e isto tambem}
 
 \paragraph{Acoplamento de Wilkinson} \hspace{0pt} 
 
