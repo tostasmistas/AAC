@@ -321,7 +321,9 @@ A partir das figuras anteriores pode-se calcular os valores dos isolamentos $OL 
 	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/isolamentosSemComFiltro}
 \end{table}
 
-Como se pode ver, o valor do isolamento $OL - FI$ sofreu uma mudança drástica com a introdução do filtro, passando a ser negativo e estar mais próximo de  $- \infty$, ou seja, é no momento que se introduz o filtro de FI que se passa a ter isolamento no porto de FI.
+O valor do isolamento $OL - FI$ sofreu uma mudança drástica com a introdução do filtro, passando a ser negativo e estar mais próximo de  $- \infty$, ou seja, é no momento que se introduz o filtro de FI que se passa a ter isolamento no porto de frequência intermédia, tal como se pretende. 
+
+Relativamente ao isolamento $OL - RF$, é expectável que o seu valor se mantenha aproximadamente inalterado. Apesar de ter variado 10 dB, esta é uma variação normal. 
 
 É também possível a partir dos espectros de potência calcular o valor do ganho de transdução de conversão, $G_{PC}$.
 
@@ -332,11 +334,11 @@ Como se pode ver, o valor do isolamento $OL - FI$ sofreu uma mudança drástica 
 	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/ganhoSemComFiltro}
 \end{table}
 
-\todo{explicar diferenças nos ganhos - nao sei bem}
+Como se pode ver, o ganho aumentou em cerca de 6 dB, ou seja, a introdução do filtro foi benéfica em vários níveis.
 
 \subsection{Componentes da tensão $V_{BE}$ e da corrente $I_{C}$} 
 
-Pretende-se agora obter as componentes da tensão $v_{BE}$ e da corrente $I_{C}$ nas frequências $f_{OL}$, $f_{RF}$ e $f_{FI}$. \unsure{isto é para fazer? nos so tiramos do PFR}
+O circuito foi projectado tendo como base um determinado PFR e pretende-se agora verificar se após a sua projecção se encontra de acordo com o pretendido. Para tal verificou-se o valor da tensão $V_{BE}$ e da corrente $I_{C}$ numa frequência de 0 GHz, ou seja, para a componente contínua.
 
 \begin{figure}[h]
 \centering
@@ -346,6 +348,8 @@ Pretende-se agora obter as componentes da tensão $v_{BE}$ e da corrente $I_{C}$
 \vspace{-0.8em}
 \label{fig:ID}
 \end{figure}
+
+\pagebreak
 
 \begin{figure}[h]
 \centering
@@ -360,7 +364,11 @@ A corrente $I_{C}$ para a qual o circuito foi dimensionado é de 55 mA, no entan
 
 Relativamente ao valor de $V_{BE}$ este já não é uma função de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ porque o circuito foi polarizado em tensão, ou seja, o seu valor foi forçado. Assim se explica que o valor obtido corresponda ao dimensionado, 0.72 V.
 
-Pode-se também obter o valor do ganho de compressão a -1 dB do ganho de transdução de conversão, ou seja, registar o valor de \todo{o que e o Pin} para o qual o ganho diminuiu 1 dB, ou seja, para o qual o ganho é 19 dB. 
+Então, um ``problema'' que se verifica com os misturadores é que são dimensionados para um dado PFR que depois se revela ser maior.
+
+Pretende-se agora obter as componentes da tensão $v_{BE}$ e da corrente $I_{C}$ nas frequências $f_{OL}$, $f_{RF}$ e $f_{FI}$. \todo{diz que isto tambem e para fazer}
+
+Pode-se também obter o valor do ponto de compressão a -1 dB do ganho de transdução de conversão, ou seja, registar o valor de \todo{o que e o Pin} para o qual o ganho diminuiu 1 dB, ou seja, para o qual o ganho é 19 dB. 
 
 \begin{figure}[h]
 \centering
@@ -370,8 +378,6 @@ Pode-se também obter o valor do ganho de compressão a -1 dB do ganho de transd
 \vspace{-0.8em}
 \label{fig:Compressao}
 \end{figure}
-
-\todo{explicar}
 
 \subsection{Acoplador de Wilkinson}
 
@@ -409,7 +415,7 @@ Ao observar a Figura \ref{fig:Imp_OL_RF}, é possível verificar que não há os
 \label{fig:GT_20}
 \end{figure}
 
-O novo valor encontrado para $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ na Figura \ref{fig:GT_20} é de \unsure{3.5?} e, como se pode verificar na Figura \ref{fig:Imp_OL_RF}, representa um valor de $ Z_{\text{in}_{RF}} $ cuja componente real é positiva, 2.191 -j14.026 $\Omega $.
+O novo valor encontrado para $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ na Figura \ref{fig:GT_20} é de \unsure{3.5 ou 5?} e, como se pode verificar na Figura \ref{fig:Imp_OL_RF}, representa um valor de $ Z_{\text{in}_{RF}} $ cuja componente real é positiva, 2.191 -j14.026 $\Omega $.
 
 Recorrendo à ferramenta SmithChart do ADS é possível determinar que adaptação se deve realizar na malha de entrada. Em primeiro lugar é necessário normalizar o valor da impedância de entrada de RF, ou seja, dividir o seu valor pela impedância característica (50 $\Omega$), de onde se obtém o valor $0.04382 -j0.28052$, como se pode observar na Figura \ref{fig:M_adapt}.
 
@@ -482,7 +488,9 @@ A partir das figuras anteriores pode-se calcular os valores dos isolamentos $OL 
 	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/isolamentosSemComFiltroMalha}
 \end{table}
 
-\todo{comentar isto}
+A diferença registada no valor do isolamento $OL - FI$ não é tão grande comparativamente à diferença registada com a introdução do filtro. No entanto, a adaptação da malha fez aumentar ainda mais o isolamento, tendendo cada vez para $- \infty$. 
+
+O valor do isolamento $OL - RF$ continua de acordo com o esperado, ou seja, sem grande oscilações em torno do valor obtido sem filtro.
 
 É também possível a partir dos espectros de potência calcular o valor do ganho de transdução de conversão, $G_{PC}$.
 
@@ -493,11 +501,11 @@ A partir das figuras anteriores pode-se calcular os valores dos isolamentos $OL 
 	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/ganhoSemComFiltroMalha}
 \end{table}
 
-\todo{e isto tambem}
+Como se pode observar, a adaptação da malha de entrada fez aumentar o ganho em cerca de 7 dB.
 
 \paragraph{Acoplamento de Wilkinson} \hspace{0pt} 
 
-Após a adaptação na malha de entrada, substituiu-se o elemento \texttt{Pwr Split} por um aop\textit{Wilkinson}(Figura ), que foi dimensionado para a frequência $ f_{RF} $.
+Após a adaptação na malha de entrada, substituiu-se o elemento \texttt{Pwr Split} por um acoplador de Wilkinson, que foi dimensionado para a frequência $ f_{RF} $.
 
 \begin{figure}[h]
 \centering
@@ -508,16 +516,15 @@ Após a adaptação na malha de entrada, substituiu-se o elemento \texttt{Pwr Sp
 \label{fig:Wilk}
 \end{figure}
 
-
-De modo a obter um power spliter que trabalhe na frequência de $900MHz$($ f_{RF} $), os componentes apresentados na Figura \ref{fig:Wilk} foram dimensionados de acordo com as Equações \ref{eq:Wilk_L}, \ref{eq:Wilk_C} e \ref{eq:Wilk_R}. 
+De modo a obter um \textit{power splitter} que trabalhe na frequência de 900 MHz ($ f_{RF} $), os componentes apresentados na Figura \ref{fig:Wilk} foram dimensionados de acordo com as Equações \ref{eq:Wilk_L}, \ref{eq:Wilk_C} e \ref{eq:Wilk_R}. 
 
 \begin{equation}
-L_{s}=frac{Z_{0}}{2 \pi f_{RF}}
+L_{s} = \frac{Z_{0}}{2 \pi f_{RF}}
 \label{eq:Wilk_L}
 \end{equation}
 
 \begin{equation}
-C_{p2}=2C_{p1}=frac{2}{2 \pi f_{RF}Z_{0}}
+C_{p_{2}} = 2C_{p_{1}} = \frac{2}{2 \pi f_{RF}Z_{0}}
 \label{eq:Wilk_C}
 \end{equation}
 
@@ -526,14 +533,11 @@ R_{0}=2Z_{0}
 \label{eq:Wilk_R}
 \end{equation}
 
-
 Os valores obtidos através das Equações \ref{eq:Wilk_L}, \ref{eq:Wilk_C} e \ref{eq:Wilk_R}, e os valores usados no circuito para os componentes do acoplador de Wilkinson estão representados na Tabela.
 
 \todo{Fazer tabela com valores, perguntar ao GUI}
 
-Após de colocar os componentes e obter o circuito total (filtro de FI, malha de entrada adaptada e acoplador de Wilkinson), representado na Figura \ref{fig:Circuito_3}, é possível obter o gráfico da do ganho de transdução (Figura \ref{fig:GT_3}).
-
-
+Após se colocar os componentes e obter o circuito total (filtro de FI, malha de entrada adaptada e acoplador de Wilkinson), representado na Figura \ref{fig:Circuito_3}, é possível obter o gráfico da do ganho de transdução, Figura \ref{fig:GT_3}.
 
 \begin{figure}[h]
 \centering
@@ -544,31 +548,58 @@ Após de colocar os componentes e obter o circuito total (filtro de FI, malha de
 \label{fig:Circuito_3}
 \end{figure}
 
-
-
 \begin{figure}[h]
 \centering
 \includegraphics[keepaspectratio=true, scale=0.45]{exps/GT_3}
 \vspace{-0.5em}
-\caption{Gráfico do ganho de transdução em função de $ P_{\text{OLDISP}\left(\omega_{OL}\right)} $, sem acoplador de Wilkinson (a azul), com acoplador de Wilkinson (a vermelho).}
+\caption{Gráfico do ganho de transdução em função de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $, sem acoplador de Wilkinson (a azul) e com acoplador de Wilkinson (a vermelho).}
 \vspace{-0.8em}
 \label{fig:GT_3}
 \end{figure}
 
-Como se pode observar na Figura \ref{fig:GT_3}, é possível perceber que após a introdução do acoplador de Wilkinson no circuito, este perdeu ganho, no entanto contínua a ter valores satisfatórios, tal como um máximo do ganho de transdução de 4.072 dBm para um valor de $ P_{\text{OLDISP}\left(\omega_{OL}\right)} $ de 2 dBm, para valores de $ P_{\text{OLDISP}\left(\omega_{OL}\right)} $ aproximadamente entre 0.5 e 6, temos um ganho de transdução maior que 0 dbM. 
+Como se pode observar na Figura \ref{fig:GT_3}, percebe-se que após a introdução do acoplador de Wilkinson no circuito, este perdeu ganho, no entanto continua a ter valores satisfatórios, tal como um máximo do ganho de transdução de 24.072 dBm para um valor de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ de 2 dBm. Para valores de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ aproximadamente entre 0.5 dBm e 6 dBm, tem-se um ganho de transdução maior que 0 dBm.
 
-Para um valor de $ P_{\text{OLDISP}\left(\omega_{OL}\right)} $ de 2 (correspondente ao máximo do ganho de transdução) foi obtido o espectro de potências (\ref{fig:EP_3}).
+Para um valor de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ de 2 dBm, correspondente ao valor óptimo, foi obtido o espectro de potências.
+
+\begin{table}[h]
+	\centering
+	\caption{Valor óptimo de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ numa situação em que o circuito não tem filtro.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/poldispSemComFiltroMalhaAcop}
+\end{table}
+
 
 \begin{figure}[h]
-\centering
-\includegraphics[keepaspectratio=true, scale=0.45]{exps/EP_3}
-\vspace{-0.5em}
-\caption{Espectros de potência após a inserção do acoplamento de Wilkinson.}
-\vspace{-0.8em}
-\label{fig:EP_3}
+	\centering
+	\subfloat[]{\includegraphics[keepaspectratio=true, scale=0.35]{exps/EP_3_RF}}
+	\hspace{8mm}
+	\subfloat[]{\includegraphics[keepaspectratio=true, scale=0.33]{exps/EP_3_FI}}
+	\vspace{-0.8em}
+	\caption{Espectro de potência do porto RF (a) e do porto de FI (b), para um circuito com filtro de FI, com malha de entrada adaptada e com acoplador de Wilkinson.}
+	\vspace{-0.8em}
 \end{figure}
 
-\todo{Comentar as diferenças depois de sabermos como se calcula os ganhos}
+A partir das figuras anteriores pode-se calcular os valores dos isolamentos $OL - RF$ e $OL - FI$. 
+
+\begin{table}[h]
+	\centering
+	\caption{Valores dos isolamentos para quatro estados diferentes do circuito.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.34]{teoricas/isolamentosSemComFiltroMalhaAcop}
+\end{table}
+
+O valor do isolamento $OL - FI$ não apresentou grandes variações face ao valor anterior, ficando o isolamento final do porto de FI a -21.151 dB, um valor claramente melhor do que obtido inicialmente sem filtro, 22.587 dB. Assim se percebe como introduzir o filtro de frequência intermédia, adaptar a malha de entrada e colocar um acoplador de Wilkinson pode melhor o isolamento.
+
+É também possível a partir dos espectros de potência calcular o valor do ganho de conversão, $G_{PC}$.
+
+\begin{table}[h]
+	\centering
+	\caption{Ganho de conversão para quatro estados diferentes do circuito.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/ganhoSemComFiltroMalhaAcop}
+\end{table}
+
+Verifica-se que o ganho diminuiu em 3 dB face ao valor registado anteriormente. Esta diminuição é expectável, uma vez que não existem acopladores ideais e, no mínimo, todos têm 3 dB de perdas. Relativamente ao valor óptimo de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $, este sofreu um \textit{shift} de 3 dB, pelo mesmo motivo. De notar, no entanto, que se esperava que o \textit{shift} fosse no sentido contrário, ou seja, que $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ passasse para 8 dB, não se encontrando uma explicação para o fenómeno. 
 
 \subsection{Máscara para fabrico}
 
@@ -578,7 +609,7 @@ De modo a obter a máscara para fabrico do circuito é necessário em primeiro l
 
 Em primeiro lugar atribui-se a todas as linhas uma largura de 0.5mm e um comprimento de 1mm, usando depois a ferramenta \texttt{Tune} se necessário.
 
-
+De referir que, ao contrário do trabalho laboratorial anterior, colocam-se linhas pequenas mas não faz diferença porque a frequência de trabalho é pequena quando comparada com o valor do comprimento de onda.
 
 \paragraph{Condensadores, Bobines e Transistor} \hspace{0pt} 
 
