@@ -660,13 +660,19 @@ Recorreu-se à ferramenta \texttt{Tune} para regular os valores de comprimento d
 \label{fig:GT_tune}
 \end{figure}
 
-Como se pode observar na Figura \ref{fig:GT_tune}, apenas foi possível atingir um ganho de transdução de 20.928 dB, o facto de se substituir linhas ideais por microfitas reais é o maior responsável pela diferença entre o ganho de transdução obtido após a inserção do acoplador de Wilkinson e o ganho obtido agora.
+Como se pode observar na Figura \ref{fig:GT_tune}, apenas foi possível atingir um ganho de transdução de 20.978 dB, o facto de se substituir linhas ideais por microfitas reais é o maior responsável pela diferença entre o ganho de transdução obtido após a inserção do acoplador de Wilkinson e o ganho obtido agora.
 
-O circuito usado para esta simulação, que contêm também os valores definitivos dos comprimentos das microfitas utilizadas está representado na figura seguinte.
+O circuito usado para esta simulação, que contêm também os valores definitivos dos comprimentos das microfitas utilizadas está representado na Figura \ref{fig:Circuito_4}.
 
 \pagebreak
-
-\todo{figura do circuito ir a TV}
+\begin{figure}[h]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_4}
+	\vspace{-0.5em}
+	\caption{Circuito final com linhas e descontinuidades simuladas por microfitas.}
+	\vspace{-0.8em}
+	\label{fig:Circuito_4}
+\end{figure}
 
 \paragraph{Condensadores, Bobines e Transistor} \hspace{0pt} 
 
@@ -736,9 +742,36 @@ Pode-se então definir as dimensões dos elementos \texttt{MGAP} para cada compo
 	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/aSS}
 \end{table}
 
-Com todos os componentes dimensionados é possível observar o circuito pré-\textit{layout}, Figura \todo{fazer o circuito na tv}. É possível reparar que a disposição do circuito foi modificada de modo a que o \textit{layout} não apresentasse sobreposições.
+Com todos os componentes dimensionados é possível observar o circuito pré-\textit{layout}, Figura \ref{fig:Circuito_5}. É possível reparar que a disposição do circuito foi modificada de modo a que o \textit{layout} não apresentasse sobreposições.
 
-O \textit{layout} extraído do programa ADS pode ser observado na Figura \todo{por aqui o layout}, no entanto, na Figura \todo{layout com coisas do paint a dizer onde se liga o quê} é possível observar o \textit{layout} com informações detalhadas sobre a disposição dos componentes do circuito.
+\begin{figure}[h]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/Circuito_5}
+	\vspace{-0.5em}
+	\caption{Circuito que serve de base para a máscara de fabrico.}
+	\vspace{-0.8em}
+	\label{fig:Circuito_5}
+\end{figure}
+
+O \textit{layout} extraído do programa ADS pode ser observado na Figura \ref{fig:layout_0}, no entanto, na Figura \ref{fig:layout_1} \todo{falta ainda fazer as brincadeiras com o colocar la elementos} é possível observar o \textit{layout} com informações detalhadas sobre a disposição dos componentes do circuito.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/layout_0}
+	\vspace{-0.5em}
+	\caption{Máscara para fabrico do Misturador.}
+	\vspace{-0.8em}
+	\label{fig:layout_0}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[keepaspectratio=true, scale=0.45]{exps/layout_1}
+	\vspace{-0.5em}
+	\caption{Máscara para fabrico com indicações de montagem.}
+	\vspace{-0.8em}
+	\label{fig:layout_1}
+\end{figure}
 
 \section{Conclusões}
 
