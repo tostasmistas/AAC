@@ -91,7 +91,7 @@ As especificações do misturador a construir podem ser consultadas na Tabela \r
 
 \subsection{Dimensionamento dos componentes}
 
-Numa primeira fase considera-se o circuito da Figura TAL sem filtro de frequência intermédia (FI) e sem malha de adaptação.
+Numa primeira fase considera-se o circuito da Figura 1 sem filtro de frequência intermédia (FI) e sem malha de adaptação.
 
 \begin{figure}[h]
 \centering
@@ -169,7 +169,7 @@ As condições dos valores do condensador $ C_{1} $ e da bobine $ L_{CH1} $ fora
 	\label{tab:cap_ind}
 \end{table}
 
-Relativamente à função destes componentes, a bobine de bloqueio serve para bloquear variações da fonte para o circuito RF, ou seja, desacoplar a componente AC, mas ao mesmo tempo serve para acoplar componente DC. Já o condensador de desacoplamento efectua uma função inversa, ou seja, vai isolar a parte DC mas acoplar a componente AC.
+Relativamente à função destes componentes, a bobine de bloqueio serve para bloquear variações da fonte para o circuito RF, ou seja, desacoplar a componente AC, mas ao mesmo tempo serve para acoplar a componente DC. Já o condensador de desacoplamento efectua uma função inversa, ou seja, vai isolar a parte DC mas acoplar a componente AC.
 
 \subsection{Ganho de transdução de conversão}  
 
@@ -366,9 +366,21 @@ Relativamente ao valor de $V_{BE}$ este já não é uma função de $ P_{\text{O
 
 Então, um ``problema'' que se verifica com os misturadores é que são dimensionados para um dado PFR que depois se revela ser maior.
 
-Pretende-se agora obter as componentes da tensão $v_{BE}$ e da corrente $I_{C}$ nas frequências $f_{OL}$, $f_{RF}$ e $f_{FI}$. \todo{diz que isto tambem e para fazer}
+Pretende-se agora obter as componentes da tensão $v_{BE}$ e da corrente $i_{C}$ nas frequências $f_{OL}$, $f_{RF}$ e $f_{FI}$. Estas componentes foram calculadas para o valor fixo de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $, nomeadamente o máximo encontrado na Figura \ref{fig:GT_1}, 4 dBm.
 
-Pode-se também obter o valor do ponto de compressão a -1 dB do ganho de transdução de conversão, ou seja, registar o valor de \todo{o que e o Pin} para o qual o ganho diminuiu 1 dB, ou seja, para o qual o ganho é 19 dB. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[keepaspectratio=true, scale=0.50]{exps/Vbe_Ic}
+\vspace{-0.5em}
+\caption{Componentes da tensão $v_{BE}$ e da corrente $i_{C}$ nas frequências $f_{OL}$, $f_{RF}$ e $f_{FI}$.}
+\vspace{-0.8em}
+\end{figure}
+
+
+Pode-se também obter o valor do ponto de compressão a -1 dB do ganho de transdução de conversão, ou seja, registar o valor de potência de entrada para qual o ganho diminuiu 1 dB, ou seja, para quando o ganho é 19 dB. 
+
+\pagebreak
 
 \begin{figure}[h]
 \centering
@@ -378,6 +390,8 @@ Pode-se também obter o valor do ponto de compressão a -1 dB do ganho de transd
 \vspace{-0.8em}
 \label{fig:Compressao}
 \end{figure}
+
+Como se pode ver, o  ponto de compressão a -1 dB é de 20 dBm.
 
 \subsection{Acoplador de Wilkinson}
 
@@ -410,12 +424,12 @@ Ao observar a Figura \ref{fig:Imp_OL_RF}, é possível verificar que não há os
 \centering
 \includegraphics[keepaspectratio=true, scale=0.45]{exps/GT_20}
 \vspace{-0.5em}
-\caption{Gráfico do ganho de transdução de conversão em função de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ que permite encontrar o novo valor óptimo.}
+\caption{Gráfico do ganho de transdução de conversão em função de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $, sem filtro (a vermelho), com filtro (a roxo).}
 \vspace{-0.8em}
 \label{fig:GT_20}
 \end{figure}
 
-O novo valor encontrado para $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ na Figura \ref{fig:GT_20} é de \unsure{3.5 ou 5?} e, como se pode verificar na Figura \ref{fig:Imp_OL_RF}, representa um valor de $ Z_{\text{in}_{RF}} $ cuja componente real é positiva, 2.191 -j14.026 $\Omega $.
+O novo valor encontrado para $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ na Figura \ref{fig:GT_20} é de 3.5 e, como se pode verificar na Figura \ref{fig:Imp_OL_RF}, representa um valor de $ Z_{\text{in}_{RF}} $ cuja componente real é positiva, 2.191 -j14.026 $\Omega $.
 
 Recorrendo à ferramenta SmithChart do ADS é possível determinar que adaptação se deve realizar na malha de entrada. Em primeiro lugar é necessário normalizar o valor da impedância de entrada de RF, ou seja, dividir o seu valor pela impedância característica (50 $\Omega$), de onde se obtém o valor $0.04382 -j0.28052$, como se pode observar na Figura \ref{fig:M_adapt}.
 
@@ -430,9 +444,16 @@ Recorrendo à ferramenta SmithChart do ADS é possível determinar que adaptaç�
 
 Assim, foram alcançado novos valores para os componentes $L_{CH1}$ e $C_{1}$, que são apresentados na tabela seguinte.
 
-\todo{Faz uma tabela igual à tabela \ref{tab:cap_ind} bobine ch1 e condensador1, são os que estao na imagem 2.223nH e 3.86pF, como valores usados mete 2.2nH e 3.9pF} \unsure{como e esta tabela?}
+\begin{table}[h]
+	\centering
+	\caption{Valores dos elementos que compõem a malha adaptada.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/componentes3}
+\end{table}
 
-Com esta alteração o gráfico de transdução sofreu alterações, que podem se observadas na Figura \ref{fig:GT_21}.
+Com esta alteração o gráfico de transdução sofreu alterações, como se pode observar na Figura \ref{fig:GT_21}.
+
+\pagebreak
 
 \begin{figure}[h]
 \centering
@@ -467,6 +488,8 @@ Como se pode ver, o valor de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ que m
 
 De seguida apresentam-se os espectros de potência, à semelhança do que se fez para o caso em que não havia filtro.
 
+\pagebreak
+
 \begin{figure}[h]
 	\centering
 	\subfloat[]{\includegraphics[keepaspectratio=true, scale=0.35]{exps/EP_2_RF}}
@@ -479,7 +502,6 @@ De seguida apresentam-se os espectros de potência, à semelhança do que se fez
 
 A partir das figuras anteriores pode-se calcular os valores dos isolamentos $OL - RF$ e $OL - FI$.
 
-\pagebreak
 
 \begin{table}[h]
 	\centering
@@ -507,6 +529,8 @@ Como se pode observar, a adaptação da malha de entrada fez aumentar o ganho em
 
 Após a adaptação na malha de entrada, substituiu-se o elemento \texttt{Pwr Split} por um acoplador de Wilkinson, que foi dimensionado para a frequência $ f_{RF} $.
 
+\pagebreak
+
 \begin{figure}[h]
 \centering
 \includegraphics[keepaspectratio=true, scale=0.45]{teoricas/Wilkinson}
@@ -533,11 +557,19 @@ R_{0}=2Z_{0}
 \label{eq:Wilk_R}
 \end{equation}
 
-Os valores obtidos através das Equações \ref{eq:Wilk_L}, \ref{eq:Wilk_C} e \ref{eq:Wilk_R}, e os valores usados no circuito para os componentes do acoplador de Wilkinson estão representados na Tabela.
+Os valores obtidos através das Equações \ref{eq:Wilk_L}, \ref{eq:Wilk_C} e \ref{eq:Wilk_R}, e os valores usados no circuito para os componentes do acoplador de Wilkinson estão representados na tabela seguinte.
 
-\todo{Fazer tabela com valores, perguntar ao GUI}
+\begin{table}[h]
+	\centering
+	\caption{Valores dos elementos que compõem o acoplador de Wilkinson.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/componentes4}
+\end{table}
+
 
 Após se colocar os componentes e obter o circuito total (filtro de FI, malha de entrada adaptada e acoplador de Wilkinson), representado na Figura \ref{fig:Circuito_3}, é possível obter o gráfico da do ganho de transdução, Figura \ref{fig:GT_3}.
+
+\pagebreak
 
 \begin{figure}[h]
 \centering
@@ -567,6 +599,8 @@ Para um valor de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ de 2 dBm, corresp
 	\vspace{-1.5mm}
 	\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/poldispSemComFiltroMalhaAcop}
 \end{table}
+
+\pagebreak
 
 
 \begin{figure}[h]
@@ -605,15 +639,107 @@ Verifica-se que o ganho diminuiu em 3 dB face ao valor registado anteriormente. 
 
 De modo a obter a máscara para fabrico do circuito é necessário em primeiro lugar obter, através da ferramenta \texttt{Tune}, o comportamento desejado do circuito, e posteriormente substituir os componentes por \texttt{MGAP}.
 
+\pagebreak
+
 \paragraph{Linhas e Descontinuidades} \hspace{0pt} 
 
 Em primeiro lugar atribui-se a todas as linhas uma largura de 0.5mm e um comprimento de 1mm, usando depois a ferramenta \texttt{Tune} se necessário.
 
-De referir que, ao contrário do trabalho laboratorial anterior, colocam-se linhas pequenas mas não faz diferença porque a frequência de trabalho é pequena quando comparada com o valor do comprimento de onda.
+De referir que, ao contrário do trabalho laboratorial anterior, colocam-se linhas pequenas mas não faz diferença porque a frequência de trabalho é pequena quando comparada com o valor do comprimento de onda. Foram então predefinidos valores para as linhas - largura de 0.5 mm e comprimento de 1 mm.
+
+Usando os elementos \texttt{MLIN}, \texttt{MCROS} e \texttt{MTEE} para substituir as linhas e descontinuidades com os valores predefinidos anteriormente, é possível simular o circuito e perceber que esta simulação não obtem resultados satisfatórios.
+
+Recorreu-se à ferramenta \texttt{Tune} para regular os valores de comprimento das linhas e após um conjunto de ajustes realizados aos seus valores foi possível determinar os comprimentos das linhas que permitem obter o ganho de transdução desejado. o resultado desta simulação pode ser observado na Figura \ref{fig:GT_tune}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[keepaspectratio=true, scale=0.60]{exps/GT_tune}
+\vspace{-0.5em}
+\caption{Gráfico do ganho de transdução em função de $ P_{\text{OLDISP}}\left(\omega_{OL}\right) $ após a utilização da ferramenta \texttt{Tune}.}
+\vspace{-0.8em}
+\label{fig:GT_tune}
+\end{figure}
+
+Como se pode observar na Figura \ref{fig:GT_tune}, apenas foi possível atingir um ganho de transdução de 20.928 dB, o facto de se substituir linhas ideais por microfitas reais é o maior responsável pela diferença entre o ganho de transdução obtido após a inserção do acoplador de Wilkinson e o ganho obtido agora.
+
+O circuito usado para esta simulação, que contêm também os valores definitivos dos comprimentos das microfitas utilizadas está representado na figura seguinte.
+
+\pagebreak
+
+\todo{figura do circuito ir a TV}
 
 \paragraph{Condensadores, Bobines e Transistor} \hspace{0pt} 
 
-\section{Conclusões}
+Para substituir os condensadores e bobines por elementos \texttt{MGAP} foi, em primeiro lugar, realizada uma pesquisa para determinar quais os componentes a utilizar (pós-fabrico) como bobines e condensadores. As Figuras \ref{fig:C_330}, \ref{fig:C_3_9}, \ref{fig:C_3_6}, \ref{fig:C_6_8} e \ref{fig:bobines} apresentam as dimensões de componentes que podem ser usados como as bobines e condensadores projectados para o circuito.
 
+\begin{figure}[H]
+\centering
+\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/330pF}
+\vspace{-0.5em}
+\caption{Dimensões do componente C0402-C0G da KEMET, utilizado para o condensador de 330 pF.}
+\vspace{-0.8em}
+\label{fig:C_330}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/6_8pF}
+\vspace{-0.5em}
+\caption{Dimensões do componente GJM1555C1H6R8CB01 da muRata, utilizado para o condensador de 6.8 pF.}
+\vspace{-0.8em}
+\label{fig:C_6_8}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/3_9pF}
+\vspace{-0.5em}
+\caption{Dimensões do componente GRM1555C1H3R9CZ01 da JAMECO, utilizado para o condensador de 3.9 pF.}
+\vspace{-0.8em}
+\label{fig:C_3_9}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/3_6pF}
+\vspace{-0.5em}
+\caption{Dimensões do componente CDR31BP369BDYM-T\&R da KEMET, utilizado para o condensador de 3.6 pF.}
+\vspace{-0.8em}
+\label{fig:C_3_6}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[keepaspectratio=true, scale=0.45]{teoricas/bobines}
+\vspace{-0.5em}
+\caption{Dimensões de componentes pertencentes à LQW15A\_00 Series da muRata usado para as bobines.}
+\vspace{-0.8em}
+\label{fig:bobines}
+\end{figure}
+
+
+Os elementos \texttt{MGAP} têm duas dimensões - largura e espaço. Para determinar que valores atribuir a estes parâmetros é necessário manipular as dimensões fornecidas nas Figuras \ref{fig:C_330}, \ref{fig:C_3_9}, \ref{fig:C_3_6}, \ref{fig:C_6_8} e \ref{fig:bobines}. Para calcular a variável S (espaço) foi utilizada a equação \ref{eq:space}.
+
+\vspace{-3mm}
+\begin{equation}
+S=L-2e
+\label{eq:space}
+\end{equation}
+
+\vspace{1mm}
+Pode-se então definir as dimensões dos elementos \texttt{MGAP} para cada componente do circuito, valores estes dimensionados na tabela apresentada de seguida. 
+
+\begin{table}[H]
+	\centering
+	\caption{Dimensões dos elementos \texttt{MGAP} para cada componente do circuito.}
+	\vspace{-1.5mm}
+	\includegraphics[keepaspectratio=true, scale=0.40]{teoricas/aSS}
+\end{table}
+
+Com todos os componentes dimensionados é possível observar o circuito pré-\textit{layout}, Figura \todo{fazer o circuito na tv}. É possível reparar que a disposição do circuito foi modificada de modo a que o \textit{layout} não apresentasse sobreposições.
+
+O \textit{layout} extraído do programa ADS pode ser observado na Figura \todo{por aqui o layout}, no entanto, na Figura \todo{layout com coisas do paint a dizer onde se liga o quê} é possível observar o \textit{layout} com informações detalhadas sobre a disposição dos componentes do circuito.
+
+\section{Conclusões}
 
 \end{document}
