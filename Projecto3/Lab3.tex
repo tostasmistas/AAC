@@ -1,0 +1,250 @@
+\documentclass[11pt]{article}
+
+\usepackage[portuguese]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subfig}
+\usepackage{fixltx2e}
+\usepackage[bottom]{footmisc}
+\usepackage{color}
+\usepackage{xargs}                      % Use more than one optional parameter in a new commands
+\usepackage[pdftex,dvipsnames]{xcolor}  % Coloured text etc.
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\usepackage{listings}
+\usepackage[font=footnotesize]{caption}
+
+\definecolor{keywordcolor}{rgb}{0,0.4,0.7}
+\definecolor{commentcolor}{rgb}{0.4,0.4,0.4} 	
+\definecolor{mygray}{rgb}{0.5,0.5,0.5} 	% line counter color
+\definecolor{mymauve}{rgb}{0.90,0.25,0.47}	% string color
+\definecolor{codebackground}{rgb}{0.95,0.95,0.95} 
+
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
+\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
+\usepackage[font=footnotesize]{caption}
+
+\numberwithin{equation}{section}
+
+\linespread{1.3}
+\usepackage{indentfirst}
+\usepackage[top=2cm, bottom=2cm, right=2.25cm, left=2.25cm]{geometry}
+\addto\captionsportuguese{\renewcommand{\contentsname}{Índice}}
+\lstset{ %
+	backgroundcolor=\color{codebackground},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+	basicstyle=\ttfamily \footnotesize,        % the size of the fonts that are used for the code
+	breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+	breaklines=true,                 % sets automatic line breaking
+	captionpos=b,                    % sets the caption-position to bottom
+	commentstyle=\color{commentcolor},    % comment style
+	deletekeywords={...},            % if you want to delete keywords from the given language
+	escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+	extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+	keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+	keywordstyle=\color{keywordcolor},       % keyword style
+	numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+	numbersep=5pt,                   % how far the line-numbers are from the code
+	numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+	rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+	showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+	showstringspaces=false,          % underline spaces within strings only
+	showtabs=false,                  % show tabs within strings adding particular underscores
+	stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+	%stringstyle=\color{mymauve},     % string literal style
+	identifierstyle=\color{mymauve},
+	tabsize=2                       % sets default tabsize to 2 spaces
+}
+
+\setcounter{tocdepth}{1}
+
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+
+\hfill \break
+\hfill \break
+
+\includegraphics[width=0.3\textwidth]{./logo}~\\[1cm]
+
+\textsc{\LARGE Instituto Superior Técnico}\\[0.25cm]
+\textsc{\Large Mestrado Integrado em Engenharia Electrotécnica e de Computadores}\\[1.8cm]
+\textsc{\huge Arquiteturas Avançadas de Computadores}\\[0.25cm]
+
+{\huge \bfseries Paralelização e aceleração de um programa\\[2cm]}
+
+\begin{tabular}{ l l }
+Guilherme .....
+Maria Margarida Dias dos Reis & \hspace{2mm} n.º 73099 \\
+Nuno Miguel Rodrigues Machado & \hspace{2mm} n.º 74236
+\end{tabular}
+
+\vfill
+
+{\large Lisboa, 3 de Maio de 2015} 
+
+\end{center}
+\end{titlepage}
+
+\pagenumbering{gobble}
+\clearpage
+
+\tableofcontents
+\pagebreak
+
+\clearpage
+\pagenumbering{arabic}
+
+\section{Introdução}
+
+\section{Implementação no CPU }
+Inicialmente o algoritmo proposto foi implementado para correr só no CPU. Para isso, foi transcrito para o código C.
+O algoritmo divide-se em duas partes fundamentais:
+
+
+\begin{itemize}
+	\vspace{-3mm}
+	\item Criação dos dados de entrada;
+	\vspace{-1.5mm}
+	\item  Obtenção do \textit{Smooth} com processamento dos dados de entrada;
+\end{itemize}
+	\subsection{Criação dos dados de entrada}
+	O sinal a ser processado é composto pela soma de dois sinais sinusoidais mais um erro com uma amplitude máxima de $0,1$. 
+	Todos os calculos são feitos em \texttt{float}, em primeiro lugar é realizado a alocação da memória de todas as variáveis necessárias para o calculo do sinal de entrada. De seguida está representado o código C em detalhe.
+\begin{lstlisting}[language=C]
+#define N 10000;
+	...
+
+	int main() {
+	
+	float *x, *y, *yest_cpu, *randomArray;
+	...
+	
+	/*Alocacao de memoria*/
+	x = (float *)malloc(N*sizeof(float));
+	y = (float *)malloc(N*sizeof(float));
+	yest_cpu = (float *)malloc(N*sizeof(float));
+	randomArray = (float *)malloc(N*sizeof(float));
+	...
+	exit(0);
+	}
+\end{lstlisting}
+
+	A implementação do algoritmo do sinal de entrada é composta por um ciclo que itera o numero de amostras do sinal pretendido. Em primeiro lugar é necessário gerar os valores ao sinal que vai ser processado, estes valores são gerados pela seguinte equação
+	\vspace{-3mm}
+	\begin{equation}
+		X ~= ~i/10; 
+	\end{equation}
+	de seguida é gerado um valor aleatório entre 1 e -1, simulando o ruído resultante da
+	amostragem do sinal. Este valor é gerado pela função \texttt{randn()}, o código da função está representado de seguida, é de salientar que o código foi obtido da Internet, onde este simula a função \texttt{randn()} do MatLab :
+	\begin{lstlisting}[language=C]
+	float randn()
+	{
+		float x1, x2, w, y1;
+		do
+		{
+			x1 = (float)(2.0 * rand() / RAND_MAX - 1.0);
+			x2 = (float)(2.0 * rand() / RAND_MAX - 1.0);
+			w = x1 * x1 + x2 * x2;
+		} while (w >= 1.0);
+	
+		w = (float)sqrt((-2.0 * log(w)) / w);
+		y1 = x1 * w;
+		return y1;
+	}
+	\end{lstlisting}
+	 Depois de obter os valores de \texttt{X} e do valor aleatório pode-se iterar os valores das amostras do sinal a ser processado. O código de seguida representa o ciclo que itera as amostras de \texttt{X}, do valor aleatório, \texttt{randomArray} e o sinal a ser processado, \texttt{Y}.
+	 \begin{lstlisting}[language=C]
+	 int main(){
+		 for (int i = 0; i < N; ++i) {
+			 x[i] = (float)i / 10;
+			 randomArray[i] = randn();
+			 y[i] = function((float)x[i], (float)randomArray[i]);
+		 }
+	...
+	exit(0);
+	}
+	 \end{lstlisting}
+	 
+	
+	\subsection{Obtenção do \textit{Smooth} com processamento dos dados de entrada}
+	
+	O algoritmo de \textit{Smooth} para o anulamento do ruído resultante da amostragem do sinal é aplicado segundo a expressão seguinte:
+	\vspace{-3mm}
+	\begin{equation}
+		y_{est}~=~\sum_{i = 0}^{N-1}~\frac{\sum_{k = 0}^{N-1}Kb(x_i,x_k)y_k}{\sum_{k = 0}^{N-1}Kb(x_i,x_k)};
+	\end{equation}
+	\vspace{-3mm}
+	\begin{equation}
+	K_b(x_i,x_k)~=~e^{-\frac{(x_i - x_k)^2}{2 b^2}};
+	\end{equation}
+	A implementação do algoritmo em C baseia-se na utilização de um ciclo para o somatório exterior e outro ciclo para o somatório interior, as funções exponencial \texttt{expf} e potencia de base 2, \texttt{powf}, pertence á biblioteca, \texttt{math.h}. O código seguinte demonstra a utilização dos dois ciclos como tambem a das funções para o calculo do \textit{smoothing}:
+	\begin{lstlisting}[language=C]
+	int main(){
+		float sumA, sumB;
+		...
+		
+		for (int i = 0; i < N; ++i) { //percorrer o yest
+			sumA = 0;
+			for (int j = 0; j < N; ++j) { //percorer o input dataset
+				sumA = sumA + ((expf(-powf((x[i] - x[j]), 2) / (2 * powf(SMOOTH, 2)))) * y[j]);
+			}
+			sumB = 0;
+			for (int j = 0; j < N; ++j)	{ //percorer o input dataset
+				sumB = sumB + expf(-powf((x[i] - x[j]), 2) / (2 * powf(SMOOTH, 2)));
+			}
+			yest_cpu[i] = sumA / sumB;
+		}
+	
+		...
+		exit(0);
+	}
+	\end{lstlisting}
+	
+	
+\section{Implementação no GPU}
+A implementação em GPU é dividia em 4 partes:
+\begin{itemize}
+	\vspace{-3mm}
+	\item Alocação da memória;
+	\vspace{-1.5mm}
+	\item  Envio dos dados do CPU para o GPU;
+	\vspace{-1.5mm}
+	\item  Iniciação do algoritmo em GPU;
+	\vspace{-1.5mm}
+	\item  Envio dos dados do GPU para o CPU;
+\end{itemize}
+
+\subsection{Alocação da memória}
+No inicio da implementação da paralisação em CUDA é necessário alocar a memória total a ser enviada do CPU para o GPU. Neste caso também foi alocado a memória total necessária para guardar o resultado do \textit{smoothing}. De seguida apresenta-se o código para alocação da memória do \textit{device} que com tem o GPU:
+	\begin{lstlisting}[language=C]
+	int main(){
+	float *d_x, *d_y, *d_yest;
+	...
+	cudaMalloc(&d_x, N*sizeof(float)); 
+	cudaMalloc(&d_y, N*sizeof(float));
+	cudaMalloc(&d_yest, N *sizeof(float));
+	...
+	exit(0);
+	}
+	\end{lstlisting}
+ 
+\subsection{Envio dos dados do CPU para o GPU}
+Com a memória alocada , o passo seguinte é transferir os dados obtidos na secção 2.1, \texttt{X} e \texttt{Y}, para o \textit{device}. É utilizado a função \texttt{cudaMemcpy}, função que pertence à biblioteca \texttt{cuda.h},
+\subsection{Iniciação do algoritmo em GPU}
+\subsection{Envio dos dados do GPU para o CPU}
+	
+\section{Técnicas de aceleração e otimização}
+
+\section{Secção de resultados}
+\subsection{Tempos}
+\subsection{Resultados do \textit{Smooth}}
+
+\section{Conclusões}
+
+\end{document}
