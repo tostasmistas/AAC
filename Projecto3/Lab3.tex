@@ -109,11 +109,11 @@ O algoritmo divide-se em duas partes fundamentais:
 
 \begin{itemize}
 	\vspace{-3mm}
-	\item Criação dos dados de entrada;
+	\item Criação do sinal amostrado;
 	\vspace{-1.5mm}
-	\item  Obtenção do \textit{Smooth} com processamento dos dados de entrada;
+	\item  \textit{Smoothing}  do sinal amostrado;
 \end{itemize}
-	\subsection{Criação dos dados de entrada}
+	\subsection{Criação do sinal amostrado}
 	O sinal a ser processado é composto pela soma de dois sinais sinusoidais mais um erro com uma amplitude máxima de $0,1$. 
 	Todos os calculos são feitos em \texttt{float}, em primeiro lugar é realizado a alocação da memória de todas as variáveis necessárias para o calculo do sinal de entrada. De seguida está representado o código C em detalhe.
 \begin{lstlisting}[language=C]
@@ -172,7 +172,7 @@ O algoritmo divide-se em duas partes fundamentais:
 	 \end{lstlisting}
 	 
 	
-	\subsection{Obtenção do \textit{Smooth} com processamento dos dados de entrada}
+	\subsection{\textit{Smoothing}  do sinal  amostrado}
 	
 	O algoritmo de \textit{Smooth} para o anulamento do ruído resultante da amostragem do sinal é aplicado segundo a expressão seguinte:
 	\vspace{-3mm}
@@ -224,27 +224,105 @@ A implementação em GPU é dividia em 4 partes:
 No inicio da implementação da paralisação em CUDA é necessário alocar a memória total a ser enviada do CPU para o GPU. Neste caso também foi alocado a memória total necessária para guardar o resultado do \textit{smoothing}. De seguida apresenta-se o código para alocação da memória do \textit{device} que com tem o GPU:
 	\begin{lstlisting}[language=C]
 	int main(){
-	float *d_x, *d_y, *d_yest;
-	...
-	cudaMalloc(&d_x, N*sizeof(float)); 
-	cudaMalloc(&d_y, N*sizeof(float));
-	cudaMalloc(&d_yest, N *sizeof(float));
-	...
-	exit(0);
+		float *d_x, *d_y, *d_yest;
+		...
+		cudaMalloc(&d_x, N*sizeof(float)); 
+		cudaMalloc(&d_y, N*sizeof(float));
+		cudaMalloc(&d_yest, N *sizeof(float));
+		...
+		exit(0);
 	}
 	\end{lstlisting}
  
-\subsection{Envio dos dados do CPU para o GPU}
-Com a memória alocada , o passo seguinte é transferir os dados obtidos na secção 2.1, \texttt{X} e \texttt{Y}, para o \textit{device}. É utilizado a função \texttt{cudaMemcpy}, função que pertence à biblioteca \texttt{cuda.h},
+\subsection{Envio dos dados do CPU/GPU ou GPU/CPU}
+
+Com a memória alocada , o passo seguinte é transferir os dados obtidos na secção 2.1, \texttt{X} e \texttt{Y}, para o \textit{device}. É utilizado a função \texttt{cudaMemcpy}, que pertence à biblioteca \texttt{cuda.h}, recebe o ponteiro de destino e o ponteiro onde está a memória a ser transferida, é necessário definir a dimensão de dados a ser transferidos e por fim é necessário definir o sentido da transferência usando as seguintes mascaras, \texttt{cudaMemcpyHostToDevice} sentido do CPU para o GPU e \texttt{cudaMemcpyDeviceToHost} sentido GPU para o CPU. No código seguinte está implementado a função descrita:
+	\begin{lstlisting}[language=C]
+	int main(){
+		float *x, *y, *yest_cpu,*yest_gpu, *randomArray;
+		float *d_x, *d_y, *d_yest;
+		...
+		/*Envio de dados para o device*/
+		cudaMemcpy(d_x, x, N*sizeof(float), cudaMemcpyHostToDevice);
+		cudaMemcpy(d_y, y, N*sizeof(float), cudaMemcpyHostToDevice);
+		...
+		/*Envio de dados para o CPU*/
+		cudaMemcpy(yest_gpu, d_yest, N*sizeof(float), cudaMemcpyDeviceToHost);
+		...
+	exit(0);
+	}
+	\end{lstlisting}
 \subsection{Iniciação do algoritmo em GPU}
-\subsection{Envio dos dados do GPU para o CPU}
+
+Depois de enviar todos os dados para o GPU o \textit{kernel} está pronto para ser invocado. O \textit{kernel} representa o código que vai ser executado pela GPU, este é definido pela declaração \texttt{\_\_global\_\_} antes da função C. Ver código seguinte,
+	\begin{lstlisting}[language=C]
+	__global__ void funtion_smooth(float *x, float *y, float *yest, int n){
+	...
+	}
+	\end{lstlisting}
+Com o \textit{kernel} definido este é executado usando a seguinte configuração, 
+	\vspace{-3mm}
+	\begin{equation}
+NomeDaFuncao~ \textless\textless\textless ~NB,NT ~\textgreater\textgreater\textgreater
+	\end{equation}
+
+Onde \texttt{NB} é o numero de blocos a ser lançados no GPU e \texttt{NT} o numero de \textit{threads} por bloco.
 	
-\section{Técnicas de aceleração e otimização}
+\section{Técnicas de aceleração e optimização}
+O código a ser paralisado é referente à segunda secção, \textit{Smoothing}  do sinal amostrado, do capítulo, Implementação no CPU.
+Analisou-se a estrutura do algoritmo e verificou-se a possibilidade de optimização e paralisação dos ciclos. 
+
+\subsection{Optimização}
+Analisando o algoritmo proposto identificou-se duas situações principais de optimização, número de ciclos e acesso á memória.
+Começou-se então por reduzir o número de ciclos do algoritmo, os dois ciclos interiores podem ser reduzidos a um só, com esta alteração verificou-se que se podia reduzir o acesso á memória. Isto é, como as variáveis \texttt{sumA} e \texttt{sumB} calculam-se da mesma forma tirando a diferença de \texttt{sumA}  ser multiplicada por \texttt{y[i]}. Fez-se a seguinte alteração, a parte comum é calculada em primeira instância e o resultado é guardado numa variável auxiliar, \texttt{sum}. Assim para o calculo de \texttt{sumB} é só necessário aceder a cache e obter os valores \texttt{sumB} e \texttt{sum} e para o calculo de \texttt{sumA} acede de igual forma, vai à cache retirar os valores de \texttt{sumA} e \texttt{sum} e um acesso à memória global, \texttt{y[j]}. O código de seguida demonstra a explicação feita anteriormente:
+\begin{lstlisting}[language=C]
+__global__ void funtion_smooth(float *x, float *y, float *yest, int n){
+	int i = blockIdx.x* blockDim.x + threadIdx.x;
+	float sumA=0.0, sumB=0.0,sum=0.0;
+
+	if (i < n){
+	for (int j = 0; j < n ;j++){
+		sum = (expf(-powf((x[i] - x[j]), 2) / (2 * powf(SMOOTH, 2))));
+		sumA = sumA +  sum* y[j];
+		sumB = sumB + sum;
+		}
+	yest[i] = sumA / sumB;
+	}
+\end{lstlisting}
+
+\subsection{Paralisação dos ciclos}
+\begin{itemize}
+	\vspace{-3mm}
+	\item Paralisação do ciclo externo;
+	\vspace{-1.5mm}
+	\item Paralisação do ciclo externo e interno;
+\end{itemize}
+Para melhor compreensão no código seguinte está representado qual o ciclo externo e qual o ciclo interno.
+
+\begin{lstlisting}[language=C]
+for (int i = 0; i < N; ++i) {/*Ciclo Externo*/
+	sumA = 0;
+	for (int j = 0; j < N; ++j) { /*Ciclo interno*/
+		sumA = sumA + ((expf(-powf((x[i] - x[j]), 2) / (2 * powf(SMOOTH, 2)))) * y[j]);
+	}
+	sumB = 0;
+	for (int j = 0; j < N; ++j)	{ /*Ciclo interno*/
+		sumB = sumB + expf(-powf((x[i] - x[j]), 2) / (2 * powf(SMOOTH, 2)));
+	}
+yest_cpu[i] = sumA / sumB;
+}
+\end{lstlisting}
+ 
+\subsubsection{Paralisação do ciclo externo}
+\subsubsection{Paralisação do ciclo interno}
+
 
 \section{Secção de resultados}
 \subsection{Tempos}
 \subsection{Resultados do \textit{Smooth}}
 
 \section{Conclusões}
+\section{Anexos}
+
 
 \end{document}
